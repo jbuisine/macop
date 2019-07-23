@@ -10,8 +10,11 @@ from optimization.algorithms.IteratedLocalSearch import IteratedLocalSearch as I
 from optimization.solutions.BinarySolution import BinarySolution
 from optimization.evaluators.EvaluatorExample import evaluatorExample
 
-from optimization.updators.mutators.SimpleMutation import SimpleMutation, SimpleBinaryMutation
-from optimization.updators.policies.RandomPolicy import RandomPolicy
+from optimization.operators.mutators.SimpleMutation import SimpleMutation
+from optimization.operators.mutators.SimpleBinaryMutation import SimpleBinaryMutation
+from optimization.operators.crossovers.SimpleCrossover import SimpleCrossover
+
+from optimization.operators.policies.RandomPolicy import RandomPolicy
 
 # logging configuration
 logging.basicConfig(format='%(asctime)s %(message)s', filename='example.log', level=logging.DEBUG)
@@ -26,10 +29,10 @@ def init():
 
 def main():
 
-    updators = [SimpleBinaryMutation, SimpleMutation]
-    policy = RandomPolicy(updators)
+    operators = [SimpleBinaryMutation(), SimpleMutation(), SimpleCrossover()]
+    policy = RandomPolicy(operators)
 
-    algo = ILS(init, evaluatorExample, updators, policy, validator, True)
+    algo = ILS(init, evaluatorExample, operators, policy, validator, True)
 
     bestSol = algo.run(100000)
 

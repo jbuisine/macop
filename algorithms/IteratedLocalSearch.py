@@ -12,7 +12,7 @@ class IteratedLocalSearch(Algorithm):
         # by default use of mother method to initialize variables
         super().run(_evaluations)
 
-        ls = LocalSearch(self.initializer, self.evaluator, self.updators, self.policy, self.validator, self.maximise)
+        ls = LocalSearch(self.initializer, self.evaluator, self.operators, self.policy, self.validator, self.maximise)
 
         # local search algorithm implementation
         while self.numberOfEvaluations < self.maxEvalutations:

@@ -4,14 +4,14 @@ import logging
 # Generic algorithm class
 class Algorithm():
 
-    def __init__(self, _initalizer, _evaluator, _updators, _policy, _validator, _maximise=True):
+    def __init__(self, _initalizer, _evaluator, _operators, _policy, _validator, _maximise=True):
         """
         Initialize all usefull parameters for problem to solve
         """
 
         self.initializer = _initalizer
         self.evaluator = _evaluator
-        self.updators = _updators
+        self.operators = _operators
         self.validator = _validator
         self.policy = _policy
 
@@ -49,7 +49,7 @@ class Algorithm():
         return solution.evaluate(self.evaluator)
 
 
-    def update(self, solution):
+    def update(self, solution, secondSolution=None):
         """
         Apply update function to solution using specific `policy`
 
@@ -59,7 +59,8 @@ class Algorithm():
             updated solution
         """
 
-        sol = self.policy.apply(solution)
+        # two parameters are sent if specific crossover solution are wished
+        sol = self.policy.apply(solution, secondSolution)
 
         if(sol.isValid(self.validator)):
             return sol

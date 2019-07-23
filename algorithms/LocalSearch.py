@@ -19,7 +19,8 @@ class LocalSearch(Algorithm):
             for _ in range(solutionSize):
 
                 # update solution using policy
-                newSolution = self.update(self.bestSolution)
+                # send random solution as second parameter for mutation
+                newSolution = self.update(self.bestSolution, self.initializer())
 
                 # if better solution than currently, replace it
                 if self.isBetter(newSolution):
@@ -29,7 +30,7 @@ class LocalSearch(Algorithm):
                 self.numberOfEvaluations += 1
 
                 self.progress()
-                logging.info("-- Found solution %s with score of %s" % (newSolution, newSolution.fitness()))
+                logging.info("-- Found %s with score of %s" % (newSolution, newSolution.fitness()))
 
                 # stop algorithm if necessary
                 if self.numberOfEvaluations >= self.maxEvalutations:
