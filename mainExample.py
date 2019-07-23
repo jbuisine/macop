@@ -1,4 +1,8 @@
 # module imports
+
+# Note: you need to import from folder dependency name
+# examples: `from optimization.solutions.BinarySolution import BinarySolution`
+
 from algorithms.IteratedLocalSearch import IteratedLocalSearch as ILS
 from solutions.BinarySolution import BinarySolution
 from evaluators.EvaluatorExample import evaluatorExample
@@ -6,6 +10,7 @@ from evaluators.EvaluatorExample import evaluatorExample
 from updators.mutators.SimpleMutation import SimpleMutation, SimpleBinaryMutation
 from updators.policies.RandomPolicy import RandomPolicy
 
+# define init random solution
 def init():
     return BinarySolution([], 30).random()
 
