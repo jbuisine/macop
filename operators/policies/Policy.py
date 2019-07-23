@@ -26,14 +26,15 @@ class Policy():
         
         operator = self.select()
 
-        logging.info("-- Applying %s on %s" % (type(operator).__name__, solution))
+        logging.info("---- Applying %s on %s" % (type(operator).__name__, solution))
 
         # check kind of operator
         if operator.kind == Operator.CROSSOVER:
-            return operator.apply(solution, secondSolution)
+            newSolution = operator.apply(solution, secondSolution)
         
         if operator.kind == Operator.MUTATOR:
-            return operator.apply(solution)
+            newSolution = operator.apply(solution)
 
-        # by default
-        return operator.apply(solution)
+        logging.info("---- Obtaining %s" % (solution))
+
+        return newSolution

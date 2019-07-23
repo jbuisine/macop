@@ -34,7 +34,7 @@ def main():
 
     algo = ILS(init, evaluatorExample, operators, policy, validator, True)
 
-    bestSol = algo.run(100000)
+    bestSol = algo.run(1000)
 
     print("Found ", bestSol)
 

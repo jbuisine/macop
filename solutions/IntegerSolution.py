@@ -27,6 +27,8 @@ class IntegerSolution(Solution):
         Use of validator to generate valid random solution
         """
 
+        self.data = np.random.randint(self.size, size=self.size)
+
         while not self.isValid(_validator):
             self.data = np.random.randint(self.size, size=self.size)
 
@@ -34,5 +36,5 @@ class IntegerSolution(Solution):
 
 
     def __str__(self):
-        return "Integer solution %s of size %s" % (self.data, self.size)
+        return "Integer solution %s" % (self.data)
         

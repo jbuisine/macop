@@ -27,6 +27,8 @@ class BinarySolution(Solution):
         Use of validator to generate valid random solution
         """
 
+        self.data = np.random.randint(2, size=self.size)
+
         while not self.isValid(_validator):
             self.data = np.random.randint(2, size=self.size)
 
@@ -34,5 +36,5 @@ class BinarySolution(Solution):
 
 
     def __str__(self):
-        return "Binary solution %s of size %s" % (self.data, self.size)
+        return "Binary solution %s" % (self.data)
         

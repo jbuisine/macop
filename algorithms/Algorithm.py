@@ -99,11 +99,11 @@ class Algorithm():
 
 
     def progress(self):
-        logging.info("-- %s evaluation n°%s of %s, %s%% - %s" % (type(self).__name__, self.numberOfEvaluations, self.maxEvalutations, "{0:.2f}".format((self.numberOfEvaluations) / self.maxEvalutations * 100.), self.bestSolution.fitness()))
+        logging.info("-- %s evaluation n°%s of %s (%s%%) - BEST SCORE %s" % (type(self).__name__, self.numberOfEvaluations, self.maxEvalutations, "{0:.2f}".format((self.numberOfEvaluations) / self.maxEvalutations * 100.), self.bestSolution.fitness()))
 
 
     def information(self):
-        logging.info("-- Best solution %s with score of %s" % (self.bestSolution, self.bestSolution.fitness()))
+        logging.info("-- Best solution %s - SCORE %s" % (self.bestSolution, self.bestSolution.fitness()))
 
 
     def __str__(self):

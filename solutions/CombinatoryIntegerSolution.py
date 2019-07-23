@@ -27,6 +27,8 @@ class CombinatoryIntegerSolution(Solution):
         Use of validator to generate valid random solution
         """
 
+        self.data = np.random.shuffle(np.arange(self.size))
+
         while not self.isValid(_validator):
             self.data = np.random.shuffle(np.arange(self.size))
 
@@ -34,5 +36,5 @@ class CombinatoryIntegerSolution(Solution):
 
 
     def __str__(self):
-        return "Combinatory integer solution %s of size %s" % (self.data, self.size)
+        return "Combinatory integer solution %s" % (self.data)
         
