@@ -10,14 +10,7 @@ class Solution():
         self.data = _data
         self.size = _size
         self.score = None
-    
-
-    def apply(self, _updator):
-        """
-        Apply custom modification of solution and return the transformed solution
-        """
-        return _updator(self)
-
+        
 
     def isValid(self, _validator):
         """
