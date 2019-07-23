@@ -10,13 +10,13 @@ from evaluators.EvaluatorExample import evaluatorExample
 from updators.mutators.SimpleMutation import SimpleMutation, SimpleBinaryMutation
 from updators.policies.RandomPolicy import RandomPolicy
 
-# define init random solution
-def init():
-    return BinarySolution([], 30).random()
-
 # default validator
 def validator(solution):
     return True
+
+# define init random solution
+def init():
+    return BinarySolution([], 30).random(validator)
 
 def main():
 

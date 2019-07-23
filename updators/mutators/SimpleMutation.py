@@ -3,7 +3,8 @@ import random
 import sys
 
 # module imports
-from ...solutions import *
+from ...solutions.BinarySolution import BinarySolution
+from ...solutions.Solution import Solution
 
 def SimpleBinaryMutation(solution):
     size = solution.size
