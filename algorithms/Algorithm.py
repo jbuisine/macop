@@ -1,3 +1,5 @@
+import logging
+
 # Generic algorithm class
 class Algorithm():
 
@@ -91,13 +93,15 @@ class Algorithm():
         """
         self.maxEvalutations = _evaluations
 
+        logging.info("Run %s with %s evaluations" % (self.__str__(), _evaluations))
+
 
     def progress(self):
-        return "Evaluation n°%s/%s, %s%%" % (self.numberOfEvaluations, self.maxEvalutations, "{0:.2f}".format((self.numberOfEvaluations) / self.maxEvalutations * 100.))
+        logging.info("-- Evaluation n°%s/%s, %s%%" % (self.numberOfEvaluations, self.maxEvalutations, "{0:.2f}".format((self.numberOfEvaluations) / self.maxEvalutations * 100.)))
 
 
     def information(self):
-        return "%s found with score of %s" % (self.bestSolution, self.bestSolution.fitness())
+        logging.info("-- Found %s with score of %s" % (self.bestSolution, self.bestSolution.fitness()))
 
 
     def __str__(self):
