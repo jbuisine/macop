@@ -1,3 +1,9 @@
+# main imports
+import logging
+
+# module imports
+from ..Operator import Operator
+
 # define policy to choose `operator` function at current iteration
 class Policy():
 
@@ -6,8 +12,28 @@ class Policy():
     def __init__(self, _operators):
         self.operators = _operators
 
-    def apply(self, solution):
+
+    def select(self):
         """
-        Apply specific operator to solution and returns solution
+        Select specific operator to solution and returns solution
         """
         raise NotImplementedError
+        
+    def apply(self, solution, secondSolution=None):
+        """
+        Apply specific operator chosen to solution and returns solution
+        """
+        
+        operator = self.select()
+
+        logging.info("-- Applying %s on %s" % (type(operator).__name__, solution))
+
+        # check kind of operator
+        if operator.kind == Operator.CROSSOVER:
+            return operator.apply(solution, secondSolution)
+        
+        if operator.kind == Operator.MUTATOR:
+            return operator.apply(solution)
+
+        # by default
+        return operator.apply(solution)
