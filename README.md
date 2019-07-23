@@ -15,7 +15,7 @@ Optimisation generic framework built for optimization problem during thesis
 
 ## How to use ?
 
-You can see an example of use in the `mainExample.py` python file.
+You can see an example of use in the `mainExample.py` python file. You need to clone this repository with `optimization` folder name to get it works.
 
 ## Add as dependency
 

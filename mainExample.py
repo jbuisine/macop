@@ -1,14 +1,20 @@
+# main imports
+import logging
+
 # module imports
 
 # Note: you need to import from folder dependency name
 # examples: `from optimization.solutions.BinarySolution import BinarySolution`
 
-from algorithms.IteratedLocalSearch import IteratedLocalSearch as ILS
-from solutions.BinarySolution import BinarySolution
-from evaluators.EvaluatorExample import evaluatorExample
+from optimization.algorithms.IteratedLocalSearch import IteratedLocalSearch as ILS
+from optimization.solutions.BinarySolution import BinarySolution
+from optimization.evaluators.EvaluatorExample import evaluatorExample
 
-from updators.mutators.SimpleMutation import SimpleMutation, SimpleBinaryMutation
-from updators.policies.RandomPolicy import RandomPolicy
+from optimization.updators.mutators.SimpleMutation import SimpleMutation, SimpleBinaryMutation
+from optimization.updators.policies.RandomPolicy import RandomPolicy
+
+# logging configuration
+logging.basicConfig(format='%(asctime)s %(message)s', filename='example.log', level=logging.DEBUG)
 
 # default validator
 def validator(solution):

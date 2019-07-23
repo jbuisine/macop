@@ -1,3 +1,5 @@
+# main imports
+
 # module imports
 from .Algorithm import Algorithm
 
@@ -25,14 +27,14 @@ class LocalSearch(Algorithm):
                 # increase number of evaluations
                 self.numberOfEvaluations += 1
 
-                print(self.progress())
+                self.progress()
 
                 # stop algorithm if necessary
                 if self.numberOfEvaluations >= self.maxEvalutations:
                     break
             
-            print(self.information())
+            self.information()
 
-        print("End of local search algorithm..")
+        logging.info("End of %s, best solution found %s" % (type(self).__name__, self.bestSolution))
 
         return self.bestSolution
