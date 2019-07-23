@@ -97,7 +97,7 @@ class Algorithm():
 
 
     def progress(self):
-        logging.info("-- Evaluation n°%s/%s, %s%%" % (self.numberOfEvaluations, self.maxEvalutations, "{0:.2f}".format((self.numberOfEvaluations) / self.maxEvalutations * 100.)))
+        logging.info("-- Evaluation n°%s of %s, %s%%" % (self.numberOfEvaluations, self.maxEvalutations, "{0:.2f}".format((self.numberOfEvaluations) / self.maxEvalutations * 100.)))
 
 
     def information(self):

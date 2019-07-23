@@ -7,7 +7,7 @@ from.LocalSearch import LocalSearch
 
 class IteratedLocalSearch(Algorithm):
 
-    def run(self, _evaluations, _lc_evaluations=100):
+    def run(self, _evaluations, _ls_evaluations=100):
 
         # by default use of mother method to initialize variables
         super().run(_evaluations)
@@ -18,14 +18,14 @@ class IteratedLocalSearch(Algorithm):
         while self.numberOfEvaluations < self.maxEvalutations:
             
             # create and search solution from local search
-            newSolution = ls.run(_lc_evaluations)
+            newSolution = ls.run(_ls_evaluations)
 
             # if better solution than currently, replace it
             if self.isBetter(newSolution):
                 self.bestSolution = newSolution
 
             # increase number of evaluations
-            self.numberOfEvaluations += _lc_evaluations
+            self.numberOfEvaluations += _ls_evaluations
 
             self.progress()
             self.information()            
