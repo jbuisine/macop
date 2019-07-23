@@ -2,12 +2,6 @@
 import random
 import sys
 
-# module imports
-sys.path.insert(0, '') # trick to enable import of main folder module
-
-from solutions.BinarySolution import BinarySolution
-from solutions.Solution import Solution
-
 def SimpleBinaryMutation(solution):
     size = solution.size
 
