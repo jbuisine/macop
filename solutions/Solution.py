@@ -41,7 +41,7 @@ class Solution():
         return self.score
 
 
-    def random(self):
+    def random(self, _validator):
         """
         Initialize solution using random data
         """

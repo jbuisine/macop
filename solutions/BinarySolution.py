@@ -20,11 +20,16 @@ class BinarySolution(Solution):
         self.size = _size
 
 
-    def random(self):
+    def random(self, _validator):
         """
         Intialize binary array using size solution data
+
+        Use of validator to generate valid random solution
         """
-        self.data = np.random.randint(2, size=self.size)
+
+        while not self.isValid(_validator):
+            self.data = np.random.randint(2, size=self.size)
+
         return self
 
 
