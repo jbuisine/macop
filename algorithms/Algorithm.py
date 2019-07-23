@@ -14,25 +14,24 @@ class Algorithm():
         self.validator = _validator
         self.policy = _policy
 
+        # other parameters
+        self.maxEvalutations = 0 # by default
+        self.maximise = _maximise
+
+        self.initRun()
+
+
+    def initRun(self):
+        """
+        Reinit the whole variables
+        """
+
         self.currentSolution = self.initializer()
         
         # evaluate current solution
         self.currentSolution.evaluate(self.evaluator)
 
         # keep in memory best known solution (current solution)
-        self.bestSolution = self.currentSolution
-
-        # other parameters
-        self.maxEvalutations = 0 # by default
-        self.numberOfEvaluations = 0
-        self.maximise = _maximise
-
-
-    def reinit(self):
-        """
-        Reinit the whole variable
-        """
-        self.currentSolution = self.initializer
         self.bestSolution = self.currentSolution
 
         self.numberOfEvaluations = 0
@@ -92,9 +91,10 @@ class Algorithm():
         Run the specific algorithm following number of evaluations to find optima
         """
         self.maxEvalutations = _evaluations
+        self.initRun()
 
         logging.info("Run %s with %s evaluations" % (self.__str__(), _evaluations))
-
+        
 
     def progress(self):
         logging.info("-- Evaluation n°%s of %s, %s%%" % (self.numberOfEvaluations, self.maxEvalutations, "{0:.2f}".format((self.numberOfEvaluations) / self.maxEvalutations * 100.)))
