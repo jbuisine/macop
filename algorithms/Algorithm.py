@@ -1,3 +1,4 @@
+# main imports
 import logging
 
 # Generic algorithm class
@@ -63,7 +64,7 @@ class Algorithm():
         if(sol.isValid(self.validator)):
             return sol
         else:
-            print("New solution is not valid", sol)
+            logging.info("-- New solution is not valid %s" % sol)
             return solution
 
 
@@ -94,14 +95,14 @@ class Algorithm():
         self.initRun()
 
         logging.info("Run %s with %s evaluations" % (self.__str__(), _evaluations))
-        
+
 
     def progress(self):
-        logging.info("-- Evaluation n°%s of %s, %s%%" % (self.numberOfEvaluations, self.maxEvalutations, "{0:.2f}".format((self.numberOfEvaluations) / self.maxEvalutations * 100.)))
+        logging.info("-- %s evaluation n°%s of %s, %s%% - %s" % (type(self).__name__, self.numberOfEvaluations, self.maxEvalutations, "{0:.2f}".format((self.numberOfEvaluations) / self.maxEvalutations * 100.), self.bestSolution.fitness()))
 
 
     def information(self):
-        logging.info("-- Found %s with score of %s" % (self.bestSolution, self.bestSolution.fitness()))
+        logging.info("-- Best solution %s with score of %s" % (self.bestSolution, self.bestSolution.fitness()))
 
 
     def __str__(self):

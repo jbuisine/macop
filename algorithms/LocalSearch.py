@@ -29,7 +29,7 @@ class LocalSearch(Algorithm):
                 self.numberOfEvaluations += 1
 
                 self.progress()
-                self.information()
+                logging.info("-- Found solution %s with score of %s" % (newSolution, newSolution.fitness()))
 
                 # stop algorithm if necessary
                 if self.numberOfEvaluations >= self.maxEvalutations:
