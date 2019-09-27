@@ -12,10 +12,19 @@ class IteratedLocalSearch(Algorithm):
         # by default use of mother method to initialize variables
         super().run(_evaluations)
 
-        ls = LocalSearch(self.initializer, self.evaluator, self.operators, self.policy, self.validator, self.maximise)
+        # enable checkpoint for ILS
+        if self.checkpoint is not None:
+            self.resume()
+
+        # passing global evaluation param from ILS
+        ls = LocalSearch(self.initializer, self.evaluator, self.operators, self.policy, self.validator, self.maximise, _parent=self)
+        
+        # set same checkpoint if exists
+        if self.checkpoint is not None:
+            ls.setCheckpoint(self.checkpoint)
 
         # local search algorithm implementation
-        while self.numberOfEvaluations < self.maxEvalutations:
+        while self.getGlobalEvaluation() < self.maxEvalutations:
             
             # create and search solution from local search
             newSolution = ls.run(_ls_evaluations)
@@ -24,11 +33,12 @@ class IteratedLocalSearch(Algorithm):
             if self.isBetter(newSolution):
                 self.bestSolution = newSolution
 
-            # increase number of evaluations
-            self.numberOfEvaluations += _ls_evaluations
+            # number of evaluatins increased from LocalSearch
+            # increase number of evaluations and progress are then not necessary there
+            #self.increaseEvaluation()
+            #self.progress()
 
-            self.progress()
-            self.information()            
+            self.information()          
 
         logging.info("End of %s, best solution found %s" % (type(self).__name__, self.bestSolution))
 

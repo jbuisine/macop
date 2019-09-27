@@ -4,7 +4,7 @@ import logging
 # Generic algorithm class
 class Algorithm():
 
-    def __init__(self, _initalizer, _evaluator, _operators, _policy, _validator, _maximise=True):
+    def __init__(self, _initalizer, _evaluator, _operators, _policy, _validator, _maximise=True, _parent=None):
         """
         Initialize all usefull parameters for problem to solve
         """
@@ -14,12 +14,30 @@ class Algorithm():
         self.operators = _operators
         self.validator = _validator
         self.policy = _policy
+        self.checkpoint = None
 
         # other parameters
+        self.parent = _parent # parent algorithm if it's sub algorithm
         self.maxEvalutations = 0 # by default
         self.maximise = _maximise
 
         self.initRun()
+
+
+    def addCheckpoint(self, _class, _every, _filepath):
+        self.checkpoint = _class(self, _every, _filepath)
+
+    
+    def setCheckpoint(self, _checkpoint):
+        self.checkpoint = _checkpoint
+
+
+    def resume(self):
+        if self.checkpoint is None:
+            raise ValueError("Need to `addCheckpoint` or `setCheckpoint` is you want to use this process")
+        else:
+            print('Checkpoint loading is called')
+            self.checkpoint.load()
 
 
     def initRun(self):
@@ -36,6 +54,21 @@ class Algorithm():
         self.bestSolution = self.currentSolution
 
         self.numberOfEvaluations = 0
+
+
+    def increaseEvaluation(self):
+        self.numberOfEvaluations += 1
+
+        if self.parent is not None:
+            self.parent.numberOfEvaluations += 1
+
+    
+    def getGlobalEvaluation(self):
+
+        if self.parent is not None:
+            return self.parent.numberOfEvaluations
+
+        return self.numberOfEvaluations
 
 
     def evaluate(self, solution):
@@ -99,6 +132,10 @@ class Algorithm():
 
 
     def progress(self):
+
+        if self.checkpoint is not None:
+            self.checkpoint.run()
+
         logging.info("-- %s evaluation %s of %s (%s%%) - BEST SCORE %s" % (type(self).__name__, self.numberOfEvaluations, self.maxEvalutations, "{0:.2f}".format((self.numberOfEvaluations) / self.maxEvalutations * 100.), self.bestSolution.fitness()))
 
 
