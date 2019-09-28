@@ -16,6 +16,8 @@ from optimization.operators.crossovers.SimpleCrossover import SimpleCrossover
 
 from optimization.operators.policies.RandomPolicy import RandomPolicy
 
+from optimization.checkpoints.BasicCheckpoint import BasicCheckpoint
+
 # logging configuration
 logging.basicConfig(format='%(asctime)s %(message)s', filename='example.log', level=logging.DEBUG)
 
@@ -27,14 +29,17 @@ def validator(solution):
 def init():
     return BinarySolution([], 30).random(validator)
 
+filepath = "checkpoints.csv"
+
 def main():
 
     operators = [SimpleBinaryMutation(), SimpleMutation(), SimpleCrossover()]
     policy = RandomPolicy(operators)
 
     algo = ILS(init, evaluatorExample, operators, policy, validator, True)
+    algo.addCheckpoint(_class=BasicCheckpoint, _every=5, _filepath=filepath)
 
-    bestSol = algo.run(1000)
+    bestSol = algo.run(425)
 
     print("Found ", bestSol)
 

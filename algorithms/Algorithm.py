@@ -4,7 +4,7 @@ import logging
 # Generic algorithm class
 class Algorithm():
 
-    def __init__(self, _initalizer, _evaluator, _operators, _policy, _validator, _maximise=True):
+    def __init__(self, _initalizer, _evaluator, _operators, _policy, _validator, _maximise=True, _parent=None):
         """
         Initialize all usefull parameters for problem to solve
         """
@@ -14,12 +14,30 @@ class Algorithm():
         self.operators = _operators
         self.validator = _validator
         self.policy = _policy
+        self.checkpoint = None
 
         # other parameters
-        self.maxEvalutations = 0 # by default
+        self.parent = _parent # parent algorithm if it's sub algorithm
+        #self.maxEvaluations = 0 # by default
         self.maximise = _maximise
 
         self.initRun()
+
+
+    def addCheckpoint(self, _class, _every, _filepath):
+        self.checkpoint = _class(self, _every, _filepath)
+
+    
+    def setCheckpoint(self, _checkpoint):
+        self.checkpoint = _checkpoint
+
+
+    def resume(self):
+        if self.checkpoint is None:
+            raise ValueError("Need to `addCheckpoint` or `setCheckpoint` is you want to use this process")
+        else:
+            print('Checkpoint loading is called')
+            self.checkpoint.load()
 
 
     def initRun(self):
@@ -34,8 +52,31 @@ class Algorithm():
 
         # keep in memory best known solution (current solution)
         self.bestSolution = self.currentSolution
+        
 
-        self.numberOfEvaluations = 0
+    def increaseEvaluation(self):
+        self.numberOfEvaluations += 1
+
+        if self.parent is not None:
+            self.parent.numberOfEvaluations += 1
+
+    
+    def getGlobalEvaluation(self):
+
+        if self.parent is not None:
+            return self.parent.numberOfEvaluations
+
+        return self.numberOfEvaluations
+
+
+    def stop(self):
+        """
+        Global stopping criteria (check for inner algorithm too)
+        """
+        if self.parent is not None:
+            return self.parent.numberOfEvaluations >= self.parent.maxEvaluations or self.numberOfEvaluations >= self.maxEvaluations
+            
+        return self.numberOfEvaluations >= self.maxEvaluations
 
 
     def evaluate(self, solution):
@@ -92,14 +133,31 @@ class Algorithm():
         """
         Run the specific algorithm following number of evaluations to find optima
         """
-        self.maxEvalutations = _evaluations
+
+        self.maxEvaluations = _evaluations
+
         self.initRun()
+
+        # check if global evaluation is used or not
+        if self.parent is not None and self.getGlobalEvaluation() != 0:
+            
+            # init number evaluations of inner algorithm depending of globalEvaluation
+            # allows to restart from `checkpoint` last evaluation into inner algorithm
+            rest = self.getGlobalEvaluation() % self.maxEvaluations
+            self.numberOfEvaluations = rest
+
+        else:
+            self.numberOfEvaluations = 0
 
         logging.info("Run %s with %s evaluations" % (self.__str__(), _evaluations))
 
 
     def progress(self):
-        logging.info("-- %s evaluation %s of %s (%s%%) - BEST SCORE %s" % (type(self).__name__, self.numberOfEvaluations, self.maxEvalutations, "{0:.2f}".format((self.numberOfEvaluations) / self.maxEvalutations * 100.), self.bestSolution.fitness()))
+
+        if self.checkpoint is not None:
+            self.checkpoint.run()
+
+        logging.info("-- %s evaluation %s of %s (%s%%) - BEST SCORE %s" % (type(self).__name__, self.numberOfEvaluations, self.maxEvaluations, "{0:.2f}".format((self.numberOfEvaluations) / self.maxEvaluations * 100.), self.bestSolution.fitness()))
 
 
     def information(self):
