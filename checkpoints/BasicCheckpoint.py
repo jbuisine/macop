@@ -51,14 +51,11 @@ class BasicCheckpoint(Checkpoint):
                 # get evaluation  information 
                 globalEvaluation = int(data[0])
 
-                print(globalEvaluation, data)
-
                 if self.algo.parent is not None:
                     self.algo.parent.numberOfEvaluations = globalEvaluation
                 else:
                     self.algo.numberOfEvaluations = globalEvaluation
 
-                print(self.algo.numberOfEvaluations)
                 # get best solution data information
                 solutionData = list(map(int, data[1].split(' ')))
 

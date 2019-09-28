@@ -14,7 +14,7 @@ class LocalSearch(Algorithm):
         solutionSize = self.bestSolution.size
 
         # local search algorithm implementation
-        while self.getGlobalEvaluation() < self.maxEvalutations:
+        while self.numberOfEvaluations < self.maxEvalutations:
 
             for _ in range(solutionSize):
 
