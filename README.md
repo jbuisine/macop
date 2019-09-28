@@ -10,6 +10,7 @@ Optimisation generic framework built for optimization problem during thesis
 - **evaluator:** example of an evaluation function to use (you have to implement your own evaluation function)
 - **solutions:** solutions used to represent problem data
 - **operators:** mutators, crossovers update of solution. This folder also had `policies` folder to manage the way of update and use solution.
+- **checkpoints:** checkpoints folder where `Checkpoint` class is available for making checkpoint every number of evaluations.
   
 **Note:** you can pass a custom `validator` function to the algorithm in order to check is solution is always correct for your needs after an update.
 

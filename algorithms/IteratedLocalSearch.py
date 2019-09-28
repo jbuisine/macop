@@ -24,8 +24,8 @@ class IteratedLocalSearch(Algorithm):
             ls.setCheckpoint(self.checkpoint)
 
         # local search algorithm implementation
-        while self.getGlobalEvaluation() < self.maxEvalutations:
-            
+        while not self.stop():
+
             # create and search solution from local search
             newSolution = ls.run(_ls_evaluations)
 

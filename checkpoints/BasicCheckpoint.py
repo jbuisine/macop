@@ -1,6 +1,7 @@
 # main imports
 import os
 import logging
+import numpy as np
 
 # module imports
 from .Checkpoint import Checkpoint
@@ -25,8 +26,16 @@ class BasicCheckpoint(Checkpoint):
 
             logging.info("Checkpoint is done into " + self.filepath)
 
-            cleanSolution =  str(solution.data).replace('[', '').replace(']', '')
-            line = str(currentEvaluation) + ';' + cleanSolution + ';' + str(solution.fitness()) + ';\n'
+            solutionData = ""
+            solutionSize = len(solution.data)
+
+            for index, val in enumerate(solution.data):
+                solutionData += str(val)
+
+                if index < solutionSize - 1:
+                    solutionData += ' '
+
+            line = str(currentEvaluation) + ';' + solutionData + ';' + str(solution.fitness()) + ';\n'
 
             # check if file exists
             if not os.path.exists(self.filepath):
@@ -58,9 +67,9 @@ class BasicCheckpoint(Checkpoint):
 
                 # get best solution data information
                 solutionData = list(map(int, data[1].split(' ')))
-
-                print(solutionData)
-                self.algo.bestSolution.data = solutionData
+                
+                self.algo.bestSolution.data = np.array(solutionData)
                 self.algo.bestSolution.score = float(data[2])
         else:
+            print('No backup found... Start running')
             logging.info("Can't load backup... Backup filepath not valid in Checkpoint")

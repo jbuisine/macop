@@ -18,7 +18,7 @@ class Algorithm():
 
         # other parameters
         self.parent = _parent # parent algorithm if it's sub algorithm
-        self.maxEvalutations = 0 # by default
+        #self.maxEvaluations = 0 # by default
         self.maximise = _maximise
 
         self.initRun()
@@ -52,9 +52,7 @@ class Algorithm():
 
         # keep in memory best known solution (current solution)
         self.bestSolution = self.currentSolution
-
-        self.numberOfEvaluations = 0
-
+        
 
     def increaseEvaluation(self):
         self.numberOfEvaluations += 1
@@ -69,6 +67,16 @@ class Algorithm():
             return self.parent.numberOfEvaluations
 
         return self.numberOfEvaluations
+
+
+    def stop(self):
+        """
+        Global stopping criteria (check for inner algorithm too)
+        """
+        if self.parent is not None:
+            return self.parent.numberOfEvaluations >= self.parent.maxEvaluations or self.numberOfEvaluations >= self.maxEvaluations
+            
+        return self.numberOfEvaluations >= self.maxEvaluations
 
 
     def evaluate(self, solution):
@@ -125,8 +133,21 @@ class Algorithm():
         """
         Run the specific algorithm following number of evaluations to find optima
         """
-        self.maxEvalutations = _evaluations
+
+        self.maxEvaluations = _evaluations
+
         self.initRun()
+
+        # check if global evaluation is used or not
+        if self.parent is not None and self.getGlobalEvaluation() != 0:
+            
+            # init number evaluations of inner algorithm depending of globalEvaluation
+            # allows to restart from `checkpoint` last evaluation into inner algorithm
+            rest = self.getGlobalEvaluation() % self.maxEvaluations
+            self.numberOfEvaluations = rest
+
+        else:
+            self.numberOfEvaluations = 0
 
         logging.info("Run %s with %s evaluations" % (self.__str__(), _evaluations))
 
@@ -136,7 +157,7 @@ class Algorithm():
         if self.checkpoint is not None:
             self.checkpoint.run()
 
-        logging.info("-- %s evaluation %s of %s (%s%%) - BEST SCORE %s" % (type(self).__name__, self.numberOfEvaluations, self.maxEvalutations, "{0:.2f}".format((self.numberOfEvaluations) / self.maxEvalutations * 100.), self.bestSolution.fitness()))
+        logging.info("-- %s evaluation %s of %s (%s%%) - BEST SCORE %s" % (type(self).__name__, self.numberOfEvaluations, self.maxEvaluations, "{0:.2f}".format((self.numberOfEvaluations) / self.maxEvaluations * 100.), self.bestSolution.fitness()))
 
 
     def information(self):
