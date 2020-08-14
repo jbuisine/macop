@@ -3,7 +3,7 @@
 ![](https://github.com/prise-3d/macop/workflows/build/badge.svg) ![](https://github.com/prise-3d/macop/workflows/pypi/badge.svg)
 
 <p align="center">
-    <img src="https://github.com/prise-3d/rawls/blob/master/logo_macop.png" alt="" width="50%">
+    <img src="https://github.com/prise-3d/macop/blob/master/logo_macop.png" alt="" width="50%">
 </p>
 
 

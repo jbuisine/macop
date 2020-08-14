@@ -1,9 +1,26 @@
+"""Abstract Algorithm class used as basic algorithm implementation with some specific initialization
+"""
+
 # main imports
 import logging
 
 
 # Generic algorithm class
 class Algorithm():
+    """Algorithm class used as basic algorithm
+
+    Attributes:
+        initalizer: {function} -- basic function strategy to initialize solution
+        evaluator: {function} -- basic function in order to obtained fitness (mono or multiple objectives)
+        operators: {[Operator]} -- list of operator to use when launching algorithm
+        policy: {Policy} -- Policy class implementation strategy to select operators
+        validator: {function} -- basic function to check if solution is valid or not under some constraints
+        maximise: {bool} -- specify kind of optimization problem 
+        currentSolution: {Solution} -- current solution managed for current evaluation
+        bestSolution: {Solution} -- best solution found so far during running algorithm
+        checkpoint: {Checkpoint} -- Checkpoint class implementation to keep track of algorithm and restart
+        parent: {Algorithm} -- parent algorithm reference in case of inner Algorithm instance (optional)
+    """
     def __init__(self,
                  _initalizer,
                  _evaluator,
@@ -12,15 +29,12 @@ class Algorithm():
                  _validator,
                  _maximise=True,
                  _parent=None):
-        """
-        Initialize all usefull parameters for problem to solve
-        """
 
         self.initializer = _initalizer
         self.evaluator = _evaluator
         self.operators = _operators
-        self.validator = _validator
         self.policy = _policy
+        self.validator = _validator
         self.checkpoint = None
         self.bestSolution = None
 
@@ -32,12 +46,29 @@ class Algorithm():
         self.initRun()
 
     def addCheckpoint(self, _class, _every, _filepath):
+        """Add checkpoint to algorithm specifying usefull parameters
+
+        Attributes:
+            _class: {class} -- Checkpoint class type
+            _every: {int} -- checkpoint frequency based on evaluations
+            _filepath: {str} -- file path where checkpoints will be saved
+        """
         self.checkpoint = _class(self, _every, _filepath)
 
     def setCheckpoint(self, _checkpoint):
+        """Set checkpoint instance directly
+
+        Attributes:
+            _checkpoint: {Checkpoint} -- checkpoint instance
+        """
         self.checkpoint = _checkpoint
 
     def resume(self):
+        """Resume algorithm using checkpoint instance
+
+        Raises:
+            ValueError: No checkpoint initialize (use `addCheckpoint` or `setCheckpoint` is you want to use this process)
+        """
         if self.checkpoint is None:
             raise ValueError(
                 "Need to `addCheckpoint` or `setCheckpoint` is you want to use this process"
@@ -48,7 +79,7 @@ class Algorithm():
 
     def initRun(self):
         """
-        Reinit the whole variables
+        Method which initialiazes or re-initializes the whole algorithm context (operators, current solution, policy, best solution (by default current solution))
         """
 
         # add track reference of algo into operator (keep an eye into best solution)
@@ -60,16 +91,27 @@ class Algorithm():
         # evaluate current solution
         self.currentSolution.evaluate(self.evaluator)
 
+        # reinitialize policy
+        self.policy = globals()[type(self.policy).__name__]()
+
         # keep in memory best known solution (current solution)
         self.bestSolution = self.currentSolution
 
     def increaseEvaluation(self):
+        """
+        Increase number of evaluation once a solution is evaluated
+        """
         self.numberOfEvaluations += 1
 
         if self.parent is not None:
             self.parent.numberOfEvaluations += 1
 
     def getGlobalEvaluation(self):
+        """Get the global number of evaluation (if inner algorithm)
+
+        Returns:
+            {int} -- current global number of evaluation
+        """
 
         if self.parent is not None:
             return self.parent.numberOfEvaluations
@@ -102,7 +144,7 @@ class Algorithm():
         Check if solution is valid after modification and returns it
 
         Returns:
-            updated solution
+            {Solution} -- updated solution obtained by the selected operator
         """
 
         # two parameters are sent if specific crossover solution are wished
@@ -119,7 +161,7 @@ class Algorithm():
         Check if solution is better than best found
 
         Returns:
-            `True` if better
+            {bool} -- `True` if better
         """
         # depending of problem to solve (maximizing or minimizing)
         if self.maximise:

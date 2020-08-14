@@ -60,3 +60,4 @@ target/
 
 example.log
 checkpoint.csv
+!docs/build
