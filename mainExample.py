@@ -2,10 +2,6 @@
 import logging
 
 # module imports
-
-# Note: you need to import from folder dependency name
-# examples: `from optimization.solutions.BinarySolution import BinarySolution`
-
 from macop.algorithms.IteratedLocalSearch import IteratedLocalSearch as ILS
 from macop.solutions.BinarySolution import BinarySolution
 from macop.evaluators.EvaluatorExample import evaluatorExample

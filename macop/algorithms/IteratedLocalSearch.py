@@ -1,3 +1,6 @@
+"""Iterated Local Search Algorithm implementation
+"""
+
 # main imports
 import logging
 
@@ -7,7 +10,30 @@ from .LocalSearch import LocalSearch
 
 
 class IteratedLocalSearch(Algorithm):
+    """Iterated Local Search used to avoir local optima and increave EvE (Exploration vs Exploitation) compromise
+
+    Attributes:
+        initalizer: {function} -- basic function strategy to initialize solution
+        evaluator: {function} -- basic function in order to obtained fitness (mono or multiple objectives)
+        operators: {[Operator]} -- list of operator to use when launching algorithm
+        policy: {Policy} -- Policy class implementation strategy to select operators
+        validator: {function} -- basic function to check if solution is valid or not under some constraints
+        maximise: {bool} -- specify kind of optimization problem 
+        currentSolution: {Solution} -- current solution managed for current evaluation
+        bestSolution: {Solution} -- best solution found so far during running algorithm
+        checkpoint: {Checkpoint} -- Checkpoint class implementation to keep track of algorithm and restart
+    """
     def run(self, _evaluations, _ls_evaluations=100):
+        """
+        Run the iterated local search algorithm using local search (EvE compromise)
+
+        Attributes:
+            _evaluations: {int} -- number of global evaluations for ILS
+            _ls_evaluations: {int} -- number of Local search evaluations (default: 100)
+
+        Returns:
+            {Solution} -- best solution found
+        """
 
         # by default use of mother method to initialize variables
         super().run(_evaluations)

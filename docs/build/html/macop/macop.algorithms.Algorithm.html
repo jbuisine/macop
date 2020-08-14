@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>macop.algorithms.Algorithm &mdash; macop v0.1.3 documentation</title>
+  <title>macop.algorithms.Algorithm &mdash; macop v0.1.4 documentation</title>
   
 
   
@@ -60,7 +60,7 @@
             
             
               <div class="version">
-                0.1.3
+                0.1.4
               </div>
             
           
@@ -101,7 +101,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../macop.html#macop-solution">macop.solution</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Some examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
 </ul>
 
@@ -308,7 +308,7 @@
 <dl class="method">
 <dt id="macop.algorithms.Algorithm.Algorithm.initRun">
 <code class="sig-name descname">initRun</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macop/algorithms/Algorithm.html#Algorithm.initRun"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macop.algorithms.Algorithm.Algorithm.initRun" title="Permalink to this definition">¶</a></dt>
-<dd><p>Method which initialiazes or re-initializes the whole algorithm context (operators, current solution, policy, best solution (by default current solution))</p>
+<dd><p>Method which initialiazes or re-initializes the whole algorithm context: operators, current solution, best solution (by default current solution)</p>
 </dd></dl>
 
 <dl class="method">
@@ -320,6 +320,12 @@
 <dd class="field-odd"><p>{bool} – <cite>True</cite> if better</p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="macop.algorithms.Algorithm.Algorithm.progress">
+<code class="sig-name descname">progress</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macop/algorithms/Algorithm.html#Algorithm.progress"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macop.algorithms.Algorithm.Algorithm.progress" title="Permalink to this definition">¶</a></dt>
+<dd><p>Log progress and apply checkpoint if necessary</p>
 </dd></dl>
 
 <dl class="method">

@@ -79,7 +79,7 @@ class Algorithm():
 
     def initRun(self):
         """
-        Method which initialiazes or re-initializes the whole algorithm context (operators, current solution, policy, best solution (by default current solution))
+        Method which initialiazes or re-initializes the whole algorithm context: operators, current solution, best solution (by default current solution)
         """
 
         # add track reference of algo into operator (keep an eye into best solution)
@@ -92,7 +92,8 @@ class Algorithm():
         self.currentSolution.evaluate(self.evaluator)
 
         # reinitialize policy
-        self.policy = globals()[type(self.policy).__name__]()
+        # if self.parent is not None:
+        #     self.policy = globals()[type(self.policy).__name__]()
 
         # keep in memory best known solution (current solution)
         self.bestSolution = self.currentSolution
@@ -198,7 +199,9 @@ class Algorithm():
                      (self.__str__(), _evaluations))
 
     def progress(self):
-
+        """
+        Log progress and apply checkpoint if necessary
+        """
         if self.checkpoint is not None:
             self.checkpoint.run()
 

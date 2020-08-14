@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>macop.algorithms.Algorithm &mdash; macop v0.1.3 documentation</title>
+  <title>macop.algorithms.Algorithm &mdash; macop v0.1.4 documentation</title>
   
 
   
@@ -58,7 +58,7 @@
             
             
               <div class="version">
-                0.1.3
+                0.1.4
               </div>
             
           
@@ -86,7 +86,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../description.html">Description</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../macop.html">Documentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples.html">Some examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a></li>
 </ul>
 
@@ -232,7 +232,7 @@
 
 <div class="viewcode-block" id="Algorithm.initRun"><a class="viewcode-back" href="../../../macop/macop.algorithms.Algorithm.html#macop.algorithms.Algorithm.Algorithm.initRun">[docs]</a>    <span class="k">def</span> <span class="nf">initRun</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Method which initialiazes or re-initializes the whole algorithm context (operators, current solution, policy, best solution (by default current solution))</span>
+<span class="sd">        Method which initialiazes or re-initializes the whole algorithm context: operators, current solution, best solution (by default current solution)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="c1"># add track reference of algo into operator (keep an eye into best solution)</span>
@@ -245,7 +245,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">currentSolution</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">evaluator</span><span class="p">)</span>
 
         <span class="c1"># reinitialize policy</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">policy</span> <span class="o">=</span> <span class="nb">globals</span><span class="p">()[</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">policy</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">]()</span>
+        <span class="c1"># if self.parent is not None:</span>
+        <span class="c1">#     self.policy = globals()[type(self.policy).__name__]()</span>
 
         <span class="c1"># keep in memory best known solution (current solution)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">bestSolution</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">currentSolution</span></div>
@@ -350,8 +351,10 @@
         <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Run </span><span class="si">%s</span><span class="s2"> with </span><span class="si">%s</span><span class="s2"> evaluations&quot;</span> <span class="o">%</span>
                      <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="fm">__str__</span><span class="p">(),</span> <span class="n">_evaluations</span><span class="p">))</span></div>
 
-    <span class="k">def</span> <span class="nf">progress</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-
+<div class="viewcode-block" id="Algorithm.progress"><a class="viewcode-back" href="../../../macop/macop.algorithms.Algorithm.html#macop.algorithms.Algorithm.Algorithm.progress">[docs]</a>    <span class="k">def</span> <span class="nf">progress</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Log progress and apply checkpoint if necessary</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">checkpoint</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">checkpoint</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
 
@@ -359,7 +362,7 @@
                      <span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">numberOfEvaluations</span><span class="p">,</span>
                       <span class="bp">self</span><span class="o">.</span><span class="n">maxEvaluations</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">{0:.2f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
                           <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">numberOfEvaluations</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">maxEvaluations</span> <span class="o">*</span>
-                          <span class="mf">100.</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">bestSolution</span><span class="o">.</span><span class="n">fitness</span><span class="p">()))</span>
+                          <span class="mf">100.</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">bestSolution</span><span class="o">.</span><span class="n">fitness</span><span class="p">()))</span></div>
 
     <span class="k">def</span> <span class="nf">information</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;-- Best </span><span class="si">%s</span><span class="s2"> - SCORE </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span>
