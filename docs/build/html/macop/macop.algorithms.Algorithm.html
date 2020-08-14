@@ -1,0 +1,425 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>macop.algorithms.Algorithm &mdash; macop v0.1.3 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="macop.algorithms.IteratedLocalSearch" href="macop.algorithms.IteratedLocalSearch.html" />
+    <link rel="prev" title="Documentation" href="../macop.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> macop
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.3
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../description.html">Description</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../macop.html">Documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../macop.html#macop">macop</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../macop.html#macop-algorithms">macop.algorithms</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">macop.algorithms.Algorithm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="macop.algorithms.IteratedLocalSearch.html">macop.algorithms.IteratedLocalSearch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="macop.algorithms.LocalSearch.html">macop.algorithms.LocalSearch</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../macop.html#macop-checkpoints">macop.checkpoints</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../macop.html#macop-evaluators">macop.evaluators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../macop.html#macop-operators">macop.operators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../macop.html#macop-solution">macop.solution</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">macop</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../macop.html">Documentation</a> &raquo;</li>
+        
+      <li>macop.algorithms.Algorithm</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <a href="https://github.com/prise-3d/macop/blob/master/docs/source/macop/macop.algorithms.Algorithm.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-macop.algorithms.Algorithm">
+<span id="macop-algorithms-algorithm"></span><h1>macop.algorithms.Algorithm<a class="headerlink" href="#module-macop.algorithms.Algorithm" title="Permalink to this headline">¶</a></h1>
+<p>Abstract Algorithm class used as basic algorithm implementation with some specific initialization</p>
+<p class="rubric">Classes</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#macop.algorithms.Algorithm.Algorithm" title="macop.algorithms.Algorithm.Algorithm"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Algorithm</span></code></a>(_initalizer, _evaluator, …[, …])</p></td>
+<td><p>Algorithm class used as basic algorithm</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="class">
+<dt id="macop.algorithms.Algorithm.Algorithm">
+<em class="property">class </em><code class="sig-prename descclassname">macop.algorithms.Algorithm.</code><code class="sig-name descname">Algorithm</code><span class="sig-paren">(</span><em class="sig-param">_initalizer</em>, <em class="sig-param">_evaluator</em>, <em class="sig-param">_operators</em>, <em class="sig-param">_policy</em>, <em class="sig-param">_validator</em>, <em class="sig-param">_maximise=True</em>, <em class="sig-param">_parent=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macop/algorithms/Algorithm.html#Algorithm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macop.algorithms.Algorithm.Algorithm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Algorithm class used as basic algorithm</p>
+<dl class="attribute">
+<dt id="macop.algorithms.Algorithm.Algorithm.initalizer">
+<code class="sig-name descname">initalizer</code><a class="headerlink" href="#macop.algorithms.Algorithm.Algorithm.initalizer" title="Permalink to this definition">¶</a></dt>
+<dd><p>{function} – basic function strategy to initialize solution</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="macop.algorithms.Algorithm.Algorithm.evaluator">
+<code class="sig-name descname">evaluator</code><a class="headerlink" href="#macop.algorithms.Algorithm.Algorithm.evaluator" title="Permalink to this definition">¶</a></dt>
+<dd><p>{function} – basic function in order to obtained fitness (mono or multiple objectives)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="macop.algorithms.Algorithm.Algorithm.operators">
+<code class="sig-name descname">operators</code><a class="headerlink" href="#macop.algorithms.Algorithm.Algorithm.operators" title="Permalink to this definition">¶</a></dt>
+<dd><p>{[Operator]} – list of operator to use when launching algorithm</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="macop.algorithms.Algorithm.Algorithm.policy">
+<code class="sig-name descname">policy</code><a class="headerlink" href="#macop.algorithms.Algorithm.Algorithm.policy" title="Permalink to this definition">¶</a></dt>
+<dd><p>{Policy} – Policy class implementation strategy to select operators</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="macop.algorithms.Algorithm.Algorithm.validator">
+<code class="sig-name descname">validator</code><a class="headerlink" href="#macop.algorithms.Algorithm.Algorithm.validator" title="Permalink to this definition">¶</a></dt>
+<dd><p>{function} – basic function to check if solution is valid or not under some constraints</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="macop.algorithms.Algorithm.Algorithm.maximise">
+<code class="sig-name descname">maximise</code><a class="headerlink" href="#macop.algorithms.Algorithm.Algorithm.maximise" title="Permalink to this definition">¶</a></dt>
+<dd><p>{bool} – specify kind of optimization problem</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="macop.algorithms.Algorithm.Algorithm.currentSolution">
+<code class="sig-name descname">currentSolution</code><a class="headerlink" href="#macop.algorithms.Algorithm.Algorithm.currentSolution" title="Permalink to this definition">¶</a></dt>
+<dd><p>{Solution} – current solution managed for current evaluation</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="macop.algorithms.Algorithm.Algorithm.bestSolution">
+<code class="sig-name descname">bestSolution</code><a class="headerlink" href="#macop.algorithms.Algorithm.Algorithm.bestSolution" title="Permalink to this definition">¶</a></dt>
+<dd><p>{Solution} – best solution found so far during running algorithm</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="macop.algorithms.Algorithm.Algorithm.checkpoint">
+<code class="sig-name descname">checkpoint</code><a class="headerlink" href="#macop.algorithms.Algorithm.Algorithm.checkpoint" title="Permalink to this definition">¶</a></dt>
+<dd><p>{Checkpoint} – Checkpoint class implementation to keep track of algorithm and restart</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="macop.algorithms.Algorithm.Algorithm.parent">
+<code class="sig-name descname">parent</code><a class="headerlink" href="#macop.algorithms.Algorithm.Algorithm.parent" title="Permalink to this definition">¶</a></dt>
+<dd><p>{Algorithm} – parent algorithm reference in case of inner Algorithm instance (optional)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="macop.algorithms.Algorithm.Algorithm.addCheckpoint">
+<code class="sig-name descname">addCheckpoint</code><span class="sig-paren">(</span><em class="sig-param">_class</em>, <em class="sig-param">_every</em>, <em class="sig-param">_filepath</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macop/algorithms/Algorithm.html#Algorithm.addCheckpoint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macop.algorithms.Algorithm.Algorithm.addCheckpoint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add checkpoint to algorithm specifying usefull parameters</p>
+<dl class="attribute">
+<dt id="macop.algorithms.Algorithm.Algorithm._class">
+<code class="sig-name descname">_class</code><a class="headerlink" href="#macop.algorithms.Algorithm.Algorithm._class" title="Permalink to this definition">¶</a></dt>
+<dd><p>{class} – Checkpoint class type</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="macop.algorithms.Algorithm.Algorithm._every">
+<code class="sig-name descname">_every</code><a class="headerlink" href="#macop.algorithms.Algorithm.Algorithm._every" title="Permalink to this definition">¶</a></dt>
+<dd><p>{int} – checkpoint frequency based on evaluations</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="macop.algorithms.Algorithm.Algorithm._filepath">
+<code class="sig-name descname">_filepath</code><a class="headerlink" href="#macop.algorithms.Algorithm.Algorithm._filepath" title="Permalink to this definition">¶</a></dt>
+<dd><p>{str} – file path where checkpoints will be saved</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="method">
+<dt id="macop.algorithms.Algorithm.Algorithm.evaluate">
+<code class="sig-name descname">evaluate</code><span class="sig-paren">(</span><em class="sig-param">solution</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macop/algorithms/Algorithm.html#Algorithm.evaluate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macop.algorithms.Algorithm.Algorithm.evaluate" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>fitness score of solution which is not already evaluated or changed</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>if multi-objective problem this method can be updated using array of <cite>evaluator</cite></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="macop.algorithms.Algorithm.Algorithm.getGlobalEvaluation">
+<code class="sig-name descname">getGlobalEvaluation</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macop/algorithms/Algorithm.html#Algorithm.getGlobalEvaluation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macop.algorithms.Algorithm.Algorithm.getGlobalEvaluation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the global number of evaluation (if inner algorithm)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>{int} – current global number of evaluation</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="macop.algorithms.Algorithm.Algorithm.increaseEvaluation">
+<code class="sig-name descname">increaseEvaluation</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macop/algorithms/Algorithm.html#Algorithm.increaseEvaluation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macop.algorithms.Algorithm.Algorithm.increaseEvaluation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Increase number of evaluation once a solution is evaluated</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="macop.algorithms.Algorithm.Algorithm.initRun">
+<code class="sig-name descname">initRun</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macop/algorithms/Algorithm.html#Algorithm.initRun"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macop.algorithms.Algorithm.Algorithm.initRun" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method which initialiazes or re-initializes the whole algorithm context (operators, current solution, policy, best solution (by default current solution))</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="macop.algorithms.Algorithm.Algorithm.isBetter">
+<code class="sig-name descname">isBetter</code><span class="sig-paren">(</span><em class="sig-param">solution</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macop/algorithms/Algorithm.html#Algorithm.isBetter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macop.algorithms.Algorithm.Algorithm.isBetter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if solution is better than best found</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>{bool} – <cite>True</cite> if better</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="macop.algorithms.Algorithm.Algorithm.resume">
+<code class="sig-name descname">resume</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macop/algorithms/Algorithm.html#Algorithm.resume"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macop.algorithms.Algorithm.Algorithm.resume" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resume algorithm using checkpoint instance</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – No checkpoint initialize (use <cite>addCheckpoint</cite> or <cite>setCheckpoint</cite> is you want to use this process)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="macop.algorithms.Algorithm.Algorithm.run">
+<code class="sig-name descname">run</code><span class="sig-paren">(</span><em class="sig-param">_evaluations</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macop/algorithms/Algorithm.html#Algorithm.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macop.algorithms.Algorithm.Algorithm.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run the specific algorithm following number of evaluations to find optima</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="macop.algorithms.Algorithm.Algorithm.setCheckpoint">
+<code class="sig-name descname">setCheckpoint</code><span class="sig-paren">(</span><em class="sig-param">_checkpoint</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macop/algorithms/Algorithm.html#Algorithm.setCheckpoint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macop.algorithms.Algorithm.Algorithm.setCheckpoint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set checkpoint instance directly</p>
+<dl class="attribute">
+<dt id="macop.algorithms.Algorithm.Algorithm._checkpoint">
+<code class="sig-name descname">_checkpoint</code><a class="headerlink" href="#macop.algorithms.Algorithm.Algorithm._checkpoint" title="Permalink to this definition">¶</a></dt>
+<dd><p>{Checkpoint} – checkpoint instance</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="method">
+<dt id="macop.algorithms.Algorithm.Algorithm.stop">
+<code class="sig-name descname">stop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macop/algorithms/Algorithm.html#Algorithm.stop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macop.algorithms.Algorithm.Algorithm.stop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Global stopping criteria (check for inner algorithm too)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="macop.algorithms.Algorithm.Algorithm.update">
+<code class="sig-name descname">update</code><span class="sig-paren">(</span><em class="sig-param">solution</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macop/algorithms/Algorithm.html#Algorithm.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macop.algorithms.Algorithm.Algorithm.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apply update function to solution using specific <cite>policy</cite></p>
+<p>Check if solution is valid after modification and returns it</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>{Solution} – updated solution obtained by the selected operator</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="macop.algorithms.IteratedLocalSearch.html" class="btn btn-neutral float-right" title="macop.algorithms.IteratedLocalSearch" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../macop.html" class="btn btn-neutral float-left" title="Documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Jérôme BUISINE
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
