@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>macop.operators.Operator &mdash; macop v0.1.4 documentation</title>
+  <title>macop.checkpoints.Checkpoint &mdash; macop v0.1.4 documentation</title>
   
 
   
@@ -135,7 +135,7 @@
         
           <li><a href="../../index.html">Module code</a> &raquo;</li>
         
-      <li>macop.operators.Operator</li>
+      <li>macop.checkpoints.Checkpoint</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -150,40 +150,45 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <h1>Source code for macop.operators.Operator</h1><div class="highlight"><pre>
-<span></span><span class="c1"># main imports</span>
-<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
+  <h1>Source code for macop.checkpoints.Checkpoint</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Abstract Checkpoint class</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="c1"># main imports</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">logging</span>
 
 
-<span class="c1"># enumeration which stores kind of operator</span>
-<div class="viewcode-block" id="KindOperator"><a class="viewcode-back" href="../../../macop/macop.operators.Operator.html#macop.operators.Operator.KindOperator">[docs]</a><span class="k">class</span> <span class="nc">KindOperator</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
-    <span class="n">MUTATOR</span> <span class="o">=</span> <span class="mi">1</span>
-    <span class="n">CROSSOVER</span> <span class="o">=</span> <span class="mi">2</span></div>
+<div class="viewcode-block" id="Checkpoint"><a class="viewcode-back" href="../../../macop/macop.checkpoints.Checkpoint.html#macop.checkpoints.Checkpoint.Checkpoint">[docs]</a><span class="k">class</span> <span class="nc">Checkpoint</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Local Search used as exploitation optimization algorithm</span>
 
+<span class="sd">    Attributes:</span>
+<span class="sd">        algo: {Algorithm} -- main algorithm instance reference</span>
+<span class="sd">        every: {int} -- checkpoint frequency used (based on number of evaluations)</span>
+<span class="sd">        filepath: {str} -- file path where checkpoints will be saved</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_algo</span><span class="p">,</span> <span class="n">_every</span><span class="p">,</span> <span class="n">_filepath</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">algo</span> <span class="o">=</span> <span class="n">_algo</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">every</span> <span class="o">=</span> <span class="n">_every</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filepath</span> <span class="o">=</span> <span class="n">_filepath</span>
 
-<span class="k">class</span> <span class="nc">Operator</span><span class="p">():</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">pass</span>
+        <span class="c1"># build path if not already exists</span>
+        <span class="n">head</span><span class="p">,</span> <span class="n">tail</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filepath</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">apply</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">solution</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Apply the current operator transformation</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">head</span><span class="p">):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">head</span><span class="p">)</span>
 
-<span class="sd">        Args:</span>
-<span class="sd">            solution (Solution): Solution instance</span>
-
-<span class="sd">        Raises:</span>
-<span class="sd">            NotImplementedError: if method not implemented into child class</span>
+<div class="viewcode-block" id="Checkpoint.run"><a class="viewcode-back" href="../../../macop/macop.checkpoints.Checkpoint.html#macop.checkpoints.Checkpoint.Checkpoint.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Check if necessary to do backup based on `_every` variable</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+        <span class="k">pass</span></div>
 
-    <span class="k">def</span> <span class="nf">setAlgo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">algo</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Keep into operator reference of the whole algorithm</span>
-<span class="sd">           The reason is to better manage operator instance</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            algo (Algorithm): the algorithm reference runned</span>
+<div class="viewcode-block" id="Checkpoint.load"><a class="viewcode-back" href="../../../macop/macop.checkpoints.Checkpoint.html#macop.checkpoints.Checkpoint.Checkpoint.load">[docs]</a>    <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Load last backup line of solution and set algorithm state at this backup</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">algo</span> <span class="o">=</span> <span class="n">algo</span>
+        <span class="k">pass</span></div></div>
 </pre></div>
 
            </div>

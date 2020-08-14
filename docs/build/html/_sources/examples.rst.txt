@@ -1,9 +1,13 @@
-Examples
+Some examples
 =====================================
 
-Some examples are already available into documentation. You can find here some others and results of use of `macop` package.
+Mono-objective example
+-----------------------
 
-Processing example
---------------------
+Available soon...
+
+
+Multi-objective example
+------------------------
 
 Available soon...
