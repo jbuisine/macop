@@ -6,17 +6,18 @@ import logging
 # Note: you need to import from folder dependency name
 # examples: `from optimization.solutions.BinarySolution import BinarySolution`
 
-from optimization.algorithms.IteratedLocalSearch import IteratedLocalSearch as ILS
-from optimization.solutions.BinarySolution import BinarySolution
-from optimization.evaluators.EvaluatorExample import evaluatorExample
+from macop.algorithms.IteratedLocalSearch import IteratedLocalSearch as ILS
+from macop.solutions.BinarySolution import BinarySolution
+from macop.evaluators.EvaluatorExample import evaluatorExample
 
-from optimization.operators.mutators.SimpleMutation import SimpleMutation
-from optimization.operators.mutators.SimpleBinaryMutation import SimpleBinaryMutation
-from optimization.operators.crossovers.SimpleCrossover import SimpleCrossover
+from macop.operators.mutators.SimpleMutation import SimpleMutation
+from macop.operators.mutators.SimpleBinaryMutation import SimpleBinaryMutation
+from macop.operators.crossovers.SimpleCrossover import SimpleCrossover
+from macop.operators.crossovers.RandomSplitCrossover import RandomSplitCrossover
 
-from optimization.operators.policies.RandomPolicy import RandomPolicy
+from macop.operators.policies.RandomPolicy import RandomPolicy
 
-from optimization.checkpoints.BasicCheckpoint import BasicCheckpoint
+from macop.checkpoints.BasicCheckpoint import BasicCheckpoint
 
 # logging configuration
 logging.basicConfig(format='%(asctime)s %(message)s', filename='example.log', level=logging.DEBUG)
@@ -33,7 +34,7 @@ filepath = "checkpoints.csv"
 
 def main():
 
-    operators = [SimpleBinaryMutation(), SimpleMutation(), SimpleCrossover()]
+    operators = [SimpleBinaryMutation(), SimpleMutation(), SimpleCrossover(), RandomSplitCrossover()]
     policy = RandomPolicy(operators)
 
     algo = ILS(init, evaluatorExample, operators, policy, validator, True)
