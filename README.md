@@ -1,4 +1,11 @@
-# Thesis-OptimizationModules
+# Minimalist And Customizable Optimizations Package
+
+![](https://github.com/prise-3d/macop/workflows/build/badge.svg) ![](https://github.com/prise-3d/macop/workflows/pypi/badge.svg)
+
+<p align="center">
+    <img src="https://github.com/prise-3d/rawls/blob/master/logo_macop.png" alt="" width="50%">
+</p>
+
 
 ## Description
 
@@ -16,12 +23,12 @@ Optimisation generic framework built for optimization problem during thesis
 
 ## How to use ?
 
-You can see an example of use in the `mainExample.py` python file. You need to clone this repository with `optimization` folder name to get it works.
+You can see an example of use in the `mainExample.py` python file.
 
 ## Add as dependency
 
 ```bash
-git submodule add https://github.com/prise-3d/Thesis-OptimizationModules.git optimization
+git submodule add https://github.com/prise-3d/macop.git
 ```
 
 ## License
