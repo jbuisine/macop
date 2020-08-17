@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>macop.operators.mutators.Mutation &mdash; macop v0.1.4 documentation</title>
+  <title>macop.operators.mutators.Mutation &mdash; macop v0.1.5 documentation</title>
   
 
   
@@ -60,7 +60,7 @@
             
             
               <div class="version">
-                0.1.4
+                0.1.5
               </div>
             
           
@@ -179,6 +179,7 @@
             
   <div class="section" id="module-macop.operators.mutators.Mutation">
 <span id="macop-operators-mutators-mutation"></span><h1>macop.operators.mutators.Mutation<a class="headerlink" href="#module-macop.operators.mutators.Mutation" title="Permalink to this headline">¶</a></h1>
+<p>Abstract Mutation class</p>
 <p class="rubric">Classes</p>
 <table class="longtable docutils align-default">
 <colgroup>
@@ -186,11 +187,37 @@
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">Mutation</span></code>()</p></td>
-<td><p></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#macop.operators.mutators.Mutation.Mutation" title="macop.operators.mutators.Mutation.Mutation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Mutation</span></code></a>()</p></td>
+<td><p>Abstract Mutation extend from Operator</p></td>
 </tr>
 </tbody>
 </table>
+<dl class="class">
+<dt id="macop.operators.mutators.Mutation.Mutation">
+<em class="property">class </em><code class="sig-prename descclassname">macop.operators.mutators.Mutation.</code><code class="sig-name descname">Mutation</code><a class="reference internal" href="../_modules/macop/operators/mutators/Mutation.html#Mutation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macop.operators.mutators.Mutation.Mutation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Abstract Mutation extend from Operator</p>
+<dl class="attribute">
+<dt id="macop.operators.mutators.Mutation.Mutation.kind">
+<code class="sig-name descname">kind</code><a class="headerlink" href="#macop.operators.mutators.Mutation.Mutation.kind" title="Permalink to this definition">¶</a></dt>
+<dd><p>{KindOperator} – specify the kind of operator</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="macop.operators.mutators.Mutation.Mutation.apply">
+<code class="sig-name descname">apply</code><span class="sig-paren">(</span><em class="sig-param">solution</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macop/operators/mutators/Mutation.html#Mutation.apply"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macop.operators.mutators.Mutation.Mutation.apply" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apply the current operator transformation</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>_solution</strong> – {Solution} – Solution instance</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>NotImplementedError</strong> – if method not implemented into child class</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 
 

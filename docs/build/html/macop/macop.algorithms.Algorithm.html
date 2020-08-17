@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>macop.algorithms.Algorithm &mdash; macop v0.1.4 documentation</title>
+  <title>macop.algorithms.Algorithm &mdash; macop v0.1.5 documentation</title>
   
 
   
@@ -60,7 +60,7 @@
             
             
               <div class="version">
-                0.1.4
+                0.1.5
               </div>
             
           
@@ -254,32 +254,27 @@
 <dt id="macop.algorithms.Algorithm.Algorithm.addCheckpoint">
 <code class="sig-name descname">addCheckpoint</code><span class="sig-paren">(</span><em class="sig-param">_class</em>, <em class="sig-param">_every</em>, <em class="sig-param">_filepath</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macop/algorithms/Algorithm.html#Algorithm.addCheckpoint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macop.algorithms.Algorithm.Algorithm.addCheckpoint" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add checkpoint to algorithm specifying usefull parameters</p>
-<dl class="attribute">
-<dt id="macop.algorithms.Algorithm.Algorithm._class">
-<code class="sig-name descname">_class</code><a class="headerlink" href="#macop.algorithms.Algorithm.Algorithm._class" title="Permalink to this definition">¶</a></dt>
-<dd><p>{class} – Checkpoint class type</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="macop.algorithms.Algorithm.Algorithm._every">
-<code class="sig-name descname">_every</code><a class="headerlink" href="#macop.algorithms.Algorithm.Algorithm._every" title="Permalink to this definition">¶</a></dt>
-<dd><p>{int} – checkpoint frequency based on evaluations</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="macop.algorithms.Algorithm.Algorithm._filepath">
-<code class="sig-name descname">_filepath</code><a class="headerlink" href="#macop.algorithms.Algorithm.Algorithm._filepath" title="Permalink to this definition">¶</a></dt>
-<dd><p>{str} – file path where checkpoints will be saved</p>
-</dd></dl>
-
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>_class</strong> – {class} – Checkpoint class type</p></li>
+<li><p><strong>_every</strong> – {int} – checkpoint frequency based on evaluations</p></li>
+<li><p><strong>_filepath</strong> – {str} – file path where checkpoints will be saved</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="macop.algorithms.Algorithm.Algorithm.evaluate">
-<code class="sig-name descname">evaluate</code><span class="sig-paren">(</span><em class="sig-param">solution</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macop/algorithms/Algorithm.html#Algorithm.evaluate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macop.algorithms.Algorithm.Algorithm.evaluate" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>fitness score of solution which is not already evaluated or changed</p>
+<code class="sig-name descname">evaluate</code><span class="sig-paren">(</span><em class="sig-param">_solution</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macop/algorithms/Algorithm.html#Algorithm.evaluate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macop.algorithms.Algorithm.Algorithm.evaluate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evaluate a solution using evaluator passed when intialize algorithm</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>solution</strong> – {Solution} – solution to evaluate</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>fitness score of solution which is not already evaluated or changed</p>
 </dd>
 </dl>
 <div class="admonition note">
@@ -313,11 +308,14 @@
 
 <dl class="method">
 <dt id="macop.algorithms.Algorithm.Algorithm.isBetter">
-<code class="sig-name descname">isBetter</code><span class="sig-paren">(</span><em class="sig-param">solution</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macop/algorithms/Algorithm.html#Algorithm.isBetter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macop.algorithms.Algorithm.Algorithm.isBetter" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">isBetter</code><span class="sig-paren">(</span><em class="sig-param">_solution</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macop/algorithms/Algorithm.html#Algorithm.isBetter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macop.algorithms.Algorithm.Algorithm.isBetter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Check if solution is better than best found</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>{bool} – <cite>True</cite> if better</p>
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>solution</strong> – {Solution} – solution to compare with best one</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>{bool} – <cite>True</cite> if better</p>
 </dd>
 </dl>
 </dd></dl>
@@ -349,12 +347,11 @@
 <dt id="macop.algorithms.Algorithm.Algorithm.setCheckpoint">
 <code class="sig-name descname">setCheckpoint</code><span class="sig-paren">(</span><em class="sig-param">_checkpoint</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macop/algorithms/Algorithm.html#Algorithm.setCheckpoint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macop.algorithms.Algorithm.Algorithm.setCheckpoint" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set checkpoint instance directly</p>
-<dl class="attribute">
-<dt id="macop.algorithms.Algorithm.Algorithm._checkpoint">
-<code class="sig-name descname">_checkpoint</code><a class="headerlink" href="#macop.algorithms.Algorithm.Algorithm._checkpoint" title="Permalink to this definition">¶</a></dt>
-<dd><p>{Checkpoint} – checkpoint instance</p>
-</dd></dl>
-
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>_checkpoint</strong> – {Checkpoint} – checkpoint instance</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
@@ -365,12 +362,15 @@
 
 <dl class="method">
 <dt id="macop.algorithms.Algorithm.Algorithm.update">
-<code class="sig-name descname">update</code><span class="sig-paren">(</span><em class="sig-param">solution</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macop/algorithms/Algorithm.html#Algorithm.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macop.algorithms.Algorithm.Algorithm.update" title="Permalink to this definition">¶</a></dt>
-<dd><p>Apply update function to solution using specific <cite>policy</cite></p>
-<p>Check if solution is valid after modification and returns it</p>
+<code class="sig-name descname">update</code><span class="sig-paren">(</span><em class="sig-param">_solution</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macop/algorithms/Algorithm.html#Algorithm.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macop.algorithms.Algorithm.Algorithm.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apply update function to solution using specific <cite>policy</cite>
+Check if solution is valid after modification and returns it</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>{Solution} – updated solution obtained by the selected operator</p>
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>solution</strong> – {Solution} – solution to update using current policy</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>{Solution} – updated solution obtained by the selected operator</p>
 </dd>
 </dl>
 </dd></dl>

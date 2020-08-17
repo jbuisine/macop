@@ -1,5 +1,6 @@
 # main imports
 import logging
+import os
 
 # module imports
 from macop.algorithms.IteratedLocalSearch import IteratedLocalSearch as ILS
@@ -15,8 +16,11 @@ from macop.operators.policies.RandomPolicy import RandomPolicy
 
 from macop.checkpoints.BasicCheckpoint import BasicCheckpoint
 
+if not os.path.exists('data'):
+    os.makedirs('data')
+
 # logging configuration
-logging.basicConfig(format='%(asctime)s %(message)s', filename='example.log', level=logging.DEBUG)
+logging.basicConfig(format='%(asctime)s %(message)s', filename='data/example.log', level=logging.DEBUG)
 
 # default validator
 def validator(solution):
@@ -26,7 +30,7 @@ def validator(solution):
 def init():
     return BinarySolution([], 30).random(validator)
 
-filepath = "checkpoints.csv"
+filepath = "data/checkpoints.csv"
 
 def main():
 

@@ -48,7 +48,7 @@ class Algorithm():
     def addCheckpoint(self, _class, _every, _filepath):
         """Add checkpoint to algorithm specifying usefull parameters
 
-        Attributes:
+        Args:
             _class: {class} -- Checkpoint class type
             _every: {int} -- checkpoint frequency based on evaluations
             _filepath: {str} -- file path where checkpoints will be saved
@@ -58,7 +58,7 @@ class Algorithm():
     def setCheckpoint(self, _checkpoint):
         """Set checkpoint instance directly
 
-        Attributes:
+        Args:
             _checkpoint: {Checkpoint} -- checkpoint instance
         """
         self.checkpoint = _checkpoint
@@ -82,9 +82,12 @@ class Algorithm():
         Method which initialiazes or re-initializes the whole algorithm context: operators, current solution, best solution (by default current solution)
         """
 
-        # add track reference of algo into operator (keep an eye into best solution)
+        # track reference of algo into operator (keep an eye into best solution)
         for operator in self.operators:
             operator.setAlgo(self)
+
+        # also track reference for policy
+        self.policy.setAlgo(self)
 
         self.currentSolution = self.initializer()
 
@@ -128,48 +131,58 @@ class Algorithm():
 
         return self.numberOfEvaluations >= self.maxEvaluations
 
-    def evaluate(self, solution):
+    def evaluate(self, _solution):
         """
+        Evaluate a solution using evaluator passed when intialize algorithm
+
+        Args:
+            solution: {Solution} -- solution to evaluate
+
         Returns: 
             fitness score of solution which is not already evaluated or changed
 
         Note: 
             if multi-objective problem this method can be updated using array of `evaluator`
         """
-        return solution.evaluate(self.evaluator)
+        return _solution.evaluate(self.evaluator)
 
-    def update(self, solution):
+    def update(self, _solution):
         """
         Apply update function to solution using specific `policy`
-
         Check if solution is valid after modification and returns it
+        
+        Args:
+            solution: {Solution} -- solution to update using current policy
 
         Returns:
             {Solution} -- updated solution obtained by the selected operator
         """
 
         # two parameters are sent if specific crossover solution are wished
-        sol = self.policy.apply(solution)
+        sol = self.policy.apply(_solution)
 
         if (sol.isValid(self.validator)):
             return sol
         else:
             logging.info("-- New solution is not valid %s" % sol)
-            return solution
+            return _solution
 
-    def isBetter(self, solution):
+    def isBetter(self, _solution):
         """
         Check if solution is better than best found
+
+        Args:
+            solution: {Solution} -- solution to compare with best one
 
         Returns:
             {bool} -- `True` if better
         """
         # depending of problem to solve (maximizing or minimizing)
         if self.maximise:
-            if self.evaluate(solution) > self.bestSolution.fitness():
+            if _solution.fitness() > self.bestSolution.fitness():
                 return True
         else:
-            if self.evaluate(solution) < self.bestSolution.fitness():
+            if _solution.fitness() < self.bestSolution.fitness():
                 return True
 
         # by default

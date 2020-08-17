@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>macop.algorithms.IteratedLocalSearch &mdash; macop v0.1.4 documentation</title>
+  <title>macop.algorithms.IteratedLocalSearch &mdash; macop v0.1.5 documentation</title>
   
 
   
@@ -60,7 +60,7 @@
             
             
               <div class="version">
-                0.1.4
+                0.1.5
               </div>
             
           
@@ -248,21 +248,15 @@
 <dt id="macop.algorithms.IteratedLocalSearch.IteratedLocalSearch.run">
 <code class="sig-name descname">run</code><span class="sig-paren">(</span><em class="sig-param">_evaluations</em>, <em class="sig-param">_ls_evaluations=100</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macop/algorithms/IteratedLocalSearch.html#IteratedLocalSearch.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macop.algorithms.IteratedLocalSearch.IteratedLocalSearch.run" title="Permalink to this definition">¶</a></dt>
 <dd><p>Run the iterated local search algorithm using local search (EvE compromise)</p>
-<dl class="attribute">
-<dt id="macop.algorithms.IteratedLocalSearch.IteratedLocalSearch._evaluations">
-<code class="sig-name descname">_evaluations</code><a class="headerlink" href="#macop.algorithms.IteratedLocalSearch.IteratedLocalSearch._evaluations" title="Permalink to this definition">¶</a></dt>
-<dd><p>{int} – number of global evaluations for ILS</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="macop.algorithms.IteratedLocalSearch.IteratedLocalSearch._ls_evaluations">
-<code class="sig-name descname">_ls_evaluations</code><a class="headerlink" href="#macop.algorithms.IteratedLocalSearch.IteratedLocalSearch._ls_evaluations" title="Permalink to this definition">¶</a></dt>
-<dd><p>{int} – number of Local search evaluations (default: 100)</p>
-</dd></dl>
-
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>{Solution} – best solution found</p>
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>_evaluations</strong> – {int} – number of global evaluations for ILS</p></li>
+<li><p><strong>_ls_evaluations</strong> – {int} – number of Local search evaluations (default: 100)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>{Solution} – best solution found</p>
 </dd>
 </dl>
 </dd></dl>

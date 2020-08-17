@@ -1,3 +1,5 @@
+"""Crossover implementation which generated new solution by randomly splitting best solution and current solution
+"""
 # main imports
 import random
 import sys
@@ -5,16 +7,30 @@ import sys
 # module imports
 from .Crossover import Crossover
 
+# need to import the specify kind of solution
 from ...solutions.BinarySolution import BinarySolution
 from ...solutions.Solution import Solution
 
 
 class RandomSplitCrossover(Crossover):
-    def apply(self, solution):
-        size = solution.size
+    """Crossover implementation which generated new solution by randomly splitting best solution and current solution
+
+    Attributes:
+        kind: {KindOperator} -- specify the kind of operator
+    """
+    def apply(self, _solution):
+        """Create new solution based on best solution found and solution passed as parameter
+
+        Args:
+            _solution: {Solution} -- the solution to use for generating new solution
+
+        Returns:
+            {Solution} -- new generated solution
+        """
+        size = _solution.size
 
         # copy data of solution
-        firstData = solution.data.copy()
+        firstData = _solution.data.copy()
         # get best solution from current algorithm
         secondData = self.algo.bestSolution.data.copy()
 
@@ -29,4 +45,4 @@ class RandomSplitCrossover(Crossover):
             currentData = secondData
 
         # create solution of same kind with new data
-        return globals()[type(solution).__name__](currentData, size)
+        return globals()[type(_solution).__name__](currentData, size)
