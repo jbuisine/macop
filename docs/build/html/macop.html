@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Documentation &mdash; macop v0.1.4 documentation</title>
+  <title>Documentation &mdash; macop v0.1.5 documentation</title>
   
 
   
@@ -60,7 +60,7 @@
             
             
               <div class="version">
-                0.1.4
+                0.1.5
               </div>
             
           
@@ -227,7 +227,7 @@
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="macop/macop.checkpoints.BasicCheckpoint.html#module-macop.checkpoints.BasicCheckpoint" title="macop.checkpoints.BasicCheckpoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">macop.checkpoints.BasicCheckpoint</span></code></a></p></td>
-<td><p></p></td>
+<td><p>Basic Checkpoint class implementation</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="macop/macop.checkpoints.Checkpoint.html#module-macop.checkpoints.Checkpoint" title="macop.checkpoints.Checkpoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">macop.checkpoints.Checkpoint</span></code></a></p></td>
 <td><p>Abstract Checkpoint class</p></td>
@@ -244,7 +244,7 @@
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="macop/macop.evaluators.EvaluatorExample.html#module-macop.evaluators.EvaluatorExample" title="macop.evaluators.EvaluatorExample"><code class="xref py py-obj docutils literal notranslate"><span class="pre">macop.evaluators.EvaluatorExample</span></code></a></p></td>
-<td><p></p></td>
+<td><p>Python evaluator function example</p></td>
 </tr>
 </tbody>
 </table>
@@ -258,31 +258,31 @@
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="macop/macop.operators.crossovers.Crossover.html#module-macop.operators.crossovers.Crossover" title="macop.operators.crossovers.Crossover"><code class="xref py py-obj docutils literal notranslate"><span class="pre">macop.operators.crossovers.Crossover</span></code></a></p></td>
-<td><p></p></td>
+<td><p>Abstract Crossover class</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="macop/macop.operators.crossovers.RandomSplitCrossover.html#module-macop.operators.crossovers.RandomSplitCrossover" title="macop.operators.crossovers.RandomSplitCrossover"><code class="xref py py-obj docutils literal notranslate"><span class="pre">macop.operators.crossovers.RandomSplitCrossover</span></code></a></p></td>
-<td><p></p></td>
+<td><p>Crossover implementation which generated new solution by randomly splitting best solution and current solution</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="macop/macop.operators.crossovers.SimpleCrossover.html#module-macop.operators.crossovers.SimpleCrossover" title="macop.operators.crossovers.SimpleCrossover"><code class="xref py py-obj docutils literal notranslate"><span class="pre">macop.operators.crossovers.SimpleCrossover</span></code></a></p></td>
-<td><p></p></td>
+<td><p>Crossover implementation which generated new solution by splitting at mean size best solution and current solution</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="macop/macop.operators.mutators.Mutation.html#module-macop.operators.mutators.Mutation" title="macop.operators.mutators.Mutation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">macop.operators.mutators.Mutation</span></code></a></p></td>
-<td><p></p></td>
+<td><p>Abstract Mutation class</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="macop/macop.operators.mutators.SimpleBinaryMutation.html#module-macop.operators.mutators.SimpleBinaryMutation" title="macop.operators.mutators.SimpleBinaryMutation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">macop.operators.mutators.SimpleBinaryMutation</span></code></a></p></td>
-<td><p></p></td>
+<td><p>Mutation implementation for binary solution, swap bit randomly from solution</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="macop/macop.operators.mutators.SimpleMutation.html#module-macop.operators.mutators.SimpleMutation" title="macop.operators.mutators.SimpleMutation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">macop.operators.mutators.SimpleMutation</span></code></a></p></td>
-<td><p></p></td>
+<td><p>Mutation implementation for binary solution, swap two bits randomly from solution</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="macop/macop.operators.policies.Policy.html#module-macop.operators.policies.Policy" title="macop.operators.policies.Policy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">macop.operators.policies.Policy</span></code></a></p></td>
-<td><p></p></td>
+<td><p>Abstract class which is used for applying strategy when selecting and applying operator</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="macop/macop.operators.policies.RandomPolicy.html#module-macop.operators.policies.RandomPolicy" title="macop.operators.policies.RandomPolicy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">macop.operators.policies.RandomPolicy</span></code></a></p></td>
-<td><p></p></td>
+<td><p>Policy class implementation which is used for select operator randomly</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="macop/macop.operators.Operator.html#module-macop.operators.Operator" title="macop.operators.Operator"><code class="xref py py-obj docutils literal notranslate"><span class="pre">macop.operators.Operator</span></code></a></p></td>
-<td><p></p></td>
+<td><p>Abstract Operator class</p></td>
 </tr>
 </tbody>
 </table>
@@ -296,16 +296,16 @@
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="macop/macop.solutions.BinarySolution.html#module-macop.solutions.BinarySolution" title="macop.solutions.BinarySolution"><code class="xref py py-obj docutils literal notranslate"><span class="pre">macop.solutions.BinarySolution</span></code></a></p></td>
-<td><p></p></td>
+<td><p>Binary solution class implementation</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="macop/macop.solutions.CombinatoryIntegerSolution.html#module-macop.solutions.CombinatoryIntegerSolution" title="macop.solutions.CombinatoryIntegerSolution"><code class="xref py py-obj docutils literal notranslate"><span class="pre">macop.solutions.CombinatoryIntegerSolution</span></code></a></p></td>
-<td><p></p></td>
+<td><p>Combinatory integer solution class implementation</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="macop/macop.solutions.IntegerSolution.html#module-macop.solutions.IntegerSolution" title="macop.solutions.IntegerSolution"><code class="xref py py-obj docutils literal notranslate"><span class="pre">macop.solutions.IntegerSolution</span></code></a></p></td>
-<td><p></p></td>
+<td><p>Integer solution class implementation</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="macop/macop.solutions.Solution.html#module-macop.solutions.Solution" title="macop.solutions.Solution"><code class="xref py py-obj docutils literal notranslate"><span class="pre">macop.solutions.Solution</span></code></a></p></td>
-<td><p></p></td>
+<td><p>Abstract solution class</p></td>
 </tr>
 </tbody>
 </table>

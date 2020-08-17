@@ -20,14 +20,14 @@ class Checkpoint():
         self.filepath = _filepath
 
         # build path if not already exists
-        head, tail = os.path.split(self.filepath)
+        head, _ = os.path.split(self.filepath)
 
         if not os.path.exists(head):
             os.makedirs(head)
 
     def run(self):
         """
-        Check if necessary to do backup based on `_every` variable
+        Check if necessary to do backup based on `every` variable
         """
         pass
 

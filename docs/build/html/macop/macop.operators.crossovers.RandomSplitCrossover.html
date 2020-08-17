@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>macop.operators.crossovers.RandomSplitCrossover &mdash; macop v0.1.4 documentation</title>
+  <title>macop.operators.crossovers.RandomSplitCrossover &mdash; macop v0.1.5 documentation</title>
   
 
   
@@ -60,7 +60,7 @@
             
             
               <div class="version">
-                0.1.4
+                0.1.5
               </div>
             
           
@@ -179,6 +179,7 @@
             
   <div class="section" id="module-macop.operators.crossovers.RandomSplitCrossover">
 <span id="macop-operators-crossovers-randomsplitcrossover"></span><h1>macop.operators.crossovers.RandomSplitCrossover<a class="headerlink" href="#module-macop.operators.crossovers.RandomSplitCrossover" title="Permalink to this headline">¶</a></h1>
+<p>Crossover implementation which generated new solution by randomly splitting best solution and current solution</p>
 <p class="rubric">Classes</p>
 <table class="longtable docutils align-default">
 <colgroup>
@@ -186,11 +187,37 @@
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">RandomSplitCrossover</span></code>()</p></td>
-<td><p></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#macop.operators.crossovers.RandomSplitCrossover.RandomSplitCrossover" title="macop.operators.crossovers.RandomSplitCrossover.RandomSplitCrossover"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RandomSplitCrossover</span></code></a>()</p></td>
+<td><p>Crossover implementation which generated new solution by randomly splitting best solution and current solution</p></td>
 </tr>
 </tbody>
 </table>
+<dl class="class">
+<dt id="macop.operators.crossovers.RandomSplitCrossover.RandomSplitCrossover">
+<em class="property">class </em><code class="sig-prename descclassname">macop.operators.crossovers.RandomSplitCrossover.</code><code class="sig-name descname">RandomSplitCrossover</code><a class="reference internal" href="../_modules/macop/operators/crossovers/RandomSplitCrossover.html#RandomSplitCrossover"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macop.operators.crossovers.RandomSplitCrossover.RandomSplitCrossover" title="Permalink to this definition">¶</a></dt>
+<dd><p>Crossover implementation which generated new solution by randomly splitting best solution and current solution</p>
+<dl class="attribute">
+<dt id="macop.operators.crossovers.RandomSplitCrossover.RandomSplitCrossover.kind">
+<code class="sig-name descname">kind</code><a class="headerlink" href="#macop.operators.crossovers.RandomSplitCrossover.RandomSplitCrossover.kind" title="Permalink to this definition">¶</a></dt>
+<dd><p>{KindOperator} – specify the kind of operator</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="macop.operators.crossovers.RandomSplitCrossover.RandomSplitCrossover.apply">
+<code class="sig-name descname">apply</code><span class="sig-paren">(</span><em class="sig-param">_solution</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macop/operators/crossovers/RandomSplitCrossover.html#RandomSplitCrossover.apply"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macop.operators.crossovers.RandomSplitCrossover.RandomSplitCrossover.apply" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create new solution based on best solution found and solution passed as parameter</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>_solution</strong> – {Solution} – the solution to use for generating new solution</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>{Solution} – new generated solution</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 
 

@@ -26,7 +26,7 @@ class LocalSearch(Algorithm):
         """
         Run the local search algorithm
 
-        Attributes:
+        Args:
             _evaluations: {int} -- number of Local search evaluations
             
         Returns:

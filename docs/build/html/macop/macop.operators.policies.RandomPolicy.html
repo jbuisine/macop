@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>macop.operators.policies.RandomPolicy &mdash; macop v0.1.4 documentation</title>
+  <title>macop.operators.policies.RandomPolicy &mdash; macop v0.1.5 documentation</title>
   
 
   
@@ -60,7 +60,7 @@
             
             
               <div class="version">
-                0.1.4
+                0.1.5
               </div>
             
           
@@ -179,6 +179,7 @@
             
   <div class="section" id="module-macop.operators.policies.RandomPolicy">
 <span id="macop-operators-policies-randompolicy"></span><h1>macop.operators.policies.RandomPolicy<a class="headerlink" href="#module-macop.operators.policies.RandomPolicy" title="Permalink to this headline">¶</a></h1>
+<p>Policy class implementation which is used for select operator randomly</p>
 <p class="rubric">Classes</p>
 <table class="longtable docutils align-default">
 <colgroup>
@@ -186,11 +187,37 @@
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">RandomPolicy</span></code>(_operators)</p></td>
-<td><p></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#macop.operators.policies.RandomPolicy.RandomPolicy" title="macop.operators.policies.RandomPolicy.RandomPolicy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RandomPolicy</span></code></a>(_operators)</p></td>
+<td><p>Policy class implementation which is used for select operator randomly</p></td>
 </tr>
 </tbody>
 </table>
+<dl class="class">
+<dt id="macop.operators.policies.RandomPolicy.RandomPolicy">
+<em class="property">class </em><code class="sig-prename descclassname">macop.operators.policies.RandomPolicy.</code><code class="sig-name descname">RandomPolicy</code><span class="sig-paren">(</span><em class="sig-param">_operators</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macop/operators/policies/RandomPolicy.html#RandomPolicy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macop.operators.policies.RandomPolicy.RandomPolicy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Policy class implementation which is used for select operator randomly</p>
+<dl class="attribute">
+<dt id="macop.operators.policies.RandomPolicy.RandomPolicy.operators">
+<code class="sig-name descname">operators</code><a class="headerlink" href="#macop.operators.policies.RandomPolicy.RandomPolicy.operators" title="Permalink to this definition">¶</a></dt>
+<dd><p>{[Operator]} – list of selected operators for the algorithm</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="macop.operators.policies.RandomPolicy.RandomPolicy.select">
+<code class="sig-name descname">select</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macop/operators/policies/RandomPolicy.html#RandomPolicy.select"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macop.operators.policies.RandomPolicy.RandomPolicy.select" title="Permalink to this definition">¶</a></dt>
+<dd><p>Select randomly the next operator to use</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the selected operator</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>{Operator}</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 
 

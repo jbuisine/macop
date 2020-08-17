@@ -1,3 +1,6 @@
+"""Basic Checkpoint class implementation
+"""
+
 # main imports
 import os
 import logging
@@ -8,13 +11,23 @@ from .Checkpoint import Checkpoint
 
 
 class BasicCheckpoint(Checkpoint):
+    """
+    BasicCheckpoint is used for loading previous computations and start again after loading checkpoit
+
+    Attributes:
+        algo: {Algorithm} -- main algorithm instance reference
+        every: {int} -- checkpoint frequency used (based on number of evaluations)
+        filepath: {str} -- file path where checkpoints will be saved
+    """
     def __init__(self, _algo, _every, _filepath):
         self.algo = _algo
         self.every = _every
         self.filepath = _filepath
 
     def run(self):
-
+        """
+        Check if necessary to do backup based on `every` variable
+        """
         # get current best solution
         solution = self.algo.bestSolution
 
@@ -46,7 +59,9 @@ class BasicCheckpoint(Checkpoint):
                     f.write(line)
 
     def load(self):
-
+        """
+        Load last backup line of solution and set algorithm state (best solution and evaluations) at this backup
+        """
         if os.path.exists(self.filepath):
 
             logging.info('Load best solution from last checkpoint')

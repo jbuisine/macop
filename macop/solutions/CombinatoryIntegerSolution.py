@@ -1,3 +1,5 @@
+"""Combinatory integer solution class implementation
+"""
 # main imports
 import numpy as np
 
@@ -7,12 +9,21 @@ from .Solution import Solution
 
 # Solution which stores solution data as combinatory integer array
 class CombinatoryIntegerSolution(Solution):
+    """
+    Combinatory integer solution class
+
+    Attributes:
+        data: {ndarray} --  array of binary values
+        size: {int} -- size of binary array values
+        score: {float} -- fitness score value
+    """
     def __init__(self, _data, _size):
         """
-        Initialize data of solution using specific data
+        Initialize binary solution using specific data
 
-        - `data` field is array of integer values
-        - `size` field is the size of array integer values
+        Args:
+            data: {ndarray} --  array of binary values
+            size: {int} -- size of binary array values
         """
 
         self.data = _data
@@ -20,9 +31,13 @@ class CombinatoryIntegerSolution(Solution):
 
     def random(self, _validator):
         """
-        Intialize combinatory integer array using size solution data
+        Intialize combinatory integer array with use of validator to generate valid random solution
 
-        Use of validator to generate valid random solution
+        Args:
+            _validator: {function} -- specific function which validates or not a solution
+
+        Returns:
+            {CombinatoryIntegerSolution} -- new generated combinatory integer solution
         """
 
         self.data = np.random.shuffle(np.arange(self.size))

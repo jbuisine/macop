@@ -27,7 +27,7 @@ class IteratedLocalSearch(Algorithm):
         """
         Run the iterated local search algorithm using local search (EvE compromise)
 
-        Attributes:
+        Args:
             _evaluations: {int} -- number of global evaluations for ILS
             _ls_evaluations: {int} -- number of Local search evaluations (default: 100)
 

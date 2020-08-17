@@ -59,5 +59,7 @@ docs/_build/
 target/
 
 example.log
-checkpoint.csv
+checkpoints.csv
 !docs/build
+.vscode
+.python-version

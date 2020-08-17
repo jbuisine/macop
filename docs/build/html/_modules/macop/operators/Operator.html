@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>macop.operators.Operator &mdash; macop v0.1.4 documentation</title>
+  <title>macop.operators.Operator &mdash; macop v0.1.5 documentation</title>
   
 
   
@@ -58,7 +58,7 @@
             
             
               <div class="version">
-                0.1.4
+                0.1.5
               </div>
             
           
@@ -151,39 +151,45 @@
            <div itemprop="articleBody">
             
   <h1>Source code for macop.operators.Operator</h1><div class="highlight"><pre>
-<span></span><span class="c1"># main imports</span>
+<span></span><span class="sd">&quot;&quot;&quot;Abstract Operator class</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="c1"># main imports</span>
 <span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
 
 
 <span class="c1"># enumeration which stores kind of operator</span>
 <div class="viewcode-block" id="KindOperator"><a class="viewcode-back" href="../../../macop/macop.operators.Operator.html#macop.operators.Operator.KindOperator">[docs]</a><span class="k">class</span> <span class="nc">KindOperator</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Enum in order to recognize kind of operators</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">MUTATOR</span> <span class="o">=</span> <span class="mi">1</span>
     <span class="n">CROSSOVER</span> <span class="o">=</span> <span class="mi">2</span></div>
 
 
-<span class="k">class</span> <span class="nc">Operator</span><span class="p">():</span>
+<div class="viewcode-block" id="Operator"><a class="viewcode-back" href="../../../macop/macop.operators.Operator.html#macop.operators.Operator.Operator">[docs]</a><span class="k">class</span> <span class="nc">Operator</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Abstract Operator class which enables to update solution applying operator (computation)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">pass</span>
 
-    <span class="k">def</span> <span class="nf">apply</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">solution</span><span class="p">):</span>
+<div class="viewcode-block" id="Operator.apply"><a class="viewcode-back" href="../../../macop/macop.operators.Operator.html#macop.operators.Operator.Operator.apply">[docs]</a>    <span class="k">def</span> <span class="nf">apply</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_solution</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Apply the current operator transformation</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            solution (Solution): Solution instance</span>
+<span class="sd">            _solution: {Solution} -- Solution instance</span>
 
 <span class="sd">        Raises:</span>
 <span class="sd">            NotImplementedError: if method not implemented into child class</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
 
-    <span class="k">def</span> <span class="nf">setAlgo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">algo</span><span class="p">):</span>
+<div class="viewcode-block" id="Operator.setAlgo"><a class="viewcode-back" href="../../../macop/macop.operators.Operator.html#macop.operators.Operator.Operator.setAlgo">[docs]</a>    <span class="k">def</span> <span class="nf">setAlgo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_algo</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Keep into operator reference of the whole algorithm</span>
 <span class="sd">           The reason is to better manage operator instance</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            algo (Algorithm): the algorithm reference runned</span>
+<span class="sd">            _algo: {Algorithm} -- the algorithm reference runned</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">algo</span> <span class="o">=</span> <span class="n">algo</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">algo</span> <span class="o">=</span> <span class="n">_algo</span></div></div>
 </pre></div>
 
            </div>

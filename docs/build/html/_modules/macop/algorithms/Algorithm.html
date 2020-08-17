@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>macop.algorithms.Algorithm &mdash; macop v0.1.4 documentation</title>
+  <title>macop.algorithms.Algorithm &mdash; macop v0.1.5 documentation</title>
   
 
   
@@ -58,7 +58,7 @@
             
             
               <div class="version">
-                0.1.4
+                0.1.5
               </div>
             
           
@@ -201,7 +201,7 @@
 <div class="viewcode-block" id="Algorithm.addCheckpoint"><a class="viewcode-back" href="../../../macop/macop.algorithms.Algorithm.html#macop.algorithms.Algorithm.Algorithm.addCheckpoint">[docs]</a>    <span class="k">def</span> <span class="nf">addCheckpoint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_class</span><span class="p">,</span> <span class="n">_every</span><span class="p">,</span> <span class="n">_filepath</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Add checkpoint to algorithm specifying usefull parameters</span>
 
-<span class="sd">        Attributes:</span>
+<span class="sd">        Args:</span>
 <span class="sd">            _class: {class} -- Checkpoint class type</span>
 <span class="sd">            _every: {int} -- checkpoint frequency based on evaluations</span>
 <span class="sd">            _filepath: {str} -- file path where checkpoints will be saved</span>
@@ -211,7 +211,7 @@
 <div class="viewcode-block" id="Algorithm.setCheckpoint"><a class="viewcode-back" href="../../../macop/macop.algorithms.Algorithm.html#macop.algorithms.Algorithm.Algorithm.setCheckpoint">[docs]</a>    <span class="k">def</span> <span class="nf">setCheckpoint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_checkpoint</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Set checkpoint instance directly</span>
 
-<span class="sd">        Attributes:</span>
+<span class="sd">        Args:</span>
 <span class="sd">            _checkpoint: {Checkpoint} -- checkpoint instance</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">checkpoint</span> <span class="o">=</span> <span class="n">_checkpoint</span></div>
@@ -235,9 +235,12 @@
 <span class="sd">        Method which initialiazes or re-initializes the whole algorithm context: operators, current solution, best solution (by default current solution)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="c1"># add track reference of algo into operator (keep an eye into best solution)</span>
+        <span class="c1"># track reference of algo into operator (keep an eye into best solution)</span>
         <span class="k">for</span> <span class="n">operator</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">operators</span><span class="p">:</span>
             <span class="n">operator</span><span class="o">.</span><span class="n">setAlgo</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="c1"># also track reference for policy</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">policy</span><span class="o">.</span><span class="n">setAlgo</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">currentSolution</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">initializer</span><span class="p">()</span>
 
@@ -281,48 +284,58 @@
 
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">numberOfEvaluations</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">maxEvaluations</span></div>
 
-<div class="viewcode-block" id="Algorithm.evaluate"><a class="viewcode-back" href="../../../macop/macop.algorithms.Algorithm.html#macop.algorithms.Algorithm.Algorithm.evaluate">[docs]</a>    <span class="k">def</span> <span class="nf">evaluate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">solution</span><span class="p">):</span>
+<div class="viewcode-block" id="Algorithm.evaluate"><a class="viewcode-back" href="../../../macop/macop.algorithms.Algorithm.html#macop.algorithms.Algorithm.Algorithm.evaluate">[docs]</a>    <span class="k">def</span> <span class="nf">evaluate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_solution</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Evaluate a solution using evaluator passed when intialize algorithm</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            solution: {Solution} -- solution to evaluate</span>
+
 <span class="sd">        Returns: </span>
 <span class="sd">            fitness score of solution which is not already evaluated or changed</span>
 
 <span class="sd">        Note: </span>
 <span class="sd">            if multi-objective problem this method can be updated using array of `evaluator`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">solution</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">evaluator</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">_solution</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">evaluator</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Algorithm.update"><a class="viewcode-back" href="../../../macop/macop.algorithms.Algorithm.html#macop.algorithms.Algorithm.Algorithm.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">solution</span><span class="p">):</span>
+<div class="viewcode-block" id="Algorithm.update"><a class="viewcode-back" href="../../../macop/macop.algorithms.Algorithm.html#macop.algorithms.Algorithm.Algorithm.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_solution</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Apply update function to solution using specific `policy`</span>
-
 <span class="sd">        Check if solution is valid after modification and returns it</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            solution: {Solution} -- solution to update using current policy</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            {Solution} -- updated solution obtained by the selected operator</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="c1"># two parameters are sent if specific crossover solution are wished</span>
-        <span class="n">sol</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">policy</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">solution</span><span class="p">)</span>
+        <span class="n">sol</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">policy</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">_solution</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="p">(</span><span class="n">sol</span><span class="o">.</span><span class="n">isValid</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">validator</span><span class="p">)):</span>
             <span class="k">return</span> <span class="n">sol</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;-- New solution is not valid </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">sol</span><span class="p">)</span>
-            <span class="k">return</span> <span class="n">solution</span></div>
+            <span class="k">return</span> <span class="n">_solution</span></div>
 
-<div class="viewcode-block" id="Algorithm.isBetter"><a class="viewcode-back" href="../../../macop/macop.algorithms.Algorithm.html#macop.algorithms.Algorithm.Algorithm.isBetter">[docs]</a>    <span class="k">def</span> <span class="nf">isBetter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">solution</span><span class="p">):</span>
+<div class="viewcode-block" id="Algorithm.isBetter"><a class="viewcode-back" href="../../../macop/macop.algorithms.Algorithm.html#macop.algorithms.Algorithm.Algorithm.isBetter">[docs]</a>    <span class="k">def</span> <span class="nf">isBetter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_solution</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Check if solution is better than best found</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            solution: {Solution} -- solution to compare with best one</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            {bool} -- `True` if better</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># depending of problem to solve (maximizing or minimizing)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">maximise</span><span class="p">:</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">solution</span><span class="p">)</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">bestSolution</span><span class="o">.</span><span class="n">fitness</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">_solution</span><span class="o">.</span><span class="n">fitness</span><span class="p">()</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">bestSolution</span><span class="o">.</span><span class="n">fitness</span><span class="p">():</span>
                 <span class="k">return</span> <span class="kc">True</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">solution</span><span class="p">)</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">bestSolution</span><span class="o">.</span><span class="n">fitness</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">_solution</span><span class="o">.</span><span class="n">fitness</span><span class="p">()</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">bestSolution</span><span class="o">.</span><span class="n">fitness</span><span class="p">():</span>
                 <span class="k">return</span> <span class="kc">True</span>
 
         <span class="c1"># by default</span>

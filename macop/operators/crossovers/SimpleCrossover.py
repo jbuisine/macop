@@ -1,3 +1,5 @@
+"""Crossover implementation which generated new solution by splitting at mean size best solution and current solution
+"""
 # main imports
 import random
 import sys
@@ -10,7 +12,21 @@ from ...solutions.Solution import Solution
 
 
 class SimpleCrossover(Crossover):
+    """Crossover implementation which generated new solution by splitting at mean size best solution and current solution
+
+    Attributes:
+        kind: {Algorithm} -- specify the kind of operator
+    """
     def apply(self, solution):
+        """Create new solution based on best solution found and solution passed as parameter
+
+        Args:
+            _solution: {Solution} -- the solution to use for generating new solution
+
+        Returns:
+            {Solution} -- new generated solution
+        """
+
         size = solution.size
 
         # copy data of solution

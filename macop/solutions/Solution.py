@@ -1,10 +1,16 @@
-# Generic solution class
+"""Abstract solution class
+"""
+
+
 class Solution():
     def __init__(self, _data, _size):
         """
-        Initialize data of solution using specific data
+        Binary integer solution class
 
-        Note : `data` field can be anything, such as array/list of integer
+        Attributes:
+            data: {ndarray} --  array of binary values
+            size: {int} -- size of binary array values
+            score: {float} -- fitness score value
         """
         self.data = _data
         self.size = _size
@@ -13,12 +19,24 @@ class Solution():
     def isValid(self, _validator):
         """
         Use of custom method which validates if solution is valid or not
+
+        Args:
+            _validator: {function} -- specific function which validates or not a solution
+
+        Returns:
+            {bool} -- `True` is solution is valid
         """
         return _validator(self)
 
     def evaluate(self, _evaluator):
         """
-        Evaluate function using specific `_evaluator`
+        Evaluate solution using specific `_evaluator`
+
+        Args:
+            _evaluator: {function} -- specific function which computes fitness of solution
+
+        Returns:
+            {float} -- fitness score value
         """
         self.score = _evaluator(self)
         return self.score
@@ -26,6 +44,9 @@ class Solution():
     def fitness(self):
         """
         Returns fitness score
+
+        Returns:
+            {float} -- fitness score value
         """
         return self.score
 

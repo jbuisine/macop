@@ -1,6 +1,6 @@
 # Minimalist And Customizable Optimization Package
 
-![](https://github.com/jbuisine/macop/workflows/build/badge.svg) ![](https://img.shields.io/pypi/v/macop) ![](https://img.shields.io/pypi/dm/macop?style=plastic)
+![](https://github.com/jbuisine/macop/workflows/build/badge.svg) ![](https://img.shields.io/pypi/v/macop) ![](https://img.shields.io/pypi/dm/macop)
 
 <p align="center">
     <img src="https://github.com/jbuisine/macop/blob/master/logo_macop.png" alt="" width="50%">
@@ -25,7 +25,7 @@
 
 You can see an example of use in the `mainExample.py` python file.
 
-Fully documentation of package with examples is also available. 
+Fully documentation of package with examples is also [available](https://jbuisine.github.io/macop). 
 
 ## Add as dependency
 
