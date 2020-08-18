@@ -23,7 +23,7 @@
 
 ## How to use ?
 
-You can see an example of use in the `mainExample.py` python file.
+You can see an example of use in the `knapsackExample.py` python file.
 
 Fully documentation of package with examples is also [available](https://jbuisine.github.io/macop). 
 

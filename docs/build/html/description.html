@@ -89,7 +89,6 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Description</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#context">Context</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#how-to-use">How to use ?</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="macop.html">Documentation</a></li>
@@ -172,53 +171,6 @@
 <h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
 <p>Just install package using <cite>pip</cite> Python package manager:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install macop
-</pre></div>
-</div>
-</div>
-<div class="section" id="how-to-use">
-<h2>How to use ?<a class="headerlink" href="#how-to-use" title="Permalink to this headline">¶</a></h2>
-<p>Load all <cite>macop</cite> implemented features:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">macop.algorithms.IteratedLocalSearch</span> <span class="kn">import</span> <span class="n">IteratedLocalSearch</span> <span class="k">as</span> <span class="n">ILS</span>
-<span class="kn">from</span> <span class="nn">macop.solutions.BinarySolution</span> <span class="kn">import</span> <span class="n">BinarySolution</span>
-<span class="kn">from</span> <span class="nn">macop.evaluators.EvaluatorExample</span> <span class="kn">import</span> <span class="n">evaluatorExample</span>
-
-<span class="kn">from</span> <span class="nn">macop.operators.mutators.SimpleMutation</span> <span class="kn">import</span> <span class="n">SimpleMutation</span>
-<span class="kn">from</span> <span class="nn">macop.operators.mutators.SimpleBinaryMutation</span> <span class="kn">import</span> <span class="n">SimpleBinaryMutation</span>
-<span class="kn">from</span> <span class="nn">macop.operators.crossovers.SimpleCrossover</span> <span class="kn">import</span> <span class="n">SimpleCrossover</span>
-<span class="kn">from</span> <span class="nn">macop.operators.crossovers.RandomSplitCrossover</span> <span class="kn">import</span> <span class="n">RandomSplitCrossover</span>
-
-<span class="kn">from</span> <span class="nn">macop.operators.policies.RandomPolicy</span> <span class="kn">import</span> <span class="n">RandomPolicy</span>
-
-<span class="kn">from</span> <span class="nn">macop.checkpoints.BasicCheckpoint</span> <span class="kn">import</span> <span class="n">BasicCheckpoint</span>
-
-<span class="c1"># logging configuration</span>
-<span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="nb">format</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%(asctime)s</span><span class="s1"> </span><span class="si">%(message)s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;example.log&#39;</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
-
-<span class="c1"># default validator</span>
-<span class="k">def</span> <span class="nf">validator</span><span class="p">(</span><span class="n">solution</span><span class="p">):</span>
-   <span class="k">return</span> <span class="kc">True</span>
-
-<span class="c1"># define init random solution</span>
-<span class="k">def</span> <span class="nf">init</span><span class="p">():</span>
-   <span class="k">return</span> <span class="n">BinarySolution</span><span class="p">([],</span> <span class="mi">30</span><span class="p">)</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">validator</span><span class="p">)</span>
-
-<span class="n">filepath</span> <span class="o">=</span> <span class="s2">&quot;checkpoints.csv&quot;</span>
-
-<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
-
-   <span class="n">operators</span> <span class="o">=</span> <span class="p">[</span><span class="n">SimpleBinaryMutation</span><span class="p">(),</span> <span class="n">SimpleMutation</span><span class="p">(),</span> <span class="n">SimpleCrossover</span><span class="p">(),</span> <span class="n">RandomSplitCrossover</span><span class="p">()]</span>
-   <span class="n">policy</span> <span class="o">=</span> <span class="n">RandomPolicy</span><span class="p">(</span><span class="n">operators</span><span class="p">)</span>
-
-   <span class="n">algo</span> <span class="o">=</span> <span class="n">ILS</span><span class="p">(</span><span class="n">init</span><span class="p">,</span> <span class="n">evaluatorExample</span><span class="p">,</span> <span class="n">operators</span><span class="p">,</span> <span class="n">policy</span><span class="p">,</span> <span class="n">validator</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
-   <span class="n">algo</span><span class="o">.</span><span class="n">addCheckpoint</span><span class="p">(</span><span class="n">_class</span><span class="o">=</span><span class="n">BasicCheckpoint</span><span class="p">,</span> <span class="n">_every</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">_filepath</span><span class="o">=</span><span class="n">filepath</span><span class="p">)</span>
-
-   <span class="n">bestSol</span> <span class="o">=</span> <span class="n">algo</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="mi">425</span><span class="p">)</span>
-
-   <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Found &quot;</span><span class="p">,</span> <span class="n">bestSol</span><span class="p">)</span>
-
-
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-   <span class="n">main</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>

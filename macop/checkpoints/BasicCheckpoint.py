@@ -95,7 +95,6 @@ class BasicCheckpoint(Checkpoint):
                 macop_text(
                     'No backup found... Start running algorithm from evaluation 0.'
                 ))
-            print(macop_line())
             logging.info(
                 "Can't load backup... Backup filepath not valid in Checkpoint")
 

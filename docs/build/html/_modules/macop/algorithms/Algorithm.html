@@ -156,7 +156,7 @@
 
 <span class="c1"># main imports</span>
 <span class="kn">import</span> <span class="nn">logging</span>
-<span class="kn">from</span> <span class="nn">..utils.color</span> <span class="kn">import</span> <span class="n">macop_text</span><span class="p">,</span> <span class="n">macop_line</span>
+<span class="kn">from</span> <span class="nn">..utils.color</span> <span class="kn">import</span> <span class="n">macop_text</span><span class="p">,</span> <span class="n">macop_line</span><span class="p">,</span> <span class="n">macop_progress</span>
 
 
 <span class="c1"># Generic algorithm class</span>
@@ -279,6 +279,18 @@
 
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">numberOfEvaluations</span></div>
 
+<div class="viewcode-block" id="Algorithm.getGlobalMaxEvaluation"><a class="viewcode-back" href="../../../macop/macop.algorithms.Algorithm.html#macop.algorithms.Algorithm.Algorithm.getGlobalMaxEvaluation">[docs]</a>    <span class="k">def</span> <span class="nf">getGlobalMaxEvaluation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get the global max number of evaluation (if inner algorithm)</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            {int} -- current global max number of evaluation</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">maxEvaluations</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">maxEvaluations</span></div>
+
 <div class="viewcode-block" id="Algorithm.stop"><a class="viewcode-back" href="../../../macop/macop.algorithms.Algorithm.html#macop.algorithms.Algorithm.Algorithm.stop">[docs]</a>    <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Global stopping criteria (check for inner algorithm too)</span>
@@ -374,6 +386,9 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">checkpoint</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">checkpoint</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+
+        <span class="n">macop_progress</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getGlobalEvaluation</span><span class="p">(),</span>
+                       <span class="bp">self</span><span class="o">.</span><span class="n">getGlobalMaxEvaluation</span><span class="p">())</span>
 
         <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;-- </span><span class="si">%s</span><span class="s2"> evaluation </span><span class="si">%s</span><span class="s2"> of </span><span class="si">%s</span><span class="s2"> (</span><span class="si">%s%%</span><span class="s2">) - BEST SCORE </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span>
                      <span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">numberOfEvaluations</span><span class="p">,</span>

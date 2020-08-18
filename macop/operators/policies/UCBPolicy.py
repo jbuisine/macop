@@ -18,7 +18,7 @@ class UCBPolicy(Policy):
         rewards: {[float]} -- list of summed rewards obtained for each operator
         occurences: {[int]} -- number of use (selected) of each operator
     """
-    def __init__(self, _operators, _C=10.):
+    def __init__(self, _operators, _C=1000.):
         self.operators = _operators
         self.rewards = [0. for o in self.operators]
         self.occurences = [0 for o in self.operators]

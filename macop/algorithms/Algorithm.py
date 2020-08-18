@@ -3,7 +3,7 @@
 
 # main imports
 import logging
-from ..utils.color import macop_text, macop_line
+from ..utils.color import macop_text, macop_line, macop_progress
 
 
 # Generic algorithm class
@@ -126,6 +126,18 @@ class Algorithm():
 
         return self.numberOfEvaluations
 
+    def getGlobalMaxEvaluation(self):
+        """Get the global max number of evaluation (if inner algorithm)
+
+        Returns:
+            {int} -- current global max number of evaluation
+        """
+
+        if self.parent is not None:
+            return self.parent.maxEvaluations
+
+        return self.maxEvaluations
+
     def stop(self):
         """
         Global stopping criteria (check for inner algorithm too)
@@ -221,6 +233,9 @@ class Algorithm():
         """
         if self.checkpoint is not None:
             self.checkpoint.run()
+
+        macop_progress(self.getGlobalEvaluation(),
+                       self.getGlobalMaxEvaluation())
 
         logging.info("-- %s evaluation %s of %s (%s%%) - BEST SCORE %s" %
                      (type(self).__name__, self.numberOfEvaluations,

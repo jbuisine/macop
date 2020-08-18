@@ -89,8 +89,13 @@
 <li class="toctree-l1"><a class="reference internal" href="description.html">Description</a></li>
 <li class="toctree-l1"><a class="reference internal" href="macop.html">Documentation</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Some examples</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#mono-objective-example">Mono-objective example</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#multi-objective-example">Multi-objective example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mono-objective">1. Mono-objective</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#problem-definition">1.1 Problem definition</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#operators-and-policy">1.2 Operators and Policy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#before-running-algorithm">1.3 Before running algorithm</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#multi-objective-example">2. Multi-objective example</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
@@ -162,12 +167,232 @@
             
   <div class="section" id="some-examples">
 <h1>Some examples<a class="headerlink" href="#some-examples" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="mono-objective-example">
-<h2>Mono-objective example<a class="headerlink" href="#mono-objective-example" title="Permalink to this headline">¶</a></h2>
-<p>Available soon…</p>
+<div class="section" id="mono-objective">
+<h2>1. Mono-objective<a class="headerlink" href="#mono-objective" title="Permalink to this headline">¶</a></h2>
+<p>In this tutorial, it will introduce the way of running your algorithm quickly.
+First of all we need to define the kind of solution best represent the problem. In this tutorial, we use the well known knapsack problem using 30 objects.</p>
+<div class="section" id="problem-definition">
+<h3>1.1 Problem definition<a class="headerlink" href="#problem-definition" title="Permalink to this headline">¶</a></h3>
+<p>Hence, we define our problem :
+- value of each component of knapsack
+- weight associated to each of these components (objects)</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">imports part</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">random</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Problem definition</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="n">elements_score</span> <span class="o">=</span> <span class="p">[</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span> <span class="p">]</span>
+<span class="n">elements_weight</span> <span class="o">=</span> <span class="p">[</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">25</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span> <span class="p">]</span>
+</pre></div>
+</div>
+<p>We can now define the solution representation. In knapsack problem we want to fill our knapsack in an optimization way selecting or not each component (object).
+The best way to represent this problem is to use the <cite>BinarySolution</cite> from <cite>macop</cite> which stores solution as a binary array.</p>
+<p>Using the solution representation, we need to define multiple things to fit our algorithm :
+- 1. function which validates or not a solution (based on constraints)
+- 2. function which evaluates the solution (in order to obtain fitness)
+- 3. initialization solution function</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">imports part</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">from</span> <span class="nn">macop.solutions.BinarySolution</span> <span class="kn">import</span> <span class="n">BinarySolution</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Problem definition</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="n">elements_score</span> <span class="o">=</span> <span class="p">[</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span> <span class="p">]</span>
+<span class="n">elements_weight</span> <span class="o">=</span> <span class="p">[</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span> <span class="p">]</span>
+
+<span class="c1"># 1. validator function (we accept only bag with maximum weight 80kg)</span>
+<span class="k">def</span> <span class="nf">validator</span><span class="p">(</span><span class="n">_solution</span><span class="p">):</span>
+
+    <span class="n">weight_sum</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">elem</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">_solution</span><span class="o">.</span><span class="n">data</span><span class="p">):</span>
+        <span class="n">weight_sum</span> <span class="o">+=</span> <span class="n">elements_weight</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">*</span> <span class="n">elem</span>
+
+    <span class="k">if</span> <span class="n">weight_sum</span> <span class="o">&lt;=</span> <span class="mi">80</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="kc">False</span>
+
+<span class="c1"># 2. function which computes fitness of solution</span>
+<span class="k">def</span> <span class="nf">evaluator</span><span class="p">(</span><span class="n">_solution</span><span class="p">):</span>
+
+    <span class="n">fitness</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">elem</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">_solution</span><span class="o">.</span><span class="n">data</span><span class="p">):</span>
+        <span class="n">fitness</span> <span class="o">+=</span> <span class="p">(</span><span class="n">elements_score</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">*</span> <span class="n">elem</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">fitness</span>
+
+<span class="c1"># 3. function which here initializes solution ramdomly and check validity of solution</span>
+<span class="k">def</span> <span class="nf">init</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">BinarySolution</span><span class="p">([],</span> <span class="mi">30</span><span class="p">)</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">validator</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="operators-and-policy">
+<h3>1.2 Operators and Policy<a class="headerlink" href="#operators-and-policy" title="Permalink to this headline">¶</a></h3>
+<p>In our algorithm we need to use some operators in order to improve current best solution found at current <cite>n</cite> evaluations.</p>
+<p>In <cite>macop</cite> you have some available operators. In this example, we use 3 of them.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">imports part</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="o">...</span>
+
+<span class="kn">from</span> <span class="nn">macop.operators.mutators.SimpleMutation</span> <span class="kn">import</span> <span class="n">SimpleMutation</span>
+<span class="kn">from</span> <span class="nn">macop.operators.mutators.SimpleBinaryMutation</span> <span class="kn">import</span> <span class="n">SimpleBinaryMutation</span>
+<span class="kn">from</span> <span class="nn">macop.operators.crossovers.SimpleCrossover</span> <span class="kn">import</span> <span class="n">SimpleCrossover</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Problem definition</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="o">...</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Algorithm parameters</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="c1"># list of operators instance to use</span>
+<span class="n">operators</span> <span class="o">=</span> <span class="p">[</span><span class="n">SimpleBinaryMutation</span><span class="p">(),</span> <span class="n">SimpleMutation</span><span class="p">(),</span> <span class="n">SimpleCrossover</span><span class="p">(),</span> <span class="n">RandomSplitCrossover</span><span class="p">()]</span>
+</pre></div>
+</div>
+<p>As we defined multiple operators, we have to tell how we want to select them into the algorithm. This is why <strong>Policy</strong> classes have been implemented.
+<cite>Policy</cite> class implementation enables to select the next operator to use and once new solution is generated, computes its score (in <cite>apply</cite> method). This class requires all the operators use to be instanciate.</p>
+<p>Why computing score into <strong>Policy</strong> <cite>apply</cite> method ? Because it’s a way to get some important statistics from solution improvment using specific operator.
+<strong>UCBPolicy</strong> as example, based on Upper Confidence Bound (<a class="reference external" href="https://banditalgs.com/2016/09/18/the-upper-confidence-bound-algorithm/">UCB</a>), computes reward each time a new solution is generated from an operator in order to better select next operator later. We use in this example the <cite>UCBPolicy</cite> implementation.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">imports part</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="o">...</span>
+
+<span class="kn">from</span> <span class="nn">macop.operators.mutators.SimpleMutation</span> <span class="kn">import</span> <span class="n">SimpleMutation</span>
+<span class="kn">from</span> <span class="nn">macop.operators.mutators.SimpleBinaryMutation</span> <span class="kn">import</span> <span class="n">SimpleBinaryMutation</span>
+<span class="kn">from</span> <span class="nn">macop.operators.crossovers.SimpleCrossover</span> <span class="kn">import</span> <span class="n">SimpleCrossover</span>
+
+<span class="kn">from</span> <span class="nn">macop.operators.policies.UCBPolicy</span> <span class="kn">import</span> <span class="n">UCBPolicy</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Problem definition</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="o">...</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Algorithm parameters</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="c1"># list of operators instance to use</span>
+<span class="n">operators</span> <span class="o">=</span> <span class="p">[</span><span class="n">SimpleBinaryMutation</span><span class="p">(),</span> <span class="n">SimpleMutation</span><span class="p">(),</span> <span class="n">SimpleCrossover</span><span class="p">(),</span> <span class="n">RandomSplitCrossover</span><span class="p">()]</span>
+
+<span class="c1"># `policy` instance is created using specific value for Upper Confidence Bound</span>
+<span class="n">policy</span> <span class="o">=</span> <span class="n">UCBPolicy</span><span class="p">(</span><span class="n">operators</span><span class="p">,</span> <span class="n">C</span><span class="o">=</span><span class="mf">100.</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="before-running-algorithm">
+<h3>1.3 Before running algorithm<a class="headerlink" href="#before-running-algorithm" title="Permalink to this headline">¶</a></h3>
+<p>Before running algorithm we can define a logger to keep track of the all algorithm run.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">imports part</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="o">...</span>
+
+<span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Problem definition</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="o">...</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Algorithm parameters</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="o">...</span>
+
+<span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">):</span>
+<span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">)</span>
+
+<span class="c1"># logging configuration</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="nb">format</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%(asctime)s</span><span class="s1"> </span><span class="si">%(message)s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;data/example.log&#39;</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We can now instanciate our algorithm. We use the Iterated Local Search in this example. It is mainly used to avoid local optima using multiple local search.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">imports part</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="o">...</span>
+
+<span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="kn">from</span> <span class="nn">macop.algorithms.IteratedLocalSearch</span> <span class="kn">import</span> <span class="n">IteratedLocalSearch</span> <span class="k">as</span> <span class="n">ILS</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Problem definition</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="o">...</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Algorithm parameters</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="o">...</span>
+
+<span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">):</span>
+<span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">)</span>
+
+<span class="c1"># logging configuration</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="nb">format</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%(asctime)s</span><span class="s1"> </span><span class="si">%(message)s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;data/example.log&#39;</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+
+<span class="n">algo</span> <span class="o">=</span> <span class="n">ILS</span><span class="p">(</span><span class="n">init</span><span class="p">,</span> <span class="n">evaluator</span><span class="p">,</span> <span class="n">operators</span><span class="p">,</span> <span class="n">policy</span><span class="p">,</span> <span class="n">validator</span><span class="p">,</span> <span class="n">_maximise</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The algorithm is now well defined and is ready to run ! But one thing can be done, and it’s very interesting to avoir restart from scratch the algorithm run.
+The use of checkpoint is available in <cite>macop</cite>. A <cite>BasicCheckpoint</cite> class let the algorithm save at <cite>every</cite> evaluations the best solution found.</p>
+<p>We need to specify the use of checkpoint if we prefer to restart from.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">imports part</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="o">...</span>
+
+<span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="kn">from</span> <span class="nn">macop.algorithms.IteratedLocalSearch</span> <span class="kn">import</span> <span class="n">IteratedLocalSearch</span> <span class="k">as</span> <span class="n">ILS</span>
+<span class="kn">from</span> <span class="nn">macop.checkpoints.BasicCheckpoint</span> <span class="kn">import</span> <span class="n">BasicCheckpoint</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Problem definition</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="o">...</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Algorithm parameters</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="o">...</span>
+
+<span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">):</span>
+<span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">)</span>
+
+<span class="c1"># logging configuration</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="nb">format</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%(asctime)s</span><span class="s1"> </span><span class="si">%(message)s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;data/example.log&#39;</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+
+<span class="n">algo</span> <span class="o">=</span> <span class="n">ILS</span><span class="p">(</span><span class="n">init</span><span class="p">,</span> <span class="n">evaluator</span><span class="p">,</span> <span class="n">operators</span><span class="p">,</span> <span class="n">policy</span><span class="p">,</span> <span class="n">validator</span><span class="p">,</span> <span class="n">_maximise</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># we specify the checkpoint class directly, the frequency and the path we want to save algorithm evolution</span>
+<span class="n">algo</span><span class="o">.</span><span class="n">addCheckpoint</span><span class="p">(</span><span class="n">_class</span><span class="o">=</span><span class="n">BasicCheckpoint</span><span class="p">,</span> <span class="n">_every</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">_filepath</span><span class="o">=</span><span class="s1">&#39;data/checkpoint.csv&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In this way, now we can run and obtained the best solution found in <cite>n</cite> evaluations</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">bestSol</span> <span class="o">=</span> <span class="n">algo</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="mi">10000</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Solution score is </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">evaluator</span><span class="p">(</span><span class="n">bestSol</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
 </div>
 <div class="section" id="multi-objective-example">
-<h2>Multi-objective example<a class="headerlink" href="#multi-objective-example" title="Permalink to this headline">¶</a></h2>
+<h2>2. Multi-objective example<a class="headerlink" href="#multi-objective-example" title="Permalink to this headline">¶</a></h2>
 <p>Available soon…</p>
 </div>
 </div>
