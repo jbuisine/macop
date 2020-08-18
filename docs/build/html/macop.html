@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Documentation &mdash; macop v0.1.5 documentation</title>
+  <title>Documentation &mdash; macop v0.1.6 documentation</title>
   
 
   
@@ -60,7 +60,7 @@
             
             
               <div class="version">
-                0.1.5
+                0.1.6
               </div>
             
           
@@ -113,6 +113,7 @@
 <li class="toctree-l3"><a class="reference internal" href="macop/macop.operators.mutators.SimpleMutation.html">macop.operators.mutators.SimpleMutation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="macop/macop.operators.policies.Policy.html">macop.operators.policies.Policy</a></li>
 <li class="toctree-l3"><a class="reference internal" href="macop/macop.operators.policies.RandomPolicy.html">macop.operators.policies.RandomPolicy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="macop/macop.operators.policies.UCBPolicy.html">macop.operators.policies.UCBPolicy</a></li>
 <li class="toctree-l3"><a class="reference internal" href="macop/macop.operators.Operator.html">macop.operators.Operator</a></li>
 </ul>
 </li>
@@ -279,9 +280,12 @@
 <td><p>Abstract class which is used for applying strategy when selecting and applying operator</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="macop/macop.operators.policies.RandomPolicy.html#module-macop.operators.policies.RandomPolicy" title="macop.operators.policies.RandomPolicy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">macop.operators.policies.RandomPolicy</span></code></a></p></td>
-<td><p>Policy class implementation which is used for select operator randomly</p></td>
+<td><p>Policy class implementation which is used for selecting operator randomly</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="macop/macop.operators.Operator.html#module-macop.operators.Operator" title="macop.operators.Operator"><code class="xref py py-obj docutils literal notranslate"><span class="pre">macop.operators.Operator</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="macop/macop.operators.policies.UCBPolicy.html#module-macop.operators.policies.UCBPolicy" title="macop.operators.policies.UCBPolicy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">macop.operators.policies.UCBPolicy</span></code></a></p></td>
+<td><p>Policy class implementation which is used for selecting operator using Upper Confidence Bound</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="macop/macop.operators.Operator.html#module-macop.operators.Operator" title="macop.operators.Operator"><code class="xref py py-obj docutils literal notranslate"><span class="pre">macop.operators.Operator</span></code></a></p></td>
 <td><p>Abstract Operator class</p></td>
 </tr>
 </tbody>

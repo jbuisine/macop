@@ -13,6 +13,7 @@ from macop.operators.crossovers.SimpleCrossover import SimpleCrossover
 from macop.operators.crossovers.RandomSplitCrossover import RandomSplitCrossover
 
 from macop.operators.policies.RandomPolicy import RandomPolicy
+from macop.operators.policies.UCBPolicy import UCBPolicy
 
 from macop.checkpoints.BasicCheckpoint import BasicCheckpoint
 
@@ -35,15 +36,12 @@ filepath = "data/checkpoints.csv"
 def main():
 
     operators = [SimpleBinaryMutation(), SimpleMutation(), SimpleCrossover(), RandomSplitCrossover()]
-    policy = RandomPolicy(operators)
+    policy = UCBPolicy(operators)
 
     algo = ILS(init, evaluatorExample, operators, policy, validator, True)
     algo.addCheckpoint(_class=BasicCheckpoint, _every=5, _filepath=filepath)
 
     bestSol = algo.run(425)
-
-    print("Found ", bestSol)
-
 
 if __name__ == "__main__":
     main()

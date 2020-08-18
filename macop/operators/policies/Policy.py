@@ -10,8 +10,6 @@ class Policy():
     Attributes:
         operators: {[Operator]} -- list of selected operators for the algorithm
     """
-
-    # here you can define your statistical variables for choosing next operator to apply
     def __init__(self, _operators):
         self.operators = _operators
 
@@ -42,7 +40,6 @@ class Policy():
 
         # compute fitness of new solution
         newSolution.evaluate(self.algo.evaluator)
-        print(newSolution.fitness())
 
         logging.info("---- Obtaining %s" % (_solution))
 

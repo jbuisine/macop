@@ -23,7 +23,7 @@ class TestCommand(distutils.command.check.check):
 
 setup(
     name='macop',
-    version='0.1.5',
+    version='0.1.6',
     description='Minimalist And Customizable Optimization Package',
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
@@ -38,7 +38,7 @@ setup(
     author='Jérôme BUISINE',
     author_email='jerome.buisine@univ-littoral.fr',
     license='MIT',
-    packages=['macop', 'macop.algorithms', 'macop.checkpoints', 'macop.evaluators', 'macop.operators', 'macop.solutions'],
+    packages=['macop', 'macop.algorithms', 'macop.checkpoints', 'macop.evaluators', 'macop.operators', 'macop.solutions', 'macop.utils'],
     install_requires=[
         'numpy',
     ],

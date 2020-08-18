@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>macop.checkpoints.BasicCheckpoint &mdash; macop v0.1.5 documentation</title>
+  <title>macop.checkpoints.BasicCheckpoint &mdash; macop v0.1.6 documentation</title>
   
 
   
@@ -58,7 +58,7 @@
             
             
               <div class="version">
-                0.1.5
+                0.1.6
               </div>
             
           
@@ -161,6 +161,7 @@
 
 <span class="c1"># module imports</span>
 <span class="kn">from</span> <span class="nn">.Checkpoint</span> <span class="kn">import</span> <span class="n">Checkpoint</span>
+<span class="kn">from</span> <span class="nn">..utils.color</span> <span class="kn">import</span> <span class="n">macop_text</span><span class="p">,</span> <span class="n">macop_line</span>
 
 
 <div class="viewcode-block" id="BasicCheckpoint"><a class="viewcode-back" href="../../../macop/macop.checkpoints.BasicCheckpoint.html#macop.checkpoints.BasicCheckpoint.BasicCheckpoint">[docs]</a><span class="k">class</span> <span class="nc">BasicCheckpoint</span><span class="p">(</span><span class="n">Checkpoint</span><span class="p">):</span>
@@ -237,10 +238,21 @@
 
                 <span class="bp">self</span><span class="o">.</span><span class="n">algo</span><span class="o">.</span><span class="n">bestSolution</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">solutionData</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">algo</span><span class="o">.</span><span class="n">bestSolution</span><span class="o">.</span><span class="n">score</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+
+            <span class="nb">print</span><span class="p">(</span>
+                <span class="n">macop_text</span><span class="p">(</span><span class="s1">&#39;Restart algorithm from evaluation </span><span class="si">{}</span><span class="s1">.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">algo</span><span class="o">.</span><span class="n">numberOfEvaluations</span><span class="p">)))</span>
+
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;No backup found... Start running&#39;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span>
+                <span class="n">macop_text</span><span class="p">(</span>
+                    <span class="s1">&#39;No backup found... Start running algorithm from evaluation 0.&#39;</span>
+                <span class="p">))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">macop_line</span><span class="p">())</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
-                <span class="s2">&quot;Can&#39;t load backup... Backup filepath not valid in Checkpoint&quot;</span><span class="p">)</span></div></div>
+                <span class="s2">&quot;Can&#39;t load backup... Backup filepath not valid in Checkpoint&quot;</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="n">macop_line</span><span class="p">())</span></div></div>
 </pre></div>
 
            </div>

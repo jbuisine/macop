@@ -75,4 +75,5 @@ class IteratedLocalSearch(Algorithm):
         logging.info("End of %s, best solution found %s" %
                      (type(self).__name__, self.bestSolution))
 
+        self.end()
         return self.bestSolution
