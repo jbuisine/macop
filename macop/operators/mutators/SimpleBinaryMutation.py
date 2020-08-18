@@ -3,12 +3,16 @@
 # main imports
 import random
 import sys
+import pkgutil
 
 # module imports
 from .Mutation import Mutation
 
-from ...solutions.BinarySolution import BinarySolution
-from ...solutions.Solution import Solution
+# import all available solutions
+for loader, module_name, is_pkg in pkgutil.walk_packages(
+        path=['macop/solutions'], prefix='macop.solutions.'):
+    _module = loader.find_module(module_name).load_module(module_name)
+    globals()[module_name] = _module
 
 
 class SimpleBinaryMutation(Mutation):
@@ -41,4 +45,6 @@ class SimpleBinaryMutation(Mutation):
             currentData[cell] = 1
 
         # create solution of same kind with new data
-        return globals()[type(_solution).__name__](currentData, size)
+        class_name = type(_solution).__name__
+        return getattr(globals()['macop.solutions.' + class_name],
+                       class_name)(currentData, size)

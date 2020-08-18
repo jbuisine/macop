@@ -3,12 +3,16 @@
 # main imports
 import random
 import sys
+import pkgutil
 
 # module imports
 from .Crossover import Crossover
 
-from ...solutions.BinarySolution import BinarySolution
-from ...solutions.Solution import Solution
+# import all available solutions
+for loader, module_name, is_pkg in pkgutil.walk_packages(
+        path=['macop/solutions'], prefix='macop.solutions.'):
+    _module = loader.find_module(module_name).load_module(module_name)
+    globals()[module_name] = _module
 
 
 class SimpleCrossover(Crossover):
@@ -17,7 +21,7 @@ class SimpleCrossover(Crossover):
     Attributes:
         kind: {Algorithm} -- specify the kind of operator
     """
-    def apply(self, solution):
+    def apply(self, _solution):
         """Create new solution based on best solution found and solution passed as parameter
 
         Args:
@@ -27,10 +31,10 @@ class SimpleCrossover(Crossover):
             {Solution} -- new generated solution
         """
 
-        size = solution.size
+        size = _solution.size
 
         # copy data of solution
-        firstData = solution.data.copy()
+        firstData = _solution.data.copy()
         # get best solution from current algorithm
         secondData = self.algo.bestSolution.data.copy()
 
@@ -45,4 +49,6 @@ class SimpleCrossover(Crossover):
             currentData = secondData
 
         # create solution of same kind with new data
-        return globals()[type(solution).__name__](currentData, size)
+        class_name = type(_solution).__name__
+        return getattr(globals()['macop.solutions.' + class_name],
+                       class_name)(currentData, size)

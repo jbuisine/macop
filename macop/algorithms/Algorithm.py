@@ -3,6 +3,7 @@
 
 # main imports
 import logging
+from ..utils.color import macop_text, macop_line, macop_progress
 
 
 # Generic algorithm class
@@ -74,7 +75,10 @@ class Algorithm():
                 "Need to `addCheckpoint` or `setCheckpoint` is you want to use this process"
             )
         else:
-            print('Checkpoint loading is called')
+            print(macop_line())
+            print(
+                macop_text('Checkpoint found from `{}` file.'.format(
+                    self.checkpoint.filepath)))
             self.checkpoint.load()
 
     def initRun(self):
@@ -121,6 +125,18 @@ class Algorithm():
             return self.parent.numberOfEvaluations
 
         return self.numberOfEvaluations
+
+    def getGlobalMaxEvaluation(self):
+        """Get the global max number of evaluation (if inner algorithm)
+
+        Returns:
+            {int} -- current global max number of evaluation
+        """
+
+        if self.parent is not None:
+            return self.parent.maxEvaluations
+
+        return self.maxEvaluations
 
     def stop(self):
         """
@@ -218,11 +234,23 @@ class Algorithm():
         if self.checkpoint is not None:
             self.checkpoint.run()
 
+        macop_progress(self.getGlobalEvaluation(),
+                       self.getGlobalMaxEvaluation())
+
         logging.info("-- %s evaluation %s of %s (%s%%) - BEST SCORE %s" %
                      (type(self).__name__, self.numberOfEvaluations,
                       self.maxEvaluations, "{0:.2f}".format(
                           (self.numberOfEvaluations) / self.maxEvaluations *
                           100.), self.bestSolution.fitness()))
+
+    def end(self):
+        """Display end message into `run` method
+        """
+        print(
+            macop_text('({}) Found after {} evaluations => {}'.format(
+                type(self).__name__, self.numberOfEvaluations,
+                self.bestSolution)))
+        print(macop_line())
 
     def information(self):
         logging.info("-- Best %s - SCORE %s" %

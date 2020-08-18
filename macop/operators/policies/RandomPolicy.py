@@ -1,4 +1,4 @@
-"""Policy class implementation which is used for select operator randomly
+"""Policy class implementation which is used for selecting operator randomly
 """
 # main imports
 import random

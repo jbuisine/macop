@@ -8,6 +8,7 @@ import numpy as np
 
 # module imports
 from .Checkpoint import Checkpoint
+from ..utils.color import macop_text, macop_line
 
 
 class BasicCheckpoint(Checkpoint):
@@ -84,7 +85,17 @@ class BasicCheckpoint(Checkpoint):
 
                 self.algo.bestSolution.data = np.array(solutionData)
                 self.algo.bestSolution.score = float(data[2])
+
+            print(
+                macop_text('Restart algorithm from evaluation {}.'.format(
+                    self.algo.numberOfEvaluations)))
+
         else:
-            print('No backup found... Start running')
+            print(
+                macop_text(
+                    'No backup found... Start running algorithm from evaluation 0.'
+                ))
             logging.info(
                 "Can't load backup... Backup filepath not valid in Checkpoint")
+
+        print(macop_line())

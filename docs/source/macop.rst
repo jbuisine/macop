@@ -47,6 +47,7 @@ macop.operators
 
    macop.operators.policies.Policy
    macop.operators.policies.RandomPolicy
+   macop.operators.policies.UCBPolicy
    
    macop.operators.Operator
 
