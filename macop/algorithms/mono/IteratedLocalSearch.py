@@ -5,7 +5,7 @@
 import logging
 
 # module imports
-from .Algorithm import Algorithm
+from ..Algorithm import Algorithm
 from .LocalSearch import LocalSearch
 
 

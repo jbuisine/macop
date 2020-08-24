@@ -11,8 +11,8 @@ macop.algorithms
    :toctree: macop
    
    macop.algorithms.Algorithm
-   macop.algorithms.IteratedLocalSearch
-   macop.algorithms.LocalSearch
+   macop.algorithms.mono.IteratedLocalSearch
+   macop.algorithms.mono.LocalSearch
 
 macop.checkpoints
 -------------------

@@ -1,6 +1,7 @@
 """Abstract class which is used for applying strategy when selecting and applying operator 
 """
 import logging
+from abc import abstractmethod
 
 
 # define policy to choose `operator` function at current iteration
@@ -13,11 +14,15 @@ class Policy():
     def __init__(self, _operators):
         self.operators = _operators
 
+    @abstractmethod
     def select(self):
         """
-        Select specific operator to solution and returns solution
+        Select specific operator
+
+        Returns:
+            {Operator} -- selected operator
         """
-        raise NotImplementedError
+        pass
 
     def apply(self, _solution):
         """

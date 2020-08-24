@@ -15,18 +15,19 @@ from macop.operators.crossovers.RandomSplitCrossover import RandomSplitCrossover
 from macop.operators.policies.RandomPolicy import RandomPolicy
 from macop.operators.policies.UCBPolicy import UCBPolicy
 
-from macop.algorithms.mono.IteratedLocalSearch import IteratedLocalSearch as ILS
+from macop.algorithms.multi.MOEAD import MOEAD
 from macop.checkpoints.BasicCheckpoint import BasicCheckpoint
 
 if not os.path.exists('data'):
     os.makedirs('data')
 
 # logging configuration
-logging.basicConfig(format='%(asctime)s %(message)s', filename='data/example.log', level=logging.DEBUG)
+logging.basicConfig(format='%(asctime)s %(message)s', filename='data/exampleMOEAD.log', level=logging.DEBUG)
 
 random.seed(42)
 
-elements_score = [ random.randint(1, 20) for _ in range(30) ]
+elements_score1 = [ random.randint(1, 20) for _ in range(30) ]
+elements_score2 = [ random.randint(1, 20) for _ in range(30) ]
 elements_weight = [ random.randint(2, 5) for _ in range(30) ]
 
 def knapsackWeight(_solution):
@@ -49,27 +50,39 @@ def validator(_solution):
 def init():
     return BinarySolution([], 30).random(validator)
 
-def evaluator(_solution):
+def evaluator1(_solution):
 
     fitness = 0
     for index, elem in enumerate(_solution.data):
-        fitness += (elements_score[index] * elem)
+        fitness += (elements_score1[index] * elem)
 
     return fitness
 
-filepath = "data/checkpoints.csv"
+def evaluator2(_solution):
+
+    fitness = 0
+    for index, elem in enumerate(_solution.data):
+        fitness += (elements_score2[index] * elem)
+
+    return fitness
+
+
+filepath = "data/checkpointsMOEAD.csv"
 
 def main():
 
     operators = [SimpleBinaryMutation(), SimpleMutation(), SimpleCrossover(), RandomSplitCrossover()]
     policy = UCBPolicy(operators)
 
-    algo = ILS(init, evaluator, operators, policy, validator, _maximise=True)
+    # pass list of evaluators
+    algo = MOEAD(20, 5, init, [evaluator1, evaluator2], operators, policy, validator, _maximise=True)
     algo.addCheckpoint(_class=BasicCheckpoint, _every=5, _filepath=filepath)
 
     bestSol = algo.run(1000)
+    bestSol = algo.run(1000)
 
-    print('Solution score is {}'.format(evaluator(bestSol)))
+    print('Solution score1 is {}'.format(evaluator1(bestSol)))
+    print('Solution score2 is {}'.format(evaluator2(bestSol)))
     print('Solution weigth is {}'.format(knapsackWeight(bestSol)))
 
 if __name__ == "__main__":

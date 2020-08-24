@@ -4,14 +4,16 @@ Some examples
 1. Mono-objective
 -----------------------
 
-In this tutorial, it will introduce the way of running your algorithm quickly.
-First of all we need to define the kind of solution best represent the problem. In this tutorial, we use the well known knapsack problem using 30 objects.
+In this tutorial, we introduce the way of using `macop` and running your algorithm quickly.
+First of all we need to define the kind of solution which best represent the problem. As example, we use the well known knapsack problem using 30 objects (solution size of 30).
 
 1.1 Problem definition
 ~~~~~~~~~~~~~~~~~~~~~~
 
 Hence, we define our problem :
+
 - value of each component of knapsack
+
 - weight associated to each of these components (objects)
 
 .. code:: python
@@ -26,16 +28,19 @@ Hence, we define our problem :
     """
     random.seed(42)
 
-    elements_score = [ random.randint(1, 20) for _ in range(30) ]
-    elements_weight = [ random.randint(5, 25) for _ in range(30) ]
+    elements_score = [ random.randint(1, 20) for _ in range(30) ] # value of each object
+    elements_weight = [ random.randint(5, 25) for _ in range(30) ] # weight of each object
 
 We can now define the solution representation. In knapsack problem we want to fill our knapsack in an optimization way selecting or not each component (object).
 The best way to represent this problem is to use the `BinarySolution` from `macop` which stores solution as a binary array.
 
-Using the solution representation, we need to define multiple things to fit our algorithm :
-- 1. function which validates or not a solution (based on constraints)
-- 2. function which evaluates the solution (in order to obtain fitness)
-- 3. initialization solution function
+Using the solution representation, we need to define multiple elements to fit our algorithm :
+
+- function which validates or not a solution (based on constraints)
+
+- function which evaluates the solution (in order to obtain fitness)
+
+- initialization solution function
 
 .. code:: python
     
@@ -50,8 +55,8 @@ Using the solution representation, we need to define multiple things to fit our 
     """
     random.seed(42)
 
-    elements_score = [ random.randint(1, 20) for _ in range(30) ]
-    elements_weight = [ random.randint(2, 5) for _ in range(30) ]
+    elements_score = [ random.randint(1, 20) for _ in range(30) ] # value of each object
+    elements_weight = [ random.randint(5, 25) for _ in range(30) ] # weight of each object
 
     # 1. validator function (we accept only bag with maximum weight 80kg)
     def validator(_solution):
@@ -183,7 +188,7 @@ We can now instanciate our algorithm. We use the Iterated Local Search in this e
 
     import logging
 
-    from macop.algorithms.IteratedLocalSearch import IteratedLocalSearch as ILS
+    from macop.algorithms.mono.IteratedLocalSearch import IteratedLocalSearch as ILS
 
     """
     Problem definition
@@ -217,7 +222,7 @@ We need to specify the use of checkpoint if we prefer to restart from.
     
     import logging
 
-    from macop.algorithms.IteratedLocalSearch import IteratedLocalSearch as ILS
+    from macop.algorithms.mono.IteratedLocalSearch import IteratedLocalSearch as ILS
     from macop.checkpoints.BasicCheckpoint import BasicCheckpoint
 
     """
@@ -249,7 +254,7 @@ In this way, now we can run and obtained the best solution found in `n` evaluati
     bestSol = algo.run(10000)
     print('Solution score is {}'.format(evaluator(bestSol)))
 
-2. Multi-objective example
---------------------------
+2. Multi-objective
+-------------------
 
 Available soon...

@@ -3,6 +3,7 @@
 # main imports
 import os
 import logging
+from abc import abstractmethod
 
 
 class Checkpoint():
@@ -25,12 +26,14 @@ class Checkpoint():
         if not os.path.exists(head):
             os.makedirs(head)
 
+    @abstractmethod
     def run(self):
         """
         Check if necessary to do backup based on `every` variable
         """
         pass
 
+    @abstractmethod
     def load(self):
         """
         Load last backup line of solution and set algorithm state at this backup

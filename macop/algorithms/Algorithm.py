@@ -39,10 +39,22 @@ class Algorithm():
         self.checkpoint = None
         self.bestSolution = None
 
+        # by default
+        self.numberOfEvaluations = 0
+        self.maxEvaluations = 0
+
         # other parameters
         self.parent = _parent  # parent algorithm if it's sub algorithm
+
         #self.maxEvaluations = 0 # by default
         self.maximise = _maximise
+
+        # track reference of algo into operator (keep an eye into best solution)
+        for operator in self.operators:
+            operator.setAlgo(self)
+
+        # also track reference for policy
+        self.policy.setAlgo(self)
 
         self.initRun()
 
@@ -83,24 +95,13 @@ class Algorithm():
 
     def initRun(self):
         """
-        Method which initialiazes or re-initializes the whole algorithm context: operators, current solution, best solution (by default current solution)
+        Initialize the current solution and best solution
         """
-
-        # track reference of algo into operator (keep an eye into best solution)
-        for operator in self.operators:
-            operator.setAlgo(self)
-
-        # also track reference for policy
-        self.policy.setAlgo(self)
 
         self.currentSolution = self.initializer()
 
         # evaluate current solution
         self.currentSolution.evaluate(self.evaluator)
-
-        # reinitialize policy
-        # if self.parent is not None:
-        #     self.policy = globals()[type(self.policy).__name__]()
 
         # keep in memory best known solution (current solution)
         self.bestSolution = self.currentSolution
@@ -209,9 +210,8 @@ class Algorithm():
         Run the specific algorithm following number of evaluations to find optima
         """
 
-        self.maxEvaluations = _evaluations
-
-        self.initRun()
+        # append number of max evaluation if multiple run called
+        self.maxEvaluations += _evaluations
 
         # check if global evaluation is used or not
         if self.parent is not None and self.getGlobalEvaluation() != 0:
@@ -247,7 +247,7 @@ class Algorithm():
         """Display end message into `run` method
         """
         print(
-            macop_text('({}) Found after {} evaluations => {}'.format(
+            macop_text('({}) Found after {} evaluations \n   - {}'.format(
                 type(self).__name__, self.numberOfEvaluations,
                 self.bestSolution)))
         print(macop_line())
