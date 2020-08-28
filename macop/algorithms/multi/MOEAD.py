@@ -170,8 +170,13 @@ class MOEAD(Algorithm):
                         # create new solution based on current new if better, computes fitness associated to new solution for sub problem
                         class_name = type(spBestSolution).__name__
                         newSolution = getattr(globals()['macop.solutions.' + class_name], class_name)(spBestSolution.data, len(spBestSolution.data))
+
+                        # evaluate solution for new sub problem and update as best solution
                         self.subProblems[j].evaluate(newSolution)
                         self.subProblems[j].bestSolution = newSolution
+
+                        # update population solution for this sub problem
+                        self.population[j] = newSolution
                        
                         improvment = True
 

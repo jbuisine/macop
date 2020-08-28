@@ -17,6 +17,7 @@ from macop.operators.policies.UCBPolicy import UCBPolicy
 
 from macop.algorithms.multi.MOEAD import MOEAD
 from macop.callbacks.MultiCheckpoint import MultiCheckpoint
+from macop.callbacks.ParetoCheckpoint import ParetoCheckpoint
 
 if not os.path.exists('data'):
     os.makedirs('data')
@@ -26,9 +27,9 @@ logging.basicConfig(format='%(asctime)s %(message)s', filename='data/exampleMOEA
 
 random.seed(42)
 
-elements_score1 = [ random.randint(1, 100) for _ in range(200) ]
-elements_score2 = [ random.randint(1, 200) for _ in range(200) ]
-elements_weight = [ random.randint(2, 10) for _ in range(200) ]
+elements_score1 = [ random.randint(1, 100) for _ in range(500) ]
+elements_score2 = [ random.randint(1, 200) for _ in range(500) ]
+elements_weight = [ random.randint(90, 100) for _ in range(500) ]
 
 def knapsackWeight(_solution):
 
@@ -41,7 +42,7 @@ def knapsackWeight(_solution):
 # default validator
 def validator(_solution):
 
-    if knapsackWeight(_solution) <= 600:
+    if knapsackWeight(_solution) <= 15000:
         return True
     else:
         False
@@ -67,18 +68,23 @@ def evaluator2(_solution):
     return fitness
 
 
-filepath = "data/checkpointsMOEAD.csv"
+mo_checkpoint_path = "data/checkpointsMOEAD.csv"
+pf_checkpoint_path = "data/pfMOEAD.csv"
+
 
 def main():
 
     operators = [SimpleBinaryMutation(), SimpleMutation(), SimpleCrossover(), RandomSplitCrossover()]
-    policy = UCBPolicy(operators)
+    policy = RandomPolicy(operators)
 
     # pass list of evaluators
     algo = MOEAD(20, 5, init, [evaluator1, evaluator2], operators, policy, validator, _maximise=True)
-    algo.addCallback(MultiCheckpoint(_every=5, _filepath=filepath))
+    algo.addCallback(MultiCheckpoint(_every=5, _filepath=mo_checkpoint_path))
+    algo.addCallback(ParetoCheckpoint(_every=5, _filepath=pf_checkpoint_path))
 
-    paretoFront = algo.run(100000)
+    paretoFront = algo.run(10000)
+
+    print("Pareto front is composed of", len(paretoFront), "solutions")
 
 if __name__ == "__main__":
     main()
