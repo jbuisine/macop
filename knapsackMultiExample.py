@@ -26,9 +26,9 @@ logging.basicConfig(format='%(asctime)s %(message)s', filename='data/exampleMOEA
 
 random.seed(42)
 
-elements_score1 = [ random.randint(1, 20) for _ in range(30) ]
-elements_score2 = [ random.randint(1, 20) for _ in range(30) ]
-elements_weight = [ random.randint(2, 5) for _ in range(30) ]
+elements_score1 = [ random.randint(1, 100) for _ in range(200) ]
+elements_score2 = [ random.randint(1, 200) for _ in range(200) ]
+elements_weight = [ random.randint(2, 10) for _ in range(200) ]
 
 def knapsackWeight(_solution):
 
@@ -41,14 +41,14 @@ def knapsackWeight(_solution):
 # default validator
 def validator(_solution):
 
-    if knapsackWeight(_solution) <= 80:
+    if knapsackWeight(_solution) <= 600:
         return True
     else:
         False
 
 # define init random solution
 def init():
-    return BinarySolution([], 30).random(validator)
+    return BinarySolution([], 200).random(validator)
 
 def evaluator1(_solution):
 
@@ -78,12 +78,7 @@ def main():
     algo = MOEAD(20, 5, init, [evaluator1, evaluator2], operators, policy, validator, _maximise=True)
     algo.addCallback(MultiCheckpoint(_every=5, _filepath=filepath))
 
-    bestSol = algo.run(1000)
-    bestSol = algo.run(1000)
-
-    print('Solution score1 is {}'.format(evaluator1(bestSol)))
-    print('Solution score2 is {}'.format(evaluator2(bestSol)))
-    print('Solution weigth is {}'.format(knapsackWeight(bestSol)))
+    paretoFront = algo.run(100000)
 
 if __name__ == "__main__":
     main()

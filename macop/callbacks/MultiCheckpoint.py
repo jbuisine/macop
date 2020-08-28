@@ -1,4 +1,4 @@
-"""Basic Checkpoint class implementation
+"""Multi Checkpoint class implementation
 """
 
 # main imports
@@ -13,7 +13,7 @@ from ..utils.color import macop_text, macop_line
 
 class MultiCheckpoint(Callback):
     """
-    BasicCheckpoint is used for loading previous computations and start again after loading checkpoint
+    MultiCheckpoint is used for loading previous computations and start again after loading checkpoint
 
     Attributes:
         algo: {Algorithm} -- main algorithm instance reference
@@ -24,8 +24,8 @@ class MultiCheckpoint(Callback):
         """
         Check if necessary to do backup based on `every` variable
         """
-        # get current best solution
-        solution = self.algo.bestSolution
+        # get current population
+        population = self.algo.population
 
         currentEvaluation = self.algo.getGlobalEvaluation()
 
@@ -34,52 +34,61 @@ class MultiCheckpoint(Callback):
 
             logging.info("Checkpoint is done into " + self.filepath)
 
-            solutionData = ""
-            solutionSize = len(solution.data)
+            with open(self.filepath, 'w') as f:
+                        
+                for solution in population:
+                    solutionData = ""
+                    solutionSize = len(solution.data)
 
-            for index, val in enumerate(solution.data):
-                solutionData += str(val)
+                    for index, val in enumerate(solution.data):
+                        solutionData += str(val)
 
-                if index < solutionSize - 1:
-                    solutionData += ' '
+                        if index < solutionSize - 1:
+                            solutionData += ' '
 
-            line = str(currentEvaluation) + ';' + solutionData + ';' + str(
-                solution.fitness()) + ';\n'
+                    line = str(currentEvaluation) + ';'
 
-            # check if file exists
-            if not os.path.exists(self.filepath):
-                with open(self.filepath, 'w') as f:
-                    f.write(line)
-            else:
-                with open(self.filepath, 'a') as f:
+                    for i in range(len(self.algo.evaluator)):
+                        line += str(solution.scores[i]) + ';'
+
+                    line += solutionData + ';\n'
+                    
                     f.write(line)
 
     def load(self):
         """
-        Load last backup line of solution and set algorithm state (best solution and evaluations) at this backup
+        Load backup lines as population and set algorithm state (population and pareto front) at this backup
         """
         if os.path.exists(self.filepath):
 
             logging.info('Load best solution from last checkpoint')
             with open(self.filepath) as f:
 
-                # get last line and read data
-                lastline = f.readlines()[-1]
-                data = lastline.split(';')
+                # read data for each line
+                for i, line in enumerate(f.readlines()):
 
-                # get evaluation  information
-                globalEvaluation = int(data[0])
+                    data = line.replace(';\n', '').split(';')
+                
+                    # only the first time
+                    if i == 0:
+                        # get evaluation  information
+                        globalEvaluation = int(data[0])
 
-                if self.algo.parent is not None:
-                    self.algo.parent.numberOfEvaluations = globalEvaluation
-                else:
-                    self.algo.numberOfEvaluations = globalEvaluation
+                        if self.algo.parent is not None:
+                            self.algo.parent.numberOfEvaluations = globalEvaluation
+                        else:
+                            self.algo.numberOfEvaluations = globalEvaluation
 
-                # get best solution data information
-                solutionData = list(map(int, data[1].split(' ')))
+                    nObjectives = len(self.algo.evaluator)
+                    scores = [ float(s) for s in data[1:nObjectives + 1] ]
 
-                self.algo.bestSolution.data = np.array(solutionData)
-                self.algo.bestSolution.score = float(data[2])
+                    # get best solution data information
+                    solutionData = list(map(int, data[-1].split(' ')))
+                        
+                    self.algo.population[i].data = np.array(solutionData)
+                    self.algo.population[i].scores = scores
+
+                    self.algo.pfPop[i] = self.algo.population[i]
 
             print(
                 macop_text('Restart algorithm from evaluation {}.'.format(

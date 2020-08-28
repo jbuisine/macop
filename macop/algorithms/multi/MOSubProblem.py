@@ -46,7 +46,7 @@ class MOSubProblem(Algorithm):
         Run the local search algorithm
 
         Args:
-            _evaluations: {int} -- number of Local search evaluations
+            _evaluations: {int} -- number of evaluations
             
         Returns:
             {Solution} -- best solution found
@@ -55,32 +55,27 @@ class MOSubProblem(Algorithm):
         # by default use of mother method to initialize variables
         super().run(_evaluations)
 
-        solutionSize = self.bestSolution.size
+        for _ in range(_evaluations):
+            # update solution using policy
+            newSolution = self.update(self.bestSolution)
 
-        # local search algorithm implementation
-        while not self.stop():
+            # if better solution than currently, replace it
+            if self.isBetter(newSolution):
+                self.bestSolution = newSolution
 
-            for _ in range(solutionSize):
+            # increase number of evaluations
+            self.increaseEvaluation()
 
-                # update solution using policy
-                newSolution = self.update(self.bestSolution)
+            self.progress()
 
-                # if better solution than currently, replace it
-                if self.isBetter(newSolution):
-                    self.bestSolution = newSolution
-
-                # increase number of evaluations
-                self.increaseEvaluation()
-
-                self.progress()
-                logging.info("---- Current %s - SCORE %s" %
-                             (newSolution, newSolution.fitness()))
-
-                # stop algorithm if necessary
-                if self.stop():
+            # stop algorithm if necessary
+            if self.stop():
                     break
 
-        logging.info("End of %s, best solution found %s" %
-                     (type(self).__name__, self.bestSolution))
+            logging.info("---- Current %s - SCORE %s" %
+                            (newSolution, newSolution.fitness()))
+
+            logging.info("End of %s, best solution found %s" %
+                        (type(self).__name__, self.bestSolution))
 
         return self.bestSolution
