@@ -10,6 +10,15 @@ import numpy as np
 from ..Algorithm import Algorithm
 from .MOSubProblem import MOSubProblem
 
+def moEvaluator(_solution, _evaluator, _weights):
+
+    scores = [ eval(_solution) for eval in _evaluator ]
+
+    # associate objectives scores to solution
+    _solution.scores = scores
+
+    return sum([scores[i] for i, w in enumerate(_weights) ])
+
 
 class MOEAD(Algorithm):
     """Multi-Ojective Evolutionary Algorithm with Scalar Decomposition
@@ -25,7 +34,7 @@ class MOEAD(Algorithm):
         maximise: {bool} -- specify kind of optimization problem 
         currentSolution: {Solution} -- current solution managed for current evaluation
         bestSolution: {Solution} -- best solution found so far during running algorithm
-        checkpoint: {Checkpoint} -- Checkpoint class implementation to keep track of algorithm and restart
+        callbacks: {[Callback]} -- list of Callback class implementation to do some instructions every number of evaluations and `load` when initializing algorithm
     """
     def __init__(self,
                  _mu,
@@ -44,8 +53,7 @@ class MOEAD(Algorithm):
         self.operators = _operators
         self.policy = _policy
         self.validator = _validator
-        self.checkpoint = None
-        self.bestSolution = None
+        self.callbacks = []
 
         # by default
         self.numberOfEvaluations = 0
@@ -66,6 +74,7 @@ class MOEAD(Algorithm):
 
         if _mu < _T:
             raise ValueError('`mu` cannot be less than `T`')
+
         self.mu = _mu
         self.T = _T
 
@@ -82,34 +91,25 @@ class MOEAD(Algorithm):
         for i in range(self.mu):
 
             # compute weight sum from solution
-            sub_evaluator = lambda _solution: sum(
-                list([
-                    eval(_solution) * weights[i][w_i]
-                    for w_i, eval in enumerate(_evaluator)
-                ]))
+            sub_evaluator = lambda _solution: moEvaluator(_solution, _evaluator, weights[i])
 
+            # intialize each sub problem
             subProblem = MOSubProblem(i, weights[i], _initalizer,
                                       sub_evaluator, _operators, _policy,
                                       _validator, _maximise, self)
+
             self.subProblems.append(subProblem)
 
         self.population = [None for n in range(self.mu)]
-
-        # no need to initialize using sub problem
-        # self.initRun()
+        self.refPoint = (0., 0.)
+        
 
     def initRun(self):
         """
         Method which initialiazes or re-initializes the whole algorithm context specifically for MOEAD
         """
-
-        self.currentSolution = self.initializer()
-
-        # evaluate current solution
-        self.subProblems[0].run(1)
-
-        # keep in memory best known solution (current solution)
-        self.bestSolution = self.subProblems[0].bestSolution
+        # initialization is done during run method
+        pass
 
     def run(self, _evaluations):
         """
@@ -125,9 +125,8 @@ class MOEAD(Algorithm):
         # by default use of mother method to initialize variables
         super().run(_evaluations)
 
-        # enable checkpoint for MOEAD
-        if self.checkpoint is not None:
-            self.resume()
+        # enable callback resume for MOEAD
+        self.resume()
 
         # initialize each sub problem
         for i in range(self.mu):
@@ -142,13 +141,18 @@ class MOEAD(Algorithm):
 
                 # run 1 iteration into sub problem `i`
                 self.subProblems[i].run(1)
+                spBestSolution = self.subProblems[i].bestSolution
+
+                self.updateMinRefPoint(spBestSolution)
+
+
 
                 # stop algorithm if necessary
                 if self.stop():
                     break
 
         logging.info("End of %s, best solution found %s" %
-                     (type(self).__name__, self.bestSolution))
+                     (type(self).__name__, self.population))
 
         self.end()
 
@@ -179,3 +183,14 @@ class MOEAD(Algorithm):
         for direction in range(self.mu - dmax, self.mu):
             for i in range(self.mu - self.T, self.mu):
                 self.neighbors[direction].append(i)
+
+
+    def updateMinRefPoint(self, _solution):
+        pass
+
+    def nonDominated():
+        pass
+
+    def __str__(self):
+        return "%s using %s" % (type(self).__name__, type(
+            self.population).__name__)

@@ -19,8 +19,7 @@ class Algorithm():
         maximise: {bool} -- specify kind of optimization problem 
         currentSolution: {Solution} -- current solution managed for current evaluation
         bestSolution: {Solution} -- best solution found so far during running algorithm
-        callbacks: {[Callback]} -- list of Callback class implementation to 
-        checkpoint: {Callback} -- Callback class implementation to keep track of algorithm and restart
+        callbacks: {[Callback]} -- list of Callback class implementation to do some instructions every number of evaluations and `load` when initializing algorithm
         parent: {Algorithm} -- parent algorithm reference in case of inner Algorithm instance (optional)
     """
     def __init__(self,
@@ -38,7 +37,6 @@ class Algorithm():
         self.policy = _policy
         self.validator = _validator
         self.callbacks = []
-        self.checkpoint = None
         self.bestSolution = None
 
         # by default
@@ -85,21 +83,12 @@ class Algorithm():
         self.checkpoint = _callback
 
     def resume(self):
-        """Resume algorithm using Callback checkpoint instance
+        """Resume algorithm using Callback instances
         """
-        if self.checkpoint is None:
-            print(macop_line())
-            print(
-                macop_text(
-                    "Need to `addCheckpoint` or `setCheckpoint` is you want to use this process"
-                ))
 
-        else:
-            print(macop_line())
-            print(
-                macop_text('Checkpoint found from `{}` file.'.format(
-                    self.checkpoint.filepath)))
-            self.checkpoint.load()
+        # load every callback if many things are necessary to do before running algorithm
+        for callback in self.callbacks:
+            callback.load()
 
     def initRun(self):
         """

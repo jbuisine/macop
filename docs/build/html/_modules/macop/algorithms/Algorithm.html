@@ -172,8 +172,7 @@
 <span class="sd">        maximise: {bool} -- specify kind of optimization problem </span>
 <span class="sd">        currentSolution: {Solution} -- current solution managed for current evaluation</span>
 <span class="sd">        bestSolution: {Solution} -- best solution found so far during running algorithm</span>
-<span class="sd">        callbacks: {[Callback]} -- list of Callback class implementation to </span>
-<span class="sd">        checkpoint: {Callback} -- Callback class implementation to keep track of algorithm and restart</span>
+<span class="sd">        callbacks: {[Callback]} -- list of Callback class implementation to do some instructions every number of evaluations and when initializing algorithm</span>
 <span class="sd">        parent: {Algorithm} -- parent algorithm reference in case of inner Algorithm instance (optional)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
@@ -191,7 +190,6 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">policy</span> <span class="o">=</span> <span class="n">_policy</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">validator</span> <span class="o">=</span> <span class="n">_validator</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">callbacks</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">checkpoint</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">bestSolution</span> <span class="o">=</span> <span class="kc">None</span>
 
         <span class="c1"># by default</span>
@@ -238,21 +236,12 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">checkpoint</span> <span class="o">=</span> <span class="n">_callback</span></div>
 
 <div class="viewcode-block" id="Algorithm.resume"><a class="viewcode-back" href="../../../macop/macop.algorithms.Algorithm.html#macop.algorithms.Algorithm.Algorithm.resume">[docs]</a>    <span class="k">def</span> <span class="nf">resume</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Resume algorithm using Callback checkpoint instance</span>
+        <span class="sd">&quot;&quot;&quot;Resume algorithm using Callback instances</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">checkpoint</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="n">macop_line</span><span class="p">())</span>
-            <span class="nb">print</span><span class="p">(</span>
-                <span class="n">macop_text</span><span class="p">(</span>
-                    <span class="s2">&quot;Need to `addCheckpoint` or `setCheckpoint` is you want to use this process&quot;</span>
-                <span class="p">))</span>
 
-        <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="n">macop_line</span><span class="p">())</span>
-            <span class="nb">print</span><span class="p">(</span>
-                <span class="n">macop_text</span><span class="p">(</span><span class="s1">&#39;Checkpoint found from `</span><span class="si">{}</span><span class="s1">` file.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">checkpoint</span><span class="o">.</span><span class="n">filepath</span><span class="p">)))</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">checkpoint</span><span class="o">.</span><span class="n">load</span><span class="p">()</span></div>
+        <span class="c1"># load every callback if many things are necessary to do before running algorithm</span>
+        <span class="k">for</span> <span class="n">callback</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">callbacks</span><span class="p">:</span>
+            <span class="n">callback</span><span class="o">.</span><span class="n">load</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="Algorithm.initRun"><a class="viewcode-back" href="../../../macop/macop.algorithms.Algorithm.html#macop.algorithms.Algorithm.Algorithm.initRun">[docs]</a>    <span class="k">def</span> <span class="nf">initRun</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>

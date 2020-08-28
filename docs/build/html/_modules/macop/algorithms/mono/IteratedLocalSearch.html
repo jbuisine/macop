@@ -191,9 +191,8 @@
         <span class="c1"># by default use of mother method to initialize variables</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">_evaluations</span><span class="p">)</span>
 
-        <span class="c1"># enable checkpoint for ILS</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">checkpoint</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">resume</span><span class="p">()</span>
+        <span class="c1"># enable resuming for ILS</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">resume</span><span class="p">()</span>
 
         <span class="c1"># passing global evaluation param from ILS</span>
         <span class="n">ls</span> <span class="o">=</span> <span class="n">LocalSearch</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">initializer</span><span class="p">,</span>
@@ -203,10 +202,6 @@
                          <span class="bp">self</span><span class="o">.</span><span class="n">validator</span><span class="p">,</span>
                          <span class="bp">self</span><span class="o">.</span><span class="n">maximise</span><span class="p">,</span>
                          <span class="n">_parent</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
-
-        <span class="c1"># set same checkpoint if exists</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">checkpoint</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">ls</span><span class="o">.</span><span class="n">setCheckpoint</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">checkpoint</span><span class="p">)</span>
 
         <span class="c1"># add same callbacks</span>
         <span class="k">for</span> <span class="n">callback</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">callbacks</span><span class="p">:</span>

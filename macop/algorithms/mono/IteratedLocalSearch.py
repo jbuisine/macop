@@ -21,7 +21,7 @@ class IteratedLocalSearch(Algorithm):
         maximise: {bool} -- specify kind of optimization problem 
         currentSolution: {Solution} -- current solution managed for current evaluation
         bestSolution: {Solution} -- best solution found so far during running algorithm
-        checkpoint: {Checkpoint} -- Checkpoint class implementation to keep track of algorithm and restart
+        callbacks: {[Callback]} -- list of Callback class implementation to do some instructions every number of evaluations and `load` when initializing algorithm
     """
     def run(self, _evaluations, _ls_evaluations=100):
         """
@@ -38,9 +38,8 @@ class IteratedLocalSearch(Algorithm):
         # by default use of mother method to initialize variables
         super().run(_evaluations)
 
-        # enable checkpoint for ILS
-        if self.checkpoint is not None:
-            self.resume()
+        # enable resuming for ILS
+        self.resume()
 
         # passing global evaluation param from ILS
         ls = LocalSearch(self.initializer,
@@ -50,10 +49,6 @@ class IteratedLocalSearch(Algorithm):
                          self.validator,
                          self.maximise,
                          _parent=self)
-
-        # set same checkpoint if exists
-        if self.checkpoint is not None:
-            ls.setCheckpoint(self.checkpoint)
 
         # add same callbacks
         for callback in self.callbacks:

@@ -81,6 +81,11 @@ class BasicCheckpoint(Callback):
                 self.algo.bestSolution.data = np.array(solutionData)
                 self.algo.bestSolution.score = float(data[2])
 
+            print(macop_line())
+            print(
+                macop_text('Checkpoint found from `{}` file.'.format(
+                    self.filepath)))
+
             print(
                 macop_text('Restart algorithm from evaluation {}.'.format(
                     self.algo.numberOfEvaluations)))

@@ -70,9 +70,6 @@ def main():
     # add callback into callback list
     algo.addCallback(callback)
 
-    # set this callback as checkpoint too
-    algo.setCheckpoint(callback)
-
     bestSol = algo.run(1000)
 
     print('Solution score is {}'.format(evaluator(bestSol)))

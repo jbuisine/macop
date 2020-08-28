@@ -11,7 +11,7 @@ from .Callback import Callback
 from ..utils.color import macop_text, macop_line
 
 
-class BasicCheckpoint(Callback):
+class MultiCheckpoint(Callback):
     """
     BasicCheckpoint is used for loading previous computations and start again after loading checkpoint
 

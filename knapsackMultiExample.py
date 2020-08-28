@@ -76,7 +76,7 @@ def main():
 
     # pass list of evaluators
     algo = MOEAD(20, 5, init, [evaluator1, evaluator2], operators, policy, validator, _maximise=True)
-    algo.addCheckpoint(_class=BasicCheckpoint, _every=5, _filepath=filepath)
+    algo.addCallback(MultiCheckpoint(_every=5, _filepath=filepath))
 
     bestSol = algo.run(1000)
     bestSol = algo.run(1000)

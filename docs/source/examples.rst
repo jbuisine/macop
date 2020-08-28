@@ -201,7 +201,7 @@ We can now instanciate our algorithm. We use the Iterated Local Search in this e
     ...
 
     if not os.path.exists('data'):
-    os.makedirs('data')
+        os.makedirs('data')
 
     # logging configuration
     logging.basicConfig(format='%(asctime)s %(message)s', filename='data/example.log', level=logging.DEBUG)
@@ -209,9 +209,12 @@ We can now instanciate our algorithm. We use the Iterated Local Search in this e
     algo = ILS(init, evaluator, operators, policy, validator, _maximise=True)
 
 The algorithm is now well defined and is ready to run ! But one thing can be done, and it's very interesting to avoir restart from scratch the algorithm run.
-The use of checkpoint is available in `macop`. A `BasicCheckpoint` class let the algorithm save at `every` evaluations the best solution found.
+The use of checkpoint is available in `macop`. A `BasicCheckpoint` class let the algorithm save at `every` evaluations the best solution found. This class is based on callback process. 
+A Callback is runned every number of evaluations but can also implement the `load` method in order to to specific instrusctions when initializing algorithm.
 
-We need to specify the use of checkpoint if we prefer to restart from.
+It's important to note, we can add any number of callbacks we want. For tabu search as example, we need to store many solutions.
+
+In our case, we need to specify the use of checkpoint if we prefer to restart from.
 
 .. code:: python
     
@@ -223,7 +226,7 @@ We need to specify the use of checkpoint if we prefer to restart from.
     import logging
 
     from macop.algorithms.mono.IteratedLocalSearch import IteratedLocalSearch as ILS
-    from macop.checkpoints.BasicCheckpoint import BasicCheckpoint
+    from macop.callbacks.BasicCheckpoint import BasicCheckpoint
 
     """
     Problem definition
@@ -236,15 +239,20 @@ We need to specify the use of checkpoint if we prefer to restart from.
     ...
 
     if not os.path.exists('data'):
-    os.makedirs('data')
+        os.makedirs('data')
 
     # logging configuration
     logging.basicConfig(format='%(asctime)s %(message)s', filename='data/example.log', level=logging.DEBUG)
 
     algo = ILS(init, evaluator, operators, policy, validator, _maximise=True)
 
-    # we specify the checkpoint class directly, the frequency and the path we want to save algorithm evolution
-    algo.addCheckpoint(_class=BasicCheckpoint, _every=5, _filepath='data/checkpoint.csv')
+    # create instance of BasicCheckpoint callback
+    callback = BasicCheckpoint(_every=5, _filepath='data/checkpoint.csv')
+
+    # Add this callback instance into list of callback
+    # It tells the algorithm to apply this callback every 5 evaluations
+    # And also the algorithm to load checkpoint if exists before running by using `load` method of callback
+    algo.addCallback(callback)
 
 
 In this way, now we can run and obtained the best solution found in `n` evaluations

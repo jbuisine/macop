@@ -345,7 +345,7 @@ The best way to represent this problem is to use the <cite>BinarySolution</cite>
 <span class="o">...</span>
 
 <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">):</span>
-<span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">)</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">)</span>
 
 <span class="c1"># logging configuration</span>
 <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="nb">format</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%(asctime)s</span><span class="s1"> </span><span class="si">%(message)s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;data/example.log&#39;</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
@@ -354,8 +354,10 @@ The best way to represent this problem is to use the <cite>BinarySolution</cite>
 </pre></div>
 </div>
 <p>The algorithm is now well defined and is ready to run ! But one thing can be done, and it’s very interesting to avoir restart from scratch the algorithm run.
-The use of checkpoint is available in <cite>macop</cite>. A <cite>BasicCheckpoint</cite> class let the algorithm save at <cite>every</cite> evaluations the best solution found.</p>
-<p>We need to specify the use of checkpoint if we prefer to restart from.</p>
+The use of checkpoint is available in <cite>macop</cite>. A <cite>BasicCheckpoint</cite> class let the algorithm save at <cite>every</cite> evaluations the best solution found. This class is based on callback process.
+A Callback is runned every number of evaluations but can also implement the <cite>load</cite> method in order to to specific instrusctions when initializing algorithm.</p>
+<p>It’s important to note, we can add any number of callbacks we want. For tabu search as example, we need to store many solutions.</p>
+<p>In our case, we need to specify the use of checkpoint if we prefer to restart from.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">imports part</span>
 <span class="sd">&quot;&quot;&quot;</span>
@@ -364,7 +366,7 @@ The use of checkpoint is available in <cite>macop</cite>. A <cite>BasicCheckpoin
 <span class="kn">import</span> <span class="nn">logging</span>
 
 <span class="kn">from</span> <span class="nn">macop.algorithms.mono.IteratedLocalSearch</span> <span class="kn">import</span> <span class="n">IteratedLocalSearch</span> <span class="k">as</span> <span class="n">ILS</span>
-<span class="kn">from</span> <span class="nn">macop.checkpoints.BasicCheckpoint</span> <span class="kn">import</span> <span class="n">BasicCheckpoint</span>
+<span class="kn">from</span> <span class="nn">macop.callbacks.BasicCheckpoint</span> <span class="kn">import</span> <span class="n">BasicCheckpoint</span>
 
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">Problem definition</span>
@@ -377,15 +379,20 @@ The use of checkpoint is available in <cite>macop</cite>. A <cite>BasicCheckpoin
 <span class="o">...</span>
 
 <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">):</span>
-<span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">)</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">)</span>
 
 <span class="c1"># logging configuration</span>
 <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="nb">format</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%(asctime)s</span><span class="s1"> </span><span class="si">%(message)s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;data/example.log&#39;</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
 
 <span class="n">algo</span> <span class="o">=</span> <span class="n">ILS</span><span class="p">(</span><span class="n">init</span><span class="p">,</span> <span class="n">evaluator</span><span class="p">,</span> <span class="n">operators</span><span class="p">,</span> <span class="n">policy</span><span class="p">,</span> <span class="n">validator</span><span class="p">,</span> <span class="n">_maximise</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-<span class="c1"># we specify the checkpoint class directly, the frequency and the path we want to save algorithm evolution</span>
-<span class="n">algo</span><span class="o">.</span><span class="n">addCheckpoint</span><span class="p">(</span><span class="n">_class</span><span class="o">=</span><span class="n">BasicCheckpoint</span><span class="p">,</span> <span class="n">_every</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">_filepath</span><span class="o">=</span><span class="s1">&#39;data/checkpoint.csv&#39;</span><span class="p">)</span>
+<span class="c1"># create instance of BasicCheckpoint callback</span>
+<span class="n">callback</span> <span class="o">=</span> <span class="n">BasicCheckpoint</span><span class="p">(</span><span class="n">_every</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">_filepath</span><span class="o">=</span><span class="s1">&#39;data/checkpoint.csv&#39;</span><span class="p">)</span>
+
+<span class="c1"># Add this callback instance into list of callback</span>
+<span class="c1"># It tells the algorithm to apply this callback every 5 evaluations</span>
+<span class="c1"># And also the algorithm to load checkpoint if exists before running by using `load` method of callback</span>
+<span class="n">algo</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="n">callback</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>In this way, now we can run and obtained the best solution found in <cite>n</cite> evaluations</p>

@@ -234,6 +234,11 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">algo</span><span class="o">.</span><span class="n">bestSolution</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">solutionData</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">algo</span><span class="o">.</span><span class="n">bestSolution</span><span class="o">.</span><span class="n">score</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
 
+            <span class="nb">print</span><span class="p">(</span><span class="n">macop_line</span><span class="p">())</span>
+            <span class="nb">print</span><span class="p">(</span>
+                <span class="n">macop_text</span><span class="p">(</span><span class="s1">&#39;Checkpoint found from `</span><span class="si">{}</span><span class="s1">` file.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">filepath</span><span class="p">)))</span>
+
             <span class="nb">print</span><span class="p">(</span>
                 <span class="n">macop_text</span><span class="p">(</span><span class="s1">&#39;Restart algorithm from evaluation </span><span class="si">{}</span><span class="s1">.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">algo</span><span class="o">.</span><span class="n">numberOfEvaluations</span><span class="p">)))</span>
