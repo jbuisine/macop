@@ -24,7 +24,6 @@ class MOSubProblem(Algorithm):
         bestSolution: {Solution} -- best solution found so far during running algorithm
         checkpoint: {Checkpoint} -- Checkpoint class implementation to keep track of algorithm and restart
     """
-
     def __init__(self,
                  _index,
                  _weights,
@@ -36,8 +35,8 @@ class MOSubProblem(Algorithm):
                  _maximise=True,
                  _parent=None):
 
-
-        super().__init__(_initalizer, _evaluator, _operators, _policy, _validator, _maximise, _parent)
+        super().__init__(_initalizer, _evaluator, _operators, _policy,
+                         _validator, _maximise, _parent)
 
         self.index = _index
         self.weights = _weights

@@ -38,7 +38,7 @@ setup(
     author='Jérôme BUISINE',
     author_email='jerome.buisine@univ-littoral.fr',
     license='MIT',
-    packages=['macop', 'macop.algorithms', 'macop.checkpoints', 'macop.evaluators', 'macop.operators', 'macop.solutions', 'macop.utils'],
+    packages=['macop', 'macop.algorithms', 'macop.callbacks', 'macop.evaluators', 'macop.operators', 'macop.solutions', 'macop.utils'],
     install_requires=[
         'numpy',
     ],

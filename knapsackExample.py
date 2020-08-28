@@ -16,7 +16,7 @@ from macop.operators.policies.RandomPolicy import RandomPolicy
 from macop.operators.policies.UCBPolicy import UCBPolicy
 
 from macop.algorithms.mono.IteratedLocalSearch import IteratedLocalSearch as ILS
-from macop.checkpoints.BasicCheckpoint import BasicCheckpoint
+from macop.callbacks.BasicCheckpoint import BasicCheckpoint
 
 if not os.path.exists('data'):
     os.makedirs('data')
@@ -63,9 +63,15 @@ def main():
 
     operators = [SimpleBinaryMutation(), SimpleMutation(), SimpleCrossover(), RandomSplitCrossover()]
     policy = UCBPolicy(operators)
+    callback = BasicCheckpoint(_every=5, _filepath=filepath)
 
     algo = ILS(init, evaluator, operators, policy, validator, _maximise=True)
-    algo.addCheckpoint(_class=BasicCheckpoint, _every=5, _filepath=filepath)
+    
+    # add callback into callback list
+    algo.addCallback(callback)
+
+    # set this callback as checkpoint too
+    algo.setCheckpoint(callback)
 
     bestSol = algo.run(1000)
 

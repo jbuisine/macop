@@ -27,7 +27,6 @@ class MOEAD(Algorithm):
         bestSolution: {Solution} -- best solution found so far during running algorithm
         checkpoint: {Checkpoint} -- Checkpoint class implementation to keep track of algorithm and restart
     """
-
     def __init__(self,
                  _mu,
                  _T,
@@ -83,16 +82,22 @@ class MOEAD(Algorithm):
         for i in range(self.mu):
 
             # compute weight sum from solution
-            sub_evaluator = lambda _solution: sum(list([ eval(_solution) * weights[i][w_i] for w_i, eval in enumerate(_evaluator)]))
+            sub_evaluator = lambda _solution: sum(
+                list([
+                    eval(_solution) * weights[i][w_i]
+                    for w_i, eval in enumerate(_evaluator)
+                ]))
 
-            subProblem = MOSubProblem(i, weights[i], _initalizer, sub_evaluator, _operators, _policy, _validator, _maximise, self)
+            subProblem = MOSubProblem(i, weights[i], _initalizer,
+                                      sub_evaluator, _operators, _policy,
+                                      _validator, _maximise, self)
             self.subProblems.append(subProblem)
 
-        self.population = [ None for n in range(self.mu) ]
-    
+        self.population = [None for n in range(self.mu)]
+
         # no need to initialize using sub problem
         # self.initRun()
-        
+
     def initRun(self):
         """
         Method which initialiazes or re-initializes the whole algorithm context specifically for MOEAD
@@ -154,23 +159,23 @@ class MOEAD(Algorithm):
         dmin = dmax = 0
 
         if self.T % 2 == 1:
-            dmin = - int(self.T / 2)
+            dmin = -int(self.T / 2)
             dmax = int(self.T / 2) + 1
         else:
-            dmin = - int(self.T/2) + 1
-            dmax = + self.T / 2
-        
-        # init neighbord list 
-        self.neighbors = [ [] for n in range(self.mu) ]
+            dmin = -int(self.T / 2) + 1
+            dmax = +self.T / 2
+
+        # init neighbord list
+        self.neighbors = [[] for n in range(self.mu)]
 
         for direction in range(0, -dmin):
             for i in range(self.T):
                 self.neighbors[direction].append(i)
-        
+
         for direction in range(-dmin, self.mu - dmax):
-            for i in range (direction + dmin, direction + dmax):
+            for i in range(direction + dmin, direction + dmax):
                 self.neighbors[direction].append(i)
-        
+
         for direction in range(self.mu - dmax, self.mu):
             for i in range(self.mu - self.T, self.mu):
                 self.neighbors[direction].append(i)

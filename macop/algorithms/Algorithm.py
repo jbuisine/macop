@@ -19,7 +19,8 @@ class Algorithm():
         maximise: {bool} -- specify kind of optimization problem 
         currentSolution: {Solution} -- current solution managed for current evaluation
         bestSolution: {Solution} -- best solution found so far during running algorithm
-        checkpoint: {Checkpoint} -- Checkpoint class implementation to keep track of algorithm and restart
+        callbacks: {[Callback]} -- list of Callback class implementation to 
+        checkpoint: {Callback} -- Callback class implementation to keep track of algorithm and restart
         parent: {Algorithm} -- parent algorithm reference in case of inner Algorithm instance (optional)
     """
     def __init__(self,
@@ -36,6 +37,7 @@ class Algorithm():
         self.operators = _operators
         self.policy = _policy
         self.validator = _validator
+        self.callbacks = []
         self.checkpoint = None
         self.bestSolution = None
 
@@ -58,34 +60,40 @@ class Algorithm():
 
         self.initRun()
 
-    def addCheckpoint(self, _class, _every, _filepath):
-        """Add checkpoint to algorithm specifying usefull parameters
+    def addCallback(self, _callback):
+        """Add new callback to algorithm specifying usefull parameters
 
         Args:
-            _class: {class} -- Checkpoint class type
-            _every: {int} -- checkpoint frequency based on evaluations
-            _filepath: {str} -- file path where checkpoints will be saved
+            _callback: {Callback} -- specific Callback instance
         """
-        self.checkpoint = _class(self, _every, _filepath)
+        # specify current main algorithm reference
+        _callback.setAlgo(self)
 
-    def setCheckpoint(self, _checkpoint):
+        # set as new
+        self.callbacks.append(_callback)
+
+    def setCheckpoint(self, _callback):
         """Set checkpoint instance directly
-
         Args:
-            _checkpoint: {Checkpoint} -- checkpoint instance
+            _callback: {Callback} -- Callback instance used for checkpoint
         """
-        self.checkpoint = _checkpoint
+        # specify current main algorithm reference if necessary
+        if _callback.algo is None:
+            _callback.setAlgo(self)
+
+        # set as checkpoint
+        self.checkpoint = _callback
 
     def resume(self):
-        """Resume algorithm using checkpoint instance
-
-        Raises:
-            ValueError: No checkpoint initialize (use `addCheckpoint` or `setCheckpoint` is you want to use this process)
+        """Resume algorithm using Callback checkpoint instance
         """
         if self.checkpoint is None:
-            raise ValueError(
-                "Need to `addCheckpoint` or `setCheckpoint` is you want to use this process"
-            )
+            print(macop_line())
+            print(
+                macop_text(
+                    "Need to `addCheckpoint` or `setCheckpoint` is you want to use this process"
+                ))
+
         else:
             print(macop_line())
             print(
@@ -229,10 +237,11 @@ class Algorithm():
 
     def progress(self):
         """
-        Log progress and apply checkpoint if necessary
+        Log progress and apply callbacks if necessary
         """
-        if self.checkpoint is not None:
-            self.checkpoint.run()
+        if len(self.callbacks) > 0:
+            for callback in self.callbacks:
+                callback.run()
 
         macop_progress(self.getGlobalEvaluation(),
                        self.getGlobalMaxEvaluation())

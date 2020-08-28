@@ -55,6 +55,10 @@ class IteratedLocalSearch(Algorithm):
         if self.checkpoint is not None:
             ls.setCheckpoint(self.checkpoint)
 
+        # add same callbacks
+        for callback in self.callbacks:
+            ls.addCallback(callback)
+
         # local search algorithm implementation
         while not self.stop():
 

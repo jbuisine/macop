@@ -90,7 +90,7 @@
 <li class="toctree-l1 current"><a class="reference internal" href="../macop.html">Documentation</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../macop.html#macop">macop</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../macop.html#macop-algorithms">macop.algorithms</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../macop.html#macop-checkpoints">macop.checkpoints</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../macop.html#macop-callbacks">macop.callbacks</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../macop.html#macop-evaluators">macop.evaluators</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../macop.html#macop-operators">macop.operators</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="macop.operators.crossovers.Crossover.html">macop.operators.crossovers.Crossover</a></li>
@@ -219,8 +219,13 @@
 
 <dl class="method">
 <dt id="macop.operators.policies.Policy.Policy.select">
-<code class="sig-name descname">select</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macop/operators/policies/Policy.html#Policy.select"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macop.operators.policies.Policy.Policy.select" title="Permalink to this definition">¶</a></dt>
-<dd><p>Select specific operator to solution and returns solution</p>
+<em class="property">abstract </em><code class="sig-name descname">select</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macop/operators/policies/Policy.html#Policy.select"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macop.operators.policies.Policy.Policy.select" title="Permalink to this definition">¶</a></dt>
+<dd><p>Select specific operator</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>{Operator} – selected operator</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">

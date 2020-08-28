@@ -16,7 +16,7 @@ from macop.operators.policies.RandomPolicy import RandomPolicy
 from macop.operators.policies.UCBPolicy import UCBPolicy
 
 from macop.algorithms.multi.MOEAD import MOEAD
-from macop.checkpoints.BasicCheckpoint import BasicCheckpoint
+from macop.callbacks.MultiCheckpoint import MultiCheckpoint
 
 if not os.path.exists('data'):
     os.makedirs('data')
