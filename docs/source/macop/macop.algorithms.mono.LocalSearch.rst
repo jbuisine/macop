@@ -1,7 +1,7 @@
-macop.checkpoints.BasicCheckpoint
+macop.algorithms.mono.LocalSearch
 =================================
 
-.. automodule:: macop.checkpoints.BasicCheckpoint
+.. automodule:: macop.algorithms.mono.LocalSearch
 
    
    
@@ -13,7 +13,7 @@ macop.checkpoints.BasicCheckpoint
 
    .. autosummary::
    
-      BasicCheckpoint
+      LocalSearch
    
    
 

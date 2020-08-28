@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>macop.checkpoints.BasicCheckpoint &mdash; macop v0.1.6 documentation</title>
+  <title>macop.callbacks.MultiCheckpoint &mdash; macop v0.1.6 documentation</title>
   
 
   
@@ -135,7 +135,7 @@
         
           <li><a href="../../index.html">Module code</a> &raquo;</li>
         
-      <li>macop.checkpoints.BasicCheckpoint</li>
+      <li>macop.callbacks.MultiCheckpoint</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -150,7 +150,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <h1>Source code for macop.checkpoints.BasicCheckpoint</h1><div class="highlight"><pre>
+  <h1>Source code for macop.callbacks.MultiCheckpoint</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;Basic Checkpoint class implementation</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
@@ -160,25 +160,20 @@
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 <span class="c1"># module imports</span>
-<span class="kn">from</span> <span class="nn">.Checkpoint</span> <span class="kn">import</span> <span class="n">Checkpoint</span>
+<span class="kn">from</span> <span class="nn">.Callback</span> <span class="kn">import</span> <span class="n">Callback</span>
 <span class="kn">from</span> <span class="nn">..utils.color</span> <span class="kn">import</span> <span class="n">macop_text</span><span class="p">,</span> <span class="n">macop_line</span>
 
 
-<div class="viewcode-block" id="BasicCheckpoint"><a class="viewcode-back" href="../../../macop/macop.checkpoints.BasicCheckpoint.html#macop.checkpoints.BasicCheckpoint.BasicCheckpoint">[docs]</a><span class="k">class</span> <span class="nc">BasicCheckpoint</span><span class="p">(</span><span class="n">Checkpoint</span><span class="p">):</span>
+<div class="viewcode-block" id="BasicCheckpoint"><a class="viewcode-back" href="../../../macop/macop.callbacks.MultiCheckpoint.html#macop.callbacks.MultiCheckpoint.BasicCheckpoint">[docs]</a><span class="k">class</span> <span class="nc">BasicCheckpoint</span><span class="p">(</span><span class="n">Callback</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    BasicCheckpoint is used for loading previous computations and start again after loading checkpoit</span>
+<span class="sd">    BasicCheckpoint is used for loading previous computations and start again after loading checkpoint</span>
 
 <span class="sd">    Attributes:</span>
 <span class="sd">        algo: {Algorithm} -- main algorithm instance reference</span>
 <span class="sd">        every: {int} -- checkpoint frequency used (based on number of evaluations)</span>
 <span class="sd">        filepath: {str} -- file path where checkpoints will be saved</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_algo</span><span class="p">,</span> <span class="n">_every</span><span class="p">,</span> <span class="n">_filepath</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">algo</span> <span class="o">=</span> <span class="n">_algo</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">every</span> <span class="o">=</span> <span class="n">_every</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">filepath</span> <span class="o">=</span> <span class="n">_filepath</span>
-
-<div class="viewcode-block" id="BasicCheckpoint.run"><a class="viewcode-back" href="../../../macop/macop.checkpoints.BasicCheckpoint.html#macop.checkpoints.BasicCheckpoint.BasicCheckpoint.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="BasicCheckpoint.run"><a class="viewcode-back" href="../../../macop/macop.callbacks.MultiCheckpoint.html#macop.callbacks.MultiCheckpoint.BasicCheckpoint.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Check if necessary to do backup based on `every` variable</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -212,7 +207,7 @@
                 <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filepath</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
                     <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">line</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="BasicCheckpoint.load"><a class="viewcode-back" href="../../../macop/macop.checkpoints.BasicCheckpoint.html#macop.checkpoints.BasicCheckpoint.BasicCheckpoint.load">[docs]</a>    <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="BasicCheckpoint.load"><a class="viewcode-back" href="../../../macop/macop.callbacks.MultiCheckpoint.html#macop.callbacks.MultiCheckpoint.BasicCheckpoint.load">[docs]</a>    <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Load last backup line of solution and set algorithm state (best solution and evaluations) at this backup</span>
 <span class="sd">        &quot;&quot;&quot;</span>

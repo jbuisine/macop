@@ -22,9 +22,8 @@ class MOSubProblem(Algorithm):
         maximise: {bool} -- specify kind of optimization problem 
         currentSolution: {Solution} -- current solution managed for current evaluation
         bestSolution: {Solution} -- best solution found so far during running algorithm
-        checkpoint: {Checkpoint} -- Checkpoint class implementation to keep track of algorithm and restart
+        callbacks: {[Callback]} -- list of Callback class implementation to do some instructions every number of evaluations and `load` when initializing algorithm
     """
-
     def __init__(self,
                  _index,
                  _weights,
@@ -36,8 +35,8 @@ class MOSubProblem(Algorithm):
                  _maximise=True,
                  _parent=None):
 
-
-        super().__init__(_initalizer, _evaluator, _operators, _policy, _validator, _maximise, _parent)
+        super().__init__(_initalizer, _evaluator, _operators, _policy,
+                         _validator, _maximise, _parent)
 
         self.index = _index
         self.weights = _weights

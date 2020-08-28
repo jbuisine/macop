@@ -3,6 +3,7 @@
 
 from abc import abstractmethod
 
+
 class Solution():
     def __init__(self, _data, _size):
         """

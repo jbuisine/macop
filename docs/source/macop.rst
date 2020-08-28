@@ -14,14 +14,15 @@ macop.algorithms
    macop.algorithms.mono.IteratedLocalSearch
    macop.algorithms.mono.LocalSearch
 
-macop.checkpoints
+macop.callbacks
 -------------------
 
 .. autosummary::
    :toctree: macop
    
-   macop.checkpoints.BasicCheckpoint
-   macop.checkpoints.Checkpoint
+   macop.callbacks.BasicCheckpoint
+   macop.callbacks.MultiCheckpoint
+   macop.callbacks.Callback
 
 macop.evaluators
 -------------------

@@ -7,24 +7,19 @@ import logging
 import numpy as np
 
 # module imports
-from .Checkpoint import Checkpoint
+from .Callback import Callback
 from ..utils.color import macop_text, macop_line
 
 
-class BasicCheckpoint(Checkpoint):
+class BasicCheckpoint(Callback):
     """
-    BasicCheckpoint is used for loading previous computations and start again after loading checkpoit
+    BasicCheckpoint is used for loading previous computations and start again after loading checkpoint
 
     Attributes:
         algo: {Algorithm} -- main algorithm instance reference
         every: {int} -- checkpoint frequency used (based on number of evaluations)
         filepath: {str} -- file path where checkpoints will be saved
     """
-    def __init__(self, _algo, _every, _filepath):
-        self.algo = _algo
-        self.every = _every
-        self.filepath = _filepath
-
     def run(self):
         """
         Check if necessary to do backup based on `every` variable
@@ -85,6 +80,11 @@ class BasicCheckpoint(Checkpoint):
 
                 self.algo.bestSolution.data = np.array(solutionData)
                 self.algo.bestSolution.score = float(data[2])
+
+            print(macop_line())
+            print(
+                macop_text('Checkpoint found from `{}` file.'.format(
+                    self.filepath)))
 
             print(
                 macop_text('Restart algorithm from evaluation {}.'.format(

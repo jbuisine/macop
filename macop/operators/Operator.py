@@ -16,7 +16,6 @@ class KindOperator(Enum):
 class Operator():
     """Abstract Operator class which enables to update solution applying operator (computation)
     """
-
     @abstractmethod
     def __init__(self):
         pass
