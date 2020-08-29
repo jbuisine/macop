@@ -18,7 +18,7 @@ class UCBPolicy(Policy):
         rewards: {[float]} -- list of summed rewards obtained for each operator
         occurences: {[int]} -- number of use (selected) of each operator
     """
-    def __init__(self, _operators, _C=1000.):
+    def __init__(self, _operators, _C=100.):
         self.operators = _operators
         self.rewards = [0. for o in self.operators]
         self.occurences = [0 for o in self.operators]
@@ -72,13 +72,16 @@ class UCBPolicy(Policy):
         # compute fitness of new solution
         newSolution.evaluate(self.algo.evaluator)
 
-        # compute reward
-        difference = newSolution.fitness() - _solution.fitness()
-        reward = difference if difference > 0 else 0.
+        # compute fitness improvment rate
+        if self.algo.maximise:
+            fir =  (newSolution.fitness() - _solution.fitness()) / _solution.fitness()
+        else:
+            fir = (_solution.fitness() - newSolution.fitness()) / _solution.fitness()
 
-        operator_index = self.operators.index(operator)
-        self.rewards[operator_index] += reward
-        self.occurences[operator_index] += 1
+        if fir > 0:
+            operator_index = self.operators.index(operator)
+            self.rewards[operator_index] += fir
+            self.occurences[operator_index] += 1
 
         logging.info("---- Obtaining %s" % (_solution))
 

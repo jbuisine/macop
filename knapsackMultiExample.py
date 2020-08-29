@@ -78,7 +78,8 @@ def main():
     policy = RandomPolicy(operators)
 
     # pass list of evaluators
-    algo = MOEAD(20, 5, init, [evaluator1, evaluator2], operators, policy, validator, _maximise=True)
+    algo = MOEAD(20, 5, init, [evaluator1, evaluator2, evaluator2, evaluator2], operators, policy, validator, _maximise=True)
+    print(algo.weights)
     algo.addCallback(MultiCheckpoint(_every=5, _filepath=mo_checkpoint_path))
     algo.addCallback(ParetoCheckpoint(_every=5, _filepath=pf_checkpoint_path))
 

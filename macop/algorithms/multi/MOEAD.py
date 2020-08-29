@@ -36,15 +36,16 @@ class MOEAD(Algorithm):
     Attributes:
         mu: {int} -- number of sub problems
         T: {[float]} -- number of neightbors for each sub problem
+        nObjectives: {int} -- number of objectives (based of number evaluator)
         initalizer: {function} -- basic function strategy to initialize solution
         evaluator: {[function]} -- list of basic function in order to obtained fitness (multiple objectives)
         operators: {[Operator]} -- list of operator to use when launching algorithm
         policy: {Policy} -- Policy class implementation strategy to select operators
         validator: {function} -- basic function to check if solution is valid or not under some constraints
         maximise: {bool} -- specify kind of optimization problem 
-        currentSolution: {Solution} -- current solution managed for current evaluation
         population: [{Solution}] -- population of solution, one for each sub problem
         pfPop: [{Solution}] -- pareto front population
+        weights: [[{float}]] -- random weights used for custom mu sub problems
         callbacks: {[Callback]} -- list of Callback class implementation to do some instructions every number of evaluations and `load` when initializing algorithm
     """
     def __init__(self,
@@ -69,6 +70,7 @@ class MOEAD(Algorithm):
         # by default
         self.numberOfEvaluations = 0
         self.maxEvaluations = 0
+        self.nObjectives = len(_evaluator)
 
         # other parameters
         self.parent = _parent  # parent algorithm if it's sub algorithm
@@ -93,10 +95,25 @@ class MOEAD(Algorithm):
         self.setNeighbors()
 
         weights = []
-        for i in range(self.mu):
-            angle = math.pi / 2 * i / (self.mu - 1)
-            weights.append([math.cos(angle), math.sin(angle)])
+    
+        if self.nObjectives == 2:
+                
+            for i in range(self.mu):
+                angle = math.pi / 2 * i / (self.mu - 1)
+                weights.append([math.cos(angle), math.sin(angle)])
 
+        elif self.nObjectives >= 3:
+
+            # random weights using uniform
+            for i in range(self.mu):
+                w_i = np.random.uniform(0, 1, self.nObjectives)
+                weights.append(w_i / sum(w_i))
+        else:
+            raise ValueError('Unvalid number of objectives')
+
+        
+        self.weights = weights
+        
         self.subProblems = []
 
         for i in range(self.mu):
@@ -114,10 +131,11 @@ class MOEAD(Algorithm):
         self.population = [None for n in range(self.mu)]
         self.pfPop = []
 
+        # ref point based on number of evaluators
         if self.maximise:
-            self.refPoint = [ 0 for _ in range(len(_evaluator)) ]
+            self.refPoint = [ 0 for _ in range(self.nObjectives) ]
         else:
-            self.refPoint = [ sys.float_info.max for _ in range(len(_evaluator)) ]
+            self.refPoint = [ sys.float_info.max for _ in range(self.nObjectives) ]
         
 
     def initRun(self):
