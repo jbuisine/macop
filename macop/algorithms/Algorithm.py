@@ -70,18 +70,6 @@ class Algorithm():
         # set as new
         self.callbacks.append(_callback)
 
-    def setCheckpoint(self, _callback):
-        """Set checkpoint instance directly
-        Args:
-            _callback: {Callback} -- Callback instance used for checkpoint
-        """
-        # specify current main algorithm reference if necessary
-        if _callback.algo is None:
-            _callback.setAlgo(self)
-
-        # set as checkpoint
-        self.checkpoint = _callback
-
     def resume(self):
         """Resume algorithm using Callback instances
         """

@@ -23,7 +23,7 @@ class TestCommand(distutils.command.check.check):
 
 setup(
     name='macop',
-    version='0.2.0',
+    version='0.2.1',
     description='Minimalist And Customizable Optimization Package',
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',

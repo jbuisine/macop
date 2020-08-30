@@ -4,6 +4,7 @@
 import logging
 import random
 import math
+import numpy as np
 
 # module imports
 from .Policy import Policy
@@ -15,14 +16,16 @@ class UCBPolicy(Policy):
     Attributes:
         operators: {[Operator]} -- list of selected operators for the algorithm
         C: {float} -- tradeoff between EvE parameter for UCB
+        exp_rate: {float} -- exploration rate (probability to choose randomly next operator)
         rewards: {[float]} -- list of summed rewards obtained for each operator
-        occurences: {[int]} -- number of use (selected) of each operator
+        occurrences: {[int]} -- number of use (selected) of each operator
     """
-    def __init__(self, _operators, _C=100.):
+    def __init__(self, _operators, _C=100., _exp_rate=0.5):
         self.operators = _operators
         self.rewards = [0. for o in self.operators]
-        self.occurences = [0 for o in self.operators]
+        self.occurrences = [0 for o in self.operators]
         self.C = _C
+        self.exp_rate = _exp_rate
 
     def select(self):
         """Select randomly the next operator to use
@@ -31,18 +34,23 @@ class UCBPolicy(Policy):
             {Operator}: the selected operator
         """
 
-        indices = [i for i, o in enumerate(self.occurences) if o == 0]
+        indices = [i for i, o in enumerate(self.occurrences) if o == 0]
 
-        # if operator have at least be used one time
-        if len(indices) == 0:
+        # random choice following exploration rate
+        if np.random.uniform(0, 1) <= self.exp_rate:
 
+            return self.operators[random.choice(range(len(self.operators)))]
+
+        elif len(indices) == 0:
+
+            # if operator have at least be used one time
             ucbValues = []
-            nVisits = sum(self.occurences)
+            nVisits = sum(self.occurrences)
 
             for i in range(len(self.operators)):
 
                 ucbValue = self.rewards[i] + self.C * math.sqrt(
-                    math.log(nVisits) / self.occurences[i])
+                    math.log(nVisits) / (self.occurrences[i] + 0.1))
                 ucbValues.append(ucbValue)
 
             return self.operators[ucbValues.index(max(ucbValues))]
@@ -83,7 +91,7 @@ class UCBPolicy(Policy):
         if fir > 0:
             operator_index = self.operators.index(operator)
             self.rewards[operator_index] += fir
-            self.occurences[operator_index] += 1
+            self.occurrences[operator_index] += 1
 
         logging.info("---- Obtaining %s" % (_solution))
 

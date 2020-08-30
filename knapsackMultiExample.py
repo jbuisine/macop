@@ -18,6 +18,7 @@ from macop.operators.policies.UCBPolicy import UCBPolicy
 from macop.algorithms.multi.MOEAD import MOEAD
 from macop.callbacks.MultiCheckpoint import MultiCheckpoint
 from macop.callbacks.ParetoCheckpoint import ParetoCheckpoint
+from macop.callbacks.UCBCheckpoint import UCBCheckpoint
 
 if not os.path.exists('data'):
     os.makedirs('data')
@@ -70,18 +71,20 @@ def evaluator2(_solution):
 
 mo_checkpoint_path = "data/checkpointsMOEAD.csv"
 pf_checkpoint_path = "data/pfMOEAD.csv"
+ucb_checkpoint_path = "data/UCBPolicyMOEAD.csv"
 
 
 def main():
 
     operators = [SimpleBinaryMutation(), SimpleMutation(), SimpleCrossover(), RandomSplitCrossover()]
-    policy = RandomPolicy(operators)
+    policy = UCBPolicy(operators, _C=100)
 
     # pass list of evaluators
     algo = MOEAD(20, 5, init, [evaluator1, evaluator2, evaluator2, evaluator2], operators, policy, validator, _maximise=True)
-    print(algo.weights)
+    
     algo.addCallback(MultiCheckpoint(_every=5, _filepath=mo_checkpoint_path))
     algo.addCallback(ParetoCheckpoint(_every=5, _filepath=pf_checkpoint_path))
+    algo.addCallback(UCBCheckpoint(_every=5, _filepath=ucb_checkpoint_path))
 
     paretoFront = algo.run(10000)
 

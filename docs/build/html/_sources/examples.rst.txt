@@ -254,6 +254,31 @@ In our case, we need to specify the use of checkpoint if we prefer to restart fr
     # And also the algorithm to load checkpoint if exists before running by using `load` method of callback
     algo.addCallback(callback)
 
+We can also add the `UCBCheckpoint` callback which keeps track of UCB data obtained during previous run:
+
+.. code:: python
+    
+    """
+    imports part
+    """
+    ...
+    
+    import logging
+
+    from macop.callbacks.UCBCheckpoint import UCBCheckpoint
+
+    """
+    Problem definition
+    """
+    ...
+
+    """
+    Algorithm parameters
+    """
+    ...
+
+    # add UCB Checkpoint callback to keep track of UCB statistics obtained
+    algo.addCallback(UCBCheckpoint(_every=5, _filepath='data/ucbPolicy.csv'))
 
 In this way, now we can run and obtained the best solution found in `n` evaluations
 
@@ -503,7 +528,7 @@ To keep track of our `mu` population and `pfPop` pareto front set, 2 new callbac
 
     from macop.algorithms.multi.MOEAD import MOEAD
     from macop.callbacks.MultiCheckpoint import MultiCheckpoint
-    from macop.callbacks.ParetoFront import ParetoFront
+    from macop.callbacks.ParetoCheckpoint import ParetoCheckpoint
 
     """
     Problem definition
@@ -532,6 +557,32 @@ To keep track of our `mu` population and `pfPop` pareto front set, 2 new callbac
     algo.addCallback(ParetoCheckpoint(_every=5, _filepath='data/paretoMOEAD.csv'))
 
 These callbacks only stores the last states of `mu` population and `pfPop`.
+
+We can also add the `UCBCheckpoint` callback which keeps track of UCB data obtained during previous run:
+
+.. code:: python
+    
+    """
+    imports part
+    """
+    ...
+    
+    import logging
+
+    from macop.callbacks.UCBCheckpoint import UCBCheckpoint
+
+    """
+    Problem definition
+    """
+    ...
+
+    """
+    Algorithm parameters
+    """
+    ...
+
+    # add UCB Checkpoint callback to keep track of UCB statistics obtained
+    algo.addCallback(UCBCheckpoint(_every=5, _filepath='data/ucbPolicy.csv'))
 
 We can now run the MOEAD algorithm instance:
 

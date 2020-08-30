@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Some examples &mdash; macop v0.2.0 documentation</title>
+  <title>Some examples &mdash; macop v0.2.1 documentation</title>
   
 
   
@@ -60,7 +60,7 @@
             
             
               <div class="version">
-                0.2.0
+                0.2.1
               </div>
             
           
@@ -401,6 +401,30 @@ A Callback is runned every number of evaluations but can also implement the <cit
 <span class="n">algo</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="n">callback</span><span class="p">)</span>
 </pre></div>
 </div>
+<p>We can also add the <cite>UCBCheckpoint</cite> callback which keeps track of UCB data obtained during previous run:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">imports part</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="o">...</span>
+
+<span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="kn">from</span> <span class="nn">macop.callbacks.UCBCheckpoint</span> <span class="kn">import</span> <span class="n">UCBCheckpoint</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Problem definition</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="o">...</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Algorithm parameters</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="o">...</span>
+
+<span class="c1"># add UCB Checkpoint callback to keep track of UCB statistics obtained</span>
+<span class="n">algo</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="n">UCBCheckpoint</span><span class="p">(</span><span class="n">_every</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">_filepath</span><span class="o">=</span><span class="s1">&#39;data/ucbPolicy.csv&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
 <p>In this way, now we can run and obtained the best solution found in <cite>n</cite> evaluations</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">bestSol</span> <span class="o">=</span> <span class="n">algo</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="mi">10000</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Solution score is </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">evaluator</span><span class="p">(</span><span class="n">bestSol</span><span class="p">)))</span>
@@ -618,7 +642,7 @@ This is an example, we based our function using classical weighted sum, we can a
 
 <span class="kn">from</span> <span class="nn">macop.algorithms.multi.MOEAD</span> <span class="kn">import</span> <span class="n">MOEAD</span>
 <span class="kn">from</span> <span class="nn">macop.callbacks.MultiCheckpoint</span> <span class="kn">import</span> <span class="n">MultiCheckpoint</span>
-<span class="kn">from</span> <span class="nn">macop.callbacks.ParetoFront</span> <span class="kn">import</span> <span class="n">ParetoFront</span>
+<span class="kn">from</span> <span class="nn">macop.callbacks.ParetoCheckpoint</span> <span class="kn">import</span> <span class="n">ParetoCheckpoint</span>
 
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">Problem definition</span>
@@ -648,6 +672,30 @@ This is an example, we based our function using classical weighted sum, we can a
 </pre></div>
 </div>
 <p>These callbacks only stores the last states of <cite>mu</cite> population and <cite>pfPop</cite>.</p>
+<p>We can also add the <cite>UCBCheckpoint</cite> callback which keeps track of UCB data obtained during previous run:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">imports part</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="o">...</span>
+
+<span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="kn">from</span> <span class="nn">macop.callbacks.UCBCheckpoint</span> <span class="kn">import</span> <span class="n">UCBCheckpoint</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Problem definition</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="o">...</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Algorithm parameters</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="o">...</span>
+
+<span class="c1"># add UCB Checkpoint callback to keep track of UCB statistics obtained</span>
+<span class="n">algo</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="n">UCBCheckpoint</span><span class="p">(</span><span class="n">_every</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">_filepath</span><span class="o">=</span><span class="s1">&#39;data/ucbPolicy.csv&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
 <p>We can now run the MOEAD algorithm instance:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">paretoFront</span> <span class="o">=</span> <span class="n">algo</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="mi">10000</span><span class="p">)</span>
 
