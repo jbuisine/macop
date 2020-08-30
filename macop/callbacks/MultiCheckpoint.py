@@ -35,7 +35,7 @@ class MultiCheckpoint(Callback):
             logging.info("Checkpoint is done into " + self.filepath)
 
             with open(self.filepath, 'w') as f:
-                        
+
                 for solution in population:
                     solutionData = ""
                     solutionSize = len(solution.data)
@@ -52,7 +52,7 @@ class MultiCheckpoint(Callback):
                         line += str(solution.scores[i]) + ';'
 
                     line += solutionData + ';\n'
-                    
+
                     f.write(line)
 
     def load(self):
@@ -68,7 +68,7 @@ class MultiCheckpoint(Callback):
                 for i, line in enumerate(f.readlines()):
 
                     data = line.replace(';\n', '').split(';')
-                
+
                     # only the first time
                     if i == 0:
                         # get evaluation  information
@@ -80,19 +80,22 @@ class MultiCheckpoint(Callback):
                             self.algo.numberOfEvaluations = globalEvaluation
 
                     nObjectives = len(self.algo.evaluator)
-                    scores = [ float(s) for s in data[1:nObjectives + 1] ]
+                    scores = [float(s) for s in data[1:nObjectives + 1]]
 
                     # get best solution data information
                     solutionData = list(map(int, data[-1].split(' ')))
-                        
+
                     self.algo.population[i].data = np.array(solutionData)
                     self.algo.population[i].scores = scores
 
                     self.algo.pfPop[i] = self.algo.population[i]
 
             print(macop_line())
-            print(macop_text('Load of available population from `{}`'.format(self.filepath)))
-            print(macop_text('Restart algorithm from evaluation {}.'.format(
+            print(
+                macop_text('Load of available population from `{}`'.format(
+                    self.filepath)))
+            print(
+                macop_text('Restart algorithm from evaluation {}.'.format(
                     self.algo.numberOfEvaluations)))
 
         else:

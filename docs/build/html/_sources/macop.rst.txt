@@ -22,6 +22,7 @@ macop.callbacks
    
    macop.callbacks.BasicCheckpoint
    macop.callbacks.MultiCheckpoint
+   macop.callbacks.ParetoCheckpoint
    macop.callbacks.Callback
 
 macop.evaluators

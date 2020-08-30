@@ -13,7 +13,7 @@ macop.callbacks.MultiCheckpoint
 
    .. autosummary::
    
-      BasicCheckpoint
+      MultiCheckpoint
    
    
 

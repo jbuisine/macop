@@ -17,6 +17,7 @@ for loader, module_name, is_pkg in pkgutil.walk_packages(
     _module = loader.find_module(module_name).load_module(module_name)
     globals()[module_name] = _module
 
+
 class ParetoCheckpoint(Callback):
     """
     Pareto checkpoint is used for loading previous computations and start again after loading checkpoint
@@ -41,7 +42,7 @@ class ParetoCheckpoint(Callback):
             logging.info("Checkpoint is done into " + self.filepath)
 
             with open(self.filepath, 'w') as f:
-                        
+
                 for solution in pfPop:
                     solutionData = ""
                     solutionSize = len(solution.data)
@@ -58,7 +59,7 @@ class ParetoCheckpoint(Callback):
                         line += str(solution.scores[i]) + ';'
 
                     line += solutionData + ';\n'
-                    
+
                     f.write(line)
 
     def load(self):
@@ -69,7 +70,7 @@ class ParetoCheckpoint(Callback):
 
             logging.info('Load best solution from last checkpoint')
             with open(self.filepath) as f:
-                
+
                 # reinit pf population
                 self.algo.pfPop = []
 
@@ -80,22 +81,30 @@ class ParetoCheckpoint(Callback):
                 for line in f.readlines():
 
                     data = line.replace(';\n', '').split(';')
-                
+
                     nObjectives = len(self.algo.evaluator)
-                    scores = [ float(s) for s in data[0:nObjectives] ]
+                    scores = [float(s) for s in data[0:nObjectives]]
 
                     # get best solution data information
                     solutionData = list(map(int, data[-1].split(' ')))
 
-                    newSolution = getattr(globals()['macop.solutions.' + class_name], class_name)(solutionData, len(solutionData))
+                    newSolution = getattr(
+                        globals()['macop.solutions.' + class_name],
+                        class_name)(solutionData, len(solutionData))
                     newSolution.scores = scores
 
                     self.algo.pfPop.append(newSolution)
 
-            print(macop_text('Load of available pareto front backup from `{}`'.format(self.filepath)))
+            print(
+                macop_text(
+                    'Load of available pareto front backup from `{}`'.format(
+                        self.filepath)))
 
         else:
-            print(macop_text('No pareto front found... Start running algorithm with new pareto front population.'))
+            print(
+                macop_text(
+                    'No pareto front found... Start running algorithm with new pareto front population.'
+                ))
             logging.info("No pareto front backup used...")
 
         print(macop_line())

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Some examples &mdash; macop v0.1.6 documentation</title>
+  <title>Some examples &mdash; macop v0.2.0 documentation</title>
   
 
   
@@ -60,7 +60,7 @@
             
             
               <div class="version">
-                0.1.6
+                0.2.0
               </div>
             
           
@@ -95,7 +95,13 @@
 <li class="toctree-l3"><a class="reference internal" href="#before-running-algorithm">1.3 Before running algorithm</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#multi-objective">2. Multi-objective</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#multi-objective">2. Multi-objective</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">1.1 Problem definition</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">1.2 Operators and Policy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#how-works-multi-objective-in-macop">1.3 How works multi-objective in macop ?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#checkpoint-multi-objective-solutions">1.4 Checkpoint multi-objective solutions</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
@@ -404,7 +410,251 @@ A Callback is runned every number of evaluations but can also implement the <cit
 </div>
 <div class="section" id="multi-objective">
 <h2>2. Multi-objective<a class="headerlink" href="#multi-objective" title="Permalink to this headline">¶</a></h2>
-<p>Available soon…</p>
+<div class="section" id="id1">
+<h3>1.1 Problem definition<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>In this example we also use the knapsack problem, with here, 2 kinds of value for each object in the knapsack :</p>
+<ul class="simple">
+<li><p>value 1 of each component of knapsack</p></li>
+<li><p>value 2 of each component of knapsack</p></li>
+<li><p>weight associated to each of these components (objects)</p></li>
+</ul>
+<p>In multi-objective algorithm, we do not only found one solution but a set of non-dominated solutions called Pareto front as we have multiple objectives.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">imports part</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">random</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Problem definition</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="n">elements_score1</span> <span class="o">=</span> <span class="p">[</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">200</span><span class="p">)</span> <span class="p">]</span> <span class="c1"># value 1 of each object</span>
+<span class="n">elements_score2</span> <span class="o">=</span> <span class="p">[</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">200</span><span class="p">)</span> <span class="p">]</span> <span class="c1"># value 2 of each object</span>
+<span class="n">elements_weight</span> <span class="o">=</span> <span class="p">[</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">25</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">200</span><span class="p">)</span> <span class="p">]</span> <span class="c1"># weight of each object</span>
+</pre></div>
+</div>
+<p>We can now define the solution representation. In knapsack problem we want to fill our knapsack in an optimization way selecting or not each component (object).
+The best way to represent this problem is to use the <cite>BinarySolution</cite> from <cite>macop</cite> which stores solution as a binary array.</p>
+<p>Using the solution representation, we need to define multiple elements to fit our algorithm :</p>
+<ul class="simple">
+<li><p>function which validates or not a solution (based on constraints)</p></li>
+<li><p>the first objective function which evaluates the solution (fitness score for objective 1)</p></li>
+<li><p>the second objective function which evaluates the solution (fitness score for objective 2)</p></li>
+<li><p>initialization solution function</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">imports part</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">from</span> <span class="nn">macop.solutions.BinarySolution</span> <span class="kn">import</span> <span class="n">BinarySolution</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Problem definition</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="n">elements_score1</span> <span class="o">=</span> <span class="p">[</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">200</span><span class="p">)</span> <span class="p">]</span> <span class="c1"># value 1 of each object</span>
+<span class="n">elements_score2</span> <span class="o">=</span> <span class="p">[</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">200</span><span class="p">)</span> <span class="p">]</span> <span class="c1"># value 2 of each object</span>
+<span class="n">elements_weight</span> <span class="o">=</span> <span class="p">[</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">25</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">200</span><span class="p">)</span> <span class="p">]</span> <span class="c1"># weight of each object</span>
+
+<span class="c1"># 1. validator function (we accept only bag with maximum weight 80kg)</span>
+<span class="k">def</span> <span class="nf">validator</span><span class="p">(</span><span class="n">_solution</span><span class="p">):</span>
+
+    <span class="n">weight_sum</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">elem</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">_solution</span><span class="o">.</span><span class="n">data</span><span class="p">):</span>
+        <span class="n">weight_sum</span> <span class="o">+=</span> <span class="n">elements_weight</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">*</span> <span class="n">elem</span>
+
+    <span class="k">if</span> <span class="n">weight_sum</span> <span class="o">&lt;=</span> <span class="mi">80</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="kc">False</span>
+
+<span class="c1"># 2. functions which computes fitness of solution for the two objectives</span>
+<span class="k">def</span> <span class="nf">evaluator1</span><span class="p">(</span><span class="n">_solution</span><span class="p">):</span>
+
+    <span class="n">fitness</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">elem</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">_solution</span><span class="o">.</span><span class="n">data</span><span class="p">):</span>
+        <span class="n">fitness</span> <span class="o">+=</span> <span class="p">(</span><span class="n">elements_score1</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">*</span> <span class="n">elem</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">fitness</span>
+
+<span class="k">def</span> <span class="nf">evaluator2</span><span class="p">(</span><span class="n">_solution</span><span class="p">):</span>
+
+    <span class="n">fitness</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">elem</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">_solution</span><span class="o">.</span><span class="n">data</span><span class="p">):</span>
+        <span class="n">fitness</span> <span class="o">+=</span> <span class="p">(</span><span class="n">elements_score2</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">*</span> <span class="n">elem</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">fitness</span>
+
+<span class="c1"># 3. function which here initializes solution ramdomly and check validity of solution</span>
+<span class="k">def</span> <span class="nf">init</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">BinarySolution</span><span class="p">([],</span> <span class="mi">200</span><span class="p">)</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">validator</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id2">
+<h3>1.2 Operators and Policy<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<p>In our algorithm we need to use some operators in order to improve current best solution found at current <cite>n</cite> evaluations.</p>
+<p>In <cite>macop</cite> you have some available operators. In this example, we use 3 of them.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">imports part</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="o">...</span>
+
+<span class="kn">from</span> <span class="nn">macop.operators.mutators.SimpleMutation</span> <span class="kn">import</span> <span class="n">SimpleMutation</span>
+<span class="kn">from</span> <span class="nn">macop.operators.mutators.SimpleBinaryMutation</span> <span class="kn">import</span> <span class="n">SimpleBinaryMutation</span>
+<span class="kn">from</span> <span class="nn">macop.operators.crossovers.SimpleCrossover</span> <span class="kn">import</span> <span class="n">SimpleCrossover</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Problem definition</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="o">...</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Algorithm parameters</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="c1"># list of operators instance to use</span>
+<span class="n">operators</span> <span class="o">=</span> <span class="p">[</span><span class="n">SimpleBinaryMutation</span><span class="p">(),</span> <span class="n">SimpleMutation</span><span class="p">(),</span> <span class="n">SimpleCrossover</span><span class="p">(),</span> <span class="n">RandomSplitCrossover</span><span class="p">()]</span>
+</pre></div>
+</div>
+<p>As we defined multiple operators, we have to tell how we want to select them into the algorithm. This is why <strong>Policy</strong> classes have been implemented.
+<cite>Policy</cite> class implementation enables to select the next operator to use and once new solution is generated, computes its score (in <cite>apply</cite> method). This class requires all the operators use to be instanciate.</p>
+<p>Why computing score into <strong>Policy</strong> <cite>apply</cite> method ? Because it’s a way to get some important statistics from solution improvment using specific operator.
+<strong>UCBPolicy</strong> as example, based on Upper Confidence Bound (<a class="reference external" href="https://banditalgs.com/2016/09/18/the-upper-confidence-bound-algorithm/">UCB</a>), computes reward each time a new solution is generated from an operator in order to better select next operator later. We use in this example the <cite>UCBPolicy</cite> implementation.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">imports part</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="o">...</span>
+
+<span class="kn">from</span> <span class="nn">macop.operators.mutators.SimpleMutation</span> <span class="kn">import</span> <span class="n">SimpleMutation</span>
+<span class="kn">from</span> <span class="nn">macop.operators.mutators.SimpleBinaryMutation</span> <span class="kn">import</span> <span class="n">SimpleBinaryMutation</span>
+<span class="kn">from</span> <span class="nn">macop.operators.crossovers.SimpleCrossover</span> <span class="kn">import</span> <span class="n">SimpleCrossover</span>
+
+<span class="kn">from</span> <span class="nn">macop.operators.policies.UCBPolicy</span> <span class="kn">import</span> <span class="n">UCBPolicy</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Problem definition</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="o">...</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Algorithm parameters</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="c1"># list of operators instance to use</span>
+<span class="n">operators</span> <span class="o">=</span> <span class="p">[</span><span class="n">SimpleBinaryMutation</span><span class="p">(),</span> <span class="n">SimpleMutation</span><span class="p">(),</span> <span class="n">SimpleCrossover</span><span class="p">(),</span> <span class="n">RandomSplitCrossover</span><span class="p">()]</span>
+
+<span class="c1"># `policy` instance is created using specific value for Upper Confidence Bound</span>
+<span class="n">policy</span> <span class="o">=</span> <span class="n">UCBPolicy</span><span class="p">(</span><span class="n">operators</span><span class="p">,</span> <span class="n">C</span><span class="o">=</span><span class="mf">100.</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="how-works-multi-objective-in-macop">
+<h3>1.3 How works multi-objective in macop ?<a class="headerlink" href="#how-works-multi-objective-in-macop" title="Permalink to this headline">¶</a></h3>
+<p>As we have now multiple objectives, we define a new algorithm named MOEAD for <cite>MultiObjective Evolutionary Algorithm with Decomposition</cite> inside <cite>macop.algorithms.multi.MOEAD</cite>.
+The principle of this algorithm is to decompose the multi-objective problem into several single-objective problems (see <a class="reference external" href="https://sites.google.com/view/moead/home">MOEAD</a> documentation framework).
+To implement this algorithm, we now define the attribute <cite>evaluator</cite> as a list of evaluators. The number of objectives is defined by the length of this list and generated weights for each sub problem too.</p>
+<p>The <cite>mu</cite> attribute represent the number of sub problems and hence our current population of solutions.</p>
+<p>In order to represent the <cite>mu</cite> mono-objective sub problems (obtained from weighted decomposition), we define the <cite>macop.algorithms.multi.MOSubProblem</cite> class.
+This class enables to compute and find best solution from weighted decomposition. The <cite>weights</cite> attribute of this class stores the weight for each objective of this sub problem instance.</p>
+<p>The <cite>evaluator</cite> of MOSubProblem is defined as below:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">moEvaluator</span><span class="p">(</span><span class="n">_solution</span><span class="p">,</span> <span class="n">_evaluator</span><span class="p">,</span> <span class="n">_weights</span><span class="p">):</span>
+
+    <span class="n">scores</span> <span class="o">=</span> <span class="p">[</span><span class="nb">eval</span><span class="p">(</span><span class="n">_solution</span><span class="p">)</span> <span class="k">for</span> <span class="nb">eval</span> <span class="ow">in</span> <span class="n">_evaluator</span><span class="p">]</span>
+
+    <span class="c1"># associate objectives scores to solution</span>
+    <span class="n">_solution</span><span class="o">.</span><span class="n">scores</span> <span class="o">=</span> <span class="n">scores</span>
+
+    <span class="c1"># return the weighted sum</span>
+    <span class="k">return</span> <span class="nb">sum</span><span class="p">([</span><span class="n">scores</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">w</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">_weights</span><span class="p">)])</span>
+
+<span class="o">...</span>
+
+<span class="c1"># compute weighted sum from solution using list of evaluators and weights for current sub problem</span>
+<span class="n">sub_evaluator</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">_solution</span><span class="p">:</span> <span class="n">moEvaluator</span><span class="p">(</span><span class="n">_solution</span><span class="p">,</span> <span class="n">_evaluator</span><span class="p">,</span> <span class="n">weights</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>This function computes the weighted sum of objectives (to transform sub problem into mono-objective) and also stores the objectives scores into solution using the dynamic added <cite>scores</cite> attributes.
+This is an example, we based our function using classical weighted sum, we can also implement <a class="reference external" href="https://repository.lib.ncsu.edu/handle/1840.16/272">Tchebychev</a> method.</p>
+<p>We can now instance our MOEAD algorithm:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">imports part</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="o">...</span>
+
+<span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="kn">from</span> <span class="nn">macop.algorithms.multi.MOEAD</span> <span class="kn">import</span> <span class="n">MOEAD</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Problem definition</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="o">...</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Algorithm parameters</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="o">...</span>
+
+<span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">):</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">)</span>
+
+<span class="c1"># logging configuration</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="nb">format</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%(asctime)s</span><span class="s1"> </span><span class="si">%(message)s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;data/example.log&#39;</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+
+<span class="n">algo</span> <span class="o">=</span> <span class="n">MOEAD</span><span class="p">(</span><span class="n">init</span><span class="p">,</span> <span class="p">[</span><span class="n">evaluator1</span><span class="p">,</span> <span class="n">evaluator2</span><span class="p">],</span> <span class="n">operators</span><span class="p">,</span> <span class="n">policy</span><span class="p">,</span> <span class="n">validator</span><span class="p">,</span> <span class="n">_maximise</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="checkpoint-multi-objective-solutions">
+<h3>1.4 Checkpoint multi-objective solutions<a class="headerlink" href="#checkpoint-multi-objective-solutions" title="Permalink to this headline">¶</a></h3>
+<p>To keep track of our <cite>mu</cite> population and <cite>pfPop</cite> pareto front set, 2 new callbacks have been defined:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">imports part</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="o">...</span>
+
+<span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="kn">from</span> <span class="nn">macop.algorithms.multi.MOEAD</span> <span class="kn">import</span> <span class="n">MOEAD</span>
+<span class="kn">from</span> <span class="nn">macop.callbacks.MultiCheckpoint</span> <span class="kn">import</span> <span class="n">MultiCheckpoint</span>
+<span class="kn">from</span> <span class="nn">macop.callbacks.ParetoFront</span> <span class="kn">import</span> <span class="n">ParetoFront</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Problem definition</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="o">...</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Algorithm parameters</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="o">...</span>
+
+<span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">):</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">)</span>
+
+<span class="c1"># logging configuration</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="nb">format</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%(asctime)s</span><span class="s1"> </span><span class="si">%(message)s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;data/example.log&#39;</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+
+<span class="n">algo</span> <span class="o">=</span> <span class="n">ILS</span><span class="p">(</span><span class="n">init</span><span class="p">,</span> <span class="n">evaluator</span><span class="p">,</span> <span class="n">operators</span><span class="p">,</span> <span class="n">policy</span><span class="p">,</span> <span class="n">validator</span><span class="p">,</span> <span class="n">_maximise</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Add this callback instance into list of callback</span>
+<span class="c1"># It tells the algorithm to apply this callback every 5 evaluations</span>
+<span class="c1"># And also the algorithm to load checkpoint if exists before running by using `load` method of callback</span>
+<span class="n">algo</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="n">MultiCheckpoint</span><span class="p">(</span><span class="n">_every</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">_filepath</span><span class="o">=</span><span class="s1">&#39;data/checkpointMOEAD.csv&#39;</span><span class="p">))</span>
+
+<span class="c1"># add Pareto Checkpoint callback instance too</span>
+<span class="n">algo</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="n">ParetoCheckpoint</span><span class="p">(</span><span class="n">_every</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">_filepath</span><span class="o">=</span><span class="s1">&#39;data/paretoMOEAD.csv&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>These callbacks only stores the last states of <cite>mu</cite> population and <cite>pfPop</cite>.</p>
+<p>We can now run the MOEAD algorithm instance:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">paretoFront</span> <span class="o">=</span> <span class="n">algo</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="mi">10000</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Pareto front is composed of&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">paretoFront</span><span class="p">),</span> <span class="s2">&quot;solutions&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
 </div>
 </div>
 

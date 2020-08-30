@@ -22,12 +22,12 @@ for loader, module_name, is_pkg in pkgutil.walk_packages(
 
 def moEvaluator(_solution, _evaluator, _weights):
 
-    scores = [ eval(_solution) for eval in _evaluator ]
+    scores = [eval(_solution) for eval in _evaluator]
 
     # associate objectives scores to solution
     _solution.scores = scores
 
-    return sum([scores[i] for i, w in enumerate(_weights) ])
+    return sum([scores[i] for i, w in enumerate(_weights)])
 
 
 class MOEAD(Algorithm):
@@ -95,9 +95,9 @@ class MOEAD(Algorithm):
         self.setNeighbors()
 
         weights = []
-    
+
         if self.nObjectives == 2:
-                
+
             for i in range(self.mu):
                 angle = math.pi / 2 * i / (self.mu - 1)
                 weights.append([math.cos(angle), math.sin(angle)])
@@ -111,15 +111,15 @@ class MOEAD(Algorithm):
         else:
             raise ValueError('Unvalid number of objectives')
 
-        
         self.weights = weights
-        
+
         self.subProblems = []
 
         for i in range(self.mu):
 
             # compute weight sum from solution
-            sub_evaluator = lambda _solution: moEvaluator(_solution, _evaluator, weights[i])
+            sub_evaluator = lambda _solution: moEvaluator(
+                _solution, _evaluator, weights[i])
 
             # intialize each sub problem
             subProblem = MOSubProblem(i, weights[i], _initalizer,
@@ -133,10 +133,11 @@ class MOEAD(Algorithm):
 
         # ref point based on number of evaluators
         if self.maximise:
-            self.refPoint = [ 0 for _ in range(self.nObjectives) ]
+            self.refPoint = [0 for _ in range(self.nObjectives)]
         else:
-            self.refPoint = [ sys.float_info.max for _ in range(self.nObjectives) ]
-        
+            self.refPoint = [
+                sys.float_info.max for _ in range(self.nObjectives)
+            ]
 
     def initRun(self):
         """
@@ -183,11 +184,15 @@ class MOEAD(Algorithm):
                 # for each neighbor of current sub problem update solution if better
                 improvment = False
                 for j in self.neighbors[i]:
-                    if spBestSolution.fitness() > self.subProblems[j].bestSolution.fitness():
-                        
+                    if spBestSolution.fitness(
+                    ) > self.subProblems[j].bestSolution.fitness():
+
                         # create new solution based on current new if better, computes fitness associated to new solution for sub problem
                         class_name = type(spBestSolution).__name__
-                        newSolution = getattr(globals()['macop.solutions.' + class_name], class_name)(spBestSolution.data, len(spBestSolution.data))
+                        newSolution = getattr(
+                            globals()['macop.solutions.' + class_name],
+                            class_name)(spBestSolution.data,
+                                        len(spBestSolution.data))
 
                         # evaluate solution for new sub problem and update as best solution
                         self.subProblems[j].evaluate(newSolution)
@@ -195,7 +200,7 @@ class MOEAD(Algorithm):
 
                         # update population solution for this sub problem
                         self.population[j] = newSolution
-                       
+
                         improvment = True
 
                 # add new solution if improvment is idenfity
@@ -230,11 +235,11 @@ class MOEAD(Algorithm):
         macop_progress(self.getGlobalEvaluation(),
                        self.getGlobalMaxEvaluation())
 
-        logging.info("-- %s evaluation %s of %s (%s%%)" %
-                     (type(self).__name__, self.numberOfEvaluations,
-                      self.maxEvaluations, "{0:.2f}".format(
-                          (self.numberOfEvaluations) / self.maxEvaluations *
-                          100.)))
+        logging.info(
+            "-- %s evaluation %s of %s (%s%%)" %
+            (type(self).__name__, self.numberOfEvaluations,
+             self.maxEvaluations, "{0:.2f}".format(
+                 (self.numberOfEvaluations) / self.maxEvaluations * 100.)))
 
     def setNeighbors(self):
 
@@ -262,7 +267,6 @@ class MOEAD(Algorithm):
             for i in range(self.mu - self.T, self.mu):
                 self.neighbors[direction].append(i)
 
-
     def updateRefPoint(self, _solution):
 
         if self.maximise:
@@ -280,7 +284,7 @@ class MOEAD(Algorithm):
         indexes = []
         nObjectives = len(self.evaluator)
         nSolutions = len(_population)
-        
+
         # find dominated solution
         for i in range(nSolutions):
             for j in range(nSolutions):
@@ -310,25 +314,26 @@ class MOEAD(Algorithm):
 
         return paFront
 
-
     def end(self):
         """Display end message into `run` method
         """
 
-        print(macop_text('({}) Found after {} evaluations'.format(type(self).__name__, self.numberOfEvaluations)))
-        
+        print(
+            macop_text('({}) Found after {} evaluations'.format(
+                type(self).__name__, self.numberOfEvaluations)))
+
         for i, solution in enumerate(self.pfPop):
             print('  - [{}] {} : {}'.format(i, solution.scores, solution))
 
         print(macop_line())
 
     def information(self):
-        
+
         logging.info("-- Pareto front :")
 
         for i, solution in enumerate(self.pfPop):
             logging.info("-- %s] SCORE %s - %s" %
-                        (i, solution.scores, solution))
+                         (i, solution.scores, solution))
 
     def __str__(self):
         return "%s using %s" % (type(self).__name__, type(

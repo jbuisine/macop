@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>macop.algorithms.mono.IteratedLocalSearch &mdash; macop v0.1.6 documentation</title>
+  <title>macop.algorithms.mono.IteratedLocalSearch &mdash; macop v0.2.0 documentation</title>
   
 
   
@@ -58,7 +58,7 @@
             
             
               <div class="version">
-                0.1.6
+                0.2.0
               </div>
             
           
@@ -174,7 +174,7 @@
 <span class="sd">        maximise: {bool} -- specify kind of optimization problem </span>
 <span class="sd">        currentSolution: {Solution} -- current solution managed for current evaluation</span>
 <span class="sd">        bestSolution: {Solution} -- best solution found so far during running algorithm</span>
-<span class="sd">        checkpoint: {Checkpoint} -- Checkpoint class implementation to keep track of algorithm and restart</span>
+<span class="sd">        callbacks: {[Callback]} -- list of Callback class implementation to do some instructions every number of evaluations and `load` when initializing algorithm</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 <div class="viewcode-block" id="IteratedLocalSearch.run"><a class="viewcode-back" href="../../../../macop/macop.algorithms.mono.IteratedLocalSearch.html#macop.algorithms.mono.IteratedLocalSearch.IteratedLocalSearch.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_evaluations</span><span class="p">,</span> <span class="n">_ls_evaluations</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>

@@ -70,12 +70,12 @@ class MOSubProblem(Algorithm):
 
             # stop algorithm if necessary
             if self.stop():
-                    break
+                break
 
             logging.info("---- Current %s - SCORE %s" %
-                            (newSolution, newSolution.fitness()))
+                         (newSolution, newSolution.fitness()))
 
             logging.info("End of %s, best solution found %s" %
-                        (type(self).__name__, self.bestSolution))
+                         (type(self).__name__, self.bestSolution))
 
         return self.bestSolution

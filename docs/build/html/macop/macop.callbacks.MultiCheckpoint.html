@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>macop.callbacks.MultiCheckpoint &mdash; macop v0.1.6 documentation</title>
+  <title>macop.callbacks.MultiCheckpoint &mdash; macop v0.2.0 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="macop.callbacks.Callback" href="macop.callbacks.Callback.html" />
+    <link rel="next" title="macop.callbacks.ParetoCheckpoint" href="macop.callbacks.ParetoCheckpoint.html" />
     <link rel="prev" title="macop.callbacks.BasicCheckpoint" href="macop.callbacks.BasicCheckpoint.html" /> 
 </head>
 
@@ -60,7 +60,7 @@
             
             
               <div class="version">
-                0.1.6
+                0.2.0
               </div>
             
           
@@ -93,6 +93,7 @@
 <li class="toctree-l2 current"><a class="reference internal" href="../macop.html#macop-callbacks">macop.callbacks</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="macop.callbacks.BasicCheckpoint.html">macop.callbacks.BasicCheckpoint</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">macop.callbacks.MultiCheckpoint</a></li>
+<li class="toctree-l3"><a class="reference internal" href="macop.callbacks.ParetoCheckpoint.html">macop.callbacks.ParetoCheckpoint</a></li>
 <li class="toctree-l3"><a class="reference internal" href="macop.callbacks.Callback.html">macop.callbacks.Callback</a></li>
 </ul>
 </li>
@@ -173,7 +174,7 @@
             
   <div class="section" id="module-macop.callbacks.MultiCheckpoint">
 <span id="macop-callbacks-multicheckpoint"></span><h1>macop.callbacks.MultiCheckpoint<a class="headerlink" href="#module-macop.callbacks.MultiCheckpoint" title="Permalink to this headline">¶</a></h1>
-<p>Basic Checkpoint class implementation</p>
+<p>Multi Checkpoint class implementation</p>
 <p class="rubric">Classes</p>
 <table class="longtable docutils align-default">
 <colgroup>
@@ -181,42 +182,42 @@
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#macop.callbacks.MultiCheckpoint.BasicCheckpoint" title="macop.callbacks.MultiCheckpoint.BasicCheckpoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BasicCheckpoint</span></code></a>(_every, _filepath)</p></td>
-<td><p>BasicCheckpoint is used for loading previous computations and start again after loading checkpoint</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#macop.callbacks.MultiCheckpoint.MultiCheckpoint" title="macop.callbacks.MultiCheckpoint.MultiCheckpoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MultiCheckpoint</span></code></a>(_every, _filepath)</p></td>
+<td><p>MultiCheckpoint is used for loading previous computations and start again after loading checkpoint</p></td>
 </tr>
 </tbody>
 </table>
 <dl class="class">
-<dt id="macop.callbacks.MultiCheckpoint.BasicCheckpoint">
-<em class="property">class </em><code class="sig-prename descclassname">macop.callbacks.MultiCheckpoint.</code><code class="sig-name descname">BasicCheckpoint</code><span class="sig-paren">(</span><em class="sig-param">_every</em>, <em class="sig-param">_filepath</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macop/callbacks/MultiCheckpoint.html#BasicCheckpoint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macop.callbacks.MultiCheckpoint.BasicCheckpoint" title="Permalink to this definition">¶</a></dt>
-<dd><p>BasicCheckpoint is used for loading previous computations and start again after loading checkpoint</p>
+<dt id="macop.callbacks.MultiCheckpoint.MultiCheckpoint">
+<em class="property">class </em><code class="sig-prename descclassname">macop.callbacks.MultiCheckpoint.</code><code class="sig-name descname">MultiCheckpoint</code><span class="sig-paren">(</span><em class="sig-param">_every</em>, <em class="sig-param">_filepath</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macop/callbacks/MultiCheckpoint.html#MultiCheckpoint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macop.callbacks.MultiCheckpoint.MultiCheckpoint" title="Permalink to this definition">¶</a></dt>
+<dd><p>MultiCheckpoint is used for loading previous computations and start again after loading checkpoint</p>
 <dl class="attribute">
-<dt id="macop.callbacks.MultiCheckpoint.BasicCheckpoint.algo">
-<code class="sig-name descname">algo</code><a class="headerlink" href="#macop.callbacks.MultiCheckpoint.BasicCheckpoint.algo" title="Permalink to this definition">¶</a></dt>
+<dt id="macop.callbacks.MultiCheckpoint.MultiCheckpoint.algo">
+<code class="sig-name descname">algo</code><a class="headerlink" href="#macop.callbacks.MultiCheckpoint.MultiCheckpoint.algo" title="Permalink to this definition">¶</a></dt>
 <dd><p>{Algorithm} – main algorithm instance reference</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="macop.callbacks.MultiCheckpoint.BasicCheckpoint.every">
-<code class="sig-name descname">every</code><a class="headerlink" href="#macop.callbacks.MultiCheckpoint.BasicCheckpoint.every" title="Permalink to this definition">¶</a></dt>
+<dt id="macop.callbacks.MultiCheckpoint.MultiCheckpoint.every">
+<code class="sig-name descname">every</code><a class="headerlink" href="#macop.callbacks.MultiCheckpoint.MultiCheckpoint.every" title="Permalink to this definition">¶</a></dt>
 <dd><p>{int} – checkpoint frequency used (based on number of evaluations)</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="macop.callbacks.MultiCheckpoint.BasicCheckpoint.filepath">
-<code class="sig-name descname">filepath</code><a class="headerlink" href="#macop.callbacks.MultiCheckpoint.BasicCheckpoint.filepath" title="Permalink to this definition">¶</a></dt>
+<dt id="macop.callbacks.MultiCheckpoint.MultiCheckpoint.filepath">
+<code class="sig-name descname">filepath</code><a class="headerlink" href="#macop.callbacks.MultiCheckpoint.MultiCheckpoint.filepath" title="Permalink to this definition">¶</a></dt>
 <dd><p>{str} – file path where checkpoints will be saved</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="macop.callbacks.MultiCheckpoint.BasicCheckpoint.load">
-<code class="sig-name descname">load</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macop/callbacks/MultiCheckpoint.html#BasicCheckpoint.load"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macop.callbacks.MultiCheckpoint.BasicCheckpoint.load" title="Permalink to this definition">¶</a></dt>
-<dd><p>Load last backup line of solution and set algorithm state (best solution and evaluations) at this backup</p>
+<dt id="macop.callbacks.MultiCheckpoint.MultiCheckpoint.load">
+<code class="sig-name descname">load</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macop/callbacks/MultiCheckpoint.html#MultiCheckpoint.load"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macop.callbacks.MultiCheckpoint.MultiCheckpoint.load" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load backup lines as population and set algorithm state (population and pareto front) at this backup</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="macop.callbacks.MultiCheckpoint.BasicCheckpoint.run">
-<code class="sig-name descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macop/callbacks/MultiCheckpoint.html#BasicCheckpoint.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macop.callbacks.MultiCheckpoint.BasicCheckpoint.run" title="Permalink to this definition">¶</a></dt>
+<dt id="macop.callbacks.MultiCheckpoint.MultiCheckpoint.run">
+<code class="sig-name descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macop/callbacks/MultiCheckpoint.html#MultiCheckpoint.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macop.callbacks.MultiCheckpoint.MultiCheckpoint.run" title="Permalink to this definition">¶</a></dt>
 <dd><p>Check if necessary to do backup based on <cite>every</cite> variable</p>
 </dd></dl>
 
@@ -232,7 +233,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="macop.callbacks.Callback.html" class="btn btn-neutral float-right" title="macop.callbacks.Callback" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="macop.callbacks.ParetoCheckpoint.html" class="btn btn-neutral float-right" title="macop.callbacks.ParetoCheckpoint" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="macop.callbacks.BasicCheckpoint.html" class="btn btn-neutral float-left" title="macop.callbacks.BasicCheckpoint" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
