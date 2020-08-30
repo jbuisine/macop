@@ -1,6 +1,8 @@
 """Abstract solution class
 """
 
+from abc import abstractmethod
+
 
 class Solution():
     def __init__(self, _data, _size):
@@ -50,11 +52,18 @@ class Solution():
         """
         return self.score
 
+    @abstractmethod
     def random(self, _validator):
         """
         Initialize solution using random data
+
+        Args:
+            _validator: {function} -- specific function which validates or not a solution
+
+        Returns:
+            {Solution} -- generated solution
         """
-        raise NotImplementedError
+        pass
 
     def __str__(self):
         print("Generic solution with ", self.data)

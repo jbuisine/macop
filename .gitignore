@@ -58,8 +58,7 @@ docs/_build/
 # PyBuilder
 target/
 
-example.log
-checkpoints.csv
+data
 !docs/build
 .vscode
 .python-version

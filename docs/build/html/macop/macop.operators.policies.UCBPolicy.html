@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>macop.operators.policies.UCBPolicy &mdash; macop v0.1.6 documentation</title>
+  <title>macop.operators.policies.UCBPolicy &mdash; macop v0.2.1 documentation</title>
   
 
   
@@ -60,7 +60,7 @@
             
             
               <div class="version">
-                0.1.6
+                0.2.1
               </div>
             
           
@@ -90,7 +90,7 @@
 <li class="toctree-l1 current"><a class="reference internal" href="../macop.html">Documentation</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../macop.html#macop">macop</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../macop.html#macop-algorithms">macop.algorithms</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../macop.html#macop-checkpoints">macop.checkpoints</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../macop.html#macop-callbacks">macop.callbacks</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../macop.html#macop-evaluators">macop.evaluators</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../macop.html#macop-operators">macop.operators</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="macop.operators.crossovers.Crossover.html">macop.operators.crossovers.Crossover</a></li>
@@ -188,14 +188,14 @@
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#macop.operators.policies.UCBPolicy.UCBPolicy" title="macop.operators.policies.UCBPolicy.UCBPolicy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">UCBPolicy</span></code></a>(_operators[, _C])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#macop.operators.policies.UCBPolicy.UCBPolicy" title="macop.operators.policies.UCBPolicy.UCBPolicy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">UCBPolicy</span></code></a>(_operators[, _C, _exp_rate])</p></td>
 <td><p>UCB policy class which is used for applying UCB strategy when selecting and applying operator</p></td>
 </tr>
 </tbody>
 </table>
 <dl class="class">
 <dt id="macop.operators.policies.UCBPolicy.UCBPolicy">
-<em class="property">class </em><code class="sig-prename descclassname">macop.operators.policies.UCBPolicy.</code><code class="sig-name descname">UCBPolicy</code><span class="sig-paren">(</span><em class="sig-param">_operators</em>, <em class="sig-param">_C=1000.0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macop/operators/policies/UCBPolicy.html#UCBPolicy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macop.operators.policies.UCBPolicy.UCBPolicy" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">macop.operators.policies.UCBPolicy.</code><code class="sig-name descname">UCBPolicy</code><span class="sig-paren">(</span><em class="sig-param">_operators</em>, <em class="sig-param">_C=100.0</em>, <em class="sig-param">_exp_rate=0.5</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macop/operators/policies/UCBPolicy.html#UCBPolicy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macop.operators.policies.UCBPolicy.UCBPolicy" title="Permalink to this definition">¶</a></dt>
 <dd><p>UCB policy class which is used for applying UCB strategy when selecting and applying operator</p>
 <dl class="attribute">
 <dt id="macop.operators.policies.UCBPolicy.UCBPolicy.operators">
@@ -210,14 +210,20 @@
 </dd></dl>
 
 <dl class="attribute">
+<dt id="macop.operators.policies.UCBPolicy.UCBPolicy.exp_rate">
+<code class="sig-name descname">exp_rate</code><a class="headerlink" href="#macop.operators.policies.UCBPolicy.UCBPolicy.exp_rate" title="Permalink to this definition">¶</a></dt>
+<dd><p>{float} – exploration rate (probability to choose randomly next operator)</p>
+</dd></dl>
+
+<dl class="attribute">
 <dt id="macop.operators.policies.UCBPolicy.UCBPolicy.rewards">
 <code class="sig-name descname">rewards</code><a class="headerlink" href="#macop.operators.policies.UCBPolicy.UCBPolicy.rewards" title="Permalink to this definition">¶</a></dt>
 <dd><p>{[float]} – list of summed rewards obtained for each operator</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="macop.operators.policies.UCBPolicy.UCBPolicy.occurences">
-<code class="sig-name descname">occurences</code><a class="headerlink" href="#macop.operators.policies.UCBPolicy.UCBPolicy.occurences" title="Permalink to this definition">¶</a></dt>
+<dt id="macop.operators.policies.UCBPolicy.UCBPolicy.occurrences">
+<code class="sig-name descname">occurrences</code><a class="headerlink" href="#macop.operators.policies.UCBPolicy.UCBPolicy.occurrences" title="Permalink to this definition">¶</a></dt>
 <dd><p>{[int]} – number of use (selected) of each operator</p>
 </dd></dl>
 

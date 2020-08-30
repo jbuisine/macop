@@ -4,7 +4,6 @@ import os
 import random
 
 # module imports
-from macop.algorithms.IteratedLocalSearch import IteratedLocalSearch as ILS
 from macop.solutions.BinarySolution import BinarySolution
 from macop.evaluators.EvaluatorExample import evaluatorExample
 
@@ -16,7 +15,8 @@ from macop.operators.crossovers.RandomSplitCrossover import RandomSplitCrossover
 from macop.operators.policies.RandomPolicy import RandomPolicy
 from macop.operators.policies.UCBPolicy import UCBPolicy
 
-from macop.checkpoints.BasicCheckpoint import BasicCheckpoint
+from macop.algorithms.mono.IteratedLocalSearch import IteratedLocalSearch as ILS
+from macop.callbacks.BasicCheckpoint import BasicCheckpoint
 
 if not os.path.exists('data'):
     os.makedirs('data')
@@ -63,11 +63,14 @@ def main():
 
     operators = [SimpleBinaryMutation(), SimpleMutation(), SimpleCrossover(), RandomSplitCrossover()]
     policy = UCBPolicy(operators)
+    callback = BasicCheckpoint(_every=5, _filepath=filepath)
 
     algo = ILS(init, evaluator, operators, policy, validator, _maximise=True)
-    algo.addCheckpoint(_class=BasicCheckpoint, _every=5, _filepath=filepath)
+    
+    # add callback into callback list
+    algo.addCallback(callback)
 
-    bestSol = algo.run(10000)
+    bestSol = algo.run(1000)
 
     print('Solution score is {}'.format(evaluator(bestSol)))
     print('Solution weigth is {}'.format(knapsackWeight(bestSol)))

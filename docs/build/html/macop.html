@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Documentation &mdash; macop v0.1.6 documentation</title>
+  <title>Documentation &mdash; macop v0.2.1 documentation</title>
   
 
   
@@ -60,7 +60,7 @@
             
             
               <div class="version">
-                0.1.6
+                0.2.1
               </div>
             
           
@@ -91,13 +91,15 @@
 <li class="toctree-l2"><a class="reference internal" href="#macop">macop</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#macop-algorithms">macop.algorithms</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="macop/macop.algorithms.Algorithm.html">macop.algorithms.Algorithm</a></li>
-<li class="toctree-l3"><a class="reference internal" href="macop/macop.algorithms.IteratedLocalSearch.html">macop.algorithms.IteratedLocalSearch</a></li>
-<li class="toctree-l3"><a class="reference internal" href="macop/macop.algorithms.LocalSearch.html">macop.algorithms.LocalSearch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="macop/macop.algorithms.mono.IteratedLocalSearch.html">macop.algorithms.mono.IteratedLocalSearch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="macop/macop.algorithms.mono.LocalSearch.html">macop.algorithms.mono.LocalSearch</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#macop-checkpoints">macop.checkpoints</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="macop/macop.checkpoints.BasicCheckpoint.html">macop.checkpoints.BasicCheckpoint</a></li>
-<li class="toctree-l3"><a class="reference internal" href="macop/macop.checkpoints.Checkpoint.html">macop.checkpoints.Checkpoint</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#macop-callbacks">macop.callbacks</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="macop/macop.callbacks.BasicCheckpoint.html">macop.callbacks.BasicCheckpoint</a></li>
+<li class="toctree-l3"><a class="reference internal" href="macop/macop.callbacks.MultiCheckpoint.html">macop.callbacks.MultiCheckpoint</a></li>
+<li class="toctree-l3"><a class="reference internal" href="macop/macop.callbacks.ParetoCheckpoint.html">macop.callbacks.ParetoCheckpoint</a></li>
+<li class="toctree-l3"><a class="reference internal" href="macop/macop.callbacks.Callback.html">macop.callbacks.Callback</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#macop-evaluators">macop.evaluators</a><ul>
@@ -210,27 +212,33 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="macop/macop.algorithms.Algorithm.html#module-macop.algorithms.Algorithm" title="macop.algorithms.Algorithm"><code class="xref py py-obj docutils literal notranslate"><span class="pre">macop.algorithms.Algorithm</span></code></a></p></td>
 <td><p>Abstract Algorithm class used as basic algorithm implementation with some specific initialization</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="macop/macop.algorithms.IteratedLocalSearch.html#module-macop.algorithms.IteratedLocalSearch" title="macop.algorithms.IteratedLocalSearch"><code class="xref py py-obj docutils literal notranslate"><span class="pre">macop.algorithms.IteratedLocalSearch</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="macop/macop.algorithms.mono.IteratedLocalSearch.html#module-macop.algorithms.mono.IteratedLocalSearch" title="macop.algorithms.mono.IteratedLocalSearch"><code class="xref py py-obj docutils literal notranslate"><span class="pre">macop.algorithms.mono.IteratedLocalSearch</span></code></a></p></td>
 <td><p>Iterated Local Search Algorithm implementation</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="macop/macop.algorithms.LocalSearch.html#module-macop.algorithms.LocalSearch" title="macop.algorithms.LocalSearch"><code class="xref py py-obj docutils literal notranslate"><span class="pre">macop.algorithms.LocalSearch</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="macop/macop.algorithms.mono.LocalSearch.html#module-macop.algorithms.mono.LocalSearch" title="macop.algorithms.mono.LocalSearch"><code class="xref py py-obj docutils literal notranslate"><span class="pre">macop.algorithms.mono.LocalSearch</span></code></a></p></td>
 <td><p>Local Search algorithm</p></td>
 </tr>
 </tbody>
 </table>
 </div>
-<div class="section" id="macop-checkpoints">
-<h2>macop.checkpoints<a class="headerlink" href="#macop-checkpoints" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="macop-callbacks">
+<h2>macop.callbacks<a class="headerlink" href="#macop-callbacks" title="Permalink to this headline">¶</a></h2>
 <table class="longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="macop/macop.checkpoints.BasicCheckpoint.html#module-macop.checkpoints.BasicCheckpoint" title="macop.checkpoints.BasicCheckpoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">macop.checkpoints.BasicCheckpoint</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="macop/macop.callbacks.BasicCheckpoint.html#module-macop.callbacks.BasicCheckpoint" title="macop.callbacks.BasicCheckpoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">macop.callbacks.BasicCheckpoint</span></code></a></p></td>
 <td><p>Basic Checkpoint class implementation</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="macop/macop.checkpoints.Checkpoint.html#module-macop.checkpoints.Checkpoint" title="macop.checkpoints.Checkpoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">macop.checkpoints.Checkpoint</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="macop/macop.callbacks.MultiCheckpoint.html#module-macop.callbacks.MultiCheckpoint" title="macop.callbacks.MultiCheckpoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">macop.callbacks.MultiCheckpoint</span></code></a></p></td>
+<td><p>Multi Checkpoint class implementation</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="macop/macop.callbacks.ParetoCheckpoint.html#module-macop.callbacks.ParetoCheckpoint" title="macop.callbacks.ParetoCheckpoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">macop.callbacks.ParetoCheckpoint</span></code></a></p></td>
+<td><p>Pareto front Checkpoint class implementation</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="macop/macop.callbacks.Callback.html#module-macop.callbacks.Callback" title="macop.callbacks.Callback"><code class="xref py py-obj docutils literal notranslate"><span class="pre">macop.callbacks.Callback</span></code></a></p></td>
 <td><p>Abstract Checkpoint class</p></td>
 </tr>
 </tbody>

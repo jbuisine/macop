@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>macop.operators.Operator &mdash; macop v0.1.6 documentation</title>
+  <title>macop.operators.Operator &mdash; macop v0.2.1 documentation</title>
   
 
   
@@ -60,7 +60,7 @@
             
             
               <div class="version">
-                0.1.6
+                0.2.1
               </div>
             
           
@@ -90,7 +90,7 @@
 <li class="toctree-l1 current"><a class="reference internal" href="../macop.html">Documentation</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../macop.html#macop">macop</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../macop.html#macop-algorithms">macop.algorithms</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../macop.html#macop-checkpoints">macop.checkpoints</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../macop.html#macop-callbacks">macop.callbacks</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../macop.html#macop-evaluators">macop.evaluators</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../macop.html#macop-operators">macop.operators</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="macop.operators.crossovers.Crossover.html">macop.operators.crossovers.Crossover</a></li>
@@ -208,14 +208,11 @@
 <dd><p>Abstract Operator class which enables to update solution applying operator (computation)</p>
 <dl class="method">
 <dt id="macop.operators.Operator.Operator.apply">
-<code class="sig-name descname">apply</code><span class="sig-paren">(</span><em class="sig-param">_solution</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macop/operators/Operator.html#Operator.apply"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macop.operators.Operator.Operator.apply" title="Permalink to this definition">¶</a></dt>
+<em class="property">abstract </em><code class="sig-name descname">apply</code><span class="sig-paren">(</span><em class="sig-param">_solution</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macop/operators/Operator.html#Operator.apply"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macop.operators.Operator.Operator.apply" title="Permalink to this definition">¶</a></dt>
 <dd><p>Apply the current operator transformation</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>_solution</strong> – {Solution} – Solution instance</p>
-</dd>
-<dt class="field-even">Raises</dt>
-<dd class="field-even"><p><strong>NotImplementedError</strong> – if method not implemented into child class</p>
 </dd>
 </dl>
 </dd></dl>

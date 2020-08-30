@@ -19,7 +19,7 @@ class Algorithm():
         maximise: {bool} -- specify kind of optimization problem 
         currentSolution: {Solution} -- current solution managed for current evaluation
         bestSolution: {Solution} -- best solution found so far during running algorithm
-        checkpoint: {Checkpoint} -- Checkpoint class implementation to keep track of algorithm and restart
+        callbacks: {[Callback]} -- list of Callback class implementation to do some instructions every number of evaluations and `load` when initializing algorithm
         parent: {Algorithm} -- parent algorithm reference in case of inner Algorithm instance (optional)
     """
     def __init__(self,
@@ -36,55 +36,18 @@ class Algorithm():
         self.operators = _operators
         self.policy = _policy
         self.validator = _validator
-        self.checkpoint = None
+        self.callbacks = []
         self.bestSolution = None
+
+        # by default
+        self.numberOfEvaluations = 0
+        self.maxEvaluations = 0
 
         # other parameters
         self.parent = _parent  # parent algorithm if it's sub algorithm
+
         #self.maxEvaluations = 0 # by default
         self.maximise = _maximise
-
-        self.initRun()
-
-    def addCheckpoint(self, _class, _every, _filepath):
-        """Add checkpoint to algorithm specifying usefull parameters
-
-        Args:
-            _class: {class} -- Checkpoint class type
-            _every: {int} -- checkpoint frequency based on evaluations
-            _filepath: {str} -- file path where checkpoints will be saved
-        """
-        self.checkpoint = _class(self, _every, _filepath)
-
-    def setCheckpoint(self, _checkpoint):
-        """Set checkpoint instance directly
-
-        Args:
-            _checkpoint: {Checkpoint} -- checkpoint instance
-        """
-        self.checkpoint = _checkpoint
-
-    def resume(self):
-        """Resume algorithm using checkpoint instance
-
-        Raises:
-            ValueError: No checkpoint initialize (use `addCheckpoint` or `setCheckpoint` is you want to use this process)
-        """
-        if self.checkpoint is None:
-            raise ValueError(
-                "Need to `addCheckpoint` or `setCheckpoint` is you want to use this process"
-            )
-        else:
-            print(macop_line())
-            print(
-                macop_text('Checkpoint found from `{}` file.'.format(
-                    self.checkpoint.filepath)))
-            self.checkpoint.load()
-
-    def initRun(self):
-        """
-        Method which initialiazes or re-initializes the whole algorithm context: operators, current solution, best solution (by default current solution)
-        """
 
         # track reference of algo into operator (keep an eye into best solution)
         for operator in self.operators:
@@ -93,14 +56,37 @@ class Algorithm():
         # also track reference for policy
         self.policy.setAlgo(self)
 
+        self.initRun()
+
+    def addCallback(self, _callback):
+        """Add new callback to algorithm specifying usefull parameters
+
+        Args:
+            _callback: {Callback} -- specific Callback instance
+        """
+        # specify current main algorithm reference
+        _callback.setAlgo(self)
+
+        # set as new
+        self.callbacks.append(_callback)
+
+    def resume(self):
+        """Resume algorithm using Callback instances
+        """
+
+        # load every callback if many things are necessary to do before running algorithm
+        for callback in self.callbacks:
+            callback.load()
+
+    def initRun(self):
+        """
+        Initialize the current solution and best solution
+        """
+
         self.currentSolution = self.initializer()
 
         # evaluate current solution
         self.currentSolution.evaluate(self.evaluator)
-
-        # reinitialize policy
-        # if self.parent is not None:
-        #     self.policy = globals()[type(self.policy).__name__]()
 
         # keep in memory best known solution (current solution)
         self.bestSolution = self.currentSolution
@@ -209,9 +195,8 @@ class Algorithm():
         Run the specific algorithm following number of evaluations to find optima
         """
 
-        self.maxEvaluations = _evaluations
-
-        self.initRun()
+        # append number of max evaluation if multiple run called
+        self.maxEvaluations += _evaluations
 
         # check if global evaluation is used or not
         if self.parent is not None and self.getGlobalEvaluation() != 0:
@@ -229,10 +214,11 @@ class Algorithm():
 
     def progress(self):
         """
-        Log progress and apply checkpoint if necessary
+        Log progress and apply callbacks if necessary
         """
-        if self.checkpoint is not None:
-            self.checkpoint.run()
+        if len(self.callbacks) > 0:
+            for callback in self.callbacks:
+                callback.run()
 
         macop_progress(self.getGlobalEvaluation(),
                        self.getGlobalMaxEvaluation())
@@ -247,7 +233,7 @@ class Algorithm():
         """Display end message into `run` method
         """
         print(
-            macop_text('({}) Found after {} evaluations => {}'.format(
+            macop_text('({}) Found after {} evaluations \n   - {}'.format(
                 type(self).__name__, self.numberOfEvaluations,
                 self.bestSolution)))
         print(macop_line())
