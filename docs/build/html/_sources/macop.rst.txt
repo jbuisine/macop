@@ -13,6 +13,8 @@ macop.algorithms
    macop.algorithms.Algorithm
    macop.algorithms.mono.IteratedLocalSearch
    macop.algorithms.mono.LocalSearch
+   macop.algorithms.multi.MOEAD
+   macop.algorithms.multi.MOSubProblem
 
 macop.callbacks
 -------------------
@@ -23,6 +25,7 @@ macop.callbacks
    macop.callbacks.BasicCheckpoint
    macop.callbacks.MultiCheckpoint
    macop.callbacks.ParetoCheckpoint
+   macop.callbacks.UCBCheckpoint
    macop.callbacks.Callback
 
 macop.evaluators
