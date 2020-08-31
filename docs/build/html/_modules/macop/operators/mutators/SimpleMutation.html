@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>macop.operators.mutators.SimpleMutation &mdash; macop v0.3.1 documentation</title>
+  <title>macop.operators.mutators.SimpleMutation &mdash; macop v0.3.3 documentation</title>
   
 
   
@@ -58,7 +58,7 @@
             
             
               <div class="version">
-                0.3.1
+                0.3.3
               </div>
             
           
@@ -156,16 +156,10 @@
 <span class="c1"># main imports</span>
 <span class="kn">import</span> <span class="nn">random</span>
 <span class="kn">import</span> <span class="nn">sys</span>
-<span class="kn">import</span> <span class="nn">pkgutil</span>
 
 <span class="c1"># module imports</span>
 <span class="kn">from</span> <span class="nn">.Mutation</span> <span class="kn">import</span> <span class="n">Mutation</span>
-
-<span class="c1"># import all available solutions</span>
-<span class="k">for</span> <span class="n">loader</span><span class="p">,</span> <span class="n">module_name</span><span class="p">,</span> <span class="n">is_pkg</span> <span class="ow">in</span> <span class="n">pkgutil</span><span class="o">.</span><span class="n">walk_packages</span><span class="p">(</span>
-        <span class="n">path</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;macop/solutions&#39;</span><span class="p">],</span> <span class="n">prefix</span><span class="o">=</span><span class="s1">&#39;macop.solutions.&#39;</span><span class="p">):</span>
-    <span class="n">_module</span> <span class="o">=</span> <span class="n">loader</span><span class="o">.</span><span class="n">find_module</span><span class="p">(</span><span class="n">module_name</span><span class="p">)</span><span class="o">.</span><span class="n">load_module</span><span class="p">(</span><span class="n">module_name</span><span class="p">)</span>
-    <span class="nb">globals</span><span class="p">()[</span><span class="n">module_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">_module</span>
+<span class="kn">from</span> <span class="nn">...utils.modules</span> <span class="kn">import</span> <span class="n">load_class</span>
 
 
 <div class="viewcode-block" id="SimpleMutation"><a class="viewcode-back" href="../../../../macop/macop.operators.mutators.SimpleMutation.html#macop.operators.mutators.SimpleMutation.SimpleMutation">[docs]</a><span class="k">class</span> <span class="nc">SimpleMutation</span><span class="p">(</span><span class="n">Mutation</span><span class="p">):</span>
@@ -204,6 +198,11 @@
 
         <span class="c1"># create solution of same kind with new data</span>
         <span class="n">class_name</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">_solution</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span>
+
+        <span class="c1"># dynamically load solution class if unknown</span>
+        <span class="k">if</span> <span class="n">class_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">:</span>
+            <span class="n">load_class</span><span class="p">(</span><span class="n">class_name</span><span class="p">,</span> <span class="nb">globals</span><span class="p">())</span>
+
         <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="nb">globals</span><span class="p">()[</span><span class="s1">&#39;macop.solutions.&#39;</span> <span class="o">+</span> <span class="n">class_name</span><span class="p">],</span>
                        <span class="n">class_name</span><span class="p">)(</span><span class="n">currentData</span><span class="p">,</span> <span class="n">size</span><span class="p">)</span></div></div>
 </pre></div>

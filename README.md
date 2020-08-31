@@ -23,9 +23,11 @@
 
 ## How to use ?
 
-You can see an example of use in the `knapsackExample.py` python file.
+Fully documentation of package with examples is [available](https://jbuisine.github.io/macop). 
 
-Fully documentation of package with examples is also [available](https://jbuisine.github.io/macop). 
+You can also see examples of use:
+-  in the [knapsackExample.py](https://github.com/jbuisine/macop/blob/master/examples/knapsackExample.py) python file for mono-objective.
+-  in the [knapsackMultiExample.py](https://github.com/jbuisine/macop/blob/master/examples/knapsackMultiExample.py) python file for multi-objective.
 
 ## Add as dependency
 

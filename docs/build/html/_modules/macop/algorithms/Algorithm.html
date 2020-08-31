@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>macop.algorithms.Algorithm &mdash; macop v0.3.1 documentation</title>
+  <title>macop.algorithms.Algorithm &mdash; macop v0.3.3 documentation</title>
   
 
   
@@ -58,7 +58,7 @@
             
             
               <div class="version">
-                0.3.1
+                0.3.3
               </div>
             
           
@@ -156,6 +156,8 @@
 
 <span class="c1"># main imports</span>
 <span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">pkgutil</span>
+<span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">from</span> <span class="nn">..utils.color</span> <span class="kn">import</span> <span class="n">macop_text</span><span class="p">,</span> <span class="n">macop_line</span><span class="p">,</span> <span class="n">macop_progress</span>
 
 
@@ -210,6 +212,17 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">policy</span><span class="o">.</span><span class="n">setAlgo</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">initRun</span><span class="p">()</span>
+
+<div class="viewcode-block" id="Algorithm.initContext"><a class="viewcode-back" href="../../../macop/macop.algorithms.Algorithm.html#macop.algorithms.Algorithm.Algorithm.initContext">[docs]</a>    <span class="k">def</span> <span class="nf">initContext</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Initialize context for macop solutions (dynamic import)</span>
+<span class="sd">           Must be part of initialization method of Algorithm implementation</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># dynamically load all available macop solutions</span>
+        <span class="k">for</span> <span class="n">loader</span><span class="p">,</span> <span class="n">module_name</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">pkgutil</span><span class="o">.</span><span class="n">walk_packages</span><span class="p">(</span>
+                <span class="n">path</span><span class="o">=</span><span class="p">[</span><span class="n">p</span> <span class="o">+</span> <span class="s1">&#39;/solutions&#39;</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="s1">&#39;macop&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">__path__</span><span class="p">],</span>
+                <span class="n">prefix</span><span class="o">=</span><span class="s1">&#39;macop.solutions.&#39;</span><span class="p">):</span>
+            <span class="n">_module</span> <span class="o">=</span> <span class="n">loader</span><span class="o">.</span><span class="n">find_module</span><span class="p">(</span><span class="n">module_name</span><span class="p">)</span><span class="o">.</span><span class="n">load_module</span><span class="p">(</span><span class="n">module_name</span><span class="p">)</span>
+            <span class="nb">globals</span><span class="p">()[</span><span class="n">module_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">_module</span></div>
 
 <div class="viewcode-block" id="Algorithm.addCallback"><a class="viewcode-back" href="../../../macop/macop.algorithms.Algorithm.html#macop.algorithms.Algorithm.Algorithm.addCallback">[docs]</a>    <span class="k">def</span> <span class="nf">addCallback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_callback</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Add new callback to algorithm specifying usefull parameters</span>

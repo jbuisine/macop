@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>macop.algorithms.multi.MOEAD &mdash; macop v0.3.1 documentation</title>
+  <title>macop.algorithms.multi.MOEAD &mdash; macop v0.3.3 documentation</title>
   
 
   
@@ -58,7 +58,7 @@
             
             
               <div class="version">
-                0.3.1
+                0.3.3
               </div>
             
           
@@ -161,6 +161,7 @@
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">from</span> <span class="nn">...utils.color</span> <span class="kn">import</span> <span class="n">macop_text</span><span class="p">,</span> <span class="n">macop_line</span><span class="p">,</span> <span class="n">macop_progress</span>
+<span class="kn">from</span> <span class="nn">...utils.modules</span> <span class="kn">import</span> <span class="n">load_class</span>
 
 <span class="c1"># module imports</span>
 <span class="kn">from</span> <span class="nn">..Algorithm</span> <span class="kn">import</span> <span class="n">Algorithm</span>
@@ -342,6 +343,11 @@
 
                         <span class="c1"># create new solution based on current new if better, computes fitness associated to new solution for sub problem</span>
                         <span class="n">class_name</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">spBestSolution</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span>
+
+                        <span class="c1"># dynamically load solution class if unknown</span>
+                        <span class="k">if</span> <span class="n">class_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">:</span>
+                            <span class="n">load_class</span><span class="p">(</span><span class="n">class_name</span><span class="p">,</span> <span class="nb">globals</span><span class="p">())</span>
+
                         <span class="n">newSolution</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span>
                             <span class="nb">globals</span><span class="p">()[</span><span class="s1">&#39;macop.solutions.&#39;</span> <span class="o">+</span> <span class="n">class_name</span><span class="p">],</span>
                             <span class="n">class_name</span><span class="p">)(</span><span class="n">spBestSolution</span><span class="o">.</span><span class="n">data</span><span class="p">,</span>
