@@ -55,7 +55,19 @@ class MOSubProblem(Algorithm):
         # by default use of mother method to initialize variables
         super().run(_evaluations)
 
+        # initialize solution if necessary
+        if self.bestSolution is None:
+            self.initRun()
+
+        # new operators list keep track of current sub problem
+        for op in self.operators:
+            op.setAlgo(self)
+
         for _ in range(_evaluations):
+
+            # keep reference of sub problem used
+            self.policy.setAlgo(self)
+
             # update solution using policy
             newSolution = self.update(self.bestSolution)
 

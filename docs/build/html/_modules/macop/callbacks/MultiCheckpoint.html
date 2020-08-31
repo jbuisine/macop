@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>macop.callbacks.MultiCheckpoint &mdash; macop v0.3.3 documentation</title>
+  <title>macop.callbacks.MultiCheckpoint &mdash; macop v0.3.4 documentation</title>
   
 
   
@@ -58,7 +58,7 @@
             
             
               <div class="version">
-                0.3.3
+                0.3.4
               </div>
             
           
@@ -238,10 +238,12 @@
                     <span class="c1"># get best solution data information</span>
                     <span class="n">solutionData</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)))</span>
 
+                    <span class="c1"># initialize and fill with data</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">algo</span><span class="o">.</span><span class="n">population</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">algo</span><span class="o">.</span><span class="n">initializer</span><span class="p">()</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">algo</span><span class="o">.</span><span class="n">population</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">solutionData</span><span class="p">)</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">algo</span><span class="o">.</span><span class="n">population</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">scores</span> <span class="o">=</span> <span class="n">scores</span>
 
-                    <span class="bp">self</span><span class="o">.</span><span class="n">algo</span><span class="o">.</span><span class="n">pfPop</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">algo</span><span class="o">.</span><span class="n">population</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">algo</span><span class="o">.</span><span class="n">pfPop</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">algo</span><span class="o">.</span><span class="n">population</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
 
             <span class="nb">print</span><span class="p">(</span><span class="n">macop_line</span><span class="p">())</span>
             <span class="nb">print</span><span class="p">(</span>

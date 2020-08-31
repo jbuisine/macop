@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>macop.algorithms.multi.MOEAD &mdash; macop v0.3.3 documentation</title>
+  <title>macop.algorithms.multi.MOEAD &mdash; macop v0.3.4 documentation</title>
   
 
   
@@ -58,7 +58,7 @@
             
             
               <div class="version">
-                0.3.3
+                0.3.4
               </div>
             
           
@@ -167,12 +167,6 @@
 <span class="kn">from</span> <span class="nn">..Algorithm</span> <span class="kn">import</span> <span class="n">Algorithm</span>
 <span class="kn">from</span> <span class="nn">.MOSubProblem</span> <span class="kn">import</span> <span class="n">MOSubProblem</span>
 
-<span class="c1"># import all available solutions</span>
-<span class="k">for</span> <span class="n">loader</span><span class="p">,</span> <span class="n">module_name</span><span class="p">,</span> <span class="n">is_pkg</span> <span class="ow">in</span> <span class="n">pkgutil</span><span class="o">.</span><span class="n">walk_packages</span><span class="p">(</span>
-        <span class="n">path</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;macop/solutions&#39;</span><span class="p">],</span> <span class="n">prefix</span><span class="o">=</span><span class="s1">&#39;macop.solutions.&#39;</span><span class="p">):</span>
-    <span class="n">_module</span> <span class="o">=</span> <span class="n">loader</span><span class="o">.</span><span class="n">find_module</span><span class="p">(</span><span class="n">module_name</span><span class="p">)</span><span class="o">.</span><span class="n">load_module</span><span class="p">(</span><span class="n">module_name</span><span class="p">)</span>
-    <span class="nb">globals</span><span class="p">()[</span><span class="n">module_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">_module</span>
-
 
 <span class="k">def</span> <span class="nf">moEvaluator</span><span class="p">(</span><span class="n">_solution</span><span class="p">,</span> <span class="n">_evaluator</span><span class="p">,</span> <span class="n">_weights</span><span class="p">):</span>
 
@@ -236,7 +230,7 @@
         <span class="k">for</span> <span class="n">operator</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">operators</span><span class="p">:</span>
             <span class="n">operator</span><span class="o">.</span><span class="n">setAlgo</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
-        <span class="c1"># also track reference for policy</span>
+        <span class="c1"># by default track reference for policy</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">policy</span><span class="o">.</span><span class="n">setAlgo</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">_mu</span> <span class="o">&lt;</span> <span class="n">_T</span><span class="p">:</span>
@@ -276,9 +270,11 @@
                 <span class="n">_solution</span><span class="p">,</span> <span class="n">_evaluator</span><span class="p">,</span> <span class="n">weights</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
 
             <span class="c1"># intialize each sub problem</span>
-            <span class="n">subProblem</span> <span class="o">=</span> <span class="n">MOSubProblem</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">weights</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">_initalizer</span><span class="p">,</span>
-                                      <span class="n">sub_evaluator</span><span class="p">,</span> <span class="n">_operators</span><span class="p">,</span> <span class="n">_policy</span><span class="p">,</span>
-                                      <span class="n">_validator</span><span class="p">,</span> <span class="n">_maximise</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+            <span class="c1"># use copy of list to keep track for each sub problem</span>
+            <span class="n">subProblem</span> <span class="o">=</span> <span class="n">MOSubProblem</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">weights</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+                                      <span class="n">_initalizer</span><span class="p">,</span> <span class="n">sub_evaluator</span><span class="p">,</span>
+                                      <span class="n">_operators</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span> <span class="n">_policy</span><span class="p">,</span> <span class="n">_validator</span><span class="p">,</span>
+                                      <span class="n">_maximise</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
 
             <span class="bp">self</span><span class="o">.</span><span class="n">subProblems</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">subProblem</span><span class="p">)</span>
 
@@ -314,15 +310,20 @@
         <span class="c1"># by default use of mother method to initialize variables</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">_evaluations</span><span class="p">)</span>
 
-        <span class="c1"># initialize each sub problem</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mu</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">subProblems</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-
-            <span class="bp">self</span><span class="o">.</span><span class="n">population</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">subProblems</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">bestSolution</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">pfPop</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">subProblems</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">bestSolution</span><span class="p">)</span>
-
         <span class="c1"># enable callback resume for MOEAD</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">resume</span><span class="p">()</span>
+
+        <span class="c1"># initialize each sub problem if no backup</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mu</span><span class="p">):</span>
+
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">subProblems</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">bestSolution</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">subProblems</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">population</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">subProblems</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">bestSolution</span>
+
+        <span class="c1"># if no backup for pf population</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pfPop</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mu</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">pfPop</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">subProblems</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">bestSolution</span><span class="p">)</span>
 
         <span class="c1"># MOEAD algorithm implementation</span>
         <span class="k">while</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">stop</span><span class="p">():</span>

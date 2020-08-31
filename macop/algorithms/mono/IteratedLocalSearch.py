@@ -41,6 +41,10 @@ class IteratedLocalSearch(Algorithm):
         # enable resuming for ILS
         self.resume()
 
+        # initialize solution if no backup
+        if self.bestSolution is None:
+            self.initRun()
+
         # passing global evaluation param from ILS
         ls = LocalSearch(self.initializer,
                          self.evaluator,

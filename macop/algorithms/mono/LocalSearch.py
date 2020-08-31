@@ -36,6 +36,10 @@ class LocalSearch(Algorithm):
         # by default use of mother method to initialize variables
         super().run(_evaluations)
 
+        # initialize solution if no backup
+        if self.bestSolution is None:
+            self.initRun()
+
         solutionSize = self.bestSolution.size
 
         # local search algorithm implementation

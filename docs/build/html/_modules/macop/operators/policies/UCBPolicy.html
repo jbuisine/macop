@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>macop.operators.policies.UCBPolicy &mdash; macop v0.3.3 documentation</title>
+  <title>macop.operators.policies.UCBPolicy &mdash; macop v0.3.4 documentation</title>
   
 
   
@@ -58,7 +58,7 @@
             
             
               <div class="version">
-                0.3.3
+                0.3.4
               </div>
             
           
@@ -192,7 +192,8 @@
         <span class="c1"># random choice following exploration rate</span>
         <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">exp_rate</span><span class="p">:</span>
 
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">operators</span><span class="p">[</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">operators</span><span class="p">)))]</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">operators</span><span class="p">)))</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">operators</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
 
         <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">indices</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
 
@@ -241,10 +242,12 @@
             <span class="n">fir</span> <span class="o">=</span> <span class="p">(</span><span class="n">_solution</span><span class="o">.</span><span class="n">fitness</span><span class="p">()</span> <span class="o">-</span>
                    <span class="n">newSolution</span><span class="o">.</span><span class="n">fitness</span><span class="p">())</span> <span class="o">/</span> <span class="n">_solution</span><span class="o">.</span><span class="n">fitness</span><span class="p">()</span>
 
+        <span class="n">operator_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">operators</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">operator</span><span class="p">)</span>
+
         <span class="k">if</span> <span class="n">fir</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">operator_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">operators</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">operator</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">rewards</span><span class="p">[</span><span class="n">operator_index</span><span class="p">]</span> <span class="o">+=</span> <span class="n">fir</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">occurrences</span><span class="p">[</span><span class="n">operator_index</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">occurrences</span><span class="p">[</span><span class="n">operator_index</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
 
         <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;---- Obtaining </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">_solution</span><span class="p">))</span>
 

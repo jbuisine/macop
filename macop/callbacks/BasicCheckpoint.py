@@ -78,6 +78,9 @@ class BasicCheckpoint(Callback):
                 # get best solution data information
                 solutionData = list(map(int, data[1].split(' ')))
 
+                if self.algo.bestSolution is None:
+                    self.algo.bestSolution = self.algo.initializer()
+
                 self.algo.bestSolution.data = np.array(solutionData)
                 self.algo.bestSolution.score = float(data[2])
 

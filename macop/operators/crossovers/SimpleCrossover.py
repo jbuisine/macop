@@ -39,6 +39,7 @@ class SimpleCrossover(Crossover):
 
         # copy data of solution
         firstData = _solution.data.copy()
+
         # get best solution from current algorithm
         secondData = self.algo.bestSolution.data.copy()
 
