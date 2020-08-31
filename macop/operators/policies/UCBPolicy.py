@@ -39,7 +39,8 @@ class UCBPolicy(Policy):
         # random choice following exploration rate
         if np.random.uniform(0, 1) <= self.exp_rate:
 
-            return self.operators[random.choice(range(len(self.operators)))]
+            index = random.choice(range(len(self.operators)))
+            return self.operators[index]
 
         elif len(indices) == 0:
 
@@ -88,10 +89,12 @@ class UCBPolicy(Policy):
             fir = (_solution.fitness() -
                    newSolution.fitness()) / _solution.fitness()
 
+        operator_index = self.operators.index(operator)
+
         if fir > 0:
-            operator_index = self.operators.index(operator)
             self.rewards[operator_index] += fir
-            self.occurrences[operator_index] += 1
+
+        self.occurrences[operator_index] += 1
 
         logging.info("---- Obtaining %s" % (_solution))
 

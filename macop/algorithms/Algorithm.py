@@ -58,19 +58,6 @@ class Algorithm():
         # also track reference for policy
         self.policy.setAlgo(self)
 
-        self.initRun()
-
-    def initContext(self):
-        """Initialize context for macop solutions (dynamic import)
-           Must be part of initialization method of Algorithm implementation
-        """
-        # dynamically load all available macop solutions
-        for loader, module_name, _ in pkgutil.walk_packages(
-                path=[p + '/solutions' for p in sys.modules['macop'].__path__],
-                prefix='macop.solutions.'):
-            _module = loader.find_module(module_name).load_module(module_name)
-            globals()[module_name] = _module
-
     def addCallback(self, _callback):
         """Add new callback to algorithm specifying usefull parameters
 

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>macop.algorithms.multi.MOSubProblem &mdash; macop v0.3.3 documentation</title>
+  <title>macop.algorithms.multi.MOSubProblem &mdash; macop v0.3.4 documentation</title>
   
 
   
@@ -58,7 +58,7 @@
             
             
               <div class="version">
-                0.3.3
+                0.3.4
               </div>
             
           
@@ -208,7 +208,19 @@
         <span class="c1"># by default use of mother method to initialize variables</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">_evaluations</span><span class="p">)</span>
 
+        <span class="c1"># initialize solution if necessary</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">bestSolution</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">initRun</span><span class="p">()</span>
+
+        <span class="c1"># new operators list keep track of current sub problem</span>
+        <span class="k">for</span> <span class="n">op</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">operators</span><span class="p">:</span>
+            <span class="n">op</span><span class="o">.</span><span class="n">setAlgo</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
         <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">_evaluations</span><span class="p">):</span>
+
+            <span class="c1"># keep reference of sub problem used</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">policy</span><span class="o">.</span><span class="n">setAlgo</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
             <span class="c1"># update solution using policy</span>
             <span class="n">newSolution</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bestSolution</span><span class="p">)</span>
 

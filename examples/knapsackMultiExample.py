@@ -77,7 +77,7 @@ ucb_checkpoint_path = "data/UCBPolicyMOEAD.csv"
 def main():
 
     operators = [SimpleBinaryMutation(), SimpleMutation(), SimpleCrossover(), RandomSplitCrossover()]
-    policy = UCBPolicy(operators, _C=100)
+    policy = UCBPolicy(operators, _C=100, _exp_rate=0.2)
 
     # pass list of evaluators
     algo = MOEAD(20, 5, init, [evaluator1, evaluator2, evaluator2, evaluator2], operators, policy, validator, _maximise=True)

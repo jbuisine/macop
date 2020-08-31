@@ -85,10 +85,12 @@ class MultiCheckpoint(Callback):
                     # get best solution data information
                     solutionData = list(map(int, data[-1].split(' ')))
 
+                    # initialize and fill with data
+                    self.algo.population[i] = self.algo.initializer()
                     self.algo.population[i].data = np.array(solutionData)
                     self.algo.population[i].scores = scores
 
-                    self.algo.pfPop[i] = self.algo.population[i]
+                    self.algo.pfPop.append(self.algo.population[i])
 
             print(macop_line())
             print(

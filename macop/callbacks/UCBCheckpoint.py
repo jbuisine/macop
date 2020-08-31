@@ -68,13 +68,13 @@ class UCBCheckpoint(Callback):
                 lines = f.readlines()
                 # read data for each line
                 rewardsLine = lines[0].replace('\n', '')
-                occurenciesLine = lines[0].replace('\n', '')
+                occurrencesLine = lines[1].replace('\n', '')
 
                 self.algo.policy.rewards = [
                     float(f) for f in rewardsLine.split(';')
                 ]
-                self.algo.policy.occurencies = [
-                    float(f) for f in occurenciesLine.split(';')
+                self.algo.policy.occurrences = [
+                    float(f) for f in occurrencesLine.split(';')
                 ]
 
             print(

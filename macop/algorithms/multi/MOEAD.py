@@ -14,12 +14,6 @@ from ...utils.modules import load_class
 from ..Algorithm import Algorithm
 from .MOSubProblem import MOSubProblem
 
-# import all available solutions
-for loader, module_name, is_pkg in pkgutil.walk_packages(
-        path=['macop/solutions'], prefix='macop.solutions.'):
-    _module = loader.find_module(module_name).load_module(module_name)
-    globals()[module_name] = _module
-
 
 def moEvaluator(_solution, _evaluator, _weights):
 
@@ -83,7 +77,7 @@ class MOEAD(Algorithm):
         for operator in self.operators:
             operator.setAlgo(self)
 
-        # also track reference for policy
+        # by default track reference for policy
         self.policy.setAlgo(self)
 
         if _mu < _T:
@@ -123,9 +117,11 @@ class MOEAD(Algorithm):
                 _solution, _evaluator, weights[i])
 
             # intialize each sub problem
-            subProblem = MOSubProblem(i, weights[i], _initalizer,
-                                      sub_evaluator, _operators, _policy,
-                                      _validator, _maximise, self)
+            # use copy of list to keep track for each sub problem
+            subProblem = MOSubProblem(i, weights[i],
+                                      _initalizer, sub_evaluator,
+                                      _operators.copy(), _policy, _validator,
+                                      _maximise, self)
 
             self.subProblems.append(subProblem)
 
@@ -161,15 +157,20 @@ class MOEAD(Algorithm):
         # by default use of mother method to initialize variables
         super().run(_evaluations)
 
-        # initialize each sub problem
-        for i in range(self.mu):
-            self.subProblems[i].run(1)
-
-            self.population[i] = self.subProblems[i].bestSolution
-            self.pfPop.append(self.subProblems[i].bestSolution)
-
         # enable callback resume for MOEAD
         self.resume()
+
+        # initialize each sub problem if no backup
+        for i in range(self.mu):
+
+            if self.subProblems[i].bestSolution is None:
+                self.subProblems[i].run(1)
+                self.population[i] = self.subProblems[i].bestSolution
+
+        # if no backup for pf population
+        if len(self.pfPop) == 0:
+            for i in range(self.mu):
+                self.pfPop.append(self.subProblems[i].bestSolution)
 
         # MOEAD algorithm implementation
         while not self.stop():
