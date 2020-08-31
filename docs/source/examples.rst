@@ -208,9 +208,9 @@ We can now instanciate our algorithm. We use the Iterated Local Search in this e
 
     algo = ILS(init, evaluator, operators, policy, validator, _maximise=True)
 
-The algorithm is now well defined and is ready to run ! But one thing can be done, and it's very interesting to avoir restart from scratch the algorithm run.
+The algorithm is now well defined and is ready to run ! But one thing can be done, and it's very interesting to avoid restart from scratch the algorithm run.
 The use of checkpoint is available in `macop`. A `BasicCheckpoint` class let the algorithm save at `every` evaluations the best solution found. This class is based on callback process. 
-A Callback is runned every number of evaluations but can also implement the `load` method in order to to specific instrusctions when initializing algorithm.
+A Callback is runned every number of evaluations but can also implement the `load` method in order to do specific instrusctions when initializing algorithm.
 
 It's important to note, we can add any number of callbacks we want. For tabu search as example, we need to store many solutions.
 

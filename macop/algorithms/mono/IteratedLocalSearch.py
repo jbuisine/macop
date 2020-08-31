@@ -10,7 +10,7 @@ from .LocalSearch import LocalSearch
 
 
 class IteratedLocalSearch(Algorithm):
-    """Iterated Local Search used to avoir local optima and increave EvE (Exploration vs Exploitation) compromise
+    """Iterated Local Search used to avoid local optima and increave EvE (Exploration vs Exploitation) compromise
 
     Attributes:
         initalizer: {function} -- basic function strategy to initialize solution
