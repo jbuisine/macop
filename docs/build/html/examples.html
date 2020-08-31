@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Some examples &mdash; macop v0.2.2 documentation</title>
+  <title>Some examples &mdash; macop v0.2.3 documentation</title>
   
 
   
@@ -60,7 +60,7 @@
             
             
               <div class="version">
-                0.2.2
+                0.2.3
               </div>
             
           
@@ -359,9 +359,9 @@ The best way to represent this problem is to use the <cite>BinarySolution</cite>
 <span class="n">algo</span> <span class="o">=</span> <span class="n">ILS</span><span class="p">(</span><span class="n">init</span><span class="p">,</span> <span class="n">evaluator</span><span class="p">,</span> <span class="n">operators</span><span class="p">,</span> <span class="n">policy</span><span class="p">,</span> <span class="n">validator</span><span class="p">,</span> <span class="n">_maximise</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>The algorithm is now well defined and is ready to run ! But one thing can be done, and it’s very interesting to avoir restart from scratch the algorithm run.
+<p>The algorithm is now well defined and is ready to run ! But one thing can be done, and it’s very interesting to avoid restart from scratch the algorithm run.
 The use of checkpoint is available in <cite>macop</cite>. A <cite>BasicCheckpoint</cite> class let the algorithm save at <cite>every</cite> evaluations the best solution found. This class is based on callback process.
-A Callback is runned every number of evaluations but can also implement the <cite>load</cite> method in order to to specific instrusctions when initializing algorithm.</p>
+A Callback is runned every number of evaluations but can also implement the <cite>load</cite> method in order to do specific instrusctions when initializing algorithm.</p>
 <p>It’s important to note, we can add any number of callbacks we want. For tabu search as example, we need to store many solutions.</p>
 <p>In our case, we need to specify the use of checkpoint if we prefer to restart from.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>

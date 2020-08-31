@@ -1,4 +1,4 @@
-"""Local Search algorithm
+"""MOEAD sub problem algorithm class
 """
 
 # main imports
