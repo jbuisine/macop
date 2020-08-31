@@ -8,6 +8,7 @@ import math
 import numpy as np
 import sys
 from ...utils.color import macop_text, macop_line, macop_progress
+from ...utils.modules import load_class
 
 # module imports
 from ..Algorithm import Algorithm
@@ -189,6 +190,11 @@ class MOEAD(Algorithm):
 
                         # create new solution based on current new if better, computes fitness associated to new solution for sub problem
                         class_name = type(spBestSolution).__name__
+
+                        # dynamically load solution class if unknown
+                        if class_name not in sys.modules:
+                            load_class(class_name, globals())
+
                         newSolution = getattr(
                             globals()['macop.solutions.' + class_name],
                             class_name)(spBestSolution.data,

@@ -7,12 +7,7 @@ import pkgutil
 
 # module imports
 from .Crossover import Crossover
-
-# import all available solutions
-for loader, module_name, is_pkg in pkgutil.walk_packages(
-        path=['macop/solutions'], prefix='macop.solutions.'):
-    _module = loader.find_module(module_name).load_module(module_name)
-    globals()[module_name] = _module
+from ...utils.modules import load_class
 
 
 class RandomSplitCrossover(Crossover):
@@ -49,5 +44,10 @@ class RandomSplitCrossover(Crossover):
 
         # create solution of same kind with new data
         class_name = type(_solution).__name__
+
+        # dynamically load solution class if unknown
+        if class_name not in sys.modules:
+            load_class(class_name, globals())
+
         return getattr(globals()['macop.solutions.' + class_name],
                        class_name)(currentData, size)

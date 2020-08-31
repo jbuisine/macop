@@ -5,17 +5,12 @@
 import os
 import logging
 import numpy as np
-import pkgutil
+import sys
 
 # module imports
 from .Callback import Callback
 from ..utils.color import macop_text, macop_line
-
-# import all available solutions
-for loader, module_name, is_pkg in pkgutil.walk_packages(
-        path=['macop/solutions'], prefix='macop.solutions.'):
-    _module = loader.find_module(module_name).load_module(module_name)
-    globals()[module_name] = _module
+from ..utils.modules import load_class
 
 
 class ParetoCheckpoint(Callback):
@@ -76,6 +71,10 @@ class ParetoCheckpoint(Callback):
 
                 # retrieve class name from algo
                 class_name = type(self.algo.population[0]).__name__
+
+                # dynamically load solution class if unknown
+                if class_name not in sys.modules:
+                    load_class(class_name, globals())
 
                 # read data for each line
                 for line in f.readlines():
