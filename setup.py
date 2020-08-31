@@ -23,7 +23,7 @@ class TestCommand(distutils.command.check.check):
 
 setup(
     name='macop',
-    version='0.3.0',
+    version='0.3.1',
     description='Minimalist And Customizable Optimization Package',
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
@@ -44,7 +44,10 @@ setup(
         'macop.algorithms.multi', 
         'macop.callbacks', 
         'macop.evaluators', 
-        'macop.operators', 
+        'macop.operators',  
+        'macop.operators.mutators',  
+        'macop.operators.crossovers',  
+        'macop.operators.policies', 
         'macop.solutions', 
         'macop.utils'],
     install_requires=[
