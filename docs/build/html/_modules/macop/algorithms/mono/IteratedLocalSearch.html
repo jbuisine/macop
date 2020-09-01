@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>macop.algorithms.mono.IteratedLocalSearch &mdash; macop v0.3.4 documentation</title>
+  <title>macop.algorithms.mono.IteratedLocalSearch &mdash; macop v0.3.5 documentation</title>
   
 
   
@@ -58,7 +58,7 @@
             
             
               <div class="version">
-                0.3.4
+                0.3.5
               </div>
             
           
@@ -194,9 +194,8 @@
         <span class="c1"># enable resuming for ILS</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">resume</span><span class="p">()</span>
 
-        <span class="c1"># initialize solution if no backup</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">bestSolution</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">initRun</span><span class="p">()</span>
+        <span class="c1"># initialize current solution</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">initRun</span><span class="p">()</span>
 
         <span class="c1"># passing global evaluation param from ILS</span>
         <span class="n">ls</span> <span class="o">=</span> <span class="n">LocalSearch</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">initializer</span><span class="p">,</span>

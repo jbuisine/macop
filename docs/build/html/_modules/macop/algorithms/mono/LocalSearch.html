@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>macop.algorithms.mono.LocalSearch &mdash; macop v0.3.4 documentation</title>
+  <title>macop.algorithms.mono.LocalSearch &mdash; macop v0.3.5 documentation</title>
   
 
   
@@ -58,7 +58,7 @@
             
             
               <div class="version">
-                0.3.4
+                0.3.5
               </div>
             
           
@@ -189,19 +189,21 @@
         <span class="c1"># by default use of mother method to initialize variables</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">_evaluations</span><span class="p">)</span>
 
-        <span class="c1"># initialize solution if no backup</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">bestSolution</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">initRun</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">bestSolution</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">bestSolution</span>
 
-        <span class="n">solutionSize</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bestSolution</span><span class="o">.</span><span class="n">size</span>
+        <span class="c1"># initialize current solution</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">initRun</span><span class="p">()</span>
+
+        <span class="n">solutionSize</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">currentSolution</span><span class="o">.</span><span class="n">size</span>
 
         <span class="c1"># local search algorithm implementation</span>
         <span class="k">while</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">stop</span><span class="p">():</span>
 
             <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">solutionSize</span><span class="p">):</span>
 
-                <span class="c1"># update solution using policy</span>
-                <span class="n">newSolution</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bestSolution</span><span class="p">)</span>
+                <span class="c1"># update current solution using policy</span>
+                <span class="n">newSolution</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">currentSolution</span><span class="p">)</span>
 
                 <span class="c1"># if better solution than currently, replace it</span>
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">isBetter</span><span class="p">(</span><span class="n">newSolution</span><span class="p">):</span>

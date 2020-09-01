@@ -40,6 +40,7 @@ class Algorithm():
         self.validator = _validator
         self.callbacks = []
         self.bestSolution = None
+        self.currentSolution = None
 
         # by default
         self.numberOfEvaluations = 0
@@ -89,7 +90,8 @@ class Algorithm():
         self.currentSolution.evaluate(self.evaluator)
 
         # keep in memory best known solution (current solution)
-        self.bestSolution = self.currentSolution
+        if self.bestSolution is None:
+            self.bestSolution = self.currentSolution
 
     def increaseEvaluation(self):
         """
