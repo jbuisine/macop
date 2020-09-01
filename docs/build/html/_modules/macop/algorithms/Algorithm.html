@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>macop.algorithms.Algorithm &mdash; macop v0.3.4 documentation</title>
+  <title>macop.algorithms.Algorithm &mdash; macop v0.3.5 documentation</title>
   
 
   
@@ -58,7 +58,7 @@
             
             
               <div class="version">
-                0.3.4
+                0.3.5
               </div>
             
           
@@ -193,6 +193,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">validator</span> <span class="o">=</span> <span class="n">_validator</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">callbacks</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">bestSolution</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">currentSolution</span> <span class="o">=</span> <span class="kc">None</span>
 
         <span class="c1"># by default</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">numberOfEvaluations</span> <span class="o">=</span> <span class="mi">0</span>
@@ -242,7 +243,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">currentSolution</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">evaluator</span><span class="p">)</span>
 
         <span class="c1"># keep in memory best known solution (current solution)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">bestSolution</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">currentSolution</span></div>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">bestSolution</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">bestSolution</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">currentSolution</span></div>
 
 <div class="viewcode-block" id="Algorithm.increaseEvaluation"><a class="viewcode-back" href="../../../macop/macop.algorithms.Algorithm.html#macop.algorithms.Algorithm.Algorithm.increaseEvaluation">[docs]</a>    <span class="k">def</span> <span class="nf">increaseEvaluation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
