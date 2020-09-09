@@ -22,10 +22,15 @@ bibliography: paper.bib
 
 # Summary
 
-`macop` is an optimization Python package which not implement the whole available algorithms in the literature but let you the possibility to quickly develop and test your own algorithm and strategies. The main objective of this package is to be the most flexible as possible and hence, to offer a maximum of implementation possibilities.
+`Macop` for `Minimalist And Customizable Optimization Package` is an optimization Python package which not implement the whole available algorithms in the literature but let you the possibility to quickly develop and test your own algorithm and strategies. The main objective of this package is to be the most flexible as possible and hence, to offer a maximum of implementation possibilities.
+
+An underlying objective is to enable this package to be used in educational contexts as well. Allowing students to quickly develop their own algorithms.
 
 # Motivation
 
+During thesis work, the search for a solution with complex evaluation was necessary. The assessment in question consisted of evaluating a model fited with selected subset of available features from a features set. The solution was therefore the new model obtained and its fitness, the score obtained on this test basis.
+
+Exploring all the solutions was not feasible given the large amount of exploration space available. Otherwise it would have been preferable to use a Recursive Features Elimination method [@DBLP:journals/remotesensing/PullanagariKY18, @DBLP:conf/icmla/ChenJ07].
 
 # Application
 
