@@ -49,7 +49,7 @@ The package consists of several modules:
 
 ## Implemented algorithms
 
-Both single and multi-objective algorithms have been implemented for demonstration purposes. The mono-objective Iterated Local Search [@DBLP:books/sp/03/LourencoMS03] algorithm which aims to perform local searches and then to explore again (explorations vs. exploitation trade-off). On the multi-objective side, the MOEA/D algorithm [@DBLP:journals/tec/ZhangL07] has been implemented using the weighted-sum of objectives method (Tchebycheff approach can also be used [@DBLP:journals/cor/AlvesA07]). This algorithm aims at decomposing the multi-objective problem into $mu$ under single-objective problem in order to obtain the pareto front.
+Both single and multi-objective algorithms have been implemented for demonstration purposes. The mono-objective Iterated Local Search [@DBLP:books/sp/03/LourencoMS03] algorithm which aims to perform local searches and then to explore again (explorations vs. exploitation trade-off). On the multi-objective side, the MOEA/D algorithm [@DBLP:journals/tec/ZhangL07] has been implemented using the weighted-sum of objectives method (Tchebycheff approach can also be used [@DBLP:journals/cor/AlvesA07]). This algorithm aims at decomposing the multi-objective problem into $mu$ single-objective problems in order to obtain the pareto front [@kim2005adaptive].
 
 ## Available solutions
 

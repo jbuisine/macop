@@ -16,7 +16,7 @@ The package consists of several modules:
 1.1 Implemented algorithms
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Both single and multi-objective algorithms have been implemented for demonstration purposes. The mono-objective Iterated Local Search algorithm which aims to perform local searches and then to explore again (explorations vs. exploitation trade-off). On the multi-objective side, the MOEA/D algorithm has been implemented using the weighted-sum of objectives method (Tchebycheff approach can also be used). This algorithm aims at decomposing the multi-objective problem into `mu` under single-objective problem in order to obtain the pareto front.
+Both single and multi-objective algorithms have been implemented for demonstration purposes. The mono-objective Iterated Local Search algorithm which aims to perform local searches and then to explore again (explorations vs. exploitation trade-off). On the multi-objective side, the MOEA/D algorithm has been implemented using the weighted-sum of objectives method (Tchebycheff approach can also be used). This algorithm aims at decomposing the multi-objective problem into `mu` single-objective problems in order to obtain the pareto front.
 
 1.2 Available solutions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
