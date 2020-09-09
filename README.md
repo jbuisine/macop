@@ -19,7 +19,7 @@
 - **operators:** mutators, crossovers update of solution. This folder also has `policies` folder to manage the way of update and use solution.
 - **callbacks:** callbacks folder where `Callback` class is available for making callback instructions every number of evaluations.
   
-**Note:** you can pass a custom `validator` function to the algorithm in order to check is solution is always correct for your needs after an update.
+**Note:** you can pass a custom `validator` function to the algorithm in order to check if a solution is always correct for your needs after an update.
 
 ## How to use ?
 
