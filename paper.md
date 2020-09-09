@@ -61,11 +61,11 @@ A few mutation and crossover operators have been implemented, however it remains
 
 ## Backup feature
 
-The use of callback instance allows both to save all the $k$ evaluations of the information but also to reload them once the run of the algorithm is cut. Simply inherit the abstract Callback class and implement the `apply` method to backup and `load` to restore. It is possible to add as many callbacks as required.
+The use of callback instance allows both to save every $k$ evaluations of the information but also to reload them once the run of the algorithm is cut. Simply inherit the abstract Callback class and implement the `apply` method to backup and `load` to restore. It is possible to add as many callbacks as required.
 
 ## Documentation
 
-Documentation with examples for mono and multi objective implemenration is available at [https://jbuisine.github.io/macop/](https://jbuisine.github.io/macop/).
+Documentation with examples for mono and multi-objective implemenration is available at [https://jbuisine.github.io/macop/](https://jbuisine.github.io/macop/).
 
 # Acknowledgements
 

@@ -102,6 +102,13 @@
 <li class="toctree-l3"><a class="reference internal" href="#checkpoint-multi-objective-solutions">1.4 Checkpoint multi-objective solutions</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="#some-information">3. Some information</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#implemented-algorithms">3.1 Implemented algorithms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#available-solutions">3.2 Available solutions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#update-solutions">3.3 Update solutions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#backup-feature">3.4 Backup feature</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
@@ -702,6 +709,33 @@ This is an example, we based our function using classical weighted sum, we can a
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Pareto front is composed of&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">paretoFront</span><span class="p">),</span> <span class="s2">&quot;solutions&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+</div>
+<div class="section" id="some-information">
+<h2>3. Some information<a class="headerlink" href="#some-information" title="Permalink to this headline">¶</a></h2>
+<p>The package consists of several modules:</p>
+<ul class="simple">
+<li><p><strong>algorithms</strong>: generic and implemented OR algorithms.</p></li>
+<li><p><strong>evaluator</strong>: contains all the implemented evaluation functions.</p></li>
+<li><p><strong>solutions</strong>: all declared solutions classes used to represent problem data.</p></li>
+<li><p><strong>operators</strong>: mutators, crossovers update of solution. This module also has policies classes to manage the way of update and use solution.</p></li>
+<li><p><strong>callbacks</strong>: contains Callback class implemenration for making callback instructions every number of evaluations.</p></li>
+</ul>
+<div class="section" id="implemented-algorithms">
+<h3>3.1 Implemented algorithms<a class="headerlink" href="#implemented-algorithms" title="Permalink to this headline">¶</a></h3>
+<p>Both single and multi-objective algorithms have been implemented for demonstration purposes. The mono-objective Iterated Local Search algorithm which aims to perform local searches and then to explore again (explorations vs. exploitation trade-off). On the multi-objective side, the MOEA/D algorithm has been implemented using the weighted-sum of objectives method (Tchebycheff approach can also be used). This algorithm aims at decomposing the multi-objective problem into <cite>mu</cite> under single-objective problem in order to obtain the pareto front.</p>
+</div>
+<div class="section" id="available-solutions">
+<h3>3.2 Available solutions<a class="headerlink" href="#available-solutions" title="Permalink to this headline">¶</a></h3>
+<p>Currently, only combinatorial solutions are offered, with the well-known problem of the knapsack as an example. Of course, it’s easy to add your own representations of solutions.</p>
+</div>
+<div class="section" id="update-solutions">
+<h3>3.3 Update solutions<a class="headerlink" href="#update-solutions" title="Permalink to this headline">¶</a></h3>
+<p>A few mutation and crossover operators have been implemented, however it remains quite simple. What is interesting here is that it is possible to develop one’s own strategy for choosing operators for the next evaluation. The available UCBPolicy class proposes this functionality as an example, since it will seek to propose the best operator to apply based on a method known as Adaptive Operator Selection (AOS) via the use of the Upper Confidence Bound (UCB) algorithm.</p>
+</div>
+<div class="section" id="backup-feature">
+<h3>3.4 Backup feature<a class="headerlink" href="#backup-feature" title="Permalink to this headline">¶</a></h3>
+<p>The use of callback instance allows both to save every <cite>k</cite> evaluations of the information but also to reload them once the run of the algorithm is cut. Simply inherit the abstract Callback class and implement the <strong>apply</strong> method to backup and <strong>load</strong> to restore. It is possible to add as many callbacks as required.</p>
 </div>
 </div>
 </div>
