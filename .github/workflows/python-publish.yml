@@ -4,15 +4,13 @@
 name: pypi
 
 on:
-  push:
-    branches: [ master ]
+  release:
+    types: [created]
 
 jobs:
   deploy:
 
     runs-on: ubuntu-latest
-    only:
-      - tags
     steps:
     - uses: actions/checkout@v2
     - name: Set up Python
