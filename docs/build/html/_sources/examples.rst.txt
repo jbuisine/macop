@@ -1,13 +1,46 @@
 Some examples
 =====================================
 
-1. Mono-objective
+1. Some information
+--------------------
+
+The package consists of several modules:
+
+- **algorithms**: generic and implemented OR algorithms.
+- **evaluator**: contains all the implemented evaluation functions.
+- **solutions**: all declared solutions classes used to represent problem data.
+- **operators**: mutators, crossovers update of solution. This module also has policies classes to manage the way of update and use solution.
+- **callbacks**: contains Callback class implemenration for making callback instructions every number of evaluations.
+
+
+1.1 Implemented algorithms
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Both single and multi-objective algorithms have been implemented for demonstration purposes. The mono-objective Iterated Local Search algorithm which aims to perform local searches and then to explore again (explorations vs. exploitation trade-off). On the multi-objective side, the MOEA/D algorithm has been implemented using the weighted-sum of objectives method (Tchebycheff approach can also be used). This algorithm aims at decomposing the multi-objective problem into `mu` single-objective problems in order to obtain the pareto front.
+
+1.2 Available solutions
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Currently, only combinatorial solutions are offered, with the well-known knapsack problem as an example. Of course, it's easy to add your own representations of solutions.
+
+1.3 Update solutions
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+A few mutation and crossover operators have been implemented, however it remains quite simple. What is interesting here is that it is possible to develop one's own strategy for choosing operators for the next evaluation. The available UCBPolicy class proposes this functionality as an example, since it will seek to propose the best operator to apply based on a method known as Adaptive Operator Selection (AOS) via the use of the Upper Confidence Bound (UCB) algorithm. 
+
+1.4 Backup feature
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The use of callback instance allows both to save every `k` evaluations of the information but also to reload them once the run of the algorithm is cut. Simply inherit the abstract Callback class and implement the **apply** method to backup and **load** to restore. It is possible to add as many callbacks as required.
+
+
+2. Mono-objective
 -----------------------
 
 In this tutorial, we introduce the way of using `macop` and running your algorithm quickly.
 First of all we need to define the kind of solution which best represent the problem. As example, we use the well known knapsack problem using 30 objects (solution size of 30).
 
-1.1 Problem definition
+2.1 Problem definition
 ~~~~~~~~~~~~~~~~~~~~~~
 
 Hence, we define our problem :
@@ -83,7 +116,7 @@ Using the solution representation, we need to define multiple elements to fit ou
     def init():
         return BinarySolution([], 30).random(validator)
 
-1.2 Operators and Policy
+2.2 Operators and Policy
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 In our algorithm we need to use some operators in order to improve current best solution found at current `n` evaluations.
@@ -147,7 +180,7 @@ Why computing score into **Policy** `apply` method ? Because it's a way to get s
     # `policy` instance is created using specific value for Upper Confidence Bound
     policy = UCBPolicy(operators, C=100.)
 
-1.3 Before running algorithm
+2.3 Before running algorithm
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Before running algorithm we can define a logger to keep track of the all algorithm run.
@@ -287,10 +320,10 @@ In this way, now we can run and obtained the best solution found in `n` evaluati
     bestSol = algo.run(10000)
     print('Solution score is {}'.format(evaluator(bestSol)))
 
-2. Multi-objective
+3. Multi-objective
 -------------------
 
-1.1 Problem definition
+3.1 Problem definition
 ~~~~~~~~~~~~~~~~~~~~~~
 
 In this example we also use the knapsack problem, with here, 2 kinds of value for each object in the knapsack :
@@ -378,7 +411,7 @@ Using the solution representation, we need to define multiple elements to fit ou
     def init():
         return BinarySolution([], 200).random(validator)
 
-1.2 Operators and Policy
+3.2 Operators and Policy
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 In our algorithm we need to use some operators in order to improve current best solution found at current `n` evaluations.
@@ -442,7 +475,7 @@ Why computing score into **Policy** `apply` method ? Because it's a way to get s
     # `policy` instance is created using specific value for Upper Confidence Bound
     policy = UCBPolicy(operators, C=100.)
 
-1.3 How works multi-objective in macop ?
+3.3 How works multi-objective in macop ?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 As we have now multiple objectives, we define a new algorithm named MOEAD for `MultiObjective Evolutionary Algorithm with Decomposition` inside `macop.algorithms.multi.MOEAD`. 
@@ -512,7 +545,7 @@ We can now instance our MOEAD algorithm:
 
     algo = MOEAD(init, [evaluator1, evaluator2], operators, policy, validator, _maximise=True)
 
-1.4 Checkpoint multi-objective solutions
+3.4 Checkpoint multi-objective solutions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 To keep track of our `mu` population and `pfPop` pareto front set, 2 new callbacks have been defined:
