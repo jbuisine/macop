@@ -1,6 +1,6 @@
 # Minimalist And Customizable Optimization Package
 
-![](https://github.com/jbuisine/macop/workflows/build/badge.svg) ![](https://img.shields.io/pypi/v/macop) ![](https://img.shields.io/pypi/dm/macop)
+![](https://img.shields.io/github/workflow/status/jbuisine/macop/build?style=flat-square) ![](https://img.shields.io/pypi/v/macop?style=flat-square) ![](https://img.shields.io/pypi/dm/macop?style=flat-square)
 
 <p align="center">
     <img src="https://github.com/jbuisine/macop/blob/master/logo_macop.png" alt="" width="50%">
