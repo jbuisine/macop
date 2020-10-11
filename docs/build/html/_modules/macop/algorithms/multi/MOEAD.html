@@ -452,6 +452,13 @@
                 <span class="k">if</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">indexes</span><span class="p">:</span>
                     <span class="k">continue</span>
 
+                <span class="c1"># check if solutions are the same</span>
+                <span class="k">if</span> <span class="nb">all</span><span class="p">([</span>
+                        <span class="n">_population</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">==</span> <span class="n">_population</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+                        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">_population</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">))</span>
+                <span class="p">]):</span>
+                    <span class="k">continue</span>
+
                 <span class="n">nDominated</span> <span class="o">=</span> <span class="mi">0</span>
 
                 <span class="c1"># check number of dominated objectives of current solution by the others solution</span>

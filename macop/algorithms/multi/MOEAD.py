@@ -300,7 +300,10 @@ class MOEAD(Algorithm):
                     continue
 
                 # check if solutions are the same
-                if all([ _population[i].data[k] == _population[j].data[k] for k in range(len(_population[i].data)) ]):
+                if all([
+                        _population[i].data[k] == _population[j].data[k]
+                        for k in range(len(_population[i].data))
+                ]):
                     continue
 
                 nDominated = 0
