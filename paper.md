@@ -39,13 +39,13 @@ This is why it was preferred to focus on operational research methods, even if t
 
 At the beginning of the development of this tool, the idea of making it as modular as possible was topical. By dividing the library into sub-module forms considered to be the most important to build and solve an optimisation problem.
 
-The package consists of several modules:
+The package consists of main several modules:
 
 - `algorithms`: generic and implemented OR algorithms.
 - `evaluator`: contains all the implemented evaluation functions.
 - `solutions`: all declared solutions classes used to represent problem data.
 - `operators`: mutators, crossovers update of solution. This module also has policies classes to manage the way of update and use solution.
-- `callbacks`: contains Callback class implemenration for making callback instructions every number of evaluations.
+- `callbacks`: contains Callback class implementations for making callback instructions every number of evaluations.
 
 The primary advantage of using Python is that it allows you to dynamically add new attributes within the new implemented solution or algorithm classes. This of course does not close the possibilities of extension and storage of information within solutions and algorithms. It all depends on the need in question.
 
