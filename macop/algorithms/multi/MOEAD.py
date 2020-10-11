@@ -299,6 +299,10 @@ class MOEAD(Algorithm):
                 if j in indexes:
                     continue
 
+                # check if solutions are the same
+                if all([ _population[i].data[k] == _population[j].data[k] for k in range(len(_population[i].data)) ]):
+                    continue
+
                 nDominated = 0
 
                 # check number of dominated objectives of current solution by the others solution

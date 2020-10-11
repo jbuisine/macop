@@ -110,7 +110,7 @@ class Algorithm():
         """
 
         if self.parent is not None:
-            return self.parent.numberOfEvaluations
+            return self.parent.getGlobalEvaluation()
 
         return self.numberOfEvaluations
 
@@ -122,7 +122,7 @@ class Algorithm():
         """
 
         if self.parent is not None:
-            return self.parent.maxEvaluations
+            return self.parent.getGlobalMaxEvaluation()
 
         return self.maxEvaluations
 

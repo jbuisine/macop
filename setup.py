@@ -11,13 +11,13 @@ class TestCommand(distutils.command.check.check):
         
         # folders
         # from macop.algorithms import Algorithm
+        print("==============================")
+        print("Run test program...")
 
         print("==============================")
-        print("Runs test command...")
+        print("Run test using doctest...")
 
         # pass test using doctest
-        #doctest.testmod(Algorithm)
-
         distutils.command.check.check.run(self)
 
 
