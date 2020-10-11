@@ -73,7 +73,7 @@ The use of callback instance allows both to do an action every $k$ evaluations o
 
 ## Documentation
 
-Documentation with examples for mono and multi-objective implemenration is available at [https://jbuisine.github.io/macop/](https://jbuisine.github.io/macop/).
+Documentation with examples for mono and multi-objective implementation is available at [https://jbuisine.github.io/macop/](https://jbuisine.github.io/macop/).
 
 # Conclusion
 
