@@ -29,15 +29,15 @@ An underlying objective is to enable this package to be used for quick implement
 
 # Motivation
 
-Most of the operational research libraries developed in Python offer users either problem and algorithm implementations where it is possible to choose parameters to obtain optimal (or near optimal) results such as [pyomo](http://www.pyomo.org/documentation), [PuLP](https://pypi.org/project/PuLP/), [pyOpt](http://www.pyopt.org/), [PySCIPOpt](https://github.com/SCIP-Interfaces/PySCIPOpt) or, libraries targeted to a specific problem or algorithm such as [simanneal](https://github.com/perrygeo/simanneal).
+Most of the operational research libraries developed in Python offer users either problem and algorithm implementations where it is possible to choose parameters to obtain optimal (or near optimal) results such as [pyomo](http://www.pyomo.org/documentation), [PuLP](https://pypi.org/project/PuLP/), [pyOpt](http://www.pyopt.org/), [PySCIPOpt](https://github.com/SCIP-Interfaces/PySCIPOpt), or, libraries targeted to a specific problem or algorithm such as [simanneal](https://github.com/perrygeo/simanneal).
 
-During thesis work, the search for a binary solution with complex evaluation was necessary. The assessment in question consisted of evaluating a model fited with selected subset of available features from a features set. Binary solution was used as represation for selected or non-selected feature from available set of features. The solution was therefore a new model obtained and its fitness which is the score obtained on test data set. Exploring all the solutions was not feasible given the large amount of exploration space available. Otherwise it would have been preferable to use a Recursive Features Elimination method [@DBLP:journals/remotesensing/PullanagariKY18; @DBLP:conf/icmla/ChenJ07].
+During thesis work, the search for a solution with complex evaluation was necessary. The assessment in question consisted of evaluating a model fited with selected subset of available features from a features set. Binary solution was used as represation for selected or non-selected feature from available set of features. The solution was therefore a new model obtained and its fitness which is the score obtained on test data set. Exploring all the solutions was not feasible given the large amount of exploration space available. Otherwise it would have been preferable to use a Recursive Features Elimination (RFE) method [@DBLP:journals/remotesensing/PullanagariKY18; @DBLP:conf/icmla/ChenJ07].
 
-This is why it was preferred to focus on operational research methods, even if the optimal solution is not found, a good solution is still sufficient for the study case. Libraries available in the literature did not allow this kind of implementation of an evaluation function quickly and this is why the development of a Python package has been undertaken. This package was then adapted to correspond to a formalism of implementing algorithms and problems from a simple structure, hence the term minimalist for Macop.
+This is why it was preferred to focus on operational research methods, even if the optimal solution is not found, a good solution is still sufficient for the study case. Available libraries in the literature did not allow this kind of implementation of an evaluation function quickly and this is why the development of a Python package has been undertaken. This package was then adapted to correspond to a formalism of implementing algorithms and problems from a simple and generic structure, hence the term minimalist in Macop.
 
 # Description
 
-At the beginning of the development of this tool, the idea of making it as modular as possible was topical. By dividing the library into sub-module forms considered to be the most important to build and solve an optimisation problem.
+At the beginning of the development of this library, the idea of making it as modular as possible was topical. By dividing the library into sub-module forms considered to be the most important to build and solve an optimisation problem.
 
 The package consists of main several modules:
 
@@ -47,7 +47,7 @@ The package consists of main several modules:
 - `operators`: mutators, crossovers update of solution. This module also has policies classes to manage the way of update and use solution.
 - `callbacks`: contains Callback class implementations for making callback instructions every number of evaluations.
 
-The primary advantage of using Python is that it allows you to dynamically add new attributes within the new implemented solution or algorithm classes. This of course does not close the possibilities of extension and storage of information within solutions and algorithms. It all depends on the need in question.
+The primary advantage of using Python is that it allows you to dynamically add new members within the new implemented solution or algorithm classes. This of course does not close the possibilities of extension and storage of information within solutions and algorithms. It all depends on the need in question.
 
 ## Implemented algorithms
 
@@ -77,7 +77,7 @@ Documentation with examples for mono and multi-objective implemenration is avail
 
 # Conclusion
 
-Macop proposes a simple structure of interaction of the main elements (algorithms, operators, solutions, AOS, callbacks) for the resolution of operational research problems. From its generic structure, it is possible, thanks to the dynamic programming paradigm of the Python language, to easily allow the extension and implementation of new algorithms. Based on simple concepts, this package can therefore meet the needs of rapid problem implementation. It can therefore also be used for quick case studies.
+Macop proposes a simple structure of interaction of the main elements (algorithms, operators, solutions, AOS, callbacks) for the resolution of operational research problems. From its generic structure, it is possible, thanks to the dynamic programming paradigm of the Python language, to easily allow the extension and implementation of new algorithms and problems. Based on simple concepts, this package can therefore meet the needs of rapid problem implementation. It can also be used for quick case studies.
 
 # Acknowledgements
 
