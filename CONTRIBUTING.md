@@ -2,7 +2,7 @@ Contribution guidelines
 =====================================
 
 <p align="center">
-    Minimalist And Customizable Optimization Package
+    Minimalist And Customisable Optimisation Package
 </p>
 
 

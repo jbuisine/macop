@@ -19,7 +19,7 @@ class MOSubProblem(Algorithm):
         operators: {[Operator]} -- list of operator to use when launching algorithm
         policy: {Policy} -- Policy class implementation strategy to select operators
         validator: {function} -- basic function to check if solution is valid or not under some constraints
-        maximise: {bool} -- specify kind of optimization problem 
+        maximise: {bool} -- specify kind of optimisation problem 
         currentSolution: {Solution} -- current solution managed for current evaluation
         bestSolution: {Solution} -- best solution found so far during running algorithm
         callbacks: {[Callback]} -- list of Callback class implementation to do some instructions every number of evaluations and `load` when initializing algorithm

@@ -187,7 +187,7 @@ man_pages = [
 #  dir menu entry, description, category)
 texinfo_documents = [
     (master_doc, 'macop', 'macop Documentation',
-     author, 'macop', 'Minimalist And Customizable Optimization Package',
+     author, 'macop', 'Minimalist And Customisable Optimisation Package',
      'Miscellaneous'),
 ]
 

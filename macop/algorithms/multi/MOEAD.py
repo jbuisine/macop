@@ -37,7 +37,7 @@ class MOEAD(Algorithm):
         operators: {[Operator]} -- list of operator to use when launching algorithm
         policy: {Policy} -- Policy class implementation strategy to select operators
         validator: {function} -- basic function to check if solution is valid or not under some constraints
-        maximise: {bool} -- specify kind of optimization problem 
+        maximise: {bool} -- specify kind of optimisation problem 
         population: [{Solution}] -- population of solution, one for each sub problem
         pfPop: [{Solution}] -- pareto front population
         weights: [[{float}]] -- random weights used for custom mu sub problems

@@ -64,7 +64,7 @@ Hence, we define our problem :
     elements_score = [ random.randint(1, 20) for _ in range(30) ] # value of each object
     elements_weight = [ random.randint(5, 25) for _ in range(30) ] # weight of each object
 
-We can now define the solution representation. In knapsack problem we want to fill our knapsack in an optimization way selecting or not each component (object).
+We can now define the solution representation. In knapsack problem we want to fill our knapsack in an optimisation way selecting or not each component (object).
 The best way to represent this problem is to use the `BinarySolution` from `macop` which stores solution as a binary array.
 
 Using the solution representation, we need to define multiple elements to fit our algorithm :
@@ -351,7 +351,7 @@ In multi-objective algorithm, we do not only found one solution but a set of non
     elements_weight = [ random.randint(5, 25) for _ in range(200) ] # weight of each object
 
 
-We can now define the solution representation. In knapsack problem we want to fill our knapsack in an optimization way selecting or not each component (object).
+We can now define the solution representation. In knapsack problem we want to fill our knapsack in an optimisation way selecting or not each component (object).
 The best way to represent this problem is to use the `BinarySolution` from `macop` which stores solution as a binary array.
 
 Using the solution representation, we need to define multiple elements to fit our algorithm :

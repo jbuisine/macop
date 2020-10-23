@@ -1,5 +1,5 @@
 ---
-title: 'Minimalist And Customizable Optimization Package'
+title: 'Minimalist And Customisable Optimisation Package'
 tags:
   - Python
   - Operations Research
@@ -23,9 +23,9 @@ bibliography: paper.bib
 
 # Summary
 
-Optimisation problems are frequently encountered in science and industry. Given a real-valued function $f$ defined on a set called the search space $X$, optimising the function $f$ consists of finding a point $x \in X$ en that has the optimal value $f(x)$, or at least constructing a sequence $(x_t)_{t \in \mathbf{N}} \in X^\mathbf{N}$ that is close to the optimum. Depending on the search space $X$, optimisation problems can be globally classified as discrete problems (e.g. $X={0,1}^n$) or as continuous problems (e.g. $X=\mathbf{R}^n$). Tools for modelling and solving discrete and continuous problems are proposed in the literature.
+Optimisation problems are frequently encountered in science and industry. Given a real-valued function $f$ defined on a set called the search space $X$, optimising the function $f$ consists of finding a point $x \in X$ en that has the optimal value $f(x)$, or at least constructing a sequence $(x_t)_{t \in \mathbf{N}} \in X^\mathbb{N}$ that is close to the optimum. Depending on the search space $X$, optimisation problems can be globally classified as discrete problems (e.g. $X=\{0,1\}^n$) or as continuous problems (e.g. $X=\mathbb{R}^n$). Tools for modelling and solving discrete and continuous problems are proposed in the literature.
 
-In this paper, `Macop` for `Minimalist And Customizable Optimization Package`, is a proposed optimization Python package which doesn't implement the whole available algorithms in the literature, but let you the possibility to quickly develop and test your own algorithm and strategies. The main objective of this package is to be the most flexible as possible and hence, to offer a maximum of implementation possibilities.
+In this paper, `Macop` for `Minimalist And Customisable Optimisation Package`, is a proposed optimisation Python package which doesn't implement the whole available algorithms in the literature, but let you the possibility to quickly develop and test your own algorithm and strategies. The main objective of this package is to be the most flexible as possible and hence, to offer a maximum of implementation possibilities.
 
 An underlying objective is to enable this package to be used for quick implementations and in educational contexts as well. Allowing students to quickly develop their own algorithms.
 
