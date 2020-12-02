@@ -43,7 +43,7 @@ class HillClimberBestImprovment(Algorithm):
         # initialize current solution and best solution
         self.initRun()
 
-        solutionSize = self._currentSolution.size
+        solutionSize = self._currentSolution._size
 
         # local search algorithm implementation
         while not self.stop():

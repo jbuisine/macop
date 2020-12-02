@@ -1,19 +1,10 @@
-"""Abstract Operator class
+"""Abstract Evaluator class
 """
 # main imports
-from enum import Enum
 from abc import abstractmethod
 
 
-# enumeration which stores kind of operator
-class KindOperator(Enum):
-    """Enum in order to recognize kind of operators
-    """
-    MUTATOR = 1
-    CROSSOVER = 2
-
-
-class Operator():
+class Evaluator():
     """Abstract Operator class which enables to update solution applying operator (computation)
     """
     @abstractmethod
@@ -22,7 +13,7 @@ class Operator():
 
     @abstractmethod
     def apply(self, solution):
-        """Apply the current operator transformation
+        """Apply the computation of fitness from solution
 
         Args:
             solution: {Solution} -- Solution instance

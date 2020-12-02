@@ -5,7 +5,7 @@ from abc import abstractmethod
 
 
 class Solution():
-    def __init__(self, _data, _size):
+    def __init__(self, data, size):
         """
         Binary integer solution class
 
@@ -14,23 +14,23 @@ class Solution():
             size: {int} -- size of binary array values
             score: {float} -- fitness score value
         """
-        self.data = _data
-        self.size = _size
-        self.score = None
+        self._data = data
+        self._size = size
+        self._score = None
 
-    def isValid(self, _validator):
+    def isValid(self, validator):
         """
         Use of custom method which validates if solution is valid or not
 
         Args:
-            _validator: {function} -- specific function which validates or not a solution
+            validator: {function} -- specific function which validates or not a solution
 
         Returns:
             {bool} -- `True` is solution is valid
         """
-        return _validator(self)
+        return validator(self)
 
-    def evaluate(self, _evaluator):
+    def evaluate(self, evaluator):
         """
         Evaluate solution using specific `_evaluator`
 
@@ -40,8 +40,8 @@ class Solution():
         Returns:
             {float} -- fitness score value
         """
-        self.score = _evaluator(self)
-        return self.score
+        self._score = evaluator(self)
+        return self._score
 
     def fitness(self):
         """
@@ -50,15 +50,15 @@ class Solution():
         Returns:
             {float} -- fitness score value
         """
-        return self.score
+        return self._score
 
     @abstractmethod
-    def random(self, _validator):
+    def random(self, validator):
         """
         Initialize solution using random data
 
         Args:
-            _validator: {function} -- specific function which validates or not a solution
+            validator: {function} -- specific function which validates or not a solution
 
         Returns:
             {Solution} -- generated solution
@@ -66,4 +66,4 @@ class Solution():
         pass
 
     def __str__(self):
-        print("Generic solution with ", self.data)
+        print("Generic solution with ", self._data)

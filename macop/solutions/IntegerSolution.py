@@ -17,7 +17,7 @@ class IntegerSolution(Solution):
         size: {int} -- size of binary array values
         score: {float} -- fitness score value
     """
-    def __init__(self, _data, _size):
+    def __init__(self, data, size):
         """
         Initialize integer solution using specific data
 
@@ -26,26 +26,26 @@ class IntegerSolution(Solution):
             size: {int} -- size of binary array values
         """
 
-        self.data = _data
-        self.size = _size
+        self._data = data
+        self._size = size
 
-    def random(self, _validator):
+    def random(self, validator):
         """
         Intialize integer array with use of validator to generate valid random solution
 
         Args:
-            _validator: {function} -- specific function which validates or not a solution
+            validator: {function} -- specific function which validates or not a solution
 
         Returns:
             {IntegerSolution} -- new generated integer solution
         """
 
-        self.data = np.random.randint(self.size, size=self.size)
+        self._data = np.random.randint(self._size, size=self._size)
 
-        while not self.isValid(_validator):
-            self.data = np.random.randint(self.size, size=self.size)
+        while not self.isValid(validator):
+            self._data = np.random.randint(self._size, size=self._size)
 
         return self
 
     def __str__(self):
-        return "Integer solution %s" % (self.data)
+        return "Integer solution %s" % (self._data)

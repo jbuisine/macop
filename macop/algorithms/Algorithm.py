@@ -110,7 +110,7 @@ class Algorithm():
         parent_alrogithm = None
 
         # recursively find the main algorithm parent
-        while self._parent is not None:
+        while current_algorithm._parent is not None:
             parent_alrogithm = current_algorithm._parent
             current_algorithm = current_algorithm._parent
 
@@ -134,13 +134,14 @@ class Algorithm():
         """
         Increase number of evaluation once a solution is evaluated for each dependant algorithm (parents hierarchy)
         """
-        self._numberOfEvaluations += 1
 
         current_algorithm = self
 
-        while current_algorithm._parent is not None:
-            current_algorithm = current_algorithm._parent
+        while current_algorithm is not None:
+
             current_algorithm._numberOfEvaluations += 1
+            current_algorithm = current_algorithm._parent
+            
 
     def getGlobalEvaluation(self):
         """Get the global number of evaluation (if inner algorithm)
@@ -271,7 +272,7 @@ class Algorithm():
         macop_progress(self.getGlobalEvaluation(),
                        self.getGlobalMaxEvaluation())
 
-        logging.info(f"-- {type(self).__name__} evaluation {self._numberOfEvaluations} of {self._maxEvaluations} ({self._numberOfEvaluations / self._maxEvaluations * 100:.{2}}%) - BEST SCORE {self._bestSolution.fitness()}")
+        logging.info(f"-- {type(self).__name__} evaluation {self._numberOfEvaluations} of {self._maxEvaluations} ({((self._numberOfEvaluations / self._maxEvaluations) * 100):.2f}%) - BEST SCORE {self._bestSolution.fitness()}")
 
     def end(self):
         """Display end message into `run` method

@@ -20,5 +20,5 @@ class RandomPolicy(Policy):
             {Operator}: the selected operator
         """
         # choose operator randomly
-        index = random.randint(0, len(self.operators) - 1)
-        return self.operators[index]
+        index = random.randint(0, len(self._operators) - 1)
+        return self._operators[index]

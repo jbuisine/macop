@@ -25,16 +25,16 @@ class MultiCheckpoint(Callback):
         Check if necessary to do backup based on `every` variable
         """
         # get current population
-        population = self.algo.population
+        population = self._algo._population
 
-        currentEvaluation = self.algo.getGlobalEvaluation()
+        currentEvaluation = self._algo.getGlobalEvaluation()
 
         # backup if necessary
-        if currentEvaluation % self.every == 0:
+        if currentEvaluation % self._every == 0:
 
-            logging.info("Checkpoint is done into " + self.filepath)
+            logging.info("Checkpoint is done into " + self._filepath)
 
-            with open(self.filepath, 'w') as f:
+            with open(self._filepath, 'w') as f:
 
                 for solution in population:
                     solutionData = ""
@@ -48,7 +48,7 @@ class MultiCheckpoint(Callback):
 
                     line = str(currentEvaluation) + ';'
 
-                    for i in range(len(self.algo.evaluator)):
+                    for i in range(len(self._algo.evaluator)):
                         line += str(solution.scores[i]) + ';'
 
                     line += solutionData + ';\n'
@@ -59,10 +59,10 @@ class MultiCheckpoint(Callback):
         """
         Load backup lines as population and set algorithm state (population and pareto front) at this backup
         """
-        if os.path.exists(self.filepath):
+        if os.path.exists(self._filepath):
 
             logging.info('Load best solution from last checkpoint')
-            with open(self.filepath) as f:
+            with open(self._filepath) as f:
 
                 # read data for each line
                 for i, line in enumerate(f.readlines()):
@@ -74,31 +74,31 @@ class MultiCheckpoint(Callback):
                         # get evaluation  information
                         globalEvaluation = int(data[0])
 
-                        if self.algo.parent is not None:
-                            self.algo.parent.numberOfEvaluations = globalEvaluation
+                        if self._algo.parent is not None:
+                            self._algo.parent.numberOfEvaluations = globalEvaluation
                         else:
-                            self.algo.numberOfEvaluations = globalEvaluation
+                            self._algo.numberOfEvaluations = globalEvaluation
 
-                    nObjectives = len(self.algo.evaluator)
+                    nObjectives = len(self._algo.evaluator)
                     scores = [float(s) for s in data[1:nObjectives + 1]]
 
                     # get best solution data information
                     solutionData = list(map(int, data[-1].split(' ')))
 
                     # initialize and fill with data
-                    self.algo.population[i] = self.algo.initializer()
-                    self.algo.population[i].data = np.array(solutionData)
-                    self.algo.population[i].scores = scores
+                    self._algo.population[i] = self._algo.initializer()
+                    self._algo.population[i].data = np.array(solutionData)
+                    self._algo.population[i].scores = scores
 
-                    self.algo.pfPop.append(self.algo.population[i])
+                    self._algo.pfPop.append(self._algo.population[i])
 
             print(macop_line())
             print(
                 macop_text('Load of available population from `{}`'.format(
-                    self.filepath)))
+                    self._filepath)))
             print(
                 macop_text('Restart algorithm from evaluation {}.'.format(
-                    self.algo.numberOfEvaluations)))
+                    self._algo.numberOfEvaluations)))
 
         else:
             print(

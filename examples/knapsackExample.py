@@ -29,18 +29,18 @@ random.seed(42)
 elements_score = [ random.randint(1, 20) for _ in range(30) ]
 elements_weight = [ random.randint(2, 5) for _ in range(30) ]
 
-def knapsackWeight(_solution):
+def knapsackWeight(solution):
 
     weight_sum = 0
-    for index, elem in enumerate(_solution.data):
+    for index, elem in enumerate(solution._data):
         weight_sum += elements_weight[index] * elem
 
     return weight_sum
 
 # default validator
-def validator(_solution):
+def validator(solution):
 
-    if knapsackWeight(_solution) <= 80:
+    if knapsackWeight(solution) <= 80:
         return True
     else:
         False
@@ -49,10 +49,10 @@ def validator(_solution):
 def init():
     return BinarySolution([], 30).random(validator)
 
-def evaluator(_solution):
+def evaluator(solution):
 
     fitness = 0
-    for index, elem in enumerate(_solution.data):
+    for index, elem in enumerate(solution._data):
         fitness += (elements_score[index] * elem)
 
     return fitness
@@ -63,9 +63,9 @@ def main():
 
     operators = [SimpleBinaryMutation(), SimpleMutation(), SimpleCrossover(), RandomSplitCrossover()]
     policy = UCBPolicy(operators)
-    callback = BasicCheckpoint(_every=5, _filepath=filepath)
+    callback = BasicCheckpoint(every=5, filepath=filepath)
 
-    algo = ILS(init, evaluator, operators, policy, validator, _maximise=True)
+    algo = ILS(init, evaluator, operators, policy, validator, maximise=True)
     
     # add callback into callback list
     algo.addCallback(callback)

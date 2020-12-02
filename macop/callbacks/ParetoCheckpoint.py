@@ -27,16 +27,16 @@ class ParetoCheckpoint(Callback):
         Check if necessary to do backup based on `every` variable
         """
         # get current population
-        pfPop = self.algo.pfPop
+        pfPop = self._algo.pfPop
 
-        currentEvaluation = self.algo.getGlobalEvaluation()
+        currentEvaluation = self._algo.getGlobalEvaluation()
 
         # backup if necessary
-        if currentEvaluation % self.every == 0:
+        if currentEvaluation % self._every == 0:
 
-            logging.info("Checkpoint is done into " + self.filepath)
+            logging.info("Checkpoint is done into " + self._filepath)
 
-            with open(self.filepath, 'w') as f:
+            with open(self._filepath, 'w') as f:
 
                 for solution in pfPop:
                     solutionData = ""
@@ -50,7 +50,7 @@ class ParetoCheckpoint(Callback):
 
                     line = ''
 
-                    for i in range(len(self.algo.evaluator)):
+                    for i in range(len(self._algo.evaluator)):
                         line += str(solution.scores[i]) + ';'
 
                     line += solutionData + ';\n'
@@ -61,16 +61,16 @@ class ParetoCheckpoint(Callback):
         """
         Load backup lines as population and set algorithm state (population and pareto front) at this backup
         """
-        if os.path.exists(self.filepath):
+        if os.path.exists(self._filepath):
 
             logging.info('Load best solution from last checkpoint')
-            with open(self.filepath) as f:
+            with open(self._filepath) as f:
 
                 # reinit pf population
-                self.algo.pfPop = []
+                self._algo.pfPop = []
 
                 # retrieve class name from algo
-                class_name = type(self.algo.population[0]).__name__
+                class_name = type(self._algo.population[0]).__name__
 
                 # dynamically load solution class if unknown
                 if class_name not in sys.modules:
@@ -81,7 +81,7 @@ class ParetoCheckpoint(Callback):
 
                     data = line.replace(';\n', '').split(';')
 
-                    nObjectives = len(self.algo.evaluator)
+                    nObjectives = len(self._algo.evaluator)
                     scores = [float(s) for s in data[0:nObjectives]]
 
                     # get best solution data information
@@ -92,12 +92,12 @@ class ParetoCheckpoint(Callback):
                         class_name)(solutionData, len(solutionData))
                     newSolution.scores = scores
 
-                    self.algo.pfPop.append(newSolution)
+                    self._algo.pfPop.append(newSolution)
 
             print(
                 macop_text(
                     'Load of available pareto front backup from `{}`'.format(
-                        self.filepath)))
+                        self._filepath)))
 
         else:
             print(

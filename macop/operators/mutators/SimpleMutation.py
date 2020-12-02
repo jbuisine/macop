@@ -15,23 +15,23 @@ class SimpleMutation(Mutation):
     Attributes:
         kind: {KindOperator} -- specify the kind of operator
     """
-    def apply(self, _solution):
+    def apply(self, solution):
         """Create new solution based on solution passed as parameter
 
         Args:
-            _solution: {Solution} -- the solution to use for generating new solution
+            solution: {Solution} -- the solution to use for generating new solution
 
         Returns:
             {Solution} -- new generated solution
         """
 
-        size = _solution.size
+        size = solution.size
 
         firstCell = 0
         secondCell = 0
 
         # copy data of solution
-        currentData = _solution.data.copy()
+        currentData = solution.data.copy()
 
         while firstCell == secondCell:
             firstCell = random.randint(0, size - 1)
@@ -44,7 +44,7 @@ class SimpleMutation(Mutation):
         currentData[secondCell] = temp
 
         # create solution of same kind with new data
-        class_name = type(_solution).__name__
+        class_name = type(solution).__name__
 
         # dynamically load solution class if unknown
         if class_name not in sys.modules:
