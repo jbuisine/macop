@@ -12,6 +12,16 @@ from ..utils.color import macop_text, macop_line, macop_progress
 class Algorithm():
     """Algorithm class used as basic algorithm
 
+    This class enables to manage some common usages of operation research algorithms:
+    - initialization function of solution
+    - validator function to check if solution is valid or not (based on some criteria)
+    - evaluation function to give fitness score to a solution
+    - operators used in order to update solution during search process
+    - policy process applied when choosing next operator to apply
+    - callbacks function in order to do some relative stuff every number of evaluation or reload algorithm state
+    - parent algorithm associated to this new algorithm instance (hierarchy management)
+
+
     Attributes:
         initalizer: {function} -- basic function strategy to initialize solution
         evaluator: {function} -- basic function in order to obtained fitness (mono or multiple objectives)
@@ -19,45 +29,52 @@ class Algorithm():
         policy: {Policy} -- Policy class implementation strategy to select operators
         validator: {function} -- basic function to check if solution is valid or not under some constraints
         maximise: {bool} -- specify kind of optimisation problem 
-        currentSolution: {Solution} -- current solution managed for current evaluation
+        currentSolution: {Solution} -- current solution managed for current evaluation comparison
         bestSolution: {Solution} -- best solution found so far during running algorithm
         callbacks: {[Callback]} -- list of Callback class implementation to do some instructions every number of evaluations and `load` when initializing algorithm
         parent: {Algorithm} -- parent algorithm reference in case of inner Algorithm instance (optional)
     """
     def __init__(self,
-                 _initalizer,
-                 _evaluator,
-                 _operators,
-                 _policy,
-                 _validator,
-                 _maximise=True,
-                 _parent=None):
+                 initalizer,
+                 evaluator,
+                 operators,
+                 policy,
+                 validator,
+                 maximise=True,
+                 parent=None):
 
-        self.initializer = _initalizer
-        self.evaluator = _evaluator
-        self.operators = _operators
-        self.policy = _policy
-        self.validator = _validator
-        self.callbacks = []
-        self.bestSolution = None
-        self.currentSolution = None
+        # protected members intialization
+        self._initializer = initalizer
+        self._evaluator = evaluator
+        self._operators = operators
+        self._policy = policy
+        self._validator = validator
+        self._callbacks = []
+        self._bestSolution = None
+        self._currentSolution = None
 
         # by default
-        self.numberOfEvaluations = 0
-        self.maxEvaluations = 0
+        self._numberOfEvaluations = 0
+        self._maxEvaluations = 0
 
         # other parameters
-        self.parent = _parent  # parent algorithm if it's sub algorithm
+        self._parent = parent  # parent algorithm if it's sub algorithm
 
         #self.maxEvaluations = 0 # by default
-        self.maximise = _maximise
+        self._maximise = maximise
 
-        # track reference of algo into operator (keep an eye into best solution)
-        for operator in self.operators:
-            operator.setAlgo(self)
+        # track reference of algorihtm into operator (keep an eye into best solution)
+        for operator in self._operators:
+            if self._parent is not None:
+                operator.setAlgo(self.getParent())
+            else:
+                operator.setAlgo(self)
 
         # also track reference for policy
-        self.policy.setAlgo(self)
+        if self._parent is not None:
+            self._policy.setAlgo(self.getParent())
+        else:
+            self._policy.setAlgo(self)
 
     def addCallback(self, _callback):
         """Add new callback to algorithm specifying usefull parameters
@@ -65,42 +82,65 @@ class Algorithm():
         Args:
             _callback: {Callback} -- specific Callback instance
         """
-        # specify current main algorithm reference
-        _callback.setAlgo(self)
+        # specify current main algorithm reference for callback
+        if self._parent is not None:
+            _callback.setAlgo(self.getParent())
+        else:
+            _callback.setAlgo(self)
 
         # set as new
-        self.callbacks.append(_callback)
+        self._callbacks.append(_callback)
 
     def resume(self):
         """Resume algorithm using Callback instances
         """
 
         # load every callback if many things are necessary to do before running algorithm
-        for callback in self.callbacks:
+        for callback in self._callbacks:
             callback.load()
+
+    def getParent(self):
+        """Recursively find the main parent algorithm attached of the current algorithm
+
+        Returns:
+            {Algorithm} -- main algorithm set for this algorithm
+        """
+
+        current_algorithm = self
+        parent_alrogithm = None
+
+        # recursively find the main algorithm parent
+        while self._parent is not None:
+            parent_alrogithm = current_algorithm._parent
+            current_algorithm = current_algorithm._parent
+
+        return parent_alrogithm
 
     def initRun(self):
         """
-        Initialize the current solution and best solution
+        Initialize the current solution and best solution using the `initialiser` function
         """
 
-        self.currentSolution = self.initializer()
+        self._currentSolution = self._initializer()
 
         # evaluate current solution
-        self.currentSolution.evaluate(self.evaluator)
+        self._currentSolution.evaluate(self._evaluator)
 
         # keep in memory best known solution (current solution)
-        if self.bestSolution is None:
-            self.bestSolution = self.currentSolution
+        if self._bestSolution is None:
+            self._bestSolution = self._currentSolution
 
     def increaseEvaluation(self):
         """
-        Increase number of evaluation once a solution is evaluated
+        Increase number of evaluation once a solution is evaluated for each dependant algorithm (parents hierarchy)
         """
-        self.numberOfEvaluations += 1
+        self._numberOfEvaluations += 1
 
-        if self.parent is not None:
-            self.parent.numberOfEvaluations += 1
+        current_algorithm = self
+
+        while current_algorithm._parent is not None:
+            current_algorithm = current_algorithm._parent
+            current_algorithm._numberOfEvaluations += 1
 
     def getGlobalEvaluation(self):
         """Get the global number of evaluation (if inner algorithm)
@@ -108,11 +148,12 @@ class Algorithm():
         Returns:
             {int} -- current global number of evaluation
         """
+        parent_algorithm = self.getParent()
 
-        if self.parent is not None:
-            return self.parent.getGlobalEvaluation()
+        if parent_algorithm is not None:
+            return parent_algorithm.getGlobalEvaluation()
 
-        return self.numberOfEvaluations
+        return self._numberOfEvaluations
 
     def getGlobalMaxEvaluation(self):
         """Get the global max number of evaluation (if inner algorithm)
@@ -121,19 +162,24 @@ class Algorithm():
             {int} -- current global max number of evaluation
         """
 
-        if self.parent is not None:
-            return self.parent.getGlobalMaxEvaluation()
+        parent_algorithm = self.getParent()
 
-        return self.maxEvaluations
+        if parent_algorithm is not None:
+            return parent_algorithm.getGlobalMaxEvaluation()
+
+        return self._maxEvaluations
 
     def stop(self):
         """
-        Global stopping criteria (check for inner algorithm too)
+        Global stopping criteria (check for parents algorithm hierarchy too)
         """
-        if self.parent is not None:
-            return self.parent.numberOfEvaluations >= self.parent.maxEvaluations or self.numberOfEvaluations >= self.maxEvaluations
+        parent_algorithm = self.getParent()
 
-        return self.numberOfEvaluations >= self.maxEvaluations
+        # based on global stopping creteria or on its own stopping critera
+        if parent_algorithm is not None:
+            return parent_algorithm._numberOfEvaluations >= parent_algorithm._maxEvaluations or self._numberOfEvaluations >= self._maxEvaluations
+
+        return self._numberOfEvaluations >= self._maxEvaluations
 
     def evaluate(self, _solution):
         """
@@ -148,7 +194,7 @@ class Algorithm():
         Note: 
             if multi-objective problem this method can be updated using array of `evaluator`
         """
-        return _solution.evaluate(self.evaluator)
+        return _solution.evaluate(self._evaluator)
 
     def update(self, _solution):
         """
@@ -163,9 +209,9 @@ class Algorithm():
         """
 
         # two parameters are sent if specific crossover solution are wished
-        sol = self.policy.apply(_solution)
+        sol = self._policy.apply(_solution)
 
-        if (sol.isValid(self.validator)):
+        if (sol.isValid(self._validator)):
             return sol
         else:
             logging.info("-- New solution is not valid %s" % sol)
@@ -182,11 +228,11 @@ class Algorithm():
             {bool} -- `True` if better
         """
         # depending of problem to solve (maximizing or minimizing)
-        if self.maximise:
-            if _solution.fitness() > self.bestSolution.fitness():
+        if self._maximise:
+            if _solution.fitness() > self._bestSolution.fitness():
                 return True
         else:
-            if _solution.fitness() < self.bestSolution.fitness():
+            if _solution.fitness() < self._bestSolution.fitness():
                 return True
 
         # by default
@@ -198,18 +244,18 @@ class Algorithm():
         """
 
         # append number of max evaluation if multiple run called
-        self.maxEvaluations += _evaluations
+        self._maxEvaluations += _evaluations
 
         # check if global evaluation is used or not
-        if self.parent is not None and self.getGlobalEvaluation() != 0:
+        if self.getParent() is not None and self.getGlobalEvaluation() != 0:
 
             # init number evaluations of inner algorithm depending of globalEvaluation
             # allows to restart from `checkpoint` last evaluation into inner algorithm
-            rest = self.getGlobalEvaluation() % self.maxEvaluations
-            self.numberOfEvaluations = rest
+            rest = self.getGlobalEvaluation() % self._maxEvaluations
+            self._numberOfEvaluations = rest
 
         else:
-            self.numberOfEvaluations = 0
+            self._numberOfEvaluations = 0
 
         logging.info("Run %s with %s evaluations" %
                      (self.__str__(), _evaluations))
@@ -218,32 +264,23 @@ class Algorithm():
         """
         Log progress and apply callbacks if necessary
         """
-        if len(self.callbacks) > 0:
-            for callback in self.callbacks:
+        if len(self._callbacks) > 0:
+            for callback in self._callbacks:
                 callback.run()
 
         macop_progress(self.getGlobalEvaluation(),
                        self.getGlobalMaxEvaluation())
 
-        logging.info("-- %s evaluation %s of %s (%s%%) - BEST SCORE %s" %
-                     (type(self).__name__, self.numberOfEvaluations,
-                      self.maxEvaluations, "{0:.2f}".format(
-                          (self.numberOfEvaluations) / self.maxEvaluations *
-                          100.), self.bestSolution.fitness()))
+        logging.info(f"-- {type(self).__name__} evaluation {self._numberOfEvaluations} of {self._maxEvaluations} ({self._numberOfEvaluations / self._maxEvaluations * 100:.{2}}%) - BEST SCORE {self._bestSolution.fitness()}")
 
     def end(self):
         """Display end message into `run` method
         """
-        print(
-            macop_text('({}) Found after {} evaluations \n   - {}'.format(
-                type(self).__name__, self.numberOfEvaluations,
-                self.bestSolution)))
+        print(macop_text(f'({type(self).__name__}) Found after {self._numberOfEvaluations} evaluations \n   - {self._bestSolution}'))
         print(macop_line())
 
     def information(self):
-        logging.info("-- Best %s - SCORE %s" %
-                     (self.bestSolution, self.bestSolution.fitness()))
+        logging.info(f"-- Best {self._bestSolution} - SCORE {self._bestSolution.fitness()}")
 
     def __str__(self):
-        return "%s using %s" % (type(self).__name__, type(
-            self.bestSolution).__name__)
+        return f"{type(self).__name__} using {type(self._bestSolution).__name__}"
