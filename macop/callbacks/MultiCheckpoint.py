@@ -38,9 +38,9 @@ class MultiCheckpoint(Callback):
 
                 for solution in population:
                     solutionData = ""
-                    solutionSize = len(solution.data)
+                    solutionSize = len(solution._data)
 
-                    for index, val in enumerate(solution.data):
+                    for index, val in enumerate(solution._data):
                         solutionData += str(val)
 
                         if index < solutionSize - 1:
@@ -48,8 +48,8 @@ class MultiCheckpoint(Callback):
 
                     line = str(currentEvaluation) + ';'
 
-                    for i in range(len(self._algo.evaluator)):
-                        line += str(solution.scores[i]) + ';'
+                    for i in range(len(self._algo._evaluator)):
+                        line += str(solution._scores[i]) + ';'
 
                     line += solutionData + ';\n'
 
@@ -74,38 +74,30 @@ class MultiCheckpoint(Callback):
                         # get evaluation  information
                         globalEvaluation = int(data[0])
 
-                        if self._algo.parent is not None:
-                            self._algo.parent.numberOfEvaluations = globalEvaluation
+                        if self._algo.getParent() is not None:
+                            self._algo.getParen()._numberOfEvaluations = globalEvaluation
                         else:
-                            self._algo.numberOfEvaluations = globalEvaluation
+                            self._algo._numberOfEvaluations = globalEvaluation
 
-                    nObjectives = len(self._algo.evaluator)
+                    nObjectives = len(self._algo._evaluator)
                     scores = [float(s) for s in data[1:nObjectives + 1]]
 
                     # get best solution data information
                     solutionData = list(map(int, data[-1].split(' ')))
 
                     # initialize and fill with data
-                    self._algo.population[i] = self._algo.initializer()
-                    self._algo.population[i].data = np.array(solutionData)
-                    self._algo.population[i].scores = scores
+                    self._algo._population[i] = self._algo._initializer()
+                    self._algo._population[i]._data = np.array(solutionData)
+                    self._algo._population[i]._scores = scores
 
-                    self._algo.pfPop.append(self._algo.population[i])
+                    self._algo._pfPop.append(self._algo._population[i])
 
             print(macop_line())
-            print(
-                macop_text('Load of available population from `{}`'.format(
-                    self._filepath)))
-            print(
-                macop_text('Restart algorithm from evaluation {}.'.format(
-                    self._algo.numberOfEvaluations)))
+            print(macop_text(f'Load of available population from `{self._filepath}`'))
+            print(macop_text(f'Restart algorithm from evaluation {self._algo._numberOfEvaluations}.'))
 
         else:
-            print(
-                macop_text(
-                    'No backup found... Start running algorithm from evaluation 0.'
-                ))
-            logging.info(
-                "Can't load backup... Backup filepath not valid in Checkpoint")
+            print(macop_text('No backup found... Start running algorithm from evaluation 0.'))
+            logging.info("Can't load backup... Backup filepath not valid in Checkpoint")
 
         print(macop_line())

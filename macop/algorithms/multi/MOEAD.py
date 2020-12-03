@@ -15,14 +15,14 @@ from ..Algorithm import Algorithm
 from .MOSubProblem import MOSubProblem
 
 
-def moEvaluator(_solution, _evaluator, _weights):
+def moEvaluator(solution, evaluator, weights):
 
-    scores = [eval(_solution) for eval in _evaluator]
+    scores = [eval(solution) for eval in evaluator]
 
     # associate objectives scores to solution
-    _solution.scores = scores
+    solution._scores = scores
 
-    return sum([scores[i] for i, w in enumerate(_weights)])
+    return sum([scores[i] for i, w in enumerate(weights)])
 
 
 class MOEAD(Algorithm):
@@ -44,96 +44,96 @@ class MOEAD(Algorithm):
         callbacks: {[Callback]} -- list of Callback class implementation to do some instructions every number of evaluations and `load` when initializing algorithm
     """
     def __init__(self,
-                 _mu,
-                 _T,
-                 _initalizer,
-                 _evaluator,
-                 _operators,
-                 _policy,
-                 _validator,
-                 _maximise=True,
-                 _parent=None):
+                 mu,
+                 T,
+                 initalizer,
+                 evaluator,
+                 operators,
+                 policy,
+                 validator,
+                 maximise=True,
+                 parent=None):
 
         # redefinition of constructor to well use `initRun` method
-        self.initializer = _initalizer
-        self.evaluator = _evaluator
-        self.operators = _operators
-        self.policy = _policy
-        self.validator = _validator
-        self.callbacks = []
+        self._initializer = initalizer
+        self._evaluator = evaluator
+        self._operators = operators
+        self._policy = policy
+        self._validator = validator
+        self._callbacks = []
 
         # by default
-        self.numberOfEvaluations = 0
-        self.maxEvaluations = 0
-        self.nObjectives = len(_evaluator)
+        self._numberOfEvaluations = 0
+        self._maxEvaluations = 0
+        self._nObjectives = len(evaluator)
 
         # other parameters
-        self.parent = _parent  # parent algorithm if it's sub algorithm
+        self._parent = parent  # parent algorithm if it's sub algorithm
 
         #self.maxEvaluations = 0 # by default
-        self.maximise = _maximise
+        self._maximise = maximise
 
         # track reference of algo into operator (keep an eye into best solution)
-        for operator in self.operators:
+        for operator in self._operators:
             operator.setAlgo(self)
 
         # by default track reference for policy
-        self.policy.setAlgo(self)
+        self._policy.setAlgo(self)
 
-        if _mu < _T:
+        if mu < T:
             raise ValueError('`mu` cannot be less than `T`')
 
-        self.mu = _mu
-        self.T = _T
+        self._mu = mu
+        self._T = T
 
         # initialize neighbors for each sub problem
         self.setNeighbors()
 
         weights = []
 
-        if self.nObjectives == 2:
+        if self._nObjectives == 2:
 
-            for i in range(self.mu):
-                angle = math.pi / 2 * i / (self.mu - 1)
+            for i in range(self._mu):
+                angle = math.pi / 2 * i / (self._mu - 1)
                 weights.append([math.cos(angle), math.sin(angle)])
 
-        elif self.nObjectives >= 3:
+        elif self._nObjectives >= 3:
 
             # random weights using uniform
-            for i in range(self.mu):
-                w_i = np.random.uniform(0, 1, self.nObjectives)
+            for i in range(self._mu):
+                w_i = np.random.uniform(0, 1, self._nObjectives)
                 weights.append(w_i / sum(w_i))
         else:
             raise ValueError('Unvalid number of objectives')
 
-        self.weights = weights
+        self._weights = weights
 
-        self.subProblems = []
+        self._subProblems = []
 
-        for i in range(self.mu):
+        for i in range(self._mu):
 
             # compute weight sum from solution
-            sub_evaluator = lambda _solution: moEvaluator(
-                _solution, _evaluator, weights[i])
+            sub_evaluator = lambda solution: moEvaluator(
+                solution, evaluator, weights[i])
 
             # intialize each sub problem
             # use copy of list to keep track for each sub problem
             subProblem = MOSubProblem(i, weights[i],
-                                      _initalizer, sub_evaluator,
-                                      _operators.copy(), _policy, _validator,
-                                      _maximise, self)
+                                      initalizer, sub_evaluator,
+                                      operators.copy(), policy, validator,
+                                      maximise, self)
 
-            self.subProblems.append(subProblem)
+            self._subProblems.append(subProblem)
 
-        self.population = [None for n in range(self.mu)]
-        self.pfPop = []
+        self._population = [None for n in range(self._mu)]
+        self._pfPop = []
 
         # ref point based on number of evaluators
-        if self.maximise:
-            self.refPoint = [0 for _ in range(self.nObjectives)]
+        if self._maximise:
+            self._refPoint = [0 for _ in range(self._nObjectives)]
         else:
-            self.refPoint = [
-                sys.float_info.max for _ in range(self.nObjectives)
+            self._refPoint = [
+                sys.float_info.max for _ in range(self._nObjectives)
             ]
 
     def initRun(self):
@@ -143,51 +143,51 @@ class MOEAD(Algorithm):
         # initialization is done during run method
         pass
 
-    def run(self, _evaluations):
+    def run(self, evaluations):
         """
         Run the local search algorithm
 
         Args:
-            _evaluations: {int} -- number of Local search evaluations
+            evaluations: {int} -- number of Local search evaluations
             
         Returns:
             {Solution} -- best solution found
         """
 
         # by default use of mother method to initialize variables
-        super().run(_evaluations)
+        super().run(evaluations)
 
         # enable callback resume for MOEAD
         self.resume()
 
         # initialize each sub problem if no backup
-        for i in range(self.mu):
+        for i in range(self._mu):
 
-            if self.subProblems[i].bestSolution is None:
-                self.subProblems[i].run(1)
-                self.population[i] = self.subProblems[i].bestSolution
+            if self._subProblems[i]._bestSolution is None:
+                self._subProblems[i].run(1)
+                self._population[i] = self._subProblems[i]._bestSolution
 
         # if no backup for pf population
-        if len(self.pfPop) == 0:
-            for i in range(self.mu):
-                self.pfPop.append(self.subProblems[i].bestSolution)
+        if len(self._pfPop) == 0:
+            for i in range(self._mu):
+                self._pfPop.append(self._subProblems[i]._bestSolution)
 
         # MOEAD algorithm implementation
         while not self.stop():
 
-            for i in range(self.mu):
+            for i in range(self._mu):
 
                 # run 1 iteration into sub problem `i`
-                self.subProblems[i].run(1)
-                spBestSolution = self.subProblems[i].bestSolution
+                self._subProblems[i].run(1)
+                spBestSolution = self._subProblems[i]._bestSolution
 
                 self.updateRefPoint(spBestSolution)
 
                 # for each neighbor of current sub problem update solution if better
                 improvment = False
-                for j in self.neighbors[i]:
+                for j in self._neighbors[i]:
                     if spBestSolution.fitness(
-                    ) > self.subProblems[j].bestSolution.fitness():
+                    ) > self._subProblems[j]._bestSolution.fitness():
 
                         # create new solution based on current new if better, computes fitness associated to new solution for sub problem
                         class_name = type(spBestSolution).__name__
@@ -198,24 +198,24 @@ class MOEAD(Algorithm):
 
                         newSolution = getattr(
                             globals()['macop.solutions.' + class_name],
-                            class_name)(spBestSolution.data,
-                                        len(spBestSolution.data))
+                            class_name)(spBestSolution._data,
+                                        len(spBestSolution._data))
 
                         # evaluate solution for new sub problem and update as best solution
-                        self.subProblems[j].evaluate(newSolution)
-                        self.subProblems[j].bestSolution = newSolution
+                        self._subProblems[j].evaluate(newSolution)
+                        self._subProblems[j]._bestSolution = newSolution
 
                         # update population solution for this sub problem
-                        self.population[j] = newSolution
+                        self._population[j] = newSolution
 
                         improvment = True
 
                 # add new solution if improvment is idenfity
                 if improvment:
-                    self.pfPop.append(spBestSolution)
+                    self._pfPop.append(spBestSolution)
 
                 # update pareto front
-                self.pfPop = self.paretoFront(self.pfPop)
+                self._pfPop = self.paretoFront(self._pfPop)
 
                 # add progress here
                 self.progress()
@@ -224,73 +224,67 @@ class MOEAD(Algorithm):
                 if self.stop():
                     break
 
-        logging.info("End of %s, best solution found %s" %
-                     (type(self).__name__, self.population))
+        logging.info(f"End of {type(self).__name__}, best solution found {self._population}")
 
         self.end()
 
-        return self.pfPop
+        return self._pfPop
 
     def progress(self):
         """
         Log progress and apply callbacks if necessary
         """
-        if len(self.callbacks) > 0:
-            for callback in self.callbacks:
+        if len(self._callbacks) > 0:
+            for callback in self._callbacks:
                 callback.run()
 
-        macop_progress(self.getGlobalEvaluation(),
-                       self.getGlobalMaxEvaluation())
+        macop_progress(self.getGlobalEvaluation(), self.getGlobalMaxEvaluation())
 
-        logging.info(
-            "-- %s evaluation %s of %s (%s%%)" %
-            (type(self).__name__, self.numberOfEvaluations,
-             self.maxEvaluations, "{0:.2f}".format(
-                 (self.numberOfEvaluations) / self.maxEvaluations * 100.)))
+        logging.info(f"-- {type(self).__name__} evaluation {self._numberOfEvaluations} of {self._maxEvaluations} ({((self._numberOfEvaluations) / self._maxEvaluations * 100.):.2f}%)")
 
     def setNeighbors(self):
 
         dmin = dmax = 0
 
-        if self.T % 2 == 1:
-            dmin = -int(self.T / 2)
-            dmax = int(self.T / 2) + 1
+        if self._T % 2 == 1:
+            dmin = -int(self._T / 2)
+            dmax = int(self._T / 2) + 1
         else:
-            dmin = -int(self.T / 2) + 1
-            dmax = +self.T / 2
+            dmin = -int(self._T / 2) + 1
+            dmax = +self._T / 2
 
         # init neighbord list
-        self.neighbors = [[] for n in range(self.mu)]
+        self._neighbors = [[] for n in range(self._mu)]
 
         for direction in range(0, -dmin):
-            for i in range(self.T):
-                self.neighbors[direction].append(i)
+            for i in range(self._T):
+                self._neighbors[direction].append(i)
 
-        for direction in range(-dmin, self.mu - dmax):
+        for direction in range(-dmin, self._mu - dmax):
             for i in range(direction + dmin, direction + dmax):
-                self.neighbors[direction].append(i)
+                self._neighbors[direction].append(i)
 
-        for direction in range(self.mu - dmax, self.mu):
-            for i in range(self.mu - self.T, self.mu):
-                self.neighbors[direction].append(i)
+        for direction in range(self._mu - dmax, self._mu):
+            for i in range(self._mu - self._T, self._mu):
+                self._neighbors[direction].append(i)
 
-    def updateRefPoint(self, _solution):
+    def updateRefPoint(self, solution):
 
-        if self.maximise:
-            for i in range(len(self.evaluator)):
-                if _solution.scores[i] > self.refPoint[i]:
-                    self.refPoint[i] = _solution.scores[i]
+        if self._maximise:
+            for i in range(len(self._evaluator)):
+                if solution._scores[i] > self._refPoint[i]:
+                    self._refPoint[i] = solution._scores[i]
         else:
-            for i in range(len(self.evaluator)):
-                if _solution.scores[i] < self.refPoint[i]:
-                    self.refPoint[i] = _solution.scores[i]
+            for i in range(len(self._evaluator)):
+                if solution.scores[i] < self._refPoint[i]:
+                    self._refPoint[i] = solution._scores[i]
 
-    def paretoFront(self, _population):
+    def paretoFront(self, population):
 
         paFront = []
         indexes = []
-        nObjectives = len(self.evaluator)
-        nSolutions = len(_population)
+        nObjectives = len(self._evaluator)
+        nSolutions = len(population)
 
         # find dominated solution
         for i in range(nSolutions):
@@ -301,20 +295,20 @@ class MOEAD(Algorithm):
 
                 # check if solutions are the same
                 if all([
-                        _population[i].data[k] == _population[j].data[k]
-                        for k in range(len(_population[i].data))
+                        population[i]._data[k] == population[j]._data[k]
+                        for k in range(len(population[i]._data))
                 ]):
                     continue
 
                 nDominated = 0
 
                 # check number of dominated objectives of current solution by the others solution
-                for k in range(len(self.evaluator)):
-                    if self.maximise:
-                        if _population[i].scores[k] < _population[j].scores[k]:
+                for k in range(len(self._evaluator)):
+                    if self._maximise:
+                        if population[i]._scores[k] < population[j]._scores[k]:
                             nDominated += 1
                     else:
-                        if _population[i].scores[k] > _population[j].scores[k]:
+                        if population[i]._scores[k] > population[j]._scores[k]:
                             nDominated += 1
 
                 if nDominated == nObjectives:
@@ -324,7 +318,7 @@ class MOEAD(Algorithm):
         # store the non dominated solution into pareto front
         for i in range(nSolutions):
             if i not in indexes:
-                paFront.append(_population[i])
+                paFront.append(population[i])
 
         return paFront
 
@@ -332,12 +326,10 @@ class MOEAD(Algorithm):
         """Display end message into `run` method
         """
 
-        print(
-            macop_text('({}) Found after {} evaluations'.format(
-                type(self).__name__, self.numberOfEvaluations)))
+        print(macop_text(f'({type(self).__name__}) Found after {self._numberOfEvaluations} evaluations'))
 
-        for i, solution in enumerate(self.pfPop):
-            print('  - [{}] {} : {}'.format(i, solution.scores, solution))
+        for i, solution in enumerate(self._pfPop):
+            print(f'  - [{i}] {solution._scores} : {solution}')
 
         print(macop_line())
 
@@ -345,10 +337,8 @@ class MOEAD(Algorithm):
 
         logging.info("-- Pareto front :")
 
-        for i, solution in enumerate(self.pfPop):
-            logging.info("-- %s] SCORE %s - %s" %
-                         (i, solution.scores, solution))
+        for i, solution in enumerate(self._pfPop):
+            logging.info(f"-- {i}] SCORE {solution._scores} - {solution}")
 
     def __str__(self):
-        return "%s using %s" % (type(self).__name__, type(
-            self.population).__name__)
+        return f"{type(self).__name__} using {type(self._population).__name__}"

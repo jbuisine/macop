@@ -35,7 +35,7 @@ class SimpleCrossover(Crossover):
             {Solution} -- new generated solution
         """
 
-        size = solution.size
+        size = solution._size
 
         # copy data of solution
         firstData = solution._data.copy()

@@ -25,12 +25,12 @@ class SimpleBinaryMutation(Mutation):
             {Solution} -- new generated solution
         """
 
-        size = solution.size
+        size = solution._size
 
         cell = random.randint(0, size - 1)
 
         # copy data of solution
-        currentData = solution.data.copy()
+        currentData = solution._data.copy()
 
         # swicth values
         if currentData[cell]:

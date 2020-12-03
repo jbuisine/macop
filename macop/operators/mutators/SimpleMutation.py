@@ -25,13 +25,13 @@ class SimpleMutation(Mutation):
             {Solution} -- new generated solution
         """
 
-        size = solution.size
+        size = solution._size
 
         firstCell = 0
         secondCell = 0
 
         # copy data of solution
-        currentData = solution.data.copy()
+        currentData = solution._data.copy()
 
         while firstCell == secondCell:
             firstCell = random.randint(0, size - 1)

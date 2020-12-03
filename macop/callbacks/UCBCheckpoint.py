@@ -38,20 +38,20 @@ class UCBCheckpoint(Callback):
 
                 rewardsLine = ''
 
-                for i, r in enumerate(self._algo.policy.rewards):
+                for i, r in enumerate(self._algo._policy._rewards):
                     rewardsLine += str(r)
 
-                    if i != len(self._algo.policy.rewards) - 1:
+                    if i != len(self._algo._policy._rewards) - 1:
                         rewardsLine += ';'
 
                 f.write(rewardsLine + '\n')
 
                 occurrencesLine = ''
 
-                for i, o in enumerate(self._algo.policy.occurrences):
+                for i, o in enumerate(self._algo._policy._occurrences):
                     occurrencesLine += str(o)
 
-                    if i != len(self._algo.policy.occurrences) - 1:
+                    if i != len(self._algo._policy._occurrences) - 1:
                         occurrencesLine += ';'
 
                 f.write(occurrencesLine + '\n')
@@ -70,17 +70,15 @@ class UCBCheckpoint(Callback):
                 rewardsLine = lines[0].replace('\n', '')
                 occurrencesLine = lines[1].replace('\n', '')
 
-                self._algo.policy.rewards = [
+                self._algo._policy._rewards = [
                     float(f) for f in rewardsLine.split(';')
                 ]
-                self._algo.policy.occurrences = [
+                self._algo._policy._occurrences = [
                     float(f) for f in occurrencesLine.split(';')
                 ]
 
             print(
-                macop_text(
-                    'Load of available UCB policy data from `{}`'.format(
-                        self._filepath)))
+                macop_text(f'Load of available UCB policy data from `{self._filepath}`'))
 
         else:
             print(macop_text('No UCB data found, use default UCB policy'))

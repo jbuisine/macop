@@ -1,0 +1,279 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>macop.solutions.IntegerSolution &mdash; macop v1.0.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="macop.solutions.Solution" href="macop.solutions.Solution.html" />
+    <link rel="prev" title="macop.solutions.CombinatoryIntegerSolution" href="macop.solutions.CombinatoryIntegerSolution.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> macop
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../description.html">Description</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../macop.html">Documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../macop.html#macop">macop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../macop.html#macop-algorithms">macop.algorithms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../macop.html#macop-callbacks">macop.callbacks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../macop.html#macop-evaluators">macop.evaluators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../macop.html#macop-operators">macop.operators</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../macop.html#macop-solution">macop.solution</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="macop.solutions.BinarySolution.html">macop.solutions.BinarySolution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="macop.solutions.CombinatoryIntegerSolution.html">macop.solutions.CombinatoryIntegerSolution</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">macop.solutions.IntegerSolution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="macop.solutions.Solution.html">macop.solutions.Solution</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Some examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">macop</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../macop.html">Documentation</a> &raquo;</li>
+        
+      <li>macop.solutions.IntegerSolution</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <a href="https://github.com/prise-3d/macop/blob/master/docs/source/macop/macop.solutions.IntegerSolution.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-macop.solutions.IntegerSolution">
+<span id="macop-solutions-integersolution"></span><h1>macop.solutions.IntegerSolution<a class="headerlink" href="#module-macop.solutions.IntegerSolution" title="Permalink to this headline">¶</a></h1>
+<p>Integer solution class implementation</p>
+<p class="rubric">Classes</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#macop.solutions.IntegerSolution.IntegerSolution" title="macop.solutions.IntegerSolution.IntegerSolution"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IntegerSolution</span></code></a>(data, size)</p></td>
+<td><p>Integer solution class</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="class">
+<dt id="macop.solutions.IntegerSolution.IntegerSolution">
+<em class="property">class </em><code class="sig-prename descclassname">macop.solutions.IntegerSolution.</code><code class="sig-name descname">IntegerSolution</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">size</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macop/solutions/IntegerSolution.html#IntegerSolution"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macop.solutions.IntegerSolution.IntegerSolution" title="Permalink to this definition">¶</a></dt>
+<dd><p>Integer solution class</p>
+<dl class="attribute">
+<dt id="macop.solutions.IntegerSolution.IntegerSolution.data">
+<code class="sig-name descname">data</code><a class="headerlink" href="#macop.solutions.IntegerSolution.IntegerSolution.data" title="Permalink to this definition">¶</a></dt>
+<dd><p>{ndarray} –  array of binary values</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="macop.solutions.IntegerSolution.IntegerSolution.size">
+<code class="sig-name descname">size</code><a class="headerlink" href="#macop.solutions.IntegerSolution.IntegerSolution.size" title="Permalink to this definition">¶</a></dt>
+<dd><p>{int} – size of binary array values</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="macop.solutions.IntegerSolution.IntegerSolution.score">
+<code class="sig-name descname">score</code><a class="headerlink" href="#macop.solutions.IntegerSolution.IntegerSolution.score" title="Permalink to this definition">¶</a></dt>
+<dd><p>{float} – fitness score value</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="macop.solutions.IntegerSolution.IntegerSolution.random">
+<code class="sig-name descname">random</code><span class="sig-paren">(</span><em class="sig-param">validator</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macop/solutions/IntegerSolution.html#IntegerSolution.random"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macop.solutions.IntegerSolution.IntegerSolution.random" title="Permalink to this definition">¶</a></dt>
+<dd><p>Intialize integer array with use of validator to generate valid random solution</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>validator</strong> – {function} – specific function which validates or not a solution</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>{IntegerSolution} – new generated integer solution</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="macop.solutions.Solution.html" class="btn btn-neutral float-right" title="macop.solutions.Solution" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="macop.solutions.CombinatoryIntegerSolution.html" class="btn btn-neutral float-left" title="macop.solutions.CombinatoryIntegerSolution" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Jérôme BUISINE
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
