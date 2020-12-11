@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>macop.callbacks.BasicCheckpoint &mdash; macop v1.0.0 documentation</title>
+  <title>macop.callbacks.BasicCheckpoint &mdash; macop v1.0.1 documentation</title>
   
 
   
@@ -58,7 +58,7 @@
             
             
               <div class="version">
-                1.0.0
+                1.0.1
               </div>
             
           
@@ -180,7 +180,7 @@
         <span class="c1"># get current best solution</span>
         <span class="n">solution</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_algo</span><span class="o">.</span><span class="n">_bestSolution</span>
 
-        <span class="n">currentEvaluation</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">algo</span><span class="o">.</span><span class="n">getGlobalEvaluation</span><span class="p">()</span>
+        <span class="n">currentEvaluation</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_algo</span><span class="o">.</span><span class="n">getGlobalEvaluation</span><span class="p">()</span>
 
         <span class="c1"># backup if necessary</span>
         <span class="k">if</span> <span class="n">currentEvaluation</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">_every</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>

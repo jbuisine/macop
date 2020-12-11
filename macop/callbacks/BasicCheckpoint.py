@@ -27,7 +27,7 @@ class BasicCheckpoint(Callback):
         # get current best solution
         solution = self._algo._bestSolution
 
-        currentEvaluation = self.algo.getGlobalEvaluation()
+        currentEvaluation = self._algo.getGlobalEvaluation()
 
         # backup if necessary
         if currentEvaluation % self._every == 0:
