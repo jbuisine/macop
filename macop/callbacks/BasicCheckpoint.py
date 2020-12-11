@@ -35,9 +35,9 @@ class BasicCheckpoint(Callback):
             logging.info("Checkpoint is done into " + self._filepath)
 
             solutionData = ""
-            solutionSize = len(solution.data)
+            solutionSize = len(solution._data)
 
-            for index, val in enumerate(solution.data):
+            for index, val in enumerate(solution._data):
                 solutionData += str(val)
 
                 if index < solutionSize - 1:
@@ -71,7 +71,7 @@ class BasicCheckpoint(Callback):
                 globalEvaluation = int(data[0])
 
                 if self._algo.getParent() is not None:
-                    self._algo.getParent().numberOfEvaluations = globalEvaluation
+                    self._algo.getParent()._numberOfEvaluations = globalEvaluation
                 else:
                     self._algo._numberOfEvaluations = globalEvaluation
 
@@ -79,26 +79,18 @@ class BasicCheckpoint(Callback):
                 solutionData = list(map(int, data[1].split(' ')))
 
                 if self._algo._bestSolution is None:
-                    self._algo._bestSolution = self._algo.initializer()
+                    self._algo._bestSolution = self._algo._initializer()
 
-                self._algo._bestSolution.data = np.array(solutionData)
-                self._algo._bestSolution.score = float(data[2])
+                self._algo._bestSolution._data = np.array(solutionData)
+                self._algo._bestSolution._score = float(data[2])
 
             print(macop_line())
-            print(
-                macop_text('Checkpoint found from `{}` file.'.format(
-                    self._filepath)))
+            print(macop_text(f'Checkpoint found from `{self._filepath}` file.'))
 
-            print(
-                macop_text('Restart algorithm from evaluation {}.'.format(
-                    self._algo._numberOfEvaluations)))
+            print(macop_text(f'Restart algorithm from evaluation {self._algo._numberOfEvaluations}.'))
 
         else:
-            print(
-                macop_text(
-                    'No backup found... Start running algorithm from evaluation 0.'
-                ))
-            logging.info(
-                "Can't load backup... Backup filepath not valid in Checkpoint")
+            print(macop_text('No backup found... Start running algorithm from evaluation 0.'))
+            logging.info("Can't load backup... Backup filepath not valid in Checkpoint")
 
         print(macop_line())
