@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>macop.operators.mutators.SimpleBinaryMutation &mdash; macop v1.0.0 documentation</title>
+  <title>macop.operators.mutators.SimpleBinaryMutation &mdash; macop v1.0.1 documentation</title>
   
 
   
@@ -58,7 +58,7 @@
             
             
               <div class="version">
-                1.0.0
+                1.0.1
               </div>
             
           
@@ -168,22 +168,22 @@
 <span class="sd">    Attributes:</span>
 <span class="sd">        kind: {KindOperator} -- specify the kind of operator</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-<div class="viewcode-block" id="SimpleBinaryMutation.apply"><a class="viewcode-back" href="../../../../macop/macop.operators.mutators.SimpleBinaryMutation.html#macop.operators.mutators.SimpleBinaryMutation.SimpleBinaryMutation.apply">[docs]</a>    <span class="k">def</span> <span class="nf">apply</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_solution</span><span class="p">):</span>
+<div class="viewcode-block" id="SimpleBinaryMutation.apply"><a class="viewcode-back" href="../../../../macop/macop.operators.mutators.SimpleBinaryMutation.html#macop.operators.mutators.SimpleBinaryMutation.SimpleBinaryMutation.apply">[docs]</a>    <span class="k">def</span> <span class="nf">apply</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">solution</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Create new solution based on solution passed as parameter</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            _solution: {Solution} -- the solution to use for generating new solution</span>
+<span class="sd">            solution: {Solution} -- the solution to use for generating new solution</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            {Solution} -- new generated solution</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="n">size</span> <span class="o">=</span> <span class="n">_solution</span><span class="o">.</span><span class="n">size</span>
+        <span class="n">size</span> <span class="o">=</span> <span class="n">solution</span><span class="o">.</span><span class="n">_size</span>
 
         <span class="n">cell</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
 
         <span class="c1"># copy data of solution</span>
-        <span class="n">currentData</span> <span class="o">=</span> <span class="n">_solution</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">currentData</span> <span class="o">=</span> <span class="n">solution</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 
         <span class="c1"># swicth values</span>
         <span class="k">if</span> <span class="n">currentData</span><span class="p">[</span><span class="n">cell</span><span class="p">]:</span>
@@ -192,7 +192,7 @@
             <span class="n">currentData</span><span class="p">[</span><span class="n">cell</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
 
         <span class="c1"># create solution of same kind with new data</span>
-        <span class="n">class_name</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">_solution</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span>
+        <span class="n">class_name</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">solution</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span>
 
         <span class="c1"># dynamically load solution class if unknown</span>
         <span class="k">if</span> <span class="n">class_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">:</span>

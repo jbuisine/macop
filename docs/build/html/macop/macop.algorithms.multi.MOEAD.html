@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>macop.algorithms.multi.MOEAD &mdash; macop v1.0.0 documentation</title>
+  <title>macop.algorithms.multi.MOEAD &mdash; macop v1.0.1 documentation</title>
   
 
   
@@ -36,7 +36,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="macop.algorithms.multi.MOSubProblem" href="macop.algorithms.multi.MOSubProblem.html" />
-    <link rel="prev" title="macop.algorithms.mono.LocalSearch" href="macop.algorithms.mono.LocalSearch.html" /> 
+    <link rel="prev" title="macop.algorithms.mono.HillClimberBestImprovment" href="macop.algorithms.mono.HillClimberBestImprovment.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -60,7 +60,7 @@
             
             
               <div class="version">
-                1.0.0
+                1.0.1
               </div>
             
           
@@ -92,7 +92,8 @@
 <li class="toctree-l2 current"><a class="reference internal" href="../macop.html#macop-algorithms">macop.algorithms</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="macop.algorithms.Algorithm.html">macop.algorithms.Algorithm</a></li>
 <li class="toctree-l3"><a class="reference internal" href="macop.algorithms.mono.IteratedLocalSearch.html">macop.algorithms.mono.IteratedLocalSearch</a></li>
-<li class="toctree-l3"><a class="reference internal" href="macop.algorithms.mono.LocalSearch.html">macop.algorithms.mono.LocalSearch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="macop.algorithms.mono.HillClimberFirstImprovment.html">macop.algorithms.mono.HillClimberFirstImprovment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="macop.algorithms.mono.HillClimberBestImprovment.html">macop.algorithms.mono.HillClimberBestImprovment</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">macop.algorithms.multi.MOEAD</a></li>
 <li class="toctree-l3"><a class="reference internal" href="macop.algorithms.multi.MOSubProblem.html">macop.algorithms.multi.MOSubProblem</a></li>
 </ul>
@@ -183,7 +184,7 @@
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">moEvaluator</span></code>(_solution, _evaluator, _weights)</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">moEvaluator</span></code>(solution, evaluator, weights)</p></td>
 <td><p></p></td>
 </tr>
 </tbody>
@@ -195,14 +196,14 @@
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#macop.algorithms.multi.MOEAD.MOEAD" title="macop.algorithms.multi.MOEAD.MOEAD"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MOEAD</span></code></a>(_mu, _T, _initalizer, _evaluator, …)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#macop.algorithms.multi.MOEAD.MOEAD" title="macop.algorithms.multi.MOEAD.MOEAD"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MOEAD</span></code></a>(mu, T, initalizer, evaluator, …[, …])</p></td>
 <td><p>Multi-Ojective Evolutionary Algorithm with Scalar Decomposition</p></td>
 </tr>
 </tbody>
 </table>
 <dl class="class">
 <dt id="macop.algorithms.multi.MOEAD.MOEAD">
-<em class="property">class </em><code class="sig-prename descclassname">macop.algorithms.multi.MOEAD.</code><code class="sig-name descname">MOEAD</code><span class="sig-paren">(</span><em class="sig-param">_mu</em>, <em class="sig-param">_T</em>, <em class="sig-param">_initalizer</em>, <em class="sig-param">_evaluator</em>, <em class="sig-param">_operators</em>, <em class="sig-param">_policy</em>, <em class="sig-param">_validator</em>, <em class="sig-param">_maximise=True</em>, <em class="sig-param">_parent=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macop/algorithms/multi/MOEAD.html#MOEAD"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macop.algorithms.multi.MOEAD.MOEAD" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">macop.algorithms.multi.MOEAD.</code><code class="sig-name descname">MOEAD</code><span class="sig-paren">(</span><em class="sig-param">mu</em>, <em class="sig-param">T</em>, <em class="sig-param">initalizer</em>, <em class="sig-param">evaluator</em>, <em class="sig-param">operators</em>, <em class="sig-param">policy</em>, <em class="sig-param">validator</em>, <em class="sig-param">maximise=True</em>, <em class="sig-param">parent=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macop/algorithms/multi/MOEAD.html#MOEAD"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macop.algorithms.multi.MOEAD.MOEAD" title="Permalink to this definition">¶</a></dt>
 <dd><p>Multi-Ojective Evolutionary Algorithm with Scalar Decomposition</p>
 <dl class="attribute">
 <dt id="macop.algorithms.multi.MOEAD.MOEAD.mu">
@@ -302,11 +303,11 @@
 
 <dl class="method">
 <dt id="macop.algorithms.multi.MOEAD.MOEAD.run">
-<code class="sig-name descname">run</code><span class="sig-paren">(</span><em class="sig-param">_evaluations</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macop/algorithms/multi/MOEAD.html#MOEAD.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macop.algorithms.multi.MOEAD.MOEAD.run" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">run</code><span class="sig-paren">(</span><em class="sig-param">evaluations</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macop/algorithms/multi/MOEAD.html#MOEAD.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macop.algorithms.multi.MOEAD.MOEAD.run" title="Permalink to this definition">¶</a></dt>
 <dd><p>Run the local search algorithm</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>_evaluations</strong> – {int} – number of Local search evaluations</p>
+<dd class="field-odd"><p><strong>evaluations</strong> – {int} – number of Local search evaluations</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>{Solution} – best solution found</p>
@@ -329,7 +330,7 @@
         <a href="macop.algorithms.multi.MOSubProblem.html" class="btn btn-neutral float-right" title="macop.algorithms.multi.MOSubProblem" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="macop.algorithms.mono.LocalSearch.html" class="btn btn-neutral float-left" title="macop.algorithms.mono.LocalSearch" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="macop.algorithms.mono.HillClimberBestImprovment.html" class="btn btn-neutral float-left" title="macop.algorithms.mono.HillClimberBestImprovment" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

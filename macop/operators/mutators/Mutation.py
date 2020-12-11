@@ -12,7 +12,7 @@ class Mutation(Operator):
         kind: {KindOperator} -- specify the kind of operator
     """
     def __init__(self):
-        self.kind = KindOperator.MUTATOR
+        self._kind = KindOperator.MUTATOR
 
     def apply(self, solution):
         raise NotImplementedError

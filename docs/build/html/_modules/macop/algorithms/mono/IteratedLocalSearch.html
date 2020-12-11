@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>macop.algorithms.mono.IteratedLocalSearch &mdash; macop v1.0.0 documentation</title>
+  <title>macop.algorithms.mono.IteratedLocalSearch &mdash; macop v1.0.1 documentation</title>
   
 
   
@@ -58,7 +58,7 @@
             
             
               <div class="version">
-                1.0.0
+                1.0.1
               </div>
             
           
@@ -159,7 +159,7 @@
 
 <span class="c1"># module imports</span>
 <span class="kn">from</span> <span class="nn">..Algorithm</span> <span class="kn">import</span> <span class="n">Algorithm</span>
-<span class="kn">from</span> <span class="nn">.LocalSearch</span> <span class="kn">import</span> <span class="n">LocalSearch</span>
+<span class="kn">from</span> <span class="nn">.HillClimberFirstImprovment</span> <span class="kn">import</span> <span class="n">HillClimberFirstImprovment</span>
 
 
 <div class="viewcode-block" id="IteratedLocalSearch"><a class="viewcode-back" href="../../../../macop/macop.algorithms.mono.IteratedLocalSearch.html#macop.algorithms.mono.IteratedLocalSearch.IteratedLocalSearch">[docs]</a><span class="k">class</span> <span class="nc">IteratedLocalSearch</span><span class="p">(</span><span class="n">Algorithm</span><span class="p">):</span>
@@ -176,20 +176,20 @@
 <span class="sd">        bestSolution: {Solution} -- best solution found so far during running algorithm</span>
 <span class="sd">        callbacks: {[Callback]} -- list of Callback class implementation to do some instructions every number of evaluations and `load` when initializing algorithm</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-<div class="viewcode-block" id="IteratedLocalSearch.run"><a class="viewcode-back" href="../../../../macop/macop.algorithms.mono.IteratedLocalSearch.html#macop.algorithms.mono.IteratedLocalSearch.IteratedLocalSearch.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_evaluations</span><span class="p">,</span> <span class="n">_ls_evaluations</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+<div class="viewcode-block" id="IteratedLocalSearch.run"><a class="viewcode-back" href="../../../../macop/macop.algorithms.mono.IteratedLocalSearch.html#macop.algorithms.mono.IteratedLocalSearch.IteratedLocalSearch.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">evaluations</span><span class="p">,</span> <span class="n">ls_evaluations</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Run the iterated local search algorithm using local search (EvE compromise)</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            _evaluations: {int} -- number of global evaluations for ILS</span>
-<span class="sd">            _ls_evaluations: {int} -- number of Local search evaluations (default: 100)</span>
+<span class="sd">            evaluations: {int} -- number of global evaluations for ILS</span>
+<span class="sd">            ls_evaluations: {int} -- number of Local search evaluations (default: 100)</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            {Solution} -- best solution found</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="c1"># by default use of mother method to initialize variables</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">_evaluations</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">evaluations</span><span class="p">)</span>
 
         <span class="c1"># enable resuming for ILS</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">resume</span><span class="p">()</span>
@@ -198,27 +198,27 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">initRun</span><span class="p">()</span>
 
         <span class="c1"># passing global evaluation param from ILS</span>
-        <span class="n">ls</span> <span class="o">=</span> <span class="n">LocalSearch</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">initializer</span><span class="p">,</span>
-                         <span class="bp">self</span><span class="o">.</span><span class="n">evaluator</span><span class="p">,</span>
-                         <span class="bp">self</span><span class="o">.</span><span class="n">operators</span><span class="p">,</span>
-                         <span class="bp">self</span><span class="o">.</span><span class="n">policy</span><span class="p">,</span>
-                         <span class="bp">self</span><span class="o">.</span><span class="n">validator</span><span class="p">,</span>
-                         <span class="bp">self</span><span class="o">.</span><span class="n">maximise</span><span class="p">,</span>
-                         <span class="n">_parent</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">ls</span> <span class="o">=</span> <span class="n">HillClimberFirstImprovment</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_initializer</span><span class="p">,</span>
+                         <span class="bp">self</span><span class="o">.</span><span class="n">_evaluator</span><span class="p">,</span>
+                         <span class="bp">self</span><span class="o">.</span><span class="n">_operators</span><span class="p">,</span>
+                         <span class="bp">self</span><span class="o">.</span><span class="n">_policy</span><span class="p">,</span>
+                         <span class="bp">self</span><span class="o">.</span><span class="n">_validator</span><span class="p">,</span>
+                         <span class="bp">self</span><span class="o">.</span><span class="n">_maximise</span><span class="p">,</span>
+                         <span class="n">parent</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
 
         <span class="c1"># add same callbacks</span>
-        <span class="k">for</span> <span class="n">callback</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">callbacks</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">callback</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_callbacks</span><span class="p">:</span>
             <span class="n">ls</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="n">callback</span><span class="p">)</span>
 
         <span class="c1"># local search algorithm implementation</span>
         <span class="k">while</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">stop</span><span class="p">():</span>
 
             <span class="c1"># create and search solution from local search</span>
-            <span class="n">newSolution</span> <span class="o">=</span> <span class="n">ls</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">_ls_evaluations</span><span class="p">)</span>
+            <span class="n">newSolution</span> <span class="o">=</span> <span class="n">ls</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">ls_evaluations</span><span class="p">)</span>
 
             <span class="c1"># if better solution than currently, replace it</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">isBetter</span><span class="p">(</span><span class="n">newSolution</span><span class="p">):</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">bestSolution</span> <span class="o">=</span> <span class="n">newSolution</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_bestSolution</span> <span class="o">=</span> <span class="n">newSolution</span>
 
             <span class="c1"># number of evaluatins increased from LocalSearch</span>
             <span class="c1"># increase number of evaluations and progress are then not necessary there</span>
@@ -227,11 +227,11 @@
 
             <span class="bp">self</span><span class="o">.</span><span class="n">information</span><span class="p">()</span>
 
-        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;End of </span><span class="si">%s</span><span class="s2">, best solution found </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span>
-                     <span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">bestSolution</span><span class="p">))</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;End of </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">, best solution found </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_bestSolution</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">end</span><span class="p">()</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">bestSolution</span></div></div>
+        
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bestSolution</span></div></div>
 </pre></div>
 
            </div>

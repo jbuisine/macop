@@ -2,7 +2,7 @@
 
 # Format code
 echo "Use of yapf package to format code.."
-yapf -ir -vv macop
+#yapf -ir -vv macop
 
 # Build rawls package
 echo "Build package..."

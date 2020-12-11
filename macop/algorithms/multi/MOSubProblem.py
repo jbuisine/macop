@@ -25,55 +25,55 @@ class MOSubProblem(Algorithm):
         callbacks: {[Callback]} -- list of Callback class implementation to do some instructions every number of evaluations and `load` when initializing algorithm
     """
     def __init__(self,
-                 _index,
-                 _weights,
-                 _initalizer,
-                 _evaluator,
-                 _operators,
-                 _policy,
-                 _validator,
-                 _maximise=True,
-                 _parent=None):
+                 index,
+                 weights,
+                 initalizer,
+                 evaluator,
+                 operators,
+                 policy,
+                 validator,
+                 maximise=True,
+                 parent=None):
 
-        super().__init__(_initalizer, _evaluator, _operators, _policy,
-                         _validator, _maximise, _parent)
+        super().__init__(initalizer, evaluator, operators, policy,
+                         validator, maximise, parent)
 
-        self.index = _index
-        self.weights = _weights
+        self._index = index
+        self._weights = weights
 
-    def run(self, _evaluations):
+    def run(self, evaluations):
         """
         Run the local search algorithm
 
         Args:
-            _evaluations: {int} -- number of evaluations
+            evaluations: {int} -- number of evaluations
             
         Returns:
             {Solution} -- best solution found
         """
 
         # by default use of mother method to initialize variables
-        super().run(_evaluations)
+        super().run(evaluations)
 
         # initialize solution if necessary
-        if self.bestSolution is None:
+        if self._bestSolution is None:
             self.initRun()
 
         # new operators list keep track of current sub problem
-        for op in self.operators:
+        for op in self._operators:
             op.setAlgo(self)
 
-        for _ in range(_evaluations):
+        for _ in range(evaluations):
 
             # keep reference of sub problem used
-            self.policy.setAlgo(self)
+            self._policy.setAlgo(self)
 
             # update solution using policy
-            newSolution = self.update(self.bestSolution)
+            newSolution = self.update(self._bestSolution)
 
             # if better solution than currently, replace it
             if self.isBetter(newSolution):
-                self.bestSolution = newSolution
+                self._bestSolution = newSolution
 
             # increase number of evaluations
             self.increaseEvaluation()
@@ -84,10 +84,8 @@ class MOSubProblem(Algorithm):
             if self.stop():
                 break
 
-            logging.info("---- Current %s - SCORE %s" %
-                         (newSolution, newSolution.fitness()))
+            logging.info(f"---- Current {newSolution} - SCORE {newSolution.fitness()}")
 
-            logging.info("End of %s, best solution found %s" %
-                         (type(self).__name__, self.bestSolution))
+            logging.info(f"End of {type(self).__name__}, best solution found {self._bestSolution}")
 
-        return self.bestSolution
+        return self._bestSolution

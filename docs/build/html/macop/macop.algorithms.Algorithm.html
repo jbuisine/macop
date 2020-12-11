@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>macop.algorithms.Algorithm &mdash; macop v1.0.0 documentation</title>
+  <title>macop.algorithms.Algorithm &mdash; macop v1.0.1 documentation</title>
   
 
   
@@ -60,7 +60,7 @@
             
             
               <div class="version">
-                1.0.0
+                1.0.1
               </div>
             
           
@@ -92,7 +92,8 @@
 <li class="toctree-l2 current"><a class="reference internal" href="../macop.html#macop-algorithms">macop.algorithms</a><ul class="current">
 <li class="toctree-l3 current"><a class="current reference internal" href="#">macop.algorithms.Algorithm</a></li>
 <li class="toctree-l3"><a class="reference internal" href="macop.algorithms.mono.IteratedLocalSearch.html">macop.algorithms.mono.IteratedLocalSearch</a></li>
-<li class="toctree-l3"><a class="reference internal" href="macop.algorithms.mono.LocalSearch.html">macop.algorithms.mono.LocalSearch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="macop.algorithms.mono.HillClimberFirstImprovment.html">macop.algorithms.mono.HillClimberFirstImprovment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="macop.algorithms.mono.HillClimberBestImprovment.html">macop.algorithms.mono.HillClimberBestImprovment</a></li>
 <li class="toctree-l3"><a class="reference internal" href="macop.algorithms.multi.MOEAD.html">macop.algorithms.multi.MOEAD</a></li>
 <li class="toctree-l3"><a class="reference internal" href="macop.algorithms.multi.MOSubProblem.html">macop.algorithms.multi.MOSubProblem</a></li>
 </ul>
@@ -183,15 +184,23 @@
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#macop.algorithms.Algorithm.Algorithm" title="macop.algorithms.Algorithm.Algorithm"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Algorithm</span></code></a>(_initalizer, _evaluator, …[, …])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#macop.algorithms.Algorithm.Algorithm" title="macop.algorithms.Algorithm.Algorithm"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Algorithm</span></code></a>(initalizer, evaluator, operators, …)</p></td>
 <td><p>Algorithm class used as basic algorithm</p></td>
 </tr>
 </tbody>
 </table>
 <dl class="class">
 <dt id="macop.algorithms.Algorithm.Algorithm">
-<em class="property">class </em><code class="sig-prename descclassname">macop.algorithms.Algorithm.</code><code class="sig-name descname">Algorithm</code><span class="sig-paren">(</span><em class="sig-param">_initalizer</em>, <em class="sig-param">_evaluator</em>, <em class="sig-param">_operators</em>, <em class="sig-param">_policy</em>, <em class="sig-param">_validator</em>, <em class="sig-param">_maximise=True</em>, <em class="sig-param">_parent=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macop/algorithms/Algorithm.html#Algorithm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macop.algorithms.Algorithm.Algorithm" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">macop.algorithms.Algorithm.</code><code class="sig-name descname">Algorithm</code><span class="sig-paren">(</span><em class="sig-param">initalizer</em>, <em class="sig-param">evaluator</em>, <em class="sig-param">operators</em>, <em class="sig-param">policy</em>, <em class="sig-param">validator</em>, <em class="sig-param">maximise=True</em>, <em class="sig-param">parent=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macop/algorithms/Algorithm.html#Algorithm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macop.algorithms.Algorithm.Algorithm" title="Permalink to this definition">¶</a></dt>
 <dd><p>Algorithm class used as basic algorithm</p>
+<p>This class enables to manage some common usages of operation research algorithms:
+- initialization function of solution
+- validator function to check if solution is valid or not (based on some criteria)
+- evaluation function to give fitness score to a solution
+- operators used in order to update solution during search process
+- policy process applied when choosing next operator to apply
+- callbacks function in order to do some relative stuff every number of evaluation or reload algorithm state
+- parent algorithm associated to this new algorithm instance (hierarchy management)</p>
 <dl class="attribute">
 <dt id="macop.algorithms.Algorithm.Algorithm.initalizer">
 <code class="sig-name descname">initalizer</code><a class="headerlink" href="#macop.algorithms.Algorithm.Algorithm.initalizer" title="Permalink to this definition">¶</a></dt>
@@ -231,7 +240,7 @@
 <dl class="attribute">
 <dt id="macop.algorithms.Algorithm.Algorithm.currentSolution">
 <code class="sig-name descname">currentSolution</code><a class="headerlink" href="#macop.algorithms.Algorithm.Algorithm.currentSolution" title="Permalink to this definition">¶</a></dt>
-<dd><p>{Solution} – current solution managed for current evaluation</p>
+<dd><p>{Solution} – current solution managed for current evaluation comparison</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -310,15 +319,26 @@
 </dd></dl>
 
 <dl class="method">
+<dt id="macop.algorithms.Algorithm.Algorithm.getParent">
+<code class="sig-name descname">getParent</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macop/algorithms/Algorithm.html#Algorithm.getParent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macop.algorithms.Algorithm.Algorithm.getParent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Recursively find the main parent algorithm attached of the current algorithm</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>{Algorithm} – main algorithm set for this algorithm</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
 <dt id="macop.algorithms.Algorithm.Algorithm.increaseEvaluation">
 <code class="sig-name descname">increaseEvaluation</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macop/algorithms/Algorithm.html#Algorithm.increaseEvaluation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macop.algorithms.Algorithm.Algorithm.increaseEvaluation" title="Permalink to this definition">¶</a></dt>
-<dd><p>Increase number of evaluation once a solution is evaluated</p>
+<dd><p>Increase number of evaluation once a solution is evaluated for each dependant algorithm (parents hierarchy)</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="macop.algorithms.Algorithm.Algorithm.initRun">
 <code class="sig-name descname">initRun</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macop/algorithms/Algorithm.html#Algorithm.initRun"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macop.algorithms.Algorithm.Algorithm.initRun" title="Permalink to this definition">¶</a></dt>
-<dd><p>Initialize the current solution and best solution</p>
+<dd><p>Initialize the current solution and best solution using the <cite>initialiser</cite> function</p>
 </dd></dl>
 
 <dl class="method">
@@ -356,7 +376,7 @@
 <dl class="method">
 <dt id="macop.algorithms.Algorithm.Algorithm.stop">
 <code class="sig-name descname">stop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macop/algorithms/Algorithm.html#Algorithm.stop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macop.algorithms.Algorithm.Algorithm.stop" title="Permalink to this definition">¶</a></dt>
-<dd><p>Global stopping criteria (check for inner algorithm too)</p>
+<dd><p>Global stopping criteria (check for parents algorithm hierarchy too)</p>
 </dd></dl>
 
 <dl class="method">

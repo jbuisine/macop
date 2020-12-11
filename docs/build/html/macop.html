@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Documentation &mdash; macop v1.0.0 documentation</title>
+  <title>Documentation &mdash; macop v1.0.1 documentation</title>
   
 
   
@@ -60,7 +60,7 @@
             
             
               <div class="version">
-                1.0.0
+                1.0.1
               </div>
             
           
@@ -92,7 +92,8 @@
 <li class="toctree-l2"><a class="reference internal" href="#macop-algorithms">macop.algorithms</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="macop/macop.algorithms.Algorithm.html">macop.algorithms.Algorithm</a></li>
 <li class="toctree-l3"><a class="reference internal" href="macop/macop.algorithms.mono.IteratedLocalSearch.html">macop.algorithms.mono.IteratedLocalSearch</a></li>
-<li class="toctree-l3"><a class="reference internal" href="macop/macop.algorithms.mono.LocalSearch.html">macop.algorithms.mono.LocalSearch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="macop/macop.algorithms.mono.HillClimberFirstImprovment.html">macop.algorithms.mono.HillClimberFirstImprovment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="macop/macop.algorithms.mono.HillClimberBestImprovment.html">macop.algorithms.mono.HillClimberBestImprovment</a></li>
 <li class="toctree-l3"><a class="reference internal" href="macop/macop.algorithms.multi.MOEAD.html">macop.algorithms.multi.MOEAD</a></li>
 <li class="toctree-l3"><a class="reference internal" href="macop/macop.algorithms.multi.MOSubProblem.html">macop.algorithms.multi.MOSubProblem</a></li>
 </ul>
@@ -218,13 +219,16 @@
 <tr class="row-even"><td><p><a class="reference internal" href="macop/macop.algorithms.mono.IteratedLocalSearch.html#module-macop.algorithms.mono.IteratedLocalSearch" title="macop.algorithms.mono.IteratedLocalSearch"><code class="xref py py-obj docutils literal notranslate"><span class="pre">macop.algorithms.mono.IteratedLocalSearch</span></code></a></p></td>
 <td><p>Iterated Local Search Algorithm implementation</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="macop/macop.algorithms.mono.LocalSearch.html#module-macop.algorithms.mono.LocalSearch" title="macop.algorithms.mono.LocalSearch"><code class="xref py py-obj docutils literal notranslate"><span class="pre">macop.algorithms.mono.LocalSearch</span></code></a></p></td>
-<td><p>Local Search algorithm</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="macop/macop.algorithms.mono.HillClimberFirstImprovment.html#module-macop.algorithms.mono.HillClimberFirstImprovment" title="macop.algorithms.mono.HillClimberFirstImprovment"><code class="xref py py-obj docutils literal notranslate"><span class="pre">macop.algorithms.mono.HillClimberFirstImprovment</span></code></a></p></td>
+<td><p>Hill Climber First Improvment algorithm starting from new solution and explore using neighborhood and loop over the best one obtained from neighborhood search space</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="macop/macop.algorithms.multi.MOEAD.html#module-macop.algorithms.multi.MOEAD" title="macop.algorithms.multi.MOEAD"><code class="xref py py-obj docutils literal notranslate"><span class="pre">macop.algorithms.multi.MOEAD</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="macop/macop.algorithms.mono.HillClimberBestImprovment.html#module-macop.algorithms.mono.HillClimberBestImprovment" title="macop.algorithms.mono.HillClimberBestImprovment"><code class="xref py py-obj docutils literal notranslate"><span class="pre">macop.algorithms.mono.HillClimberBestImprovment</span></code></a></p></td>
+<td><p>Hill Climber Best Improvment algorithm starting from new solution and explore using neighborhood and loop over the best one obtained from neighborhood search space</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="macop/macop.algorithms.multi.MOEAD.html#module-macop.algorithms.multi.MOEAD" title="macop.algorithms.multi.MOEAD"><code class="xref py py-obj docutils literal notranslate"><span class="pre">macop.algorithms.multi.MOEAD</span></code></a></p></td>
 <td><p>Multi-Ojective Evolutionary Algorithm with Scalar Decomposition algorithm</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="macop/macop.algorithms.multi.MOSubProblem.html#module-macop.algorithms.multi.MOSubProblem" title="macop.algorithms.multi.MOSubProblem"><code class="xref py py-obj docutils literal notranslate"><span class="pre">macop.algorithms.multi.MOSubProblem</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="macop/macop.algorithms.multi.MOSubProblem.html#module-macop.algorithms.multi.MOSubProblem" title="macop.algorithms.multi.MOSubProblem"><code class="xref py py-obj docutils literal notranslate"><span class="pre">macop.algorithms.multi.MOSubProblem</span></code></a></p></td>
 <td><p>MOEAD sub problem algorithm class</p></td>
 </tr>
 </tbody>

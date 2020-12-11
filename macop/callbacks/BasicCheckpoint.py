@@ -25,14 +25,14 @@ class BasicCheckpoint(Callback):
         Check if necessary to do backup based on `every` variable
         """
         # get current best solution
-        solution = self.algo.bestSolution
+        solution = self._algo._bestSolution
 
-        currentEvaluation = self.algo.getGlobalEvaluation()
+        currentEvaluation = self._algo.getGlobalEvaluation()
 
         # backup if necessary
-        if currentEvaluation % self.every == 0:
+        if currentEvaluation % self._every == 0:
 
-            logging.info("Checkpoint is done into " + self.filepath)
+            logging.info("Checkpoint is done into " + self._filepath)
 
             solutionData = ""
             solutionSize = len(solution.data)
@@ -47,21 +47,21 @@ class BasicCheckpoint(Callback):
                 solution.fitness()) + ';\n'
 
             # check if file exists
-            if not os.path.exists(self.filepath):
-                with open(self.filepath, 'w') as f:
+            if not os.path.exists(self._filepath):
+                with open(self._filepath, 'w') as f:
                     f.write(line)
             else:
-                with open(self.filepath, 'a') as f:
+                with open(self._filepath, 'a') as f:
                     f.write(line)
 
     def load(self):
         """
         Load last backup line of solution and set algorithm state (best solution and evaluations) at this backup
         """
-        if os.path.exists(self.filepath):
+        if os.path.exists(self._filepath):
 
             logging.info('Load best solution from last checkpoint')
-            with open(self.filepath) as f:
+            with open(self._filepath) as f:
 
                 # get last line and read data
                 lastline = f.readlines()[-1]
@@ -70,28 +70,28 @@ class BasicCheckpoint(Callback):
                 # get evaluation  information
                 globalEvaluation = int(data[0])
 
-                if self.algo.parent is not None:
-                    self.algo.parent.numberOfEvaluations = globalEvaluation
+                if self._algo.getParent() is not None:
+                    self._algo.getParent().numberOfEvaluations = globalEvaluation
                 else:
-                    self.algo.numberOfEvaluations = globalEvaluation
+                    self._algo._numberOfEvaluations = globalEvaluation
 
                 # get best solution data information
                 solutionData = list(map(int, data[1].split(' ')))
 
-                if self.algo.bestSolution is None:
-                    self.algo.bestSolution = self.algo.initializer()
+                if self._algo._bestSolution is None:
+                    self._algo._bestSolution = self._algo.initializer()
 
-                self.algo.bestSolution.data = np.array(solutionData)
-                self.algo.bestSolution.score = float(data[2])
+                self._algo._bestSolution.data = np.array(solutionData)
+                self._algo._bestSolution.score = float(data[2])
 
             print(macop_line())
             print(
                 macop_text('Checkpoint found from `{}` file.'.format(
-                    self.filepath)))
+                    self._filepath)))
 
             print(
                 macop_text('Restart algorithm from evaluation {}.'.format(
-                    self.algo.numberOfEvaluations)))
+                    self._algo._numberOfEvaluations)))
 
         else:
             print(

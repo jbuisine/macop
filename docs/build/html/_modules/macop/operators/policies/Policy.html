@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>macop.operators.policies.Policy &mdash; macop v1.0.0 documentation</title>
+  <title>macop.operators.policies.Policy &mdash; macop v1.0.1 documentation</title>
   
 
   
@@ -58,7 +58,7 @@
             
             
               <div class="version">
-                1.0.0
+                1.0.1
               </div>
             
           
@@ -164,8 +164,8 @@
 <span class="sd">    Attributes:</span>
 <span class="sd">        operators: {[Operator]} -- list of selected operators for the algorithm</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_operators</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">operators</span> <span class="o">=</span> <span class="n">_operators</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">operators</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_operators</span> <span class="o">=</span> <span class="n">operators</span>
 
 <div class="viewcode-block" id="Policy.select"><a class="viewcode-back" href="../../../../macop/macop.operators.policies.Policy.html#macop.operators.policies.Policy.Policy.select">[docs]</a>    <span class="nd">@abstractmethod</span>
     <span class="k">def</span> <span class="nf">select</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -177,7 +177,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span></div>
 
-<div class="viewcode-block" id="Policy.apply"><a class="viewcode-back" href="../../../../macop/macop.operators.policies.Policy.html#macop.operators.policies.Policy.Policy.apply">[docs]</a>    <span class="k">def</span> <span class="nf">apply</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_solution</span><span class="p">):</span>
+<div class="viewcode-block" id="Policy.apply"><a class="viewcode-back" href="../../../../macop/macop.operators.policies.Policy.html#macop.operators.policies.Policy.Policy.apply">[docs]</a>    <span class="k">def</span> <span class="nf">apply</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">solution</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Apply specific operator chosen to create new solution, computes its fitness and returns solution</span>
 <span class="sd">        </span>
@@ -191,26 +191,26 @@
         <span class="n">operator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">select</span><span class="p">()</span>
 
         <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;---- Applying </span><span class="si">%s</span><span class="s2"> on </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span>
-                     <span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">operator</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">_solution</span><span class="p">))</span>
+                     <span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">operator</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">solution</span><span class="p">))</span>
 
         <span class="c1"># apply operator on solution</span>
-        <span class="n">newSolution</span> <span class="o">=</span> <span class="n">operator</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">_solution</span><span class="p">)</span>
+        <span class="n">newSolution</span> <span class="o">=</span> <span class="n">operator</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">solution</span><span class="p">)</span>
 
         <span class="c1"># compute fitness of new solution</span>
-        <span class="n">newSolution</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">algo</span><span class="o">.</span><span class="n">evaluator</span><span class="p">)</span>
+        <span class="n">newSolution</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_algo</span><span class="o">.</span><span class="n">_evaluator</span><span class="p">)</span>
 
-        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;---- Obtaining </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">_solution</span><span class="p">))</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;---- Obtaining </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">solution</span><span class="p">))</span>
 
         <span class="k">return</span> <span class="n">newSolution</span></div>
 
-<div class="viewcode-block" id="Policy.setAlgo"><a class="viewcode-back" href="../../../../macop/macop.operators.policies.Policy.html#macop.operators.policies.Policy.Policy.setAlgo">[docs]</a>    <span class="k">def</span> <span class="nf">setAlgo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_algo</span><span class="p">):</span>
+<div class="viewcode-block" id="Policy.setAlgo"><a class="viewcode-back" href="../../../../macop/macop.operators.policies.Policy.html#macop.operators.policies.Policy.Policy.setAlgo">[docs]</a>    <span class="k">def</span> <span class="nf">setAlgo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">algo</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Keep into policy reference of the whole algorithm</span>
 <span class="sd">           The reason is to better manage the operator choices (use of rewards as example)</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            _algo: {Algorithm} -- the algorithm reference runned</span>
+<span class="sd">            algo: {Algorithm} -- the algorithm reference runned</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">algo</span> <span class="o">=</span> <span class="n">_algo</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_algo</span> <span class="o">=</span> <span class="n">algo</span></div></div>
 </pre></div>
 
            </div>

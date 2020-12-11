@@ -12,7 +12,7 @@ class Crossover(Operator):
         kind: {KindOperator} -- specify the kind of operator
     """
     def __init__(self):
-        self.kind = KindOperator.CROSSOVER
+        self._kind = KindOperator.CROSSOVER
 
     def apply(self, solution):
         raise NotImplementedError

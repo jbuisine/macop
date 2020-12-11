@@ -15,22 +15,22 @@ class SimpleBinaryMutation(Mutation):
     Attributes:
         kind: {KindOperator} -- specify the kind of operator
     """
-    def apply(self, _solution):
+    def apply(self, solution):
         """Create new solution based on solution passed as parameter
 
         Args:
-            _solution: {Solution} -- the solution to use for generating new solution
+            solution: {Solution} -- the solution to use for generating new solution
 
         Returns:
             {Solution} -- new generated solution
         """
 
-        size = _solution.size
+        size = solution._size
 
         cell = random.randint(0, size - 1)
 
         # copy data of solution
-        currentData = _solution.data.copy()
+        currentData = solution._data.copy()
 
         # swicth values
         if currentData[cell]:
@@ -39,7 +39,7 @@ class SimpleBinaryMutation(Mutation):
             currentData[cell] = 1
 
         # create solution of same kind with new data
-        class_name = type(_solution).__name__
+        class_name = type(solution).__name__
 
         # dynamically load solution class if unknown
         if class_name not in sys.modules:

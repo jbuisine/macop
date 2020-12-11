@@ -12,7 +12,8 @@ macop.algorithms
    
    macop.algorithms.Algorithm
    macop.algorithms.mono.IteratedLocalSearch
-   macop.algorithms.mono.LocalSearch
+   macop.algorithms.mono.HillClimberFirstImprovment
+   macop.algorithms.mono.HillClimberBestImprovment
    macop.algorithms.multi.MOEAD
    macop.algorithms.multi.MOSubProblem
 

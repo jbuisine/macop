@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>macop.algorithms.multi.MOSubProblem &mdash; macop v1.0.0 documentation</title>
+  <title>macop.algorithms.multi.MOSubProblem &mdash; macop v1.0.1 documentation</title>
   
 
   
@@ -60,7 +60,7 @@
             
             
               <div class="version">
-                1.0.0
+                1.0.1
               </div>
             
           
@@ -92,7 +92,8 @@
 <li class="toctree-l2 current"><a class="reference internal" href="../macop.html#macop-algorithms">macop.algorithms</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="macop.algorithms.Algorithm.html">macop.algorithms.Algorithm</a></li>
 <li class="toctree-l3"><a class="reference internal" href="macop.algorithms.mono.IteratedLocalSearch.html">macop.algorithms.mono.IteratedLocalSearch</a></li>
-<li class="toctree-l3"><a class="reference internal" href="macop.algorithms.mono.LocalSearch.html">macop.algorithms.mono.LocalSearch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="macop.algorithms.mono.HillClimberFirstImprovment.html">macop.algorithms.mono.HillClimberFirstImprovment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="macop.algorithms.mono.HillClimberBestImprovment.html">macop.algorithms.mono.HillClimberBestImprovment</a></li>
 <li class="toctree-l3"><a class="reference internal" href="macop.algorithms.multi.MOEAD.html">macop.algorithms.multi.MOEAD</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">macop.algorithms.multi.MOSubProblem</a></li>
 </ul>
@@ -183,14 +184,14 @@
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#macop.algorithms.multi.MOSubProblem.MOSubProblem" title="macop.algorithms.multi.MOSubProblem.MOSubProblem"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MOSubProblem</span></code></a>(_index, _weights, _initalizer, …)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#macop.algorithms.multi.MOSubProblem.MOSubProblem" title="macop.algorithms.multi.MOSubProblem.MOSubProblem"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MOSubProblem</span></code></a>(index, weights, initalizer, …)</p></td>
 <td><p>Specific MO sub problem used into MOEAD</p></td>
 </tr>
 </tbody>
 </table>
 <dl class="class">
 <dt id="macop.algorithms.multi.MOSubProblem.MOSubProblem">
-<em class="property">class </em><code class="sig-prename descclassname">macop.algorithms.multi.MOSubProblem.</code><code class="sig-name descname">MOSubProblem</code><span class="sig-paren">(</span><em class="sig-param">_index</em>, <em class="sig-param">_weights</em>, <em class="sig-param">_initalizer</em>, <em class="sig-param">_evaluator</em>, <em class="sig-param">_operators</em>, <em class="sig-param">_policy</em>, <em class="sig-param">_validator</em>, <em class="sig-param">_maximise=True</em>, <em class="sig-param">_parent=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macop/algorithms/multi/MOSubProblem.html#MOSubProblem"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macop.algorithms.multi.MOSubProblem.MOSubProblem" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">macop.algorithms.multi.MOSubProblem.</code><code class="sig-name descname">MOSubProblem</code><span class="sig-paren">(</span><em class="sig-param">index</em>, <em class="sig-param">weights</em>, <em class="sig-param">initalizer</em>, <em class="sig-param">evaluator</em>, <em class="sig-param">operators</em>, <em class="sig-param">policy</em>, <em class="sig-param">validator</em>, <em class="sig-param">maximise=True</em>, <em class="sig-param">parent=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macop/algorithms/multi/MOSubProblem.html#MOSubProblem"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macop.algorithms.multi.MOSubProblem.MOSubProblem" title="Permalink to this definition">¶</a></dt>
 <dd><p>Specific MO sub problem used into MOEAD</p>
 <dl class="attribute">
 <dt id="macop.algorithms.multi.MOSubProblem.MOSubProblem.index">
@@ -260,11 +261,11 @@
 
 <dl class="method">
 <dt id="macop.algorithms.multi.MOSubProblem.MOSubProblem.run">
-<code class="sig-name descname">run</code><span class="sig-paren">(</span><em class="sig-param">_evaluations</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macop/algorithms/multi/MOSubProblem.html#MOSubProblem.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macop.algorithms.multi.MOSubProblem.MOSubProblem.run" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">run</code><span class="sig-paren">(</span><em class="sig-param">evaluations</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macop/algorithms/multi/MOSubProblem.html#MOSubProblem.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macop.algorithms.multi.MOSubProblem.MOSubProblem.run" title="Permalink to this definition">¶</a></dt>
 <dd><p>Run the local search algorithm</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>_evaluations</strong> – {int} – number of evaluations</p>
+<dd class="field-odd"><p><strong>evaluations</strong> – {int} – number of evaluations</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>{Solution} – best solution found</p>

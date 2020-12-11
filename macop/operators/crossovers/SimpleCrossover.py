@@ -25,23 +25,23 @@ class SimpleCrossover(Crossover):
     Attributes:
         kind: {Algorithm} -- specify the kind of operator
     """
-    def apply(self, _solution):
+    def apply(self, solution):
         """Create new solution based on best solution found and solution passed as parameter
 
         Args:
-            _solution: {Solution} -- the solution to use for generating new solution
+            solution: {Solution} -- the solution to use for generating new solution
 
         Returns:
             {Solution} -- new generated solution
         """
 
-        size = _solution.size
+        size = solution._size
 
         # copy data of solution
-        firstData = _solution.data.copy()
+        firstData = solution._data.copy()
 
         # get best solution from current algorithm
-        secondData = self.algo.bestSolution.data.copy()
+        secondData = self._algo._bestSolution._data.copy()
 
         splitIndex = int(size / 2)
 
@@ -54,7 +54,7 @@ class SimpleCrossover(Crossover):
             currentData = secondData
 
         # create solution of same kind with new data
-        class_name = type(_solution).__name__
+        class_name = type(solution).__name__
 
         # dynamically load solution class if unknown
         if class_name not in sys.modules:

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>macop.callbacks.Callback &mdash; macop v1.0.0 documentation</title>
+  <title>macop.callbacks.Callback &mdash; macop v1.0.1 documentation</title>
   
 
   
@@ -58,7 +58,7 @@
             
             
               <div class="version">
-                1.0.0
+                1.0.1
               </div>
             
           
@@ -168,25 +168,25 @@
 <span class="sd">        every: {int} -- checkpoint frequency used (based on number of evaluations)</span>
 <span class="sd">        filepath: {str} -- file path where checkpoints will be saved</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_every</span><span class="p">,</span> <span class="n">_filepath</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">every</span><span class="p">,</span> <span class="n">filepath</span><span class="p">):</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">algo</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">every</span> <span class="o">=</span> <span class="n">_every</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">filepath</span> <span class="o">=</span> <span class="n">_filepath</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_algo</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_every</span> <span class="o">=</span> <span class="n">every</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_filepath</span> <span class="o">=</span> <span class="n">filepath</span>
 
         <span class="c1"># build path if not already exists</span>
-        <span class="n">head</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filepath</span><span class="p">)</span>
+        <span class="n">head</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_filepath</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">head</span><span class="p">):</span>
             <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">head</span><span class="p">)</span>
 
-<div class="viewcode-block" id="Callback.setAlgo"><a class="viewcode-back" href="../../../macop/macop.callbacks.Callback.html#macop.callbacks.Callback.Callback.setAlgo">[docs]</a>    <span class="k">def</span> <span class="nf">setAlgo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_algo</span><span class="p">):</span>
+<div class="viewcode-block" id="Callback.setAlgo"><a class="viewcode-back" href="../../../macop/macop.callbacks.Callback.html#macop.callbacks.Callback.Callback.setAlgo">[docs]</a>    <span class="k">def</span> <span class="nf">setAlgo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">algo</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Specify the main algorithm instance reference</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            _algo: {Algorithm} -- main algorithm instance reference</span>
+<span class="sd">            algo: {Algorithm} -- main algorithm instance reference</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">algo</span> <span class="o">=</span> <span class="n">_algo</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_algo</span> <span class="o">=</span> <span class="n">algo</span></div>
 
 <div class="viewcode-block" id="Callback.run"><a class="viewcode-back" href="../../../macop/macop.callbacks.Callback.html#macop.callbacks.Callback.Callback.run">[docs]</a>    <span class="nd">@abstractmethod</span>
     <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>

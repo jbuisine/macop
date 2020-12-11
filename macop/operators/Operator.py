@@ -21,19 +21,19 @@ class Operator():
         pass
 
     @abstractmethod
-    def apply(self, _solution):
+    def apply(self, solution):
         """Apply the current operator transformation
 
         Args:
-            _solution: {Solution} -- Solution instance
+            solution: {Solution} -- Solution instance
         """
         pass
 
-    def setAlgo(self, _algo):
+    def setAlgo(self, algo):
         """Keep into operator reference of the whole algorithm
            The reason is to better manage operator instance
 
         Args:
-            _algo: {Algorithm} -- the algorithm reference runned
+            algo: {Algorithm} -- the algorithm reference runned
         """
-        self.algo = _algo
+        self._algo = algo

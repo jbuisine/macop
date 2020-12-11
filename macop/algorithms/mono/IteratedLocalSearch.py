@@ -6,7 +6,7 @@ import logging
 
 # module imports
 from ..Algorithm import Algorithm
-from .LocalSearch import LocalSearch
+from .HillClimberFirstImprovment import HillClimberFirstImprovment
 
 
 class IteratedLocalSearch(Algorithm):
@@ -23,20 +23,20 @@ class IteratedLocalSearch(Algorithm):
         bestSolution: {Solution} -- best solution found so far during running algorithm
         callbacks: {[Callback]} -- list of Callback class implementation to do some instructions every number of evaluations and `load` when initializing algorithm
     """
-    def run(self, _evaluations, _ls_evaluations=100):
+    def run(self, evaluations, ls_evaluations=100):
         """
         Run the iterated local search algorithm using local search (EvE compromise)
 
         Args:
-            _evaluations: {int} -- number of global evaluations for ILS
-            _ls_evaluations: {int} -- number of Local search evaluations (default: 100)
+            evaluations: {int} -- number of global evaluations for ILS
+            ls_evaluations: {int} -- number of Local search evaluations (default: 100)
 
         Returns:
             {Solution} -- best solution found
         """
 
         # by default use of mother method to initialize variables
-        super().run(_evaluations)
+        super().run(evaluations)
 
         # enable resuming for ILS
         self.resume()
@@ -45,27 +45,27 @@ class IteratedLocalSearch(Algorithm):
         self.initRun()
 
         # passing global evaluation param from ILS
-        ls = LocalSearch(self.initializer,
-                         self.evaluator,
-                         self.operators,
-                         self.policy,
-                         self.validator,
-                         self.maximise,
-                         _parent=self)
+        ls = HillClimberFirstImprovment(self._initializer,
+                         self._evaluator,
+                         self._operators,
+                         self._policy,
+                         self._validator,
+                         self._maximise,
+                         parent=self)
 
         # add same callbacks
-        for callback in self.callbacks:
+        for callback in self._callbacks:
             ls.addCallback(callback)
 
         # local search algorithm implementation
         while not self.stop():
 
             # create and search solution from local search
-            newSolution = ls.run(_ls_evaluations)
+            newSolution = ls.run(ls_evaluations)
 
             # if better solution than currently, replace it
             if self.isBetter(newSolution):
-                self.bestSolution = newSolution
+                self._bestSolution = newSolution
 
             # number of evaluatins increased from LocalSearch
             # increase number of evaluations and progress are then not necessary there
@@ -74,8 +74,8 @@ class IteratedLocalSearch(Algorithm):
 
             self.information()
 
-        logging.info("End of %s, best solution found %s" %
-                     (type(self).__name__, self.bestSolution))
+        logging.info(f"End of {type(self).__name__}, best solution found {self._bestSolution}")
 
         self.end()
-        return self.bestSolution
+        
+        return self._bestSolution

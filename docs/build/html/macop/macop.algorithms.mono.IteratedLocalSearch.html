@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>macop.algorithms.mono.IteratedLocalSearch &mdash; macop v1.0.0 documentation</title>
+  <title>macop.algorithms.mono.IteratedLocalSearch &mdash; macop v1.0.1 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="macop.algorithms.mono.LocalSearch" href="macop.algorithms.mono.LocalSearch.html" />
+    <link rel="next" title="macop.algorithms.mono.HillClimberFirstImprovment" href="macop.algorithms.mono.HillClimberFirstImprovment.html" />
     <link rel="prev" title="macop.algorithms.Algorithm" href="macop.algorithms.Algorithm.html" /> 
 </head>
 
@@ -60,7 +60,7 @@
             
             
               <div class="version">
-                1.0.0
+                1.0.1
               </div>
             
           
@@ -92,7 +92,8 @@
 <li class="toctree-l2 current"><a class="reference internal" href="../macop.html#macop-algorithms">macop.algorithms</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="macop.algorithms.Algorithm.html">macop.algorithms.Algorithm</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">macop.algorithms.mono.IteratedLocalSearch</a></li>
-<li class="toctree-l3"><a class="reference internal" href="macop.algorithms.mono.LocalSearch.html">macop.algorithms.mono.LocalSearch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="macop.algorithms.mono.HillClimberFirstImprovment.html">macop.algorithms.mono.HillClimberFirstImprovment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="macop.algorithms.mono.HillClimberBestImprovment.html">macop.algorithms.mono.HillClimberBestImprovment</a></li>
 <li class="toctree-l3"><a class="reference internal" href="macop.algorithms.multi.MOEAD.html">macop.algorithms.multi.MOEAD</a></li>
 <li class="toctree-l3"><a class="reference internal" href="macop.algorithms.multi.MOSubProblem.html">macop.algorithms.multi.MOSubProblem</a></li>
 </ul>
@@ -183,14 +184,14 @@
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#macop.algorithms.mono.IteratedLocalSearch.IteratedLocalSearch" title="macop.algorithms.mono.IteratedLocalSearch.IteratedLocalSearch"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IteratedLocalSearch</span></code></a>(_initalizer, _evaluator, …)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#macop.algorithms.mono.IteratedLocalSearch.IteratedLocalSearch" title="macop.algorithms.mono.IteratedLocalSearch.IteratedLocalSearch"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IteratedLocalSearch</span></code></a>(initalizer, evaluator, …)</p></td>
 <td><p>Iterated Local Search used to avoid local optima and increave EvE (Exploration vs Exploitation) compromise</p></td>
 </tr>
 </tbody>
 </table>
 <dl class="class">
 <dt id="macop.algorithms.mono.IteratedLocalSearch.IteratedLocalSearch">
-<em class="property">class </em><code class="sig-prename descclassname">macop.algorithms.mono.IteratedLocalSearch.</code><code class="sig-name descname">IteratedLocalSearch</code><span class="sig-paren">(</span><em class="sig-param">_initalizer</em>, <em class="sig-param">_evaluator</em>, <em class="sig-param">_operators</em>, <em class="sig-param">_policy</em>, <em class="sig-param">_validator</em>, <em class="sig-param">_maximise=True</em>, <em class="sig-param">_parent=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macop/algorithms/mono/IteratedLocalSearch.html#IteratedLocalSearch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macop.algorithms.mono.IteratedLocalSearch.IteratedLocalSearch" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">macop.algorithms.mono.IteratedLocalSearch.</code><code class="sig-name descname">IteratedLocalSearch</code><span class="sig-paren">(</span><em class="sig-param">initalizer</em>, <em class="sig-param">evaluator</em>, <em class="sig-param">operators</em>, <em class="sig-param">policy</em>, <em class="sig-param">validator</em>, <em class="sig-param">maximise=True</em>, <em class="sig-param">parent=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macop/algorithms/mono/IteratedLocalSearch.html#IteratedLocalSearch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macop.algorithms.mono.IteratedLocalSearch.IteratedLocalSearch" title="Permalink to this definition">¶</a></dt>
 <dd><p>Iterated Local Search used to avoid local optima and increave EvE (Exploration vs Exploitation) compromise</p>
 <dl class="attribute">
 <dt id="macop.algorithms.mono.IteratedLocalSearch.IteratedLocalSearch.initalizer">
@@ -248,13 +249,13 @@
 
 <dl class="method">
 <dt id="macop.algorithms.mono.IteratedLocalSearch.IteratedLocalSearch.run">
-<code class="sig-name descname">run</code><span class="sig-paren">(</span><em class="sig-param">_evaluations</em>, <em class="sig-param">_ls_evaluations=100</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macop/algorithms/mono/IteratedLocalSearch.html#IteratedLocalSearch.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macop.algorithms.mono.IteratedLocalSearch.IteratedLocalSearch.run" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">run</code><span class="sig-paren">(</span><em class="sig-param">evaluations</em>, <em class="sig-param">ls_evaluations=100</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macop/algorithms/mono/IteratedLocalSearch.html#IteratedLocalSearch.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macop.algorithms.mono.IteratedLocalSearch.IteratedLocalSearch.run" title="Permalink to this definition">¶</a></dt>
 <dd><p>Run the iterated local search algorithm using local search (EvE compromise)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>_evaluations</strong> – {int} – number of global evaluations for ILS</p></li>
-<li><p><strong>_ls_evaluations</strong> – {int} – number of Local search evaluations (default: 100)</p></li>
+<li><p><strong>evaluations</strong> – {int} – number of global evaluations for ILS</p></li>
+<li><p><strong>ls_evaluations</strong> – {int} – number of Local search evaluations (default: 100)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -275,7 +276,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="macop.algorithms.mono.LocalSearch.html" class="btn btn-neutral float-right" title="macop.algorithms.mono.LocalSearch" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="macop.algorithms.mono.HillClimberFirstImprovment.html" class="btn btn-neutral float-right" title="macop.algorithms.mono.HillClimberFirstImprovment" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="macop.algorithms.Algorithm.html" class="btn btn-neutral float-left" title="macop.algorithms.Algorithm" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

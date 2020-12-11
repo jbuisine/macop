@@ -11,8 +11,8 @@ class Policy():
     Attributes:
         operators: {[Operator]} -- list of selected operators for the algorithm
     """
-    def __init__(self, _operators):
-        self.operators = _operators
+    def __init__(self, operators):
+        self._operators = operators
 
     @abstractmethod
     def select(self):
@@ -24,7 +24,7 @@ class Policy():
         """
         pass
 
-    def apply(self, _solution):
+    def apply(self, solution):
         """
         Apply specific operator chosen to create new solution, computes its fitness and returns solution
         
@@ -38,23 +38,23 @@ class Policy():
         operator = self.select()
 
         logging.info("---- Applying %s on %s" %
-                     (type(operator).__name__, _solution))
+                     (type(operator).__name__, solution))
 
         # apply operator on solution
-        newSolution = operator.apply(_solution)
+        newSolution = operator.apply(solution)
 
         # compute fitness of new solution
-        newSolution.evaluate(self.algo.evaluator)
+        newSolution.evaluate(self._algo._evaluator)
 
-        logging.info("---- Obtaining %s" % (_solution))
+        logging.info("---- Obtaining %s" % (solution))
 
         return newSolution
 
-    def setAlgo(self, _algo):
+    def setAlgo(self, algo):
         """Keep into policy reference of the whole algorithm
            The reason is to better manage the operator choices (use of rewards as example)
 
         Args:
-            _algo: {Algorithm} -- the algorithm reference runned
+            algo: {Algorithm} -- the algorithm reference runned
         """
-        self.algo = _algo
+        self._algo = algo

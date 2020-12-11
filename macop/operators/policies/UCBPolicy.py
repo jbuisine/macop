@@ -20,12 +20,12 @@ class UCBPolicy(Policy):
         rewards: {[float]} -- list of summed rewards obtained for each operator
         occurrences: {[int]} -- number of use (selected) of each operator
     """
-    def __init__(self, _operators, _C=100., _exp_rate=0.5):
-        self.operators = _operators
-        self.rewards = [0. for o in self.operators]
-        self.occurrences = [0 for o in self.operators]
-        self.C = _C
-        self.exp_rate = _exp_rate
+    def __init__(self, operators, C=100., exp_rate=0.5):
+        self._operators = operators
+        self._rewards = [0. for o in self._operators]
+        self._occurrences = [0 for o in self._operators]
+        self._C = C
+        self._exp_rate = exp_rate
 
     def select(self):
         """Select randomly the next operator to use
@@ -34,37 +34,37 @@ class UCBPolicy(Policy):
             {Operator}: the selected operator
         """
 
-        indices = [i for i, o in enumerate(self.occurrences) if o == 0]
+        indices = [i for i, o in enumerate(self._occurrences) if o == 0]
 
         # random choice following exploration rate
-        if np.random.uniform(0, 1) <= self.exp_rate:
+        if np.random.uniform(0, 1) <= self._exp_rate:
 
-            index = random.choice(range(len(self.operators)))
-            return self.operators[index]
+            index = random.choice(range(len(self._operators)))
+            return self._operators[index]
 
         elif len(indices) == 0:
 
             # if operator have at least be used one time
             ucbValues = []
-            nVisits = sum(self.occurrences)
+            nVisits = sum(self._occurrences)
 
-            for i in range(len(self.operators)):
+            for i in range(len(self._operators)):
 
-                ucbValue = self.rewards[i] + self.C * math.sqrt(
-                    math.log(nVisits) / (self.occurrences[i] + 0.1))
+                ucbValue = self._rewards[i] + self._C * math.sqrt(
+                    math.log(nVisits) / (self._occurrences[i] + 0.1))
                 ucbValues.append(ucbValue)
 
-            return self.operators[ucbValues.index(max(ucbValues))]
+            return self._operators[ucbValues.index(max(ucbValues))]
 
         else:
-            return self.operators[random.choice(indices)]
+            return self._operators[random.choice(indices)]
 
-    def apply(self, _solution):
+    def apply(self, solution):
         """
         Apply specific operator chosen to create new solution, computes its fitness and returns solution
         
         Args:
-            _solution: {Solution} -- the solution to use for generating new solution
+            solution: {Solution} -- the solution to use for generating new solution
 
         Returns:
             {Solution} -- new generated solution
@@ -73,29 +73,29 @@ class UCBPolicy(Policy):
         operator = self.select()
 
         logging.info("---- Applying %s on %s" %
-                     (type(operator).__name__, _solution))
+                     (type(operator).__name__, solution))
 
         # apply operator on solution
-        newSolution = operator.apply(_solution)
+        newSolution = operator.apply(solution)
 
         # compute fitness of new solution
-        newSolution.evaluate(self.algo.evaluator)
+        newSolution.evaluate(self._algo._evaluator)
 
         # compute fitness improvment rate
-        if self.algo.maximise:
+        if self._algo._maximise:
             fir = (newSolution.fitness() -
-                   _solution.fitness()) / _solution.fitness()
+                   solution.fitness()) / solution.fitness()
         else:
-            fir = (_solution.fitness() -
-                   newSolution.fitness()) / _solution.fitness()
+            fir = (solution.fitness() -
+                   newSolution.fitness()) / solution.fitness()
 
-        operator_index = self.operators.index(operator)
+        operator_index = self._operators.index(operator)
 
         if fir > 0:
-            self.rewards[operator_index] += fir
+            self._rewards[operator_index] += fir
 
-        self.occurrences[operator_index] += 1
+        self._occurrences[operator_index] += 1
 
-        logging.info("---- Obtaining %s" % (_solution))
+        logging.info("---- Obtaining %s" % (solution))
 
         return newSolution

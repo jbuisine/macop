@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>macop.operators.policies.Policy &mdash; macop v1.0.0 documentation</title>
+  <title>macop.operators.policies.Policy &mdash; macop v1.0.1 documentation</title>
   
 
   
@@ -60,7 +60,7 @@
             
             
               <div class="version">
-                1.0.0
+                1.0.1
               </div>
             
           
@@ -188,14 +188,14 @@
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#macop.operators.policies.Policy.Policy" title="macop.operators.policies.Policy.Policy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Policy</span></code></a>(_operators)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#macop.operators.policies.Policy.Policy" title="macop.operators.policies.Policy.Policy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Policy</span></code></a>(operators)</p></td>
 <td><p>Abstract class which is used for applying strategy when selecting and applying operator</p></td>
 </tr>
 </tbody>
 </table>
 <dl class="class">
 <dt id="macop.operators.policies.Policy.Policy">
-<em class="property">class </em><code class="sig-prename descclassname">macop.operators.policies.Policy.</code><code class="sig-name descname">Policy</code><span class="sig-paren">(</span><em class="sig-param">_operators</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macop/operators/policies/Policy.html#Policy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macop.operators.policies.Policy.Policy" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">macop.operators.policies.Policy.</code><code class="sig-name descname">Policy</code><span class="sig-paren">(</span><em class="sig-param">operators</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macop/operators/policies/Policy.html#Policy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macop.operators.policies.Policy.Policy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Abstract class which is used for applying strategy when selecting and applying operator</p>
 <dl class="attribute">
 <dt id="macop.operators.policies.Policy.Policy.operators">
@@ -205,7 +205,7 @@
 
 <dl class="method">
 <dt id="macop.operators.policies.Policy.Policy.apply">
-<code class="sig-name descname">apply</code><span class="sig-paren">(</span><em class="sig-param">_solution</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macop/operators/policies/Policy.html#Policy.apply"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macop.operators.policies.Policy.Policy.apply" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">apply</code><span class="sig-paren">(</span><em class="sig-param">solution</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macop/operators/policies/Policy.html#Policy.apply"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macop.operators.policies.Policy.Policy.apply" title="Permalink to this definition">¶</a></dt>
 <dd><p>Apply specific operator chosen to create new solution, computes its fitness and returns solution</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -230,14 +230,14 @@
 
 <dl class="method">
 <dt id="macop.operators.policies.Policy.Policy.setAlgo">
-<code class="sig-name descname">setAlgo</code><span class="sig-paren">(</span><em class="sig-param">_algo</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macop/operators/policies/Policy.html#Policy.setAlgo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macop.operators.policies.Policy.Policy.setAlgo" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setAlgo</code><span class="sig-paren">(</span><em class="sig-param">algo</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macop/operators/policies/Policy.html#Policy.setAlgo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macop.operators.policies.Policy.Policy.setAlgo" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="simple">
 <dt>Keep into policy reference of the whole algorithm</dt><dd><p>The reason is to better manage the operator choices (use of rewards as example)</p>
 </dd>
 </dl>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>_algo</strong> – {Algorithm} – the algorithm reference runned</p>
+<dd class="field-odd"><p><strong>algo</strong> – {Algorithm} – the algorithm reference runned</p>
 </dd>
 </dl>
 </dd></dl>

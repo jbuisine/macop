@@ -27,31 +27,31 @@ class UCBCheckpoint(Callback):
         Check if necessary to do backup based on `every` variable
         """
         # get current population
-        currentEvaluation = self.algo.getGlobalEvaluation()
+        currentEvaluation = self._algo.getGlobalEvaluation()
 
         # backup if necessary
-        if currentEvaluation % self.every == 0:
+        if currentEvaluation % self._every == 0:
 
-            logging.info("UCB Checkpoint is done into " + self.filepath)
+            logging.info("UCB Checkpoint is done into " + self._filepath)
 
-            with open(self.filepath, 'w') as f:
+            with open(self._filepath, 'w') as f:
 
                 rewardsLine = ''
 
-                for i, r in enumerate(self.algo.policy.rewards):
+                for i, r in enumerate(self._algo._policy._rewards):
                     rewardsLine += str(r)
 
-                    if i != len(self.algo.policy.rewards) - 1:
+                    if i != len(self._algo._policy._rewards) - 1:
                         rewardsLine += ';'
 
                 f.write(rewardsLine + '\n')
 
                 occurrencesLine = ''
 
-                for i, o in enumerate(self.algo.policy.occurrences):
+                for i, o in enumerate(self._algo._policy._occurrences):
                     occurrencesLine += str(o)
 
-                    if i != len(self.algo.policy.occurrences) - 1:
+                    if i != len(self._algo._policy._occurrences) - 1:
                         occurrencesLine += ';'
 
                 f.write(occurrencesLine + '\n')
@@ -60,27 +60,25 @@ class UCBCheckpoint(Callback):
         """
         Load backup lines as rewards and occurrences for UCB
         """
-        if os.path.exists(self.filepath):
+        if os.path.exists(self._filepath):
 
             logging.info('Load UCB data')
-            with open(self.filepath) as f:
+            with open(self._filepath) as f:
 
                 lines = f.readlines()
                 # read data for each line
                 rewardsLine = lines[0].replace('\n', '')
                 occurrencesLine = lines[1].replace('\n', '')
 
-                self.algo.policy.rewards = [
+                self._algo._policy._rewards = [
                     float(f) for f in rewardsLine.split(';')
                 ]
-                self.algo.policy.occurrences = [
+                self._algo._policy._occurrences = [
                     float(f) for f in occurrencesLine.split(';')
                 ]
 
             print(
-                macop_text(
-                    'Load of available UCB policy data from `{}`'.format(
-                        self.filepath)))
+                macop_text(f'Load of available UCB policy data from `{self._filepath}`'))
 
         else:
             print(macop_text('No UCB data found, use default UCB policy'))

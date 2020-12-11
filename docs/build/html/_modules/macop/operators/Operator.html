@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>macop.operators.Operator &mdash; macop v1.0.0 documentation</title>
+  <title>macop.operators.Operator &mdash; macop v1.0.1 documentation</title>
   
 
   
@@ -58,7 +58,7 @@
             
             
               <div class="version">
-                1.0.0
+                1.0.1
               </div>
             
           
@@ -174,22 +174,22 @@
         <span class="k">pass</span>
 
 <div class="viewcode-block" id="Operator.apply"><a class="viewcode-back" href="../../../macop/macop.operators.Operator.html#macop.operators.Operator.Operator.apply">[docs]</a>    <span class="nd">@abstractmethod</span>
-    <span class="k">def</span> <span class="nf">apply</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_solution</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">apply</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">solution</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Apply the current operator transformation</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            _solution: {Solution} -- Solution instance</span>
+<span class="sd">            solution: {Solution} -- Solution instance</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span></div>
 
-<div class="viewcode-block" id="Operator.setAlgo"><a class="viewcode-back" href="../../../macop/macop.operators.Operator.html#macop.operators.Operator.Operator.setAlgo">[docs]</a>    <span class="k">def</span> <span class="nf">setAlgo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_algo</span><span class="p">):</span>
+<div class="viewcode-block" id="Operator.setAlgo"><a class="viewcode-back" href="../../../macop/macop.operators.Operator.html#macop.operators.Operator.Operator.setAlgo">[docs]</a>    <span class="k">def</span> <span class="nf">setAlgo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">algo</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Keep into operator reference of the whole algorithm</span>
 <span class="sd">           The reason is to better manage operator instance</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            _algo: {Algorithm} -- the algorithm reference runned</span>
+<span class="sd">            algo: {Algorithm} -- the algorithm reference runned</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">algo</span> <span class="o">=</span> <span class="n">_algo</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_algo</span> <span class="o">=</span> <span class="n">algo</span></div></div>
 </pre></div>
 
            </div>

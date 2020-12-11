@@ -15,25 +15,25 @@ class Callback():
         every: {int} -- checkpoint frequency used (based on number of evaluations)
         filepath: {str} -- file path where checkpoints will be saved
     """
-    def __init__(self, _every, _filepath):
+    def __init__(self, every, filepath):
 
-        self.algo = None
-        self.every = _every
-        self.filepath = _filepath
+        self._algo = None
+        self._every = every
+        self._filepath = filepath
 
         # build path if not already exists
-        head, _ = os.path.split(self.filepath)
+        head, _ = os.path.split(self._filepath)
 
         if not os.path.exists(head):
             os.makedirs(head)
 
-    def setAlgo(self, _algo):
+    def setAlgo(self, algo):
         """Specify the main algorithm instance reference
 
         Args:
-            _algo: {Algorithm} -- main algorithm instance reference
+            algo: {Algorithm} -- main algorithm instance reference
         """
-        self.algo = _algo
+        self._algo = algo
 
     @abstractmethod
     def run(self):

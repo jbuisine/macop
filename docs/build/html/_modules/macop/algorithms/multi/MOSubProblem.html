@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>macop.algorithms.multi.MOSubProblem &mdash; macop v1.0.0 documentation</title>
+  <title>macop.algorithms.multi.MOSubProblem &mdash; macop v1.0.1 documentation</title>
   
 
   
@@ -58,7 +58,7 @@
             
             
               <div class="version">
-                1.0.0
+                1.0.1
               </div>
             
           
@@ -178,55 +178,55 @@
 <span class="sd">        callbacks: {[Callback]} -- list of Callback class implementation to do some instructions every number of evaluations and `load` when initializing algorithm</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
-                 <span class="n">_index</span><span class="p">,</span>
-                 <span class="n">_weights</span><span class="p">,</span>
-                 <span class="n">_initalizer</span><span class="p">,</span>
-                 <span class="n">_evaluator</span><span class="p">,</span>
-                 <span class="n">_operators</span><span class="p">,</span>
-                 <span class="n">_policy</span><span class="p">,</span>
-                 <span class="n">_validator</span><span class="p">,</span>
-                 <span class="n">_maximise</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                 <span class="n">_parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+                 <span class="n">index</span><span class="p">,</span>
+                 <span class="n">weights</span><span class="p">,</span>
+                 <span class="n">initalizer</span><span class="p">,</span>
+                 <span class="n">evaluator</span><span class="p">,</span>
+                 <span class="n">operators</span><span class="p">,</span>
+                 <span class="n">policy</span><span class="p">,</span>
+                 <span class="n">validator</span><span class="p">,</span>
+                 <span class="n">maximise</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                 <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">_initalizer</span><span class="p">,</span> <span class="n">_evaluator</span><span class="p">,</span> <span class="n">_operators</span><span class="p">,</span> <span class="n">_policy</span><span class="p">,</span>
-                         <span class="n">_validator</span><span class="p">,</span> <span class="n">_maximise</span><span class="p">,</span> <span class="n">_parent</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">initalizer</span><span class="p">,</span> <span class="n">evaluator</span><span class="p">,</span> <span class="n">operators</span><span class="p">,</span> <span class="n">policy</span><span class="p">,</span>
+                         <span class="n">validator</span><span class="p">,</span> <span class="n">maximise</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">_index</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">weights</span> <span class="o">=</span> <span class="n">_weights</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_index</span> <span class="o">=</span> <span class="n">index</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_weights</span> <span class="o">=</span> <span class="n">weights</span>
 
-<div class="viewcode-block" id="MOSubProblem.run"><a class="viewcode-back" href="../../../../macop/macop.algorithms.multi.MOSubProblem.html#macop.algorithms.multi.MOSubProblem.MOSubProblem.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_evaluations</span><span class="p">):</span>
+<div class="viewcode-block" id="MOSubProblem.run"><a class="viewcode-back" href="../../../../macop/macop.algorithms.multi.MOSubProblem.html#macop.algorithms.multi.MOSubProblem.MOSubProblem.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">evaluations</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Run the local search algorithm</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            _evaluations: {int} -- number of evaluations</span>
+<span class="sd">            evaluations: {int} -- number of evaluations</span>
 <span class="sd">            </span>
 <span class="sd">        Returns:</span>
 <span class="sd">            {Solution} -- best solution found</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="c1"># by default use of mother method to initialize variables</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">_evaluations</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">evaluations</span><span class="p">)</span>
 
         <span class="c1"># initialize solution if necessary</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">bestSolution</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bestSolution</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">initRun</span><span class="p">()</span>
 
         <span class="c1"># new operators list keep track of current sub problem</span>
-        <span class="k">for</span> <span class="n">op</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">operators</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">op</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_operators</span><span class="p">:</span>
             <span class="n">op</span><span class="o">.</span><span class="n">setAlgo</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
-        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">_evaluations</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">evaluations</span><span class="p">):</span>
 
             <span class="c1"># keep reference of sub problem used</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">policy</span><span class="o">.</span><span class="n">setAlgo</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_policy</span><span class="o">.</span><span class="n">setAlgo</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
             <span class="c1"># update solution using policy</span>
-            <span class="n">newSolution</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bestSolution</span><span class="p">)</span>
+            <span class="n">newSolution</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_bestSolution</span><span class="p">)</span>
 
             <span class="c1"># if better solution than currently, replace it</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">isBetter</span><span class="p">(</span><span class="n">newSolution</span><span class="p">):</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">bestSolution</span> <span class="o">=</span> <span class="n">newSolution</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_bestSolution</span> <span class="o">=</span> <span class="n">newSolution</span>
 
             <span class="c1"># increase number of evaluations</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">increaseEvaluation</span><span class="p">()</span>
@@ -237,13 +237,11 @@
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">stop</span><span class="p">():</span>
                 <span class="k">break</span>
 
-            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;---- Current </span><span class="si">%s</span><span class="s2"> - SCORE </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span>
-                         <span class="p">(</span><span class="n">newSolution</span><span class="p">,</span> <span class="n">newSolution</span><span class="o">.</span><span class="n">fitness</span><span class="p">()))</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;---- Current </span><span class="si">{</span><span class="n">newSolution</span><span class="si">}</span><span class="s2"> - SCORE </span><span class="si">{</span><span class="n">newSolution</span><span class="o">.</span><span class="n">fitness</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
-            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;End of </span><span class="si">%s</span><span class="s2">, best solution found </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span>
-                         <span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">bestSolution</span><span class="p">))</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;End of </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">, best solution found </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_bestSolution</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">bestSolution</span></div></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bestSolution</span></div></div>
 </pre></div>
 
            </div>
