@@ -212,8 +212,9 @@ class Algorithm():
         # two parameters are sent if specific crossover solution are wished
         sol = self._policy.apply(_solution)
 
-        # compute fitness of new solution
-        sol.evaluate(self._evaluator)
+        # compute fitness of new solution if not already computed
+        if sol._score is None:
+            sol.evaluate(self._evaluator)
 
         if (sol.isValid(self._validator)):
             return sol

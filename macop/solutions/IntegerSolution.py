@@ -25,9 +25,7 @@ class IntegerSolution(Solution):
             data: {ndarray} --  array of binary values
             size: {int} -- size of binary array values
         """
-
-        self._data = data
-        self._size = size
+        super().__init__(data, size)
 
     def random(self, validator):
         """
