@@ -43,9 +43,6 @@ class Policy():
         # apply operator on solution
         newSolution = operator.apply(solution)
 
-        # compute fitness of new solution
-        newSolution.evaluate(self._algo._evaluator)
-
         logging.info("---- Obtaining %s" % (solution))
 
         return newSolution

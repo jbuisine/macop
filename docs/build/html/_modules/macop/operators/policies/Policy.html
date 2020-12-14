@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>macop.operators.policies.Policy &mdash; macop v1.0.3 documentation</title>
+  <title>macop.operators.policies.Policy &mdash; macop v1.0.4 documentation</title>
   
 
   
@@ -58,7 +58,7 @@
             
             
               <div class="version">
-                1.0.3
+                1.0.4
               </div>
             
           
@@ -195,9 +195,6 @@
 
         <span class="c1"># apply operator on solution</span>
         <span class="n">newSolution</span> <span class="o">=</span> <span class="n">operator</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">solution</span><span class="p">)</span>
-
-        <span class="c1"># compute fitness of new solution</span>
-        <span class="n">newSolution</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_algo</span><span class="o">.</span><span class="n">_evaluator</span><span class="p">)</span>
 
         <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;---- Obtaining </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">solution</span><span class="p">))</span>
 
