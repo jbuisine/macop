@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>macop.solutions.BinarySolution &mdash; macop v1.0.4 documentation</title>
+  <title>macop.solutions.BinarySolution &mdash; macop v1.0.5 documentation</title>
   
 
   
@@ -58,7 +58,7 @@
             
             
               <div class="version">
-                1.0.4
+                1.0.5
               </div>
             
           
@@ -177,9 +177,7 @@
 <span class="sd">            data: {ndarray} --  array of binary values</span>
 <span class="sd">            size: {int} -- size of binary array values</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">_data</span> <span class="o">=</span> <span class="n">data</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_size</span> <span class="o">=</span> <span class="n">size</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">size</span><span class="p">)</span>
 
 <div class="viewcode-block" id="BinarySolution.random"><a class="viewcode-back" href="../../../macop/macop.solutions.BinarySolution.html#macop.solutions.BinarySolution.BinarySolution.random">[docs]</a>    <span class="k">def</span> <span class="nf">random</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">validator</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
