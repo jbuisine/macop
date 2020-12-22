@@ -318,7 +318,7 @@ In this way, now we can run and obtained the best solution found in `n` evaluati
 .. code:: python
 
     bestSol = algo.run(10000)
-    print('Solution score is {}'.format(evaluator(bestSol)))
+    print('Solution score is {}'.format(evaluator.compute(bestSol)))
 
 3. Multi-objective
 -------------------

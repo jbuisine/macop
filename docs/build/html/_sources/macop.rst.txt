@@ -10,12 +10,9 @@ macop.algorithms
 .. autosummary::
    :toctree: macop
    
-   macop.algorithms.Algorithm
-   macop.algorithms.mono.IteratedLocalSearch
-   macop.algorithms.mono.HillClimberFirstImprovment
-   macop.algorithms.mono.HillClimberBestImprovment
-   macop.algorithms.multi.MOEAD
-   macop.algorithms.multi.MOSubProblem
+   macop.algorithms.base
+   macop.algorithms.mono
+   macop.algorithms.multi
 
 macop.callbacks
 -------------------
@@ -23,11 +20,10 @@ macop.callbacks
 .. autosummary::
    :toctree: macop
    
-   macop.callbacks.BasicCheckpoint
-   macop.callbacks.MultiCheckpoint
-   macop.callbacks.ParetoCheckpoint
-   macop.callbacks.UCBCheckpoint
-   macop.callbacks.Callback
+   macop.callbacks.base
+   macop.callbacks.classicals
+   macop.callbacks.multi
+   macop.callbacks.policies
 
 macop.evaluators
 -------------------
@@ -35,7 +31,8 @@ macop.evaluators
 .. autosummary::
    :toctree: macop
    
-   macop.evaluators.EvaluatorExample
+   macop.evaluators
+   macop.evaluators.knapsacks
 
 macop.operators
 -------------------
@@ -43,19 +40,14 @@ macop.operators
 .. autosummary::
    :toctree: macop
    
-   macop.operators.crossovers.Crossover
-   macop.operators.crossovers.RandomSplitCrossover
-   macop.operators.crossovers.SimpleCrossover
-
-   macop.operators.mutators.Mutation
-   macop.operators.mutators.SimpleBinaryMutation
-   macop.operators.mutators.SimpleMutation
-
-   macop.operators.policies.Policy
-   macop.operators.policies.RandomPolicy
-   macop.operators.policies.UCBPolicy
+   macop.operators.base
    
-   macop.operators.Operator
+   macop.operators.discrete.mutators
+   macop.operators.discrete.crossovers
+
+   macop.operators.continuous.mutators
+   macop.operators.continuous.crossovers
+
 
 macop.solution
 -------------------
@@ -63,7 +55,6 @@ macop.solution
 .. autosummary::
    :toctree: macop
 
-   macop.solutions.BinarySolution
-   macop.solutions.CombinatoryIntegerSolution
-   macop.solutions.IntegerSolution
-   macop.solutions.Solution
+   macop.solutions.base
+   macop.solutions.discrete
+   macop.solutions.continuous

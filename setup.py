@@ -13,19 +13,19 @@ class TestCommand(distutils.command.check.check):
         # from macop.algorithms import Algorithm
         print("==============================")
         print("Run test program...")
-        from macop.solutions.BinarySolution import BinarySolution
-        from macop.evaluators.EvaluatorExample import evaluatorExample
+        from macop.solutions.discrete import BinarySolution
+        from macop.evaluators.knapsacks import KnapsackEvaluator
 
-        from macop.operators.mutators.SimpleMutation import SimpleMutation
-        from macop.operators.mutators.SimpleBinaryMutation import SimpleBinaryMutation
-        from macop.operators.crossovers.SimpleCrossover import SimpleCrossover
-        from macop.operators.crossovers.RandomSplitCrossover import RandomSplitCrossover
+        from macop.operators.discrete.mutators import SimpleMutation
+        from macop.operators.discrete.mutators import SimpleBinaryMutation
+        from macop.operators.discrete.crossovers import SimpleCrossover
+        from macop.operators.discrete.crossovers import RandomSplitCrossover
 
-        from macop.operators.policies.RandomPolicy import RandomPolicy
-        from macop.operators.policies.UCBPolicy import UCBPolicy
+        from macop.policies.classicals import RandomPolicy
+        from macop.policies.reinforcement import UCBPolicy
 
-        from macop.algorithms.mono.IteratedLocalSearch import IteratedLocalSearch as ILS
-        from macop.callbacks.BasicCheckpoint import BasicCheckpoint
+        from macop.algorithms.mono import IteratedLocalSearch as ILS
+        from macop.callbacks.classicals import BasicCheckpoint
         import random
 
         random.seed(42)
@@ -53,19 +53,12 @@ class TestCommand(distutils.command.check.check):
         def init():
             return BinarySolution([], 30).random(validator)
 
-        def evaluator(solution):
-
-            fitness = 0
-            for index, elem in enumerate(solution._data):
-                fitness += (elements_score[index] * elem)
-
-            return fitness
-
+        evaluator = KnapsackEvaluator(data={'worths': elements_score})
         operators = [SimpleBinaryMutation(), SimpleMutation(), SimpleCrossover(), RandomSplitCrossover()]
         policy = UCBPolicy(operators)
         # callback = BasicCheckpoint(_every=5, _filepath=filepath)
 
-        algo = ILS(init, evaluator, operators, policy, validator, maximise=True)
+        algo = ILS(init, evaluator, operators, policy, validator, maximise=True, verbose=False)
         
         # add callback into callback list
         # algo.addCallback(callback)
@@ -97,14 +90,12 @@ setup(
     license='MIT',
     packages=['macop', 
         'macop.algorithms', 
-        'macop.algorithms.mono', 
-        'macop.algorithms.multi', 
         'macop.callbacks', 
-        'macop.evaluators', 
+        'macop.evaluators',  
         'macop.operators',  
-        'macop.operators.mutators',  
-        'macop.operators.crossovers',  
-        'macop.operators.policies', 
+        'macop.operators.discrete',
+        'macop.operators.continuous',  
+        'macop.policies', 
         'macop.solutions', 
         'macop.utils'],
     install_requires=[
