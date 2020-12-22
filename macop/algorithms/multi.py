@@ -10,16 +10,7 @@ from ..utils.color import macop_text, macop_line, macop_progress
 
 # module imports
 from .base import Algorithm
-
-
-def moEvaluator(solution, evaluator, weights):
-
-    scores = [eval(solution) for eval in evaluator]
-
-    # associate objectives scores to solution
-    solution._scores = scores
-
-    return sum([scores[i] for i, w in enumerate(weights)])
+from ..evaluators.multi import WeightedSum
 
 
 class MOEAD(Algorithm):
@@ -114,8 +105,7 @@ class MOEAD(Algorithm):
         for i in range(self._mu):
 
             # compute weight sum from solution
-            sub_evaluator = lambda solution: moEvaluator(
-                solution, evaluator, weights[i])
+            sub_evaluator = WeightedSum(data={'evaluators': evaluator, 'weights': weights[i]})
 
             # intialize each sub problem
             # use copy of list to keep track for each sub problem
@@ -187,20 +177,10 @@ class MOEAD(Algorithm):
                 # for each neighbor of current sub problem update solution if better
                 improvment = False
                 for j in self._neighbors[i]:
-                    if spBestSolution.fitness(
-                    ) > self._subProblems[j]._bestSolution.fitness():
+                    if spBestSolution.fitness() > self._subProblems[j]._bestSolution.fitness():
 
                         # create new solution based on current new if better, computes fitness associated to new solution for sub problem
-                        class_name = type(spBestSolution).__name__
-
-                        # dynamically load solution class if unknown
-                        if class_name not in sys.modules:
-                            load_class(class_name, globals())
-
-                        newSolution = getattr(
-                            globals()['macop.solutions.' + class_name],
-                            class_name)(spBestSolution._data,
-                                        len(spBestSolution._data))
+                        newSolution = spBestSolution.clone()
 
                         # evaluate solution for new sub problem and update as best solution
                         self._subProblems[j].evaluate(newSolution)

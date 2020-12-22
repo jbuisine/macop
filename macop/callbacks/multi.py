@@ -156,18 +156,8 @@ class ParetoCheckpoint(Callback):
             logging.info('Load best solution from last checkpoint')
             with open(self._filepath) as f:
 
-                # reinit pf population
-                self._algo._pfPop = []
-
-                # retrieve class name from algo
-                class_name = type(self._algo._population[0]).__name__
-
-                # dynamically load solution class if unknown
-                if class_name not in sys.modules:
-                    load_class(class_name, globals())
-
                 # read data for each line
-                for line in f.readlines():
+                for i, line in enumerate(f.readlines()):
 
                     data = line.replace(';\n', '').split(';')
 
@@ -177,12 +167,8 @@ class ParetoCheckpoint(Callback):
                     # get best solution data information
                     solutionData = list(map(int, data[-1].split(' ')))
 
-                    newSolution = getattr(
-                        globals()['macop.solutions.' + class_name],
-                        class_name)(solutionData, len(solutionData))
-                    newSolution._scores = scores
-
-                    self._algo._pfPop.append(newSolution)
+                    self._algo._pfPop[i]._data = solutionData
+                    self._algo._pfPop[i]._scores = scores
 
             print(
                 macop_text(f'Load of available pareto front backup from `{ self._filepath}`'))

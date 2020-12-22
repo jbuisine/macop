@@ -23,7 +23,7 @@ class BinarySolution(Solution):
             data: {ndarray} --  array of binary values
             size: {int} -- size of binary array values
         """
-        super().__init__(data, size)
+        super().__init__(np.array(data), size)
 
     def random(self, validator):
         """

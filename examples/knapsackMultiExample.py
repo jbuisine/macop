@@ -4,21 +4,21 @@ import os
 import random
 
 # module imports
-from macop.solutions.BinarySolution import BinarySolution
-from macop.evaluators.EvaluatorExample import evaluatorExample
+from macop.solutions.discrete import BinarySolution
+from macop.evaluators.knapsacks import KnapsackEvaluator
 
-from macop.operators.mutators.SimpleMutation import SimpleMutation
-from macop.operators.mutators.SimpleBinaryMutation import SimpleBinaryMutation
-from macop.operators.crossovers.SimpleCrossover import SimpleCrossover
-from macop.operators.crossovers.RandomSplitCrossover import RandomSplitCrossover
+from macop.operators.discrete.mutators import SimpleMutation
+from macop.operators.discrete.mutators import SimpleBinaryMutation
+from macop.operators.discrete.crossovers import SimpleCrossover
+from macop.operators.discrete.crossovers import RandomSplitCrossover
 
-from macop.operators.policies.RandomPolicy import RandomPolicy
-from macop.operators.policies.UCBPolicy import UCBPolicy
+from macop.policies.classicals import RandomPolicy
+from macop.policies.reinforcement import UCBPolicy
 
-from macop.algorithms.multi.MOEAD import MOEAD
-from macop.callbacks.MultiCheckpoint import MultiCheckpoint
-from macop.callbacks.ParetoCheckpoint import ParetoCheckpoint
-from macop.callbacks.UCBCheckpoint import UCBCheckpoint
+from macop.algorithms.multi import MOEAD
+from macop.callbacks.multi import MultiCheckpoint
+from macop.callbacks.multi import ParetoCheckpoint
+from macop.callbacks.policies import UCBCheckpoint
 
 if not os.path.exists('data'):
     os.makedirs('data')
@@ -52,22 +52,6 @@ def validator(solution):
 def init():
     return BinarySolution([], 200).random(validator)
 
-def evaluator1(solution):
-
-    fitness = 0
-    for index, elem in enumerate(solution._data):
-        fitness += (elements_score1[index] * elem)
-
-    return fitness
-
-def evaluator2(solution):
-
-    fitness = 0
-    for index, elem in enumerate(solution._data):
-        fitness += (elements_score2[index] * elem)
-
-    return fitness
-
 
 mo_checkpoint_path = "data/checkpointsMOEAD.csv"
 pf_checkpoint_path = "data/pfMOEAD.csv"
@@ -78,6 +62,9 @@ def main():
 
     operators = [SimpleBinaryMutation(), SimpleMutation(), SimpleCrossover(), RandomSplitCrossover()]
     policy = UCBPolicy(operators, C=100, exp_rate=0.2)
+
+    evaluator1 = KnapsackEvaluator(data={'worths': elements_score1})
+    evaluator2 = KnapsackEvaluator(data={'worths': elements_score2})
 
     # pass list of evaluators
     algo = MOEAD(20, 5, init, [evaluator1, evaluator2], operators, policy, validator, maximise=True)
