@@ -1,0 +1,608 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>macop.algorithms.multi &mdash; macop v1.0.5 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> macop
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0.5
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../description.html">Description</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../macop.html">Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples.html">Some examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">macop</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>macop.algorithms.multi</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for macop.algorithms.multi</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Multi-objetive classes algorithm</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="c1"># main imports</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">..utils.progress</span> <span class="kn">import</span> <span class="n">macop_text</span><span class="p">,</span> <span class="n">macop_line</span><span class="p">,</span> <span class="n">macop_progress</span>
+
+<span class="c1"># module imports</span>
+<span class="kn">from</span> <span class="nn">.base</span> <span class="kn">import</span> <span class="n">Algorithm</span>
+<span class="kn">from</span> <span class="nn">..evaluators.multi</span> <span class="kn">import</span> <span class="n">WeightedSum</span>
+
+
+<div class="viewcode-block" id="MOEAD"><a class="viewcode-back" href="../../../macop/macop.algorithms.multi.html#macop.algorithms.multi.MOEAD">[docs]</a><span class="k">class</span> <span class="nc">MOEAD</span><span class="p">(</span><span class="n">Algorithm</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Multi-Ojective Evolutionary Algorithm with Scalar Decomposition</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        mu: {int} -- number of sub problems</span>
+<span class="sd">        T: {[float]} -- number of neightbors for each sub problem</span>
+<span class="sd">        nObjectives: {int} -- number of objectives (based of number evaluator)</span>
+<span class="sd">        initializer: {function} -- basic function strategy to initialize solution</span>
+<span class="sd">        evaluator: {[function]} -- list of basic function in order to obtained fitness (multiple objectives)</span>
+<span class="sd">        operators: {[Operator]} -- list of operator to use when launching algorithm</span>
+<span class="sd">        policy: {Policy} -- Policy class implementation strategy to select operators</span>
+<span class="sd">        validator: {function} -- basic function to check if solution is valid or not under some constraints</span>
+<span class="sd">        maximise: {bool} -- specify kind of optimisation problem</span>
+<span class="sd">        verbose: {bool} -- verbose or not information about the algorithm</span>
+<span class="sd">        population: [{Solution}] -- population of solution, one for each sub problem</span>
+<span class="sd">        pfPop: [{Solution}] -- pareto front population</span>
+<span class="sd">        weights: [[{float}]] -- random weights used for custom mu sub problems</span>
+<span class="sd">        callbacks: {[Callback]} -- list of Callback class implementation to do some instructions every number of evaluations and `load` when initializing algorithm</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                 <span class="n">mu</span><span class="p">,</span>
+                 <span class="n">T</span><span class="p">,</span>
+                 <span class="n">initializer</span><span class="p">,</span>
+                 <span class="n">evaluator</span><span class="p">,</span>
+                 <span class="n">operators</span><span class="p">,</span>
+                 <span class="n">policy</span><span class="p">,</span>
+                 <span class="n">validator</span><span class="p">,</span>
+                 <span class="n">maximise</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                 <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+
+        <span class="c1"># redefinition of constructor to well use `initRun` method</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_initializer</span> <span class="o">=</span> <span class="n">initializer</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_evaluator</span> <span class="o">=</span> <span class="n">evaluator</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_operators</span> <span class="o">=</span> <span class="n">operators</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_policy</span> <span class="o">=</span> <span class="n">policy</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_validator</span> <span class="o">=</span> <span class="n">validator</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_callbacks</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="c1"># by default</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_numberOfEvaluations</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_maxEvaluations</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_nObjectives</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">evaluator</span><span class="p">)</span>
+
+        <span class="c1"># other parameters</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span> <span class="o">=</span> <span class="n">parent</span>  <span class="c1"># parent algorithm if it&#39;s sub algorithm</span>
+
+        <span class="c1">#self.maxEvaluations = 0 # by default</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_maximise</span> <span class="o">=</span> <span class="n">maximise</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_verbose</span> <span class="o">=</span> <span class="n">verbose</span>
+
+        <span class="c1"># track reference of algo into operator (keep an eye into best solution)</span>
+        <span class="k">for</span> <span class="n">operator</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_operators</span><span class="p">:</span>
+            <span class="n">operator</span><span class="o">.</span><span class="n">setAlgo</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="c1"># by default track reference for policy</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_policy</span><span class="o">.</span><span class="n">setAlgo</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">mu</span> <span class="o">&lt;</span> <span class="n">T</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;`mu` cannot be less than `T`&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_mu</span> <span class="o">=</span> <span class="n">mu</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_T</span> <span class="o">=</span> <span class="n">T</span>
+
+        <span class="c1"># initialize neighbors for each sub problem</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setNeighbors</span><span class="p">()</span>
+
+        <span class="n">weights</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_nObjectives</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_mu</span><span class="p">):</span>
+                <span class="n">angle</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">i</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_mu</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+                <span class="n">weights</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">angle</span><span class="p">),</span> <span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">angle</span><span class="p">)])</span>
+
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_nObjectives</span> <span class="o">&gt;=</span> <span class="mi">3</span><span class="p">:</span>
+
+            <span class="c1"># random weights using uniform</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_mu</span><span class="p">):</span>
+                <span class="n">w_i</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_nObjectives</span><span class="p">)</span>
+                <span class="n">weights</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">w_i</span> <span class="o">/</span> <span class="nb">sum</span><span class="p">(</span><span class="n">w_i</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Unvalid number of objectives&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_weights</span> <span class="o">=</span> <span class="n">weights</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_subProblems</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_mu</span><span class="p">):</span>
+
+            <span class="c1"># compute weight sum from solution</span>
+            <span class="n">sub_evaluator</span> <span class="o">=</span> <span class="n">WeightedSum</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;evaluators&#39;</span><span class="p">:</span> <span class="n">evaluator</span><span class="p">,</span> <span class="s1">&#39;weights&#39;</span><span class="p">:</span> <span class="n">weights</span><span class="p">[</span><span class="n">i</span><span class="p">]})</span>
+
+            <span class="c1"># intialize each sub problem</span>
+            <span class="c1"># use copy of list to keep track for each sub problem</span>
+            <span class="n">subProblem</span> <span class="o">=</span> <span class="n">MOSubProblem</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">weights</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+                                      <span class="n">initializer</span><span class="p">,</span> <span class="n">sub_evaluator</span><span class="p">,</span>
+                                      <span class="n">operators</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span> <span class="n">policy</span><span class="p">,</span> <span class="n">validator</span><span class="p">,</span>
+                                      <span class="n">maximise</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">_subProblems</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">subProblem</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_population</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_mu</span><span class="p">)]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_pfPop</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="c1"># ref point based on number of evaluators</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_maximise</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_refPoint</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_nObjectives</span><span class="p">)]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_refPoint</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="n">sys</span><span class="o">.</span><span class="n">float_info</span><span class="o">.</span><span class="n">max</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_nObjectives</span><span class="p">)</span>
+            <span class="p">]</span>
+
+<div class="viewcode-block" id="MOEAD.initRun"><a class="viewcode-back" href="../../../macop/macop.algorithms.multi.html#macop.algorithms.multi.MOEAD.initRun">[docs]</a>    <span class="k">def</span> <span class="nf">initRun</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Method which initialiazes or re-initializes the whole algorithm context specifically for MOEAD</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># initialization is done during run method</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="MOEAD.run"><a class="viewcode-back" href="../../../macop/macop.algorithms.multi.html#macop.algorithms.multi.MOEAD.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">evaluations</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Run the local search algorithm</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            evaluations: {int} -- number of Local search evaluations</span>
+<span class="sd">            </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            {Solution} -- best solution found</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># by default use of mother method to initialize variables</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">evaluations</span><span class="p">)</span>
+
+        <span class="c1"># enable callback resume for MOEAD</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">resume</span><span class="p">()</span>
+
+        <span class="c1"># initialize each sub problem if no backup</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_mu</span><span class="p">):</span>
+
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_subProblems</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">_bestSolution</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_subProblems</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_population</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_subProblems</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">_bestSolution</span>
+
+        <span class="c1"># if no backup for pf population</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_pfPop</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_mu</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_pfPop</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_subProblems</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">_bestSolution</span><span class="p">)</span>
+
+        <span class="c1"># MOEAD algorithm implementation</span>
+        <span class="k">while</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">stop</span><span class="p">():</span>
+
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_mu</span><span class="p">):</span>
+
+                <span class="c1"># run 1 iteration into sub problem `i`</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_subProblems</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+                <span class="n">spBestSolution</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_subProblems</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">_bestSolution</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">updateRefPoint</span><span class="p">(</span><span class="n">spBestSolution</span><span class="p">)</span>
+
+                <span class="c1"># for each neighbor of current sub problem update solution if better</span>
+                <span class="n">improvment</span> <span class="o">=</span> <span class="kc">False</span>
+                <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_neighbors</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+                    <span class="k">if</span> <span class="n">spBestSolution</span><span class="o">.</span><span class="n">fitness</span><span class="p">()</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_subProblems</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">_bestSolution</span><span class="o">.</span><span class="n">fitness</span><span class="p">():</span>
+
+                        <span class="c1"># create new solution based on current new if better, computes fitness associated to new solution for sub problem</span>
+                        <span class="n">newSolution</span> <span class="o">=</span> <span class="n">spBestSolution</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span>
+
+                        <span class="c1"># evaluate solution for new sub problem and update as best solution</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">_subProblems</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">newSolution</span><span class="p">)</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">_subProblems</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">_bestSolution</span> <span class="o">=</span> <span class="n">newSolution</span>
+
+                        <span class="c1"># update population solution for this sub problem</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">_population</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">newSolution</span>
+
+                        <span class="n">improvment</span> <span class="o">=</span> <span class="kc">True</span>
+
+                <span class="c1"># add new solution if improvment is idenfity</span>
+                <span class="k">if</span> <span class="n">improvment</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_pfPop</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">spBestSolution</span><span class="p">)</span>
+
+                <span class="c1"># update pareto front</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_pfPop</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">paretoFront</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_pfPop</span><span class="p">)</span>
+
+                <span class="c1"># add progress here</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">progress</span><span class="p">()</span>
+
+                <span class="c1"># stop algorithm if necessary</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">stop</span><span class="p">():</span>
+                    <span class="k">break</span>
+
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;End of </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">, best solution found </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_population</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">end</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pfPop</span></div>
+
+<div class="viewcode-block" id="MOEAD.progress"><a class="viewcode-back" href="../../../macop/macop.algorithms.multi.html#macop.algorithms.multi.MOEAD.progress">[docs]</a>    <span class="k">def</span> <span class="nf">progress</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Log progress and apply callbacks if necessary</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_callbacks</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">callback</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_callbacks</span><span class="p">:</span>
+                <span class="n">callback</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+
+        <span class="n">macop_progress</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">getGlobalEvaluation</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">getGlobalMaxEvaluation</span><span class="p">())</span>
+
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;-- </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> evaluation </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_numberOfEvaluations</span><span class="si">}</span><span class="s2"> of </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_maxEvaluations</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">_numberOfEvaluations</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">_maxEvaluations</span> <span class="o">*</span> <span class="mf">100.</span><span class="p">)</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">%)&quot;</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">setNeighbors</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="n">dmin</span> <span class="o">=</span> <span class="n">dmax</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_T</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">dmin</span> <span class="o">=</span> <span class="o">-</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_T</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+            <span class="n">dmax</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_T</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">dmin</span> <span class="o">=</span> <span class="o">-</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_T</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="n">dmax</span> <span class="o">=</span> <span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">_T</span> <span class="o">/</span> <span class="mi">2</span>
+
+        <span class="c1"># init neighbord list</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_neighbors</span> <span class="o">=</span> <span class="p">[[]</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_mu</span><span class="p">)]</span>
+
+        <span class="k">for</span> <span class="n">direction</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="n">dmin</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_T</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_neighbors</span><span class="p">[</span><span class="n">direction</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">direction</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="o">-</span><span class="n">dmin</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mu</span> <span class="o">-</span> <span class="n">dmax</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">direction</span> <span class="o">+</span> <span class="n">dmin</span><span class="p">,</span> <span class="n">direction</span> <span class="o">+</span> <span class="n">dmax</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_neighbors</span><span class="p">[</span><span class="n">direction</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">direction</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_mu</span> <span class="o">-</span> <span class="n">dmax</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mu</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_mu</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_T</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mu</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_neighbors</span><span class="p">[</span><span class="n">direction</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">updateRefPoint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">solution</span><span class="p">):</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_maximise</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_evaluator</span><span class="p">)):</span>
+                <span class="k">if</span> <span class="n">solution</span><span class="o">.</span><span class="n">_scores</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_refPoint</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_refPoint</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">solution</span><span class="o">.</span><span class="n">_scores</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_evaluator</span><span class="p">)):</span>
+                <span class="k">if</span> <span class="n">solution</span><span class="o">.</span><span class="n">scores</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_refPoint</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_refPoint</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">solution</span><span class="o">.</span><span class="n">_scores</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">paretoFront</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">population</span><span class="p">):</span>
+
+        <span class="n">paFront</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">indexes</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">nObjectives</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_evaluator</span><span class="p">)</span>
+        <span class="n">nSolutions</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">population</span><span class="p">)</span>
+
+        <span class="c1"># find dominated solution</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nSolutions</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nSolutions</span><span class="p">):</span>
+
+                <span class="k">if</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">indexes</span><span class="p">:</span>
+                    <span class="k">continue</span>
+
+                <span class="c1"># check if solutions are the same</span>
+                <span class="k">if</span> <span class="nb">all</span><span class="p">([</span>
+                        <span class="n">population</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">==</span> <span class="n">population</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+                        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">population</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">_data</span><span class="p">))</span>
+                <span class="p">]):</span>
+                    <span class="k">continue</span>
+
+                <span class="n">nDominated</span> <span class="o">=</span> <span class="mi">0</span>
+
+                <span class="c1"># check number of dominated objectives of current solution by the others solution</span>
+                <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_evaluator</span><span class="p">)):</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_maximise</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">population</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">_scores</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">population</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">_scores</span><span class="p">[</span><span class="n">k</span><span class="p">]:</span>
+                            <span class="n">nDominated</span> <span class="o">+=</span> <span class="mi">1</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">population</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">_scores</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">population</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">_scores</span><span class="p">[</span><span class="n">k</span><span class="p">]:</span>
+                            <span class="n">nDominated</span> <span class="o">+=</span> <span class="mi">1</span>
+
+                <span class="k">if</span> <span class="n">nDominated</span> <span class="o">==</span> <span class="n">nObjectives</span><span class="p">:</span>
+                    <span class="n">indexes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+                    <span class="k">break</span>
+
+        <span class="c1"># store the non dominated solution into pareto front</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nSolutions</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">indexes</span><span class="p">:</span>
+                <span class="n">paFront</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">population</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+
+        <span class="k">return</span> <span class="n">paFront</span>
+
+<div class="viewcode-block" id="MOEAD.end"><a class="viewcode-back" href="../../../macop/macop.algorithms.multi.html#macop.algorithms.multi.MOEAD.end">[docs]</a>    <span class="k">def</span> <span class="nf">end</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Display end message into `run` method</span>
+<span class="sd">        &quot;&quot;&quot;</span> 
+
+        <span class="n">macop_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;(</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s1">) Found after </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_numberOfEvaluations</span><span class="si">}</span><span class="s1"> evaluations&#39;</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">solution</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_pfPop</span><span class="p">):</span>
+            <span class="n">macop_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;  - [</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">] </span><span class="si">{</span><span class="n">solution</span><span class="o">.</span><span class="n">_scores</span><span class="si">}</span><span class="s1"> : </span><span class="si">{</span><span class="n">solution</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+        <span class="n">macop_line</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">information</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;-- Pareto front :&quot;</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">solution</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_pfPop</span><span class="p">):</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;-- </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">] SCORE </span><span class="si">{</span><span class="n">solution</span><span class="o">.</span><span class="n">_scores</span><span class="si">}</span><span class="s2"> - </span><span class="si">{</span><span class="n">solution</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> using </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_population</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&quot;</span></div>
+
+
+<div class="viewcode-block" id="MOSubProblem"><a class="viewcode-back" href="../../../macop/macop.algorithms.multi.html#macop.algorithms.multi.MOSubProblem">[docs]</a><span class="k">class</span> <span class="nc">MOSubProblem</span><span class="p">(</span><span class="n">Algorithm</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Specific MO sub problem used into MOEAD</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        index: {int} -- sub problem index</span>
+<span class="sd">        weights: {[float]} -- sub problems objectives weights</span>
+<span class="sd">        initalizer: {function} -- basic function strategy to initialize solution</span>
+<span class="sd">        evaluator: {function} -- basic function in order to obtained fitness (mono or multiple objectives)</span>
+<span class="sd">        operators: {[Operator]} -- list of operator to use when launching algorithm</span>
+<span class="sd">        policy: {Policy} -- Policy class implementation strategy to select operators</span>
+<span class="sd">        validator: {function} -- basic function to check if solution is valid or not under some constraints</span>
+<span class="sd">        maximise: {bool} -- specify kind of optimisation problem </span>
+<span class="sd">        verbose: {bool} -- verbose or not information about the algorithm</span>
+<span class="sd">        currentSolution: {Solution} -- current solution managed for current evaluation</span>
+<span class="sd">        bestSolution: {Solution} -- best solution found so far during running algorithm</span>
+<span class="sd">        callbacks: {[Callback]} -- list of Callback class implementation to do some instructions every number of evaluations and `load` when initializing algorithm</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                 <span class="n">index</span><span class="p">,</span>
+                 <span class="n">weights</span><span class="p">,</span>
+                 <span class="n">initalizer</span><span class="p">,</span>
+                 <span class="n">evaluator</span><span class="p">,</span>
+                 <span class="n">operators</span><span class="p">,</span>
+                 <span class="n">policy</span><span class="p">,</span>
+                 <span class="n">validator</span><span class="p">,</span>
+                 <span class="n">maximise</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                 <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">initalizer</span><span class="p">,</span> <span class="n">evaluator</span><span class="p">,</span> <span class="n">operators</span><span class="p">,</span> <span class="n">policy</span><span class="p">,</span>
+                         <span class="n">validator</span><span class="p">,</span> <span class="n">maximise</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_index</span> <span class="o">=</span> <span class="n">index</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_weights</span> <span class="o">=</span> <span class="n">weights</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_verbose</span> <span class="o">=</span> <span class="n">verbose</span>
+
+<div class="viewcode-block" id="MOSubProblem.run"><a class="viewcode-back" href="../../../macop/macop.algorithms.multi.html#macop.algorithms.multi.MOSubProblem.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">evaluations</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Run the local search algorithm</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            evaluations: {int} -- number of evaluations</span>
+<span class="sd">            </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            {Solution} -- best solution found</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># by default use of mother method to initialize variables</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">evaluations</span><span class="p">)</span>
+
+        <span class="c1"># initialize solution if necessary</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bestSolution</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">initRun</span><span class="p">()</span>
+
+        <span class="c1"># new operators list keep track of current sub problem</span>
+        <span class="k">for</span> <span class="n">op</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_operators</span><span class="p">:</span>
+            <span class="n">op</span><span class="o">.</span><span class="n">setAlgo</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">evaluations</span><span class="p">):</span>
+
+            <span class="c1"># keep reference of sub problem used</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_policy</span><span class="o">.</span><span class="n">setAlgo</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+            <span class="c1"># update solution using policy</span>
+            <span class="n">newSolution</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_bestSolution</span><span class="p">)</span>
+
+            <span class="c1"># if better solution than currently, replace it</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">isBetter</span><span class="p">(</span><span class="n">newSolution</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_bestSolution</span> <span class="o">=</span> <span class="n">newSolution</span>
+
+            <span class="c1"># increase number of evaluations</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">increaseEvaluation</span><span class="p">()</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">progress</span><span class="p">()</span>
+
+            <span class="c1"># stop algorithm if necessary</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">stop</span><span class="p">():</span>
+                <span class="k">break</span>
+
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;---- Current </span><span class="si">{</span><span class="n">newSolution</span><span class="si">}</span><span class="s2"> - SCORE </span><span class="si">{</span><span class="n">newSolution</span><span class="o">.</span><span class="n">fitness</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;End of </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">, best solution found </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_bestSolution</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bestSolution</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Jérôme BUISINE
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

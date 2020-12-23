@@ -8,7 +8,7 @@ import numpy as np
 
 # module imports
 from .base import Callback
-from ..utils.color import macop_text, macop_line
+from ..utils.progress import macop_text, macop_line
 
 
 class MultiCheckpoint(Callback):
@@ -92,15 +92,14 @@ class MultiCheckpoint(Callback):
 
                     self._algo._pfPop.append(self._algo._population[i])
 
-            print(macop_line())
-            print(macop_text(f'Load of available population from `{self._filepath}`'))
-            print(macop_text(f'Restart algorithm from evaluation {self._algo._numberOfEvaluations}.'))
-
+            macop_line(self._algo)
+            macop_text(self._algo, f'Load of available population from `{self._filepath}`')
+            macop_text(self._algo, f'Restart algorithm from evaluation {self._algo._numberOfEvaluations}.')
         else:
-            print(macop_text('No backup found... Start running algorithm from evaluation 0.'))
+            macop_text(self._algo, 'No backup found... Start running algorithm from evaluation 0.')
             logging.info("Can't load backup... Backup filepath not valid in Checkpoint")
 
-        print(macop_line())
+        macop_line(self._algo)
 
 
 class ParetoCheckpoint(Callback):
@@ -170,11 +169,9 @@ class ParetoCheckpoint(Callback):
                     self._algo._pfPop[i]._data = solutionData
                     self._algo._pfPop[i]._scores = scores
 
-            print(
-                macop_text(f'Load of available pareto front backup from `{ self._filepath}`'))
-
-        else:
-            print(macop_text('No pareto front found... Start running algorithm with new pareto front population.'))
+            macop_text(self._algo, f'Load of available pareto front backup from `{ self._filepath}`')
+        else:           
+            macop_text(self._algo, 'No pareto front found... Start running algorithm with new pareto front population.')
             logging.info("No pareto front backup used...")
 
-        print(macop_line())
+        macop_line(self._algo)

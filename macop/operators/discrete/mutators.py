@@ -13,6 +13,19 @@ class SimpleMutation(Mutation):
 
     Attributes:
         kind: {KindOperator} -- specify the kind of operator
+
+    Example:
+
+    >>> # import of solution and simple mutation operator
+    >>> from macop.solutions.discrete import BinarySolution
+    >>> from macop.operators.discrete.mutators import SimpleMutation
+    >>> solution = BinarySolution.random(5)
+    >>> list(solution._data)
+    [1, 0, 0, 0, 1]
+    >>> mutator = SimpleMutation()
+    >>> mutation_solution = mutator.apply(solution)
+    >>> list(mutation_solution._data)
+    [0, 0, 1, 0, 1]
     """
     def apply(self, solution):
         """Create new solution based on solution passed as parameter
@@ -50,6 +63,19 @@ class SimpleBinaryMutation(Mutation):
 
     Attributes:
         kind: {KindOperator} -- specify the kind of operator
+
+    Example:
+
+    >>> # import of solution and simple binary mutation operator
+    >>> from macop.solutions.discrete import BinarySolution
+    >>> from macop.operators.discrete.mutators import SimpleBinaryMutation
+    >>> solution = BinarySolution.random(5)
+    >>> list(solution._data)
+    [0, 1, 0, 0, 0]
+    >>> mutator = SimpleBinaryMutation()
+    >>> mutation_solution = mutator.apply(solution)
+    >>> list(mutation_solution._data)
+    [1, 1, 0, 0, 0]
     """
     def apply(self, solution):
         """Create new solution based on solution passed as parameter

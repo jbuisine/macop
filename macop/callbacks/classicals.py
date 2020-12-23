@@ -8,7 +8,7 @@ import numpy as np
 
 # module imports
 from .base import Callback
-from ..utils.color import macop_text, macop_line
+from ..utils.progress import macop_text, macop_line
 
 
 class BasicCheckpoint(Callback):
@@ -83,14 +83,12 @@ class BasicCheckpoint(Callback):
 
                 self._algo._bestSolution._data = np.array(solutionData)
                 self._algo._bestSolution._score = float(data[2])
-
-            print(macop_line())
-            print(macop_text(f'Checkpoint found from `{self._filepath}` file.'))
-
-            print(macop_text(f'Restart algorithm from evaluation {self._algo._numberOfEvaluations}.'))
-
+      
+            macop_line(self._algo)
+            macop_text(self._algo, f'Checkpoint found from `{self._filepath}` file.')
+            macop_text(self._algo, f'Restart algorithm from evaluation {self._algo._numberOfEvaluations}.')
         else:
-            print(macop_text('No backup found... Start running algorithm from evaluation 0.'))
+            macop_text(self._algo, 'No backup found... Start running algorithm from evaluation 0.')
             logging.info("Can't load backup... Backup filepath not valid in Checkpoint")
 
-        print(macop_line())
+        macop_line(self._algo)

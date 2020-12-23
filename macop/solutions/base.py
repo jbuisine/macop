@@ -4,11 +4,17 @@
 from abc import abstractmethod
 from copy import deepcopy
 
-
 class Solution():
+    """Base abstract solution class structure
+    
+    - stores solution data representation into `data` attribute
+    - get size (shape) of specific data representation
+    - stores the score of the solution
+    """
+
     def __init__(self, data, size):
         """
-        Binary integer solution class
+        Abstract solution class constructor
 
         Attributes:
             data: {ndarray} --  array of binary values
@@ -54,13 +60,13 @@ class Solution():
         return self._score
 
     @staticmethod
-    def random(validator, size):
+    def random(size, validator=None):
         """
-        Initialize solution using random data
+        Initialize solution using random data with validator
 
         Args:
-            validator: {function} -- specific function which validates or not a solution
             size: {int} -- expected solution size to generate
+            validator: {function} -- specific function which validates or not a solution (if None, not validation is applied)
 
         Returns:
             {Solution} -- generated solution

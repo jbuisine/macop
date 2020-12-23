@@ -1,0 +1,408 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>macop.solutions.discrete &mdash; macop v1.0.5 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="macop.solutions.continuous" href="macop.solutions.continuous.html" />
+    <link rel="prev" title="macop.solutions.base" href="macop.solutions.base.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> macop
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0.5
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../description.html">Description</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../macop.html">Documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../macop.html#macop">macop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../macop.html#macop-algorithms">macop.algorithms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../macop.html#macop-callbacks">macop.callbacks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../macop.html#macop-evaluators">macop.evaluators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../macop.html#macop-operators">macop.operators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../macop.html#macop-policies">macop.policies</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../macop.html#macop-solution">macop.solution</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="macop.solutions.base.html">macop.solutions.base</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">macop.solutions.discrete</a></li>
+<li class="toctree-l3"><a class="reference internal" href="macop.solutions.continuous.html">macop.solutions.continuous</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../macop.html#macop-utils">macop.utils</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Some examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">macop</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../macop.html">Documentation</a> &raquo;</li>
+        
+      <li>macop.solutions.discrete</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <a href="https://github.com/prise-3d/macop/blob/master/docs/source/macop/macop.solutions.discrete.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-macop.solutions.discrete">
+<span id="macop-solutions-discrete"></span><h1>macop.solutions.discrete<a class="headerlink" href="#module-macop.solutions.discrete" title="Permalink to this headline">¶</a></h1>
+<p>Discrete solution classes implementations</p>
+<p class="rubric">Classes</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#macop.solutions.discrete.BinarySolution" title="macop.solutions.discrete.BinarySolution"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BinarySolution</span></code></a>(data, size)</p></td>
+<td><p>Binary integer solution class</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#macop.solutions.discrete.CombinatoryIntegerSolution" title="macop.solutions.discrete.CombinatoryIntegerSolution"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CombinatoryIntegerSolution</span></code></a>(data, size)</p></td>
+<td><p>Combinatory integer solution class</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#macop.solutions.discrete.IntegerSolution" title="macop.solutions.discrete.IntegerSolution"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IntegerSolution</span></code></a>(data, size)</p></td>
+<td><p>Integer solution class</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="class">
+<dt id="macop.solutions.discrete.BinarySolution">
+<em class="property">class </em><code class="sig-prename descclassname">macop.solutions.discrete.</code><code class="sig-name descname">BinarySolution</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">size</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macop/solutions/discrete.html#BinarySolution"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macop.solutions.discrete.BinarySolution" title="Permalink to this definition">¶</a></dt>
+<dd><p>Binary integer solution class</p>
+<ul class="simple">
+<li><p>store solution as a binary array (example: [0, 1, 0, 1, 1])</p></li>
+<li><p>associated size is the size of the array</p></li>
+<li><p>mainly use for selecting or not an element in a list of valuable objects</p></li>
+</ul>
+<dl class="attribute">
+<dt id="macop.solutions.discrete.BinarySolution.data">
+<code class="sig-name descname">data</code><a class="headerlink" href="#macop.solutions.discrete.BinarySolution.data" title="Permalink to this definition">¶</a></dt>
+<dd><p>{ndarray} –  array of binary values</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="macop.solutions.discrete.BinarySolution.size">
+<code class="sig-name descname">size</code><a class="headerlink" href="#macop.solutions.discrete.BinarySolution.size" title="Permalink to this definition">¶</a></dt>
+<dd><p>{int} – size of binary array values</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="macop.solutions.discrete.BinarySolution.score">
+<code class="sig-name descname">score</code><a class="headerlink" href="#macop.solutions.discrete.BinarySolution.score" title="Permalink to this definition">¶</a></dt>
+<dd><p>{float} – fitness score value</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="macop.solutions.discrete.BinarySolution.random">
+<em class="property">static </em><code class="sig-name descname">random</code><span class="sig-paren">(</span><em class="sig-param">size</em>, <em class="sig-param">validator=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macop/solutions/discrete.html#BinarySolution.random"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macop.solutions.discrete.BinarySolution.random" title="Permalink to this definition">¶</a></dt>
+<dd><p>Intialize binary array with use of validator to generate valid random solution</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>size</strong> – {int} – expected solution size to generate</p></li>
+<li><p><strong>validator</strong> – {function} – specific function which validates or not a solution (if None, not validation is applied)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>{BinarySolution} – new generated binary solution</p>
+</dd>
+</dl>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">macop.solutions.discrete</span> <span class="kn">import</span> <span class="n">BinarySolution</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">validator</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">solution</span><span class="p">:</span> <span class="kc">True</span> <span class="k">if</span> <span class="nb">sum</span><span class="p">(</span><span class="n">solution</span><span class="o">.</span><span class="n">_data</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">5</span> <span class="k">else</span> <span class="kc">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">solution</span> <span class="o">=</span> <span class="n">BinarySolution</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">validator</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">sum</span><span class="p">(</span><span class="n">solution</span><span class="o">.</span><span class="n">_data</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">5</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="macop.solutions.discrete.CombinatoryIntegerSolution">
+<em class="property">class </em><code class="sig-prename descclassname">macop.solutions.discrete.</code><code class="sig-name descname">CombinatoryIntegerSolution</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">size</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macop/solutions/discrete.html#CombinatoryIntegerSolution"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macop.solutions.discrete.CombinatoryIntegerSolution" title="Permalink to this definition">¶</a></dt>
+<dd><p>Combinatory integer solution class</p>
+<ul class="simple">
+<li><p>store solution as a binary array (example: [0, 1, 0, 1, 1])</p></li>
+<li><p>associated size is the size of the array</p></li>
+<li><p>mainly use for selecting or not an element in a list of valuable objects</p></li>
+</ul>
+<dl class="attribute">
+<dt id="macop.solutions.discrete.CombinatoryIntegerSolution.data">
+<code class="sig-name descname">data</code><a class="headerlink" href="#macop.solutions.discrete.CombinatoryIntegerSolution.data" title="Permalink to this definition">¶</a></dt>
+<dd><p>{ndarray} –  array of integer values</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="macop.solutions.discrete.CombinatoryIntegerSolution.size">
+<code class="sig-name descname">size</code><a class="headerlink" href="#macop.solutions.discrete.CombinatoryIntegerSolution.size" title="Permalink to this definition">¶</a></dt>
+<dd><p>{int} – size of integer array values</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="macop.solutions.discrete.CombinatoryIntegerSolution.score">
+<code class="sig-name descname">score</code><a class="headerlink" href="#macop.solutions.discrete.CombinatoryIntegerSolution.score" title="Permalink to this definition">¶</a></dt>
+<dd><p>{float} – fitness score value</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="macop.solutions.discrete.CombinatoryIntegerSolution.random">
+<em class="property">static </em><code class="sig-name descname">random</code><span class="sig-paren">(</span><em class="sig-param">size</em>, <em class="sig-param">validator=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macop/solutions/discrete.html#CombinatoryIntegerSolution.random"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macop.solutions.discrete.CombinatoryIntegerSolution.random" title="Permalink to this definition">¶</a></dt>
+<dd><p>Intialize combinatory integer array with use of validator to generate valid random solution</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>size</strong> – {int} – expected solution size to generate</p></li>
+<li><p><strong>validator</strong> – {function} – specific function which validates or not a solution (if None, not validation is applied)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>{CombinatoryIntegerSolution} – new generated combinatory integer solution</p>
+</dd>
+</dl>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">macop.solutions.discrete</span> <span class="kn">import</span> <span class="n">CombinatoryIntegerSolution</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">validator</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">solution</span><span class="p">:</span> <span class="kc">True</span> <span class="k">if</span> <span class="nb">sum</span><span class="p">(</span><span class="n">solution</span><span class="o">.</span><span class="n">_data</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">5</span> <span class="k">else</span> <span class="kc">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">solution</span> <span class="o">=</span> <span class="n">CombinatoryIntegerSolution</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">validator</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">sum</span><span class="p">(</span><span class="n">solution</span><span class="o">.</span><span class="n">_data</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">5</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="macop.solutions.discrete.IntegerSolution">
+<em class="property">class </em><code class="sig-prename descclassname">macop.solutions.discrete.</code><code class="sig-name descname">IntegerSolution</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">size</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macop/solutions/discrete.html#IntegerSolution"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macop.solutions.discrete.IntegerSolution" title="Permalink to this definition">¶</a></dt>
+<dd><p>Integer solution class</p>
+<dl class="attribute">
+<dt id="macop.solutions.discrete.IntegerSolution.data">
+<code class="sig-name descname">data</code><a class="headerlink" href="#macop.solutions.discrete.IntegerSolution.data" title="Permalink to this definition">¶</a></dt>
+<dd><p>{ndarray} –  array of binary values</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="macop.solutions.discrete.IntegerSolution.size">
+<code class="sig-name descname">size</code><a class="headerlink" href="#macop.solutions.discrete.IntegerSolution.size" title="Permalink to this definition">¶</a></dt>
+<dd><p>{int} – size of binary array values</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="macop.solutions.discrete.IntegerSolution.score">
+<code class="sig-name descname">score</code><a class="headerlink" href="#macop.solutions.discrete.IntegerSolution.score" title="Permalink to this definition">¶</a></dt>
+<dd><p>{float} – fitness score value</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="macop.solutions.discrete.IntegerSolution.random">
+<em class="property">static </em><code class="sig-name descname">random</code><span class="sig-paren">(</span><em class="sig-param">size</em>, <em class="sig-param">validator=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macop/solutions/discrete.html#IntegerSolution.random"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macop.solutions.discrete.IntegerSolution.random" title="Permalink to this definition">¶</a></dt>
+<dd><p>Intialize integer array with use of validator to generate valid random solution</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>size</strong> – {int} – expected solution size to generate</p></li>
+<li><p><strong>validator</strong> – {function} – specific function which validates or not a solution (if None, not validation is applied)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>{IntegerSolution} – new generated integer solution</p>
+</dd>
+</dl>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">macop.solutions.discrete</span> <span class="kn">import</span> <span class="n">IntegerSolution</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">validator</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">solution</span><span class="p">:</span> <span class="kc">True</span> <span class="k">if</span> <span class="nb">sum</span><span class="p">(</span><span class="n">solution</span><span class="o">.</span><span class="n">_data</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">5</span> <span class="k">else</span> <span class="kc">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">solution</span> <span class="o">=</span> <span class="n">IntegerSolution</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">validator</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">sum</span><span class="p">(</span><span class="n">solution</span><span class="o">.</span><span class="n">_data</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">10</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="macop.solutions.continuous.html" class="btn btn-neutral float-right" title="macop.solutions.continuous" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="macop.solutions.base.html" class="btn btn-neutral float-left" title="macop.solutions.base" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Jérôme BUISINE
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

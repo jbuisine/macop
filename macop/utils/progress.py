@@ -1,23 +1,39 @@
+"""Utils progress `macop` module when verbose enable
+"""
 import sys
 
 
 class Colors:
+    """Macop color representation
+    """
     ENDC = '\033[m'
     GREEN = '\033[32m'
     GREY = '\033[90m'
 
 
-def macop_text(msg):
+def macop_text(algo, msg):
     """Display Macop message to user interface
+
+    Args:
+        algo: {Algorithm} -- current algorithm instance
+        msg: {str} -- message to display
     """
-    return Colors.GREEN + 'M' + Colors.ENDC + Colors.GREY + 'acop' \
+    if algo._verbose:
+        print(Colors.GREEN + 'M' + Colors.ENDC + Colors.GREY + 'acop' \
         + Colors.ENDC + Colors.GREEN + ' :: ' + Colors.ENDC \
-        + Colors.GREY + msg + Colors.ENDC
+        + Colors.GREY + msg + Colors.ENDC)
 
 
-def macop_line():
+def macop_line(algo):
     """Macop split line
+
+    Args:
+        algo: {Algorithm} -- current algorithm instance
     """
+
+    if not algo._verbose:
+        return
+
     line = ''
 
     for i in range(41):
@@ -27,10 +43,19 @@ def macop_line():
         else:
             line += Colors.GREY + '----' + Colors.ENDC
 
-    return line
+    print(line)
 
 
-def macop_progress(evaluations, max):
+def macop_progress(algo, evaluations, max):
+    """Progress line of macop
+
+    Args:
+        algo: {Algorithm} -- current algorithm instance
+        evaluations: {int} -- current number of evaluations
+        max: {int} -- max number of expected evaluations
+    """
+    if not algo._verbose:
+        return
 
     barWidth = 156
 
@@ -54,4 +79,4 @@ def macop_progress(evaluations, max):
     # go to line
     if progress >= 1.:
         print()
-        print(macop_line())
+        print(macop_line(algo))

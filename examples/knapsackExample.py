@@ -47,7 +47,7 @@ def validator(solution):
 
 # define init random solution
 def init():
-    return BinarySolution.random(validator, 30)
+    return BinarySolution.random(30, validator)
 
 
 filepath = "data/checkpoints.csv"

@@ -4,7 +4,7 @@
 # main imports
 import logging
 import sys, os
-from ..utils.color import macop_text, macop_line, macop_progress
+from ..utils.progress import macop_text, macop_line, macop_progress
 
 
 # Generic algorithm class
@@ -22,7 +22,7 @@ class Algorithm():
 
 
     Attributes:
-        initalizer: {function} -- basic function strategy to initialize solution
+        initializer: {function} -- basic function strategy to initialize solution
         evaluator: {function} -- basic function in order to obtained fitness (mono or multiple objectives)
         operators: {[Operator]} -- list of operator to use when launching algorithm
         policy: {Policy} -- Policy class implementation strategy to select operators
@@ -35,7 +35,7 @@ class Algorithm():
         parent: {Algorithm} -- parent algorithm reference in case of inner Algorithm instance (optional)
     """
     def __init__(self,
-                 initalizer,
+                 initializer,
                  evaluator,
                  operators,
                  policy,
@@ -45,7 +45,7 @@ class Algorithm():
                  verbose=True):
 
         # protected members intialization
-        self._initializer = initalizer
+        self._initializer = initializer
         self._evaluator = evaluator
         self._operators = operators
         self._policy = policy
@@ -128,6 +128,7 @@ class Algorithm():
 
         # evaluate current solution
         self._currentSolution.evaluate(self._evaluator)
+        self.increaseEvaluation()
 
         # keep in memory best known solution (current solution)
         if self._bestSolution is None:
@@ -225,9 +226,12 @@ class Algorithm():
             logging.info("-- New solution is not valid %s" % sol)
             return solution
 
-    def isBetter(self, _solution):
+    def isBetter(self, solution):
         """
         Check if solution is better than best found
+
+        - if the new solution is not valid then the fitness comparison is not done
+        - fitness comparison is done using problem nature (maximising or minimising)
 
         Args:
             solution: {Solution} -- solution to compare with best one
@@ -235,12 +239,15 @@ class Algorithm():
         Returns:
             {bool} -- `True` if better
         """
+        if not solution.isValid(self._validator):
+            return False
+
         # depending of problem to solve (maximizing or minimizing)
         if self._maximise:
-            if _solution.fitness() > self._bestSolution.fitness():
+            if solution.fitness() > self._bestSolution.fitness():
                 return True
         else:
-            if _solution.fitness() < self._bestSolution.fitness():
+            if solution.fitness() < self._bestSolution.fitness():
                 return True
 
         # by default
@@ -250,12 +257,6 @@ class Algorithm():
         """
         Run the specific algorithm following number of evaluations to find optima
         """
-
-        # enable or not block print element
-        if not self._verbose:
-            self.__blockPrint()
-        else:
-            self.__enablePrint()
 
         # append number of max evaluation if multiple run called
         self._maxEvaluations += evaluations
@@ -282,36 +283,35 @@ class Algorithm():
             for callback in self._callbacks:
                 callback.run()
 
-        macop_progress(self.getGlobalEvaluation(),
-                       self.getGlobalMaxEvaluation())
+        if self._verbose:
+            macop_progress(self, self.getGlobalEvaluation(), self.getGlobalMaxEvaluation())
 
         logging.info(f"-- {type(self).__name__} evaluation {self._numberOfEvaluations} of {self._maxEvaluations} ({((self._numberOfEvaluations / self._maxEvaluations) * 100):.2f}%) - BEST SCORE {self._bestSolution.fitness()}")
 
-    def end(self, verbose=True):
+    def end(self):
         """Display end message into `run` method
         """
-        print(macop_text(f'({type(self).__name__}) Found after {self._numberOfEvaluations} evaluations \n   - {self._bestSolution}'))
-        print(macop_line())
-        if not self._verbose:
-            self.__enablePrint()
+    
+        macop_text(self, f'({type(self).__name__}) Found after {self._numberOfEvaluations} evaluations \n   - {self._bestSolution}')
+        macop_line(self)
 
     def information(self):
         logging.info(f"-- Best {self._bestSolution} - SCORE {self._bestSolution.fitness()}")
 
-    def __blockPrint(self):
-        """Private method which disables console prints when running algorithm if specified when instancing algorithm
-        """
-        sys.stdout = open(os.devnull, 'w')
+    # def __blockPrint(self):
+    #     """Private method which disables console prints when running algorithm if specified when instancing algorithm
+    #     """
+    #     sys.stdout = open(os.devnull, 'w')
 
-    def __enablePrint(self):
-        """Private which enables console prints when running algorithm
-        """
-        sys.stdout = sys.__stdout__
+    # def __enablePrint(self):
+    #     """Private which enables console prints when running algorithm
+    #     """
+    #     sys.stdout = sys.__stdout__
 
-    def __del__(self):
-        # enable prints when object is deleted
-        if not self._verbose:
-            self.__enablePrint()
+    # def __del__(self):
+    #     # enable prints when object is deleted
+    #     if not self._verbose:
+    #         self.__enablePrint()
 
     def __str__(self):
         return f"{type(self).__name__} using {type(self._bestSolution).__name__}"

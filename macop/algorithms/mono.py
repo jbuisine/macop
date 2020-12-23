@@ -185,6 +185,7 @@ class IteratedLocalSearch(Algorithm):
                          self._policy,
                          self._validator,
                          self._maximise,
+                         verbose=self._verbose,
                          parent=self)
 
         # add same callbacks

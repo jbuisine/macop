@@ -48,6 +48,15 @@ extensions = [
     #'autoapi.extension' 
 ]
 
+# These folders are copied to the documentation's HTML output
+html_static_path = ['_static']
+
+# These paths are either relative to html_static_path
+# or fully qualified paths (eg. https://...)
+html_css_files = [
+    'css/custom.css',
+]
+
 # autoapi_add_toctree_entry = True
 # autoapi_template_dir = '_autoapi_templates'
 # autoapi_dirs = ['../../rawls']

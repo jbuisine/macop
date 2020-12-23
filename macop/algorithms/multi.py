@@ -6,7 +6,7 @@ import logging
 import math
 import numpy as np
 import sys
-from ..utils.color import macop_text, macop_line, macop_progress
+from ..utils.progress import macop_text, macop_line, macop_progress
 
 # module imports
 from .base import Algorithm
@@ -20,7 +20,7 @@ class MOEAD(Algorithm):
         mu: {int} -- number of sub problems
         T: {[float]} -- number of neightbors for each sub problem
         nObjectives: {int} -- number of objectives (based of number evaluator)
-        initalizer: {function} -- basic function strategy to initialize solution
+        initializer: {function} -- basic function strategy to initialize solution
         evaluator: {[function]} -- list of basic function in order to obtained fitness (multiple objectives)
         operators: {[Operator]} -- list of operator to use when launching algorithm
         policy: {Policy} -- Policy class implementation strategy to select operators
@@ -35,7 +35,7 @@ class MOEAD(Algorithm):
     def __init__(self,
                  mu,
                  T,
-                 initalizer,
+                 initializer,
                  evaluator,
                  operators,
                  policy,
@@ -45,7 +45,7 @@ class MOEAD(Algorithm):
                  verbose=True):
 
         # redefinition of constructor to well use `initRun` method
-        self._initializer = initalizer
+        self._initializer = initializer
         self._evaluator = evaluator
         self._operators = operators
         self._policy = policy
@@ -110,7 +110,7 @@ class MOEAD(Algorithm):
             # intialize each sub problem
             # use copy of list to keep track for each sub problem
             subProblem = MOSubProblem(i, weights[i],
-                                      initalizer, sub_evaluator,
+                                      initializer, sub_evaluator,
                                       operators.copy(), policy, validator,
                                       maximise, self)
 
@@ -219,7 +219,7 @@ class MOEAD(Algorithm):
             for callback in self._callbacks:
                 callback.run()
 
-        macop_progress(self.getGlobalEvaluation(), self.getGlobalMaxEvaluation())
+        macop_progress(self, self.getGlobalEvaluation(), self.getGlobalMaxEvaluation())
 
         logging.info(f"-- {type(self).__name__} evaluation {self._numberOfEvaluations} of {self._maxEvaluations} ({((self._numberOfEvaluations) / self._maxEvaluations * 100.):.2f}%)")
 
@@ -305,14 +305,14 @@ class MOEAD(Algorithm):
 
     def end(self):
         """Display end message into `run` method
-        """
+        """ 
 
-        print(macop_text(f'({type(self).__name__}) Found after {self._numberOfEvaluations} evaluations'))
+        macop_text(self, f'({type(self).__name__}) Found after {self._numberOfEvaluations} evaluations')
 
         for i, solution in enumerate(self._pfPop):
-            print(f'  - [{i}] {solution._scores} : {solution}')
+            macop_text(self, f'  - [{i}] {solution._scores} : {solution}')
 
-        print(macop_line())
+        macop_line(self)
 
     def information(self):
 

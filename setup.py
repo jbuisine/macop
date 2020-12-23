@@ -8,19 +8,44 @@ class TestCommand(distutils.command.check.check):
 
         # run tests using doctest
         import doctest
-        
-        # discrete solutions module
+
+        # set specific seed for pseudo-random process
+        import random
+        import numpy as np
+
+        # discrete and continuous solutions module
         from macop.solutions import discrete
         from macop.solutions import continuous
-        
+
+        # operators module
+        from macop.operators.discrete import mutators as discrete_mutators
+        from macop.operators.discrete import crossovers as discrete_crossovers
+
+        # policies module
+        from macop.policies import classicals
+        from macop.policies import reinforcement
 
         # run all doctest
         print("==============================")
         print("Runs test command...")
-        
+
+        random.seed(42)
+        np.random.seed(42)
         # discrete solutions module
         doctest.testmod(discrete)
         doctest.testmod(continuous)
+
+        random.seed(42)
+        np.random.seed(42)
+        # operators module
+        doctest.testmod(discrete_mutators)
+        doctest.testmod(discrete_crossovers)
+
+        random.seed(42)
+        np.random.seed(42)
+        # policies module
+        doctest.testmod(classicals)
+        doctest.testmod(reinforcement)
 
         # pass test using doctest
         distutils.command.check.check.run(self)
@@ -43,15 +68,15 @@ setup(
     author='Jérôme BUISINE',
     author_email='jerome.buisine@univ-littoral.fr',
     license='MIT',
-    packages=['macop', 
-        'macop.algorithms', 
-        'macop.callbacks', 
-        'macop.evaluators',  
-        'macop.operators',  
+    packages=['macop',
+        'macop.algorithms',
+        'macop.callbacks',
+        'macop.evaluators',
+        'macop.operators',
         'macop.operators.discrete',
-        'macop.operators.continuous',  
-        'macop.policies', 
-        'macop.solutions', 
+        'macop.operators.continuous',
+        'macop.policies',
+        'macop.solutions',
         'macop.utils'],
     install_requires=[
         'numpy',

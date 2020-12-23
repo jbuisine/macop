@@ -50,8 +50,8 @@ def validator(solution):
 
 # define init random solution
 def init():
-    return BinarySolution([], 200).random(validator)
-
+    return BinarySolution.random(200, validator)
+    
 
 mo_checkpoint_path = "data/checkpointsMOEAD.csv"
 pf_checkpoint_path = "data/pfMOEAD.csv"

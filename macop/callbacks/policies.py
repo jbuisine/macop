@@ -8,7 +8,7 @@ import numpy as np
 
 # module imports
 from .base import Callback
-from ..utils.color import macop_text, macop_line
+from ..utils.progress import macop_text, macop_line
 
 
 class UCBCheckpoint(Callback):
@@ -47,10 +47,10 @@ class UCBCheckpoint(Callback):
 
                 occurrencesLine = ''
 
-                for i, o in enumerate(self._algo._policy._occurrences):
+                for i, o in enumerate(self._algo._policy._occurences):
                     occurrencesLine += str(o)
 
-                    if i != len(self._algo._policy._occurrences) - 1:
+                    if i != len(self._algo._policy._occurences) - 1:
                         occurrencesLine += ';'
 
                 f.write(occurrencesLine + '\n')
@@ -72,15 +72,13 @@ class UCBCheckpoint(Callback):
                 self._algo._policy._rewards = [
                     float(f) for f in rewardsLine.split(';')
                 ]
-                self._algo._policy._occurrences = [
+                self._algo._policy._occurences = [
                     float(f) for f in occurrencesLine.split(';')
                 ]
-
-            print(
-                macop_text(f'Load of available UCB policy data from `{self._filepath}`'))
-
+            
+            macop_text(self._algo, f'Load of available UCB policy data from `{self._filepath}`')
         else:
-            print(macop_text('No UCB data found, use default UCB policy'))
+            macop_text(self._algo, 'No UCB data found, use default UCB policy')
             logging.info("No UCB data found...")
 
-        print(macop_line())
+        macop_line(self._algo)
