@@ -53,18 +53,19 @@ class Solution():
         """
         return self._score
 
-    @abstractmethod
-    def random(self, validator):
+    @staticmethod
+    def random(validator, size):
         """
         Initialize solution using random data
 
         Args:
             validator: {function} -- specific function which validates or not a solution
+            size: {int} -- expected solution size to generate
 
         Returns:
             {Solution} -- generated solution
         """
-        pass
+        return None
 
     def clone(self):
         """Clone the current solution and its data, but without keeping evaluated `_score`

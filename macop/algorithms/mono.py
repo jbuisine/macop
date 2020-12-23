@@ -73,8 +73,6 @@ class HillClimberFirstImprovment(Algorithm):
 
         logging.info(f"End of {type(self).__name__}, best solution found {self._bestSolution}")
         
-        self.end()
-
         return self._bestSolution
 
 
@@ -141,8 +139,6 @@ class HillClimberBestImprovment(Algorithm):
             self._currentSolution = self._bestSolution
 
         logging.info(f"End of {type(self).__name__}, best solution found {self._bestSolution}")
-
-        self.end()
         
         return self._bestSolution
 

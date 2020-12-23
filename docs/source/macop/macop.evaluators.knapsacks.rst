@@ -14,7 +14,6 @@ macop.evaluators.knapsacks
    .. autosummary::
    
       KnapsackEvaluator
-      KnapsackMultiEvaluator
    
    
 

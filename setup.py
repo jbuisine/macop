@@ -9,63 +9,18 @@ class TestCommand(distutils.command.check.check):
         # run tests using doctest
         import doctest
         
-        # folders
-        # from macop.algorithms import Algorithm
-        print("==============================")
-        print("Run test program...")
-        from macop.solutions.discrete import BinarySolution
-        from macop.evaluators.knapsacks import KnapsackEvaluator
-
-        from macop.operators.discrete.mutators import SimpleMutation
-        from macop.operators.discrete.mutators import SimpleBinaryMutation
-        from macop.operators.discrete.crossovers import SimpleCrossover
-        from macop.operators.discrete.crossovers import RandomSplitCrossover
-
-        from macop.policies.classicals import RandomPolicy
-        from macop.policies.reinforcement import UCBPolicy
-
-        from macop.algorithms.mono import IteratedLocalSearch as ILS
-        from macop.callbacks.classicals import BasicCheckpoint
-        import random
-
-        random.seed(42)
-
-        elements_score = [ random.randint(1, 20) for _ in range(30) ]
-        elements_weight = [ random.randint(2, 5) for _ in range(30) ]
-
-        def knapsackWeight(solution):
-
-            weight_sum = 0
-            for index, elem in enumerate(solution._data):
-                weight_sum += elements_weight[index] * elem
-
-            return weight_sum
-
-        # default validator
-        def validator(solution):
-
-            if knapsackWeight(solution) <= 80:
-                return True
-            else:
-                False
-
-        # define init random solution
-        def init():
-            return BinarySolution([], 30).random(validator)
-
-        evaluator = KnapsackEvaluator(data={'worths': elements_score})
-        operators = [SimpleBinaryMutation(), SimpleMutation(), SimpleCrossover(), RandomSplitCrossover()]
-        policy = UCBPolicy(operators)
-        # callback = BasicCheckpoint(_every=5, _filepath=filepath)
-
-        algo = ILS(init, evaluator, operators, policy, validator, maximise=True, verbose=False)
+        # discrete solutions module
+        from macop.solutions import discrete
+        from macop.solutions import continuous
         
-        # add callback into callback list
-        # algo.addCallback(callback)
-        algo.run(200)
 
+        # run all doctest
         print("==============================")
-        print("Run test using doctest...")
+        print("Runs test command...")
+        
+        # discrete solutions module
+        doctest.testmod(discrete)
+        doctest.testmod(continuous)
 
         # pass test using doctest
         distutils.command.check.check.run(self)

@@ -5,12 +5,6 @@ macop.algorithms.multi
 
    
    
-   .. rubric:: Functions
-
-   .. autosummary::
-   
-      moEvaluator
-   
    
 
    
