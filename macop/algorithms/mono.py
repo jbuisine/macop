@@ -25,6 +25,37 @@ class HillClimberFirstImprovment(Algorithm):
         currentSolution: {Solution} -- current solution managed for current evaluation
         bestSolution: {Solution} -- best solution found so far during running algorithm
         callbacks: {[Callback]} -- list of Callback class implementation to do some instructions every number of evaluations and `load` when initializing algorithm
+    
+    Example:
+
+    >>> import random
+    >>> # operators import
+    >>> from macop.operators.discrete.crossovers import SimpleCrossover
+    >>> from macop.operators.discrete.mutators import SimpleMutation
+    >>> # policy import
+    >>> from macop.policies.classicals import RandomPolicy
+    >>> # solution and algorithm
+    >>> from macop.solutions.discrete import BinarySolution
+    >>> from macop.algorithms.mono import HillClimberFirstImprovment
+    >>> # evaluator import
+    >>> from macop.evaluators.discrete.mono import KnapsackEvaluator
+    >>> # evaluator initialization (worths objects passed into data)
+    >>> problem_size = 20
+    >>> worths = [ random.randint(0, 20) for i in range(problem_size) ]
+    >>> evaluator = KnapsackEvaluator(data={'worths': worths})
+    >>> # validator specification (based on weights of each objects)
+    >>> weights = [ random.randint(5, 30) for i in range(problem_size) ]
+    >>> validator = lambda solution: True if sum([weights[i] for i, value in enumerate(solution._data) if value == 1]) < 200 else False
+    >>> # initializer function with lambda function
+    >>> initializer = lambda x=20: BinarySolution.random(x, validator)
+    >>> # operators list with crossover and mutation
+    >>> operators = [SimpleCrossover(), SimpleMutation()]
+    >>> policy = RandomPolicy(operators)
+    >>> algo = HillClimberFirstImprovment(initializer, evaluator, operators, policy, validator, maximise=True, verbose=False)
+    >>> # run the algorithm
+    >>> solution = algo.run(100)
+    >>> solution._score
+    128
     """
     def run(self, evaluations):
         """
@@ -93,6 +124,37 @@ class HillClimberBestImprovment(Algorithm):
         currentSolution: {Solution} -- current solution managed for current evaluation
         bestSolution: {Solution} -- best solution found so far during running algorithm
         callbacks: {[Callback]} -- list of Callback class implementation to do some instructions every number of evaluations and `load` when initializing algorithm
+    
+    Example:
+
+    >>> import random
+    >>> # operators import
+    >>> from macop.operators.discrete.crossovers import SimpleCrossover
+    >>> from macop.operators.discrete.mutators import SimpleMutation
+    >>> # policy import
+    >>> from macop.policies.classicals import RandomPolicy
+    >>> # solution and algorithm
+    >>> from macop.solutions.discrete import BinarySolution
+    >>> from macop.algorithms.mono import HillClimberBestImprovment
+    >>> # evaluator import
+    >>> from macop.evaluators.discrete.mono import KnapsackEvaluator
+    >>> # evaluator initialization (worths objects passed into data)
+    >>> problem_size = 20
+    >>> worths = [ random.randint(0, 20) for i in range(problem_size) ]
+    >>> evaluator = KnapsackEvaluator(data={'worths': worths})
+    >>> # validator specification (based on weights of each objects)
+    >>> weights = [ random.randint(5, 30) for i in range(problem_size) ]
+    >>> validator = lambda solution: True if sum([weights[i] for i, value in enumerate(solution._data) if value == 1]) < 200 else False
+    >>> # initializer function with lambda function
+    >>> initializer = lambda x=20: BinarySolution.random(x, validator)
+    >>> # operators list with crossover and mutation
+    >>> operators = [SimpleCrossover(), SimpleMutation()]
+    >>> policy = RandomPolicy(operators)
+    >>> algo = HillClimberBestImprovment(initializer, evaluator, operators, policy, validator, maximise=True, verbose=False)
+    >>> # run the algorithm
+    >>> solution = algo.run(100)
+    >>> solution._score
+    104
     """
     def run(self, evaluations):
         """
@@ -146,6 +208,11 @@ class HillClimberBestImprovment(Algorithm):
 class IteratedLocalSearch(Algorithm):
     """Iterated Local Search used to avoid local optima and increave EvE (Exploration vs Exploitation) compromise
 
+    - A number of evaluations (`ls_evaluations`) is dedicated to local search process, here `HillClimberFirstImprovment` algorithm
+    - Starting with the new generated solution, the local search algorithm will return a new solution
+    - If the obtained solution is better than the best solution known into `IteratedLocalSearch`, then the solution is replaced
+    - Restart this process until stopping critirion (number of expected evaluations)
+
     Attributes:
         initalizer: {function} -- basic function strategy to initialize solution
         evaluator: {function} -- basic function in order to obtained fitness (mono or multiple objectives)
@@ -156,6 +223,37 @@ class IteratedLocalSearch(Algorithm):
         currentSolution: {Solution} -- current solution managed for current evaluation
         bestSolution: {Solution} -- best solution found so far during running algorithm
         callbacks: {[Callback]} -- list of Callback class implementation to do some instructions every number of evaluations and `load` when initializing algorithm
+    
+    Example:
+
+    >>> import random
+    >>> # operators import
+    >>> from macop.operators.discrete.crossovers import SimpleCrossover
+    >>> from macop.operators.discrete.mutators import SimpleMutation
+    >>> # policy import
+    >>> from macop.policies.classicals import RandomPolicy
+    >>> # solution and algorithm
+    >>> from macop.solutions.discrete import BinarySolution
+    >>> from macop.algorithms.mono import IteratedLocalSearch
+    >>> # evaluator import
+    >>> from macop.evaluators.discrete.mono import KnapsackEvaluator
+    >>> # evaluator initialization (worths objects passed into data)
+    >>> problem_size = 20
+    >>> worths = [ random.randint(0, 20) for i in range(problem_size) ]
+    >>> evaluator = KnapsackEvaluator(data={'worths': worths})
+    >>> # validator specification (based on weights of each objects)
+    >>> weights = [ random.randint(5, 30) for i in range(problem_size) ]
+    >>> validator = lambda solution: True if sum([weights[i] for i, value in enumerate(solution._data) if value == 1]) < 200 else False
+    >>> # initializer function with lambda function
+    >>> initializer = lambda x=20: BinarySolution.random(x, validator)
+    >>> # operators list with crossover and mutation
+    >>> operators = [SimpleCrossover(), SimpleMutation()]
+    >>> policy = RandomPolicy(operators)
+    >>> algo = IteratedLocalSearch(initializer, evaluator, operators, policy, validator, maximise=True, verbose=False)
+    >>> # run the algorithm
+    >>> solution = algo.run(100, ls_evaluations=10)
+    >>> solution._score
+    137
     """
     def run(self, evaluations, ls_evaluations=100):
         """

@@ -32,8 +32,8 @@ macop.evaluators
    :toctree: macop
    
    macop.evaluators.base
-   macop.evaluators.knapsacks
-   macop.evaluators.multi
+   macop.evaluators.discrete.mono
+   macop.evaluators.discrete.multi
 
 macop.operators
 -------------------

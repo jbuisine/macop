@@ -25,6 +25,14 @@ class TestCommand(distutils.command.check.check):
         from macop.policies import classicals
         from macop.policies import reinforcement
 
+        # evaluators module
+        from macop.evaluators.discrete import mono as discrete_mono
+        from macop.evaluators.discrete import multi as discrete_multi
+
+        # algorithms
+        from macop.algorithms import mono as algo_mono
+        from macop.algorithms import multi as algo_multi
+
         # run all doctest
         print("==============================")
         print("Runs test command...")
@@ -46,6 +54,18 @@ class TestCommand(distutils.command.check.check):
         # policies module
         doctest.testmod(classicals)
         doctest.testmod(reinforcement)
+
+        random.seed(42)
+        np.random.seed(42)
+        # policies module
+        doctest.testmod(discrete_mono)
+        doctest.testmod(discrete_multi)
+
+        random.seed(42)
+        np.random.seed(42)
+        # policies module
+        doctest.testmod(algo_mono)
+        doctest.testmod(algo_multi)
 
         # pass test using doctest
         distutils.command.check.check.run(self)
@@ -72,6 +92,8 @@ setup(
         'macop.algorithms',
         'macop.callbacks',
         'macop.evaluators',
+        'macop.evaluators.discrete',
+        'macop.evaluators.continuous',
         'macop.operators',
         'macop.operators.discrete',
         'macop.operators.continuous',

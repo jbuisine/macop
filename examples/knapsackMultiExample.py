@@ -5,7 +5,7 @@ import random
 
 # module imports
 from macop.solutions.discrete import BinarySolution
-from macop.evaluators.knapsacks import KnapsackEvaluator
+from macop.evaluators.discrete.mono import KnapsackEvaluator
 
 from macop.operators.discrete.mutators import SimpleMutation
 from macop.operators.discrete.mutators import SimpleBinaryMutation

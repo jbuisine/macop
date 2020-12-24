@@ -10,7 +10,7 @@ from ..utils.progress import macop_text, macop_line, macop_progress
 
 # module imports
 from .base import Algorithm
-from ..evaluators.multi import WeightedSum
+from ..evaluators.discrete.multi import WeightedSum
 
 
 class MOEAD(Algorithm):
@@ -31,6 +31,39 @@ class MOEAD(Algorithm):
         pfPop: [{Solution}] -- pareto front population
         weights: [[{float}]] -- random weights used for custom mu sub problems
         callbacks: {[Callback]} -- list of Callback class implementation to do some instructions every number of evaluations and `load` when initializing algorithm
+
+    >>> import random
+    >>> # operators import
+    >>> from macop.operators.discrete.crossovers import SimpleCrossover
+    >>> from macop.operators.discrete.mutators import SimpleMutation
+    >>> # policy import
+    >>> from macop.policies.classicals import RandomPolicy
+    >>> # solution and algorithm
+    >>> from macop.solutions.discrete import BinarySolution
+    >>> from macop.algorithms.multi import MOEAD
+    >>> # evaluator import
+    >>> from macop.evaluators.discrete.mono import KnapsackEvaluator
+    >>> # evaluator initialization (worths objects passed into data)
+    >>> problem_size = 20
+    >>> worths1 = [ random.randint(0, 20) for i in range(problem_size) ]
+    >>> evaluator1 = KnapsackEvaluator(data={'worths': worths1})
+    >>> worths2 = [ random.randint(10, 15) for i in range(problem_size) ]
+    >>> evaluator2 = KnapsackEvaluator(data={'worths': worths2})
+    >>> # validator specification (based on weights of each objects)
+    >>> weights = [ random.randint(5, 30) for i in range(problem_size) ]
+    >>> validator = lambda solution: True if sum([weights[i] for i, value in enumerate(solution._data) if value == 1]) < 200 else False
+    >>> # initializer function with lambda function
+    >>> initializer = lambda x=20: BinarySolution.random(x, validator)
+    >>> # operators list with crossover and mutation
+    >>> operators = [SimpleCrossover(), SimpleMutation()]
+    >>> policy = RandomPolicy(operators)
+    >>> # MOEAD use multi-objective, hence list of evaluators with mu=100 and T=10
+    >>> algo = MOEAD(20, 5, initializer, [evaluator1, evaluator2], operators, policy, validator, maximise=True, verbose=False)
+    >>> # run the algorithm and get the pareto front obtained
+    >>> pf_solutions = algo.run(100)
+    >>> # check size of expected pareto
+    >>> len(pf_solutions)
+    33
     """
     def __init__(self,
                  mu,
@@ -74,6 +107,9 @@ class MOEAD(Algorithm):
 
         if mu < T:
             raise ValueError('`mu` cannot be less than `T`')
+            
+        if mu < T:
+            raise ValueError('`mu` cannot be less than `T`')
 
         self._mu = mu
         self._T = T
@@ -112,7 +148,7 @@ class MOEAD(Algorithm):
             subProblem = MOSubProblem(i, weights[i],
                                       initializer, sub_evaluator,
                                       operators.copy(), policy, validator,
-                                      maximise, self)
+                                      maximise, self, verbose=self._verbose)
 
             self._subProblems.append(subProblem)
 
@@ -225,14 +261,12 @@ class MOEAD(Algorithm):
 
     def setNeighbors(self):
 
-        dmin = dmax = 0
-
         if self._T % 2 == 1:
             dmin = -int(self._T / 2)
             dmax = int(self._T / 2) + 1
         else:
             dmin = -int(self._T / 2) + 1
-            dmax = +self._T / 2
+            dmax = int(+self._T / 2)
 
         # init neighbord list
         self._neighbors = [[] for n in range(self._mu)]
@@ -242,7 +276,7 @@ class MOEAD(Algorithm):
                 self._neighbors[direction].append(i)
 
         for direction in range(-dmin, self._mu - dmax):
-            for i in range(direction + dmin, direction + dmax):
+            for i in range(direction + dmin, direction + dmax - 1):
                 self._neighbors[direction].append(i)
 
         for direction in range(self._mu - dmax, self._mu):

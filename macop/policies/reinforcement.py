@@ -38,7 +38,7 @@ class UCBPolicy(Policy):
     >>> from macop.solutions.discrete import BinarySolution
     >>> from macop.algorithms.mono import IteratedLocalSearch
     >>> # evaluator import
-    >>> from macop.evaluators.knapsacks import KnapsackEvaluator
+    >>> from macop.evaluators.discrete.mono import KnapsackEvaluator
     >>> # evaluator initialization (worths objects passed into data)
     >>> worths = [ random.randint(0, 20) for i in range(20) ]
     >>> evaluator = KnapsackEvaluator(data={'worths': worths})
