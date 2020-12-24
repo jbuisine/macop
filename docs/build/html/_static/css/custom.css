@@ -1,0 +1,15 @@
+.wy-nav-content {
+    max-width: 100% !important;
+}
+
+.wy-side-nav-search {
+    background-color: #009900 !important;
+}
+
+.wy-side-nav-search input[type="text"] {
+    border-color: #FFFFFF !important;
+}
+
+.wy-menu-vertical header, .wy-menu-vertical p.caption {
+    color: #009900 !important;
+}

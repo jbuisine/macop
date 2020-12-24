@@ -375,6 +375,44 @@ class MOSubProblem(Algorithm):
         currentSolution: {Solution} -- current solution managed for current evaluation
         bestSolution: {Solution} -- best solution found so far during running algorithm
         callbacks: {[Callback]} -- list of Callback class implementation to do some instructions every number of evaluations and `load` when initializing algorithm
+    
+    Example:
+
+    >>> import random
+    >>> # operators import
+    >>> from macop.operators.discrete.crossovers import SimpleCrossover
+    >>> from macop.operators.discrete.mutators import SimpleMutation
+    >>> # policy import
+    >>> from macop.policies.classicals import RandomPolicy
+    >>> # solution and algorithm
+    >>> from macop.solutions.discrete import BinarySolution
+    >>> from macop.algorithms.multi import MOEAD, MOSubProblem
+    >>> # evaluator import
+    >>> from macop.evaluators.discrete.mono import KnapsackEvaluator
+    >>> # evaluator initialization (worths objects passed into data)
+    >>> problem_size = 20
+    >>> worths1 = [ random.randint(0, 20) for i in range(problem_size) ]
+    >>> evaluator1 = KnapsackEvaluator(data={'worths': worths1})
+    >>> worths2 = [ random.randint(10, 15) for i in range(problem_size) ]
+    >>> evaluator2 = KnapsackEvaluator(data={'worths': worths2})
+    >>> # validator specification (based on weights of each objects)
+    >>> weights = [ random.randint(5, 30) for i in range(problem_size) ]
+    >>> validator = lambda solution: True if sum([weights[i] for i, value in enumerate(solution._data) if value == 1]) < 200 else False
+    >>> # initializer function with lambda function
+    >>> initializer = lambda x=20: BinarySolution.random(x, validator)
+    >>> # operators list with crossover and mutation
+    >>> operators = [SimpleCrossover(), SimpleMutation()]
+    >>> policy = RandomPolicy(operators)
+    >>> algo = MOEAD(20, 5, initializer, [evaluator1, evaluator2], operators, policy, validator, maximise=True, verbose=False)
+    >>> # weights of the sub problem
+    >>> sub_problem_weights = [0.4, 0.6]
+    >>> sub_evaluator = WeightedSum(data={'evaluators': [evaluator1, evaluator2], 'weights': sub_problem_weights})
+    >>> # first parameter is the index of the MOSubProblem
+    >>> subProblem = MOSubProblem(0, sub_problem_weights, initializer, sub_evaluator, operators, policy, validator, maximise=True, parent=algo, verbose=False)
+    >>> # run the algorithm
+    >>> solution = subProblem.run(100)
+    >>> solution._score
+    133.0
     """
     def __init__(self,
                  index,
