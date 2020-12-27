@@ -2,7 +2,7 @@ Minimalist And Customisable Optimisation Package
 ================================================
 
 .. image:: _static/logo_macop.png
-   :width: 450 px
+   :width: 300 px
    :align: center
 
 What's `macop` ?
@@ -15,7 +15,8 @@ What's `macop` ?
    :caption: Contents:
 
    description
-   macop
+   api
+   documentations/index
    examples
    contributing
 
