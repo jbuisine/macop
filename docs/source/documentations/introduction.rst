@@ -5,6 +5,7 @@
 
 - **solutions:** representation of the solution ;
 - **evaluator:** stores problem instance data and implement a `compute` method in order to evaluate a solution ;
+- **validator:** such as constraint programmig, a `validator` is function which is used for validate or not a solution data state ;
 - **operators:** mutators, crossovers update of solution ;
 - **policies:** the way you choose the available operators (might be using reinforcement learning) ;
 - **callbacks:** callbacks to automatically keep track of the search space advancement.
