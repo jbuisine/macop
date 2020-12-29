@@ -11,9 +11,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - run: bash build.sh
+      - run: apt-get install python3-sphinx
+      - run: cd docs && make html
       - name: Deploy
         uses: crazy-max/ghaction-github-pages@v1
         with:
           target_branch: gh-pages
-          build_dir: docs/build
+          build_dir: build
