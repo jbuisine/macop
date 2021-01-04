@@ -11,7 +11,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - run: sudo apt-get install python3-sphinx
+      - run: | 
+          sudo apt-get install python3-sphinx
+          python -m pip install --upgrade pip
+          pip install sphinx_rtd_theme
       - run: cd docs && make html
       - name: Deploy
         uses: crazy-max/ghaction-github-pages@v1
