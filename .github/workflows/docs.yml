@@ -7,10 +7,13 @@ on:
 
 jobs:
   build-test-deploy:
-    runs-on: sphinxdoc/sphinx
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - run: |
+          python -m pip install --upgrade pip
+          pip install -U sphinx
       - run: cd docs && make html
       - name: Deploy
         uses: crazy-max/ghaction-github-pages@v1
