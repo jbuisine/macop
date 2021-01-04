@@ -14,7 +14,7 @@ jobs:
       - run: python3 -m pip install --user -r requirements.txt
       - run: python3 -m pip install sphinx_rtd_theme
       - run: whereis sphinx-build
-      - run: export PATH=~/.local/bin/sphinx-build:$PATH
+      - run: export PATH=/usr/local/bin/sphinx-build:$PATH
       - run: cd docs && make html
       - name: Deploy
         uses: crazy-max/ghaction-github-pages@v1
