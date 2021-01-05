@@ -1,4 +1,4 @@
-name: Generate docs
+name: Package Docs
 on: 
   push:
     branches:
@@ -9,12 +9,13 @@ jobs:
   docs:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
-    - uses: ammaraskar/sphinx-action@master
+    - name: Generate
+      uses: actions/checkout@v1
+      uses: ammaraskar/sphinx-action@master
       with:
         docs-folder: "docs/"
     - name: Deploy
         uses: crazy-max/ghaction-github-pages@v1
         with:
           target_branch: gh-pages
-          build_dir: build
+          build_dir: docs/build
