@@ -14,7 +14,6 @@ jobs:
     # Standard drop-in approach that should work for most people.
     - name: Download sphinx theme
       run: pip3 install asteroid-sphinx-theme
-      run: pip install asteroid-sphinx-theme
     - uses: ammaraskar/sphinx-action@master
       with:
         docs-folder: "docs/"
