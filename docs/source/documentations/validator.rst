@@ -7,7 +7,17 @@ It is based on a defined function taking a solution as input and returning the v
 4.1. Validator definition
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
+An invalid solution can be shown below where the sum of the object weights is greater than 15:
 
+.. image:: ../_static/documentation/project_knapsack_invalid.png
+   :width:  800 px
+   :align: center
+
+.. code-block::
+
+
+
+Hence, ``[1, 0, 1, 0, 0]`` is an invalid solution.
 
 .. code-block:: python
 

@@ -22,8 +22,7 @@ jobs:
     - name: Commit documentation changes
       run: |
         git clone https://github.com/jbuisine/macop.git --branch gh-pages --single-branch gh-pages
-        mkdir gh-pages/docs/_build
-        cp -r docs/build/html gh-pages/docs/_build
+        cp -r docs gh-pages/docs
         cd gh-pages
         touch .nojekyll
         git config --local user.email "action@github.com"
