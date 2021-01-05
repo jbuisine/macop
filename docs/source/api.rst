@@ -60,7 +60,7 @@ macop.policies
    macop.policies.classicals
    macop.policies.reinforcement
 
-macop.solution
+macop.solutions
 -------------------
 
 .. autosummary::

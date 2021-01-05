@@ -1,22 +1,19 @@
-name: Packages Docs
-on:
+name: Generate docs
+on: 
   push:
     branches:
       - master
       - develop
 
 jobs:
-  build-test-deploy:
+  docs:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - run: python3 -m pip install -r requirements.txt
-      - run: python3 -m pip install sphinx_rtd_theme
-      - run: whereis sphinx-build
-      - run: export PATH=/usr/local/bin/sphinx-build:$PATH
-      - run: cd docs && make html
-      - name: Deploy
+    - uses: actions/checkout@v1
+    - uses: ammaraskar/sphinx-action@master
+      with:
+        docs-folder: "docs/"
+    - name: Deploy
         uses: crazy-max/ghaction-github-pages@v1
         with:
           target_branch: gh-pages

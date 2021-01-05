@@ -27,7 +27,7 @@ class Solution():
 
     def isValid(self, validator):
         """
-        Use of custom method which validates if solution is valid or not
+        Use of custom function which checks if a solution is valid or not
 
         Args:
             validator: {function} -- specific function which validates or not a solution
@@ -62,7 +62,7 @@ class Solution():
     @staticmethod
     def random(size, validator=None):
         """
-        Initialize solution using random data with validator
+        Initialize solution using random data with validator or not
 
         Args:
             size: {int} -- expected solution size to generate
