@@ -136,3 +136,7 @@ Using this new Solution representation, we can now generate solution randomly:
 
 3.3. Validate a solution
 ~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When an optimization problem requires respecting certain constraints, Macop allows you to quickly verify that a solution is valid. 
+It is based on a defined function taking a solution as input and returning the validity criterion (true or false).
+
