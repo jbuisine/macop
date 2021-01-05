@@ -40,7 +40,7 @@ Hence, we now define our problem in Python:
 .. code-block:: python
     
     """
-    Problem definition
+    Problem instance definition
     """
 
     elements_score = [ 4, 2, 10, 1, 2 ] # value of each object

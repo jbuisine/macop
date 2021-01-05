@@ -16,3 +16,4 @@ It will gradually take up the major ideas developed within `Macop` to allow for 
    introduction
    problem
    solutions
+   validator

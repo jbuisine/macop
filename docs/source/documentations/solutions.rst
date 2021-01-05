@@ -133,10 +133,4 @@ Using this new Solution representation, we can now generate solution randomly:
 
     solution = BinarySolution.random(5)
 
-
-3.3. Validate a solution
-~~~~~~~~~~~~~~~~~~~~~~~~~
-
-When an optimization problem requires respecting certain constraints, Macop allows you to quickly verify that a solution is valid. 
-It is based on a defined function taking a solution as input and returning the validity criterion (true or false).
-
+In the next part, we will see how to verify that a solution meets certain modeling constraints of the problem.
