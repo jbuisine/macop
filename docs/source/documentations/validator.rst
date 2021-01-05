@@ -13,9 +13,9 @@ An invalid solution can be shown below where the sum of the object weights is gr
    :width:  800 px
    :align: center
 
-Hence, ``[1, 0, 1, 0, 0]`` is an invalid solution.
+In fact, **[1, 0, 1, 0, 0]** is an invalid solution as we have a weight of **16** which violates the knapsack capacity constraint.
 
-To avoid taking into account invalid solutions, we can define our function which will validate or not a solution.
+To avoid taking into account invalid solutions, we can define our function which will validate or not a solution based on our problem instance:
 
 .. code-block:: python
 
@@ -27,17 +27,38 @@ To avoid taking into account invalid solutions, we can define our function which
     elements_weight = [ 12, 1, 4, 1, 2 ] # weight of each object
 
     """
-    validator function definition
+    Validator function definition
     """
     def validator(solution):
 
         weight_sum = 0
 
         for i, w in enumerate(elements_weight):
+            # add weight if current object is set to 1
             weight_sum += w * solution._data[i]
         
+        # validation condition
         return weight_sum <= 15
 
 
 4.2. Use of validator
 ~~~~~~~~~~~~~~~~~~~~~
+
+We can now generate solutions randomly by passing our validation function as a parameter:
+
+.. code-block:: python
+
+    """
+    Problem instance definition
+    """
+    ...
+    
+    """
+    Validator function definition
+    """
+    ...
+
+    # ensure valid solution
+    solution = BinarySolution.random(5, validator)
+
+    The validation of a solution is therefore now possible. In the next part we will focus on the evaluation of a solution.
