@@ -13,11 +13,9 @@ An invalid solution can be shown below where the sum of the object weights is gr
    :width:  800 px
    :align: center
 
-.. code-block::
-
-
-
 Hence, ``[1, 0, 1, 0, 0]`` is an invalid solution.
+
+To avoid taking into account invalid solutions, we can define our function which will validate or not a solution.
 
 .. code-block:: python
 
