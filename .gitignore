@@ -57,6 +57,6 @@ target/
 
 data
 examples/data
-docs/build
+docs/_build
 .vscode
 .python-version

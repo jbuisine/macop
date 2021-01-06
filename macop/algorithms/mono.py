@@ -11,8 +11,8 @@ from .base import Algorithm
 class HillClimberFirstImprovment(Algorithm):
     """Hill Climber First Improvment used as quick exploration optimisation algorithm
 
-    - First, this algorithm do a neighborhood exploration of a new generated solution (by doing operation on the current solution obtained) in order to find a better solution from the neighborhood space.
-    - Then replace the current solution by the first one from the neighbordhood space which is better than the current solution.
+    - First, this algorithm do a neighborhood exploration of a new generated solution (by doing operation on the current solution obtained) in order to find a better solution from the neighborhood space;
+    - Then replace the current solution by the first one from the neighbordhood space which is better than the current solution;
     - And do these steps until a number of evaluation (stopping criterion) is reached.
 
     Attributes:
@@ -110,8 +110,8 @@ class HillClimberFirstImprovment(Algorithm):
 class HillClimberBestImprovment(Algorithm):
     """Hill Climber Best Improvment used as exploitation optimisation algorithm
 
-    - First, this algorithm do a neighborhood exploration of a new generated solution (by doing operation on the current solution obtained) in order to find the best solution from the neighborhood space.
-    - Then replace the best solution found from the neighbordhood space as current solution to use.
+    - First, this algorithm do a neighborhood exploration of a new generated solution (by doing operation on the current solution obtained) in order to find the best solution from the neighborhood space;
+    - Then replace the best solution found from the neighbordhood space as current solution to use;
     - And do these steps until a number of evaluation (stopping criterion) is reached.
 
     Attributes:
@@ -206,12 +206,12 @@ class HillClimberBestImprovment(Algorithm):
 
 
 class IteratedLocalSearch(Algorithm):
-    """Iterated Local Search used to avoid local optima and increave EvE (Exploration vs Exploitation) compromise
+    """Iterated Local Search (ILS) used to avoid local optima and increave EvE (Exploration vs Exploitation) compromise
 
-    - A number of evaluations (`ls_evaluations`) is dedicated to local search process, here `HillClimberFirstImprovment` algorithm
-    - Starting with the new generated solution, the local search algorithm will return a new solution
-    - If the obtained solution is better than the best solution known into `IteratedLocalSearch`, then the solution is replaced
-    - Restart this process until stopping critirion (number of expected evaluations)
+    - A number of evaluations (`ls_evaluations`) is dedicated to local search process, here `HillClimberFirstImprovment` algorithm;
+    - Starting with the new generated solution, the local search algorithm will return a new solution;
+    - If the obtained solution is better than the best solution known into `IteratedLocalSearch`, then the solution is replaced;
+    - Restart this process until stopping critirion (number of expected evaluations).
 
     Attributes:
         initalizer: {function} -- basic function strategy to initialize solution
@@ -222,6 +222,7 @@ class IteratedLocalSearch(Algorithm):
         maximise: {bool} -- specify kind of optimisation problem 
         currentSolution: {Solution} -- current solution managed for current evaluation
         bestSolution: {Solution} -- best solution found so far during running algorithm
+        localSearch: {Algorithm} -- current local search into ILS
         callbacks: {[Callback]} -- list of Callback class implementation to do some instructions every number of evaluations and `load` when initializing algorithm
     
     Example:
@@ -235,6 +236,7 @@ class IteratedLocalSearch(Algorithm):
     >>> # solution and algorithm
     >>> from macop.solutions.discrete import BinarySolution
     >>> from macop.algorithms.mono import IteratedLocalSearch
+    >>> from macop.algorithms.mono import HillClimberFirstImprovment
     >>> # evaluator import
     >>> from macop.evaluators.discrete.mono import KnapsackEvaluator
     >>> # evaluator initialization (worths objects passed into data)
@@ -249,12 +251,32 @@ class IteratedLocalSearch(Algorithm):
     >>> # operators list with crossover and mutation
     >>> operators = [SimpleCrossover(), SimpleMutation()]
     >>> policy = RandomPolicy(operators)
-    >>> algo = IteratedLocalSearch(initializer, evaluator, operators, policy, validator, maximise=True, verbose=False)
+    >>> local_search = HillClimberFirstImprovment(initializer, evaluator, operators, policy, validator, maximise=True, verbose=False)
+    >>> algo = IteratedLocalSearch(initializer, evaluator, operators, policy, validator, localSearch=local_search, maximise=True, verbose=False)
     >>> # run the algorithm
     >>> solution = algo.run(100, ls_evaluations=10)
     >>> solution._score
     137
     """
+    def __init__(self,
+                 initializer,
+                 evaluator,
+                 operators,
+                 policy,
+                 validator,
+                 localSearch,
+                 maximise=True,
+                 parent=None,
+                 verbose=True):
+        
+        super().__init__(initializer, evaluator, operators, policy, validator, maximise, parent, verbose)
+
+        # specific local search associated with current algorithm
+        self._localSearch = localSearch
+        # need to attach current algorithm as parent
+        self._localSearch.setParent(self)
+
+
     def run(self, evaluations, ls_evaluations=100):
         """
         Run the iterated local search algorithm using local search (EvE compromise)
@@ -276,25 +298,15 @@ class IteratedLocalSearch(Algorithm):
         # initialize current solution
         self.initRun()
 
-        # passing global evaluation param from ILS
-        ls = HillClimberFirstImprovment(self._initializer,
-                         self._evaluator,
-                         self._operators,
-                         self._policy,
-                         self._validator,
-                         self._maximise,
-                         verbose=self._verbose,
-                         parent=self)
-
         # add same callbacks
         for callback in self._callbacks:
-            ls.addCallback(callback)
+            self._localSearch.addCallback(callback)
 
         # local search algorithm implementation
         while not self.stop():
 
             # create and search solution from local search
-            newSolution = ls.run(ls_evaluations)
+            newSolution = self._localSearch.run(ls_evaluations)
 
             # if better solution than currently, replace it
             if self.isBetter(newSolution):

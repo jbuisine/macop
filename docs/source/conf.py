@@ -59,6 +59,10 @@ html_css_files = [
     'css/custom.css',
 ]
 
+html_js_files = [
+    'js/custom.js',
+]
+
 # autoapi_add_toctree_entry = True
 # autoapi_template_dir = '_autoapi_templates'
 # autoapi_dirs = ['../../rawls']

@@ -9,7 +9,14 @@ Description
 Context
 ------------
 
-`macop` is an optimisation Python package which not implement the whole available algorithms in the literature but let you the possibility to quickly develop and test your own algorithm and strategies. The main objective of this package is to be the most flexible as possible and hence, to offer a maximum of implementation possibilities.
+Based on its generic behaviour, each **Macop** algorithm runs can be represented as an interactive loop where you can interact with and specify your needs at each step:
+
+.. image:: _static/documentation/macop_behaviour.png
+   :width: 450 px
+   :align: center
+
+The package is strongly oriented on combinatorial optimisation (hence discrete optimisation) but it remains possible to extend for continuous optimisation.
+
 
 Installation
 ------------

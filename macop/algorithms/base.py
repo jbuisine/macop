@@ -79,20 +79,20 @@ class Algorithm():
         else:
             self._policy.setAlgo(self)
 
-    def addCallback(self, _callback):
+    def addCallback(self, callback):
         """Add new callback to algorithm specifying usefull parameters
 
         Args:
-            _callback: {Callback} -- specific Callback instance
+            callback: {Callback} -- specific Callback instance
         """
         # specify current main algorithm reference for callback
         if self._parent is not None:
-            _callback.setAlgo(self.getParent())
+            callback.setAlgo(self.getParent())
         else:
-            _callback.setAlgo(self)
+            callback.setAlgo(self)
 
         # set as new
-        self._callbacks.append(_callback)
+        self._callbacks.append(callback)
 
     def resume(self):
         """Resume algorithm using Callback instances
@@ -118,6 +118,15 @@ class Algorithm():
             current_algorithm = current_algorithm._parent
 
         return parent_alrogithm
+
+    def setParent(self, parent):
+        """Set parent algorithm to current algorithm
+
+        Args:
+            parent: {Algorithm} -- main algorithm set for this algorithm
+        """
+        self._parent = parent
+
 
     def initRun(self):
         """

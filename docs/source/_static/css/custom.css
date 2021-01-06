@@ -62,3 +62,9 @@ colgroup :first-child {
 .article.pytorch-article .function dt > code, article.pytorch-article .attribute dt > code, article.pytorch-article .class .attribute dt > code, article.pytorch-article .class dt > code {
     color: #009900 !important;
 }
+
+.align-center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}

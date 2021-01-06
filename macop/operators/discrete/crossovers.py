@@ -24,6 +24,7 @@ class SimpleCrossover(Crossover):
     >>> # solution and algorithm
     >>> from macop.solutions.discrete import BinarySolution
     >>> from macop.algorithms.mono import IteratedLocalSearch
+    >>> from macop.algorithms.mono import HillClimberFirstImprovment
     >>> # evaluator import
     >>> from macop.evaluators.discrete.mono import KnapsackEvaluator
     >>> # evaluator initialization (worths objects passed into data)
@@ -39,33 +40,39 @@ class SimpleCrossover(Crossover):
     >>> simple_mutation = SimpleMutation()
     >>> operators = [simple_crossover, simple_mutation]
     >>> policy = UCBPolicy(operators)
-    >>> algo = IteratedLocalSearch(initializer, evaluator, operators, policy, validator, maximise=True, verbose=False)
+    >>> local_search = HillClimberFirstImprovment(initializer, evaluator, operators, policy, validator, maximise=True, verbose=False)
+    >>> algo = IteratedLocalSearch(initializer, evaluator, operators, policy, validator, localSearch=local_search, maximise=True, verbose=False)
     >>> # using best solution, simple crossover is applied
     >>> best_solution = algo.run(100)
     >>> list(best_solution._data)
     [1, 1, 0, 1, 0, 1, 1, 1, 0, 1]
-    >>> new_solution = initializer()
-    >>> mutate_solution = simple_crossover.apply(new_solution)
-    >>> list(mutate_solution._data)
-    [0, 1, 0, 0, 0, 1, 1, 1, 0, 1]
+    >>> new_solution_1 = initializer()
+    >>> new_solution_2 = initializer()
+    >>> offspring_solution = simple_crossover.apply(new_solution_1, new_solution_2)
+    >>> list(offspring_solution._data)
+    [0, 1, 1, 0, 1, 0, 1, 1, 0, 1]
     """
-    def apply(self, solution):
+    def apply(self, solution1, solution2=None):
         """Create new solution based on best solution found and solution passed as parameter
 
         Args:
-            solution: {Solution} -- the solution to use for generating new solution
+            solution1: {Solution} -- the first solution to use for generating new solution
+            solution2: {Solution} -- the second solution to use for generating new solution
 
         Returns:
             {Solution} -- new generated solution
         """
 
-        size = solution._size
+        size = solution1._size
 
         # copy data of solution
-        firstData = solution._data.copy()
+        firstData = solution1._data.copy()
 
         # get best solution from current algorithm
-        copy_solution = self._algo._bestSolution.clone()
+        if solution2 is None:
+            copy_solution = self._algo._bestSolution.clone()
+        else:
+            copy_solution = solution2.clone()
 
         splitIndex = int(size / 2)
 
@@ -93,6 +100,7 @@ class RandomSplitCrossover(Crossover):
     >>> # solution and algorithm
     >>> from macop.solutions.discrete import BinarySolution
     >>> from macop.algorithms.mono import IteratedLocalSearch
+    >>> from macop.algorithms.mono import HillClimberFirstImprovment
     >>> # evaluator import
     >>> from macop.evaluators.discrete.mono import KnapsackEvaluator
     >>> # evaluator initialization (worths objects passed into data)
@@ -108,32 +116,38 @@ class RandomSplitCrossover(Crossover):
     >>> simple_mutation = SimpleMutation()
     >>> operators = [random_split_crossover, simple_mutation]
     >>> policy = UCBPolicy(operators)
-    >>> algo = IteratedLocalSearch(initializer, evaluator, operators, policy, validator, maximise=True, verbose=False)
+    >>> local_search = HillClimberFirstImprovment(initializer, evaluator, operators, policy, validator, maximise=True, verbose=False)
+    >>> algo = IteratedLocalSearch(initializer, evaluator, operators, policy, validator, localSearch=local_search, maximise=True, verbose=False)
     >>> # using best solution, simple crossover is applied
     >>> best_solution = algo.run(100)
     >>> list(best_solution._data)
     [1, 1, 1, 0, 1, 0, 1, 1, 1, 0]
-    >>> new_solution = initializer()
-    >>> mutate_solution = random_split_crossover.apply(new_solution)
-    >>> list(mutate_solution._data)
-    [1, 0, 0, 1, 1, 0, 0, 1, 0, 0]
+    >>> new_solution_1 = initializer()
+    >>> new_solution_2 = initializer()
+    >>> offspring_solution = random_split_crossover.apply(new_solution_1, new_solution_2)
+    >>> list(offspring_solution._data)
+    [0, 0, 0, 1, 1, 0, 0, 1, 0, 0]
     """
-    def apply(self, solution):
+    def apply(self, solution1, solution2=None):
         """Create new solution based on best solution found and solution passed as parameter
 
         Args:
-            solution: {Solution} -- the solution to use for generating new solution
+            solution1: {Solution} -- the first solution to use for generating new solution
+            solution2: {Solution} -- the second solution to use for generating new solution
 
         Returns:
             {Solution} -- new generated solution
         """
-        size = solution._size
+        size = solution1._size
 
         # copy data of solution
-        firstData = solution._data.copy()
+        firstData = solution1._data.copy()
 
         # get best solution from current algorithm
-        copy_solution = self._algo._bestSolution.clone()
+        if solution2 is None:
+            copy_solution = self._algo._bestSolution.clone()
+        else:
+            copy_solution = solution2.clone()
 
         splitIndex = random.randint(0, size)
 

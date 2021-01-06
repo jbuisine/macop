@@ -16,6 +16,7 @@ from macop.policies.classicals import RandomPolicy
 from macop.policies.reinforcement import UCBPolicy
 
 from macop.algorithms.mono import IteratedLocalSearch as ILS
+from macop.algorithms.mono import HillClimberFirstImprovment
 from macop.callbacks.classicals import BasicCheckpoint
 
 if not os.path.exists('data'):
@@ -59,7 +60,9 @@ def main():
     callback = BasicCheckpoint(every=5, filepath=filepath)
     evaluator = KnapsackEvaluator(data={'worths': elements_score})
 
-    algo = ILS(init, evaluator, operators, policy, validator, maximise=True, verbose=False)
+    # passing global evaluation param from ILS
+    hcfi = HillClimberFirstImprovment(init, evaluator, operators, policy, validator, maximise=True, verbose=False)
+    algo = ILS(init, evaluator, operators, policy, validator, localSearch=hcfi, maximise=True, verbose=False)
     
     # add callback into callback list
     algo.addCallback(callback)

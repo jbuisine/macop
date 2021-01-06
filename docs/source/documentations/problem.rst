@@ -6,7 +6,7 @@ In this tutorial, we introduce the way of using **Macop** and running your algor
 2.1 Problem definition
 ~~~~~~~~~~~~~~~~~~~~~~
 
-The **knapsack problem** is a problem in combinatorial optimization: Given a set of items, each with a weight and a value, determine the number of each item to include in a collection so that the total weight is less than or equal to a given limit and the total value is as large as possible.
+The **knapsack problem** is a problem in combinatorial optimisation: Given a set of items, each with a weight and a value, determine the number of each item to include in a collection so that the total weight is less than or equal to a given limit and the total value is as large as possible.
 
 
 The image below provides an illustration of the problem:
@@ -34,7 +34,7 @@ During the whole tutorial, the example used is based on the previous illustratio
 
 Hence, we now define our problem in Python:
 
-- values of each objects 
+- worth value of each objects 
 - weight associated to each of these objects
 
 .. code-block:: python
@@ -43,7 +43,9 @@ Hence, we now define our problem in Python:
     Problem instance definition
     """
 
-    elements_score = [ 4, 2, 10, 1, 2 ] # value of each object
+    elements_score = [ 4, 2, 10, 1, 2 ] # worth of each object
     elements_weight = [ 12, 1, 4, 1, 2 ] # weight of each object
 
 Once we have defined the instance of our problem, we will need to define the representation of a solution to that problem.
+
+Let's define the ``SimpleBinaryCrossover`` operator, allows to randomly change a binary value of our current solution.

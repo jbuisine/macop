@@ -37,6 +37,7 @@ class UCBPolicy(Policy):
     >>> # solution and algorithm
     >>> from macop.solutions.discrete import BinarySolution
     >>> from macop.algorithms.mono import IteratedLocalSearch
+    >>> from macop.algorithms.mono import HillClimberFirstImprovment
     >>> # evaluator import
     >>> from macop.evaluators.discrete.mono import KnapsackEvaluator
     >>> # evaluator initialization (worths objects passed into data)
@@ -50,7 +51,8 @@ class UCBPolicy(Policy):
     >>> # operators list with crossover and mutation
     >>> operators = [SimpleCrossover(), SimpleMutation()]
     >>> policy = UCBPolicy(operators)
-    >>> algo = IteratedLocalSearch(initializer, evaluator, operators, policy, validator, maximise=True, verbose=False)
+    >>> local_search = HillClimberFirstImprovment(initializer, evaluator, operators, policy, validator, maximise=True, verbose=False)
+    >>> algo = IteratedLocalSearch(initializer, evaluator, operators, policy, validator, localSearch=local_search, maximise=True, verbose=False)
     >>> policy._occurences
     [0, 0]
     >>> solution = algo.run(100)

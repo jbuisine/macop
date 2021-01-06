@@ -127,6 +127,9 @@ We will also have to implement the ``random`` method to create a new random solu
 
             return solution
 
+.. note::
+    The current developed ``BinarySolution`` is available into ``macop.solutions.discrete.BinarySolution`` in **Macop**.
+
 Using this new Solution representation, we can now generate solution randomly:
 
 .. code-block:: python

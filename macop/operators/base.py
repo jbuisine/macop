@@ -61,5 +61,5 @@ class Crossover(Operator):
     def __init__(self):
         self._kind = KindOperator.CROSSOVER
 
-    def apply(self, solution):
+    def apply(self, solution1, solution2=None):
         raise NotImplementedError
