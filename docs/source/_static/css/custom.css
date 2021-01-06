@@ -1,0 +1,70 @@
+.main-menu {
+    display: none !important;
+}
+
+.header-logo {
+    background-image: url("../logo_macop.png") !important;
+}
+
+.pytorch-left-menu-search input[type="text"] {
+    border-color: #009900 !important;
+}
+
+.pytorch-left-menu li.toctree-l1.current > a, .pytorch-right-menu li.toctree-l1.current > a {
+    color: #009900 !important;
+}
+
+ul.pytorch-breadcrumbs a {
+    color: #009900 !important;
+}
+
+.pytorch-left-menu-search .version {
+    color: white !important;
+    text-align: center !important;
+}
+
+a .btn {
+    color: #009900 !important;
+}
+
+footer a {
+    color: #009900 !important;   
+}
+
+colgroup :first-child {
+    width: 60% !important;
+}
+
+.rst-content a:link, .rst-content a:visited, .rst-content a:hover {
+    color: #009900 !important;
+}
+
+.pre {
+    color: #009900 !important;
+}
+
+.article.pytorch-article .function dt, article.pytorch-article .attribute dt, article.pytorch-article .class .attribute dt, article.pytorch-article .class dt {
+    background-color: #bfbfbf !important;
+}
+
+.article.pytorch-article .class em.property {
+    color: #404040 !important;
+}
+
+.article.pytorch-article .function dt em, article.pytorch-article .attribute dt em, article.pytorch-article .class .attribute dt em, article.pytorch-article .class dt em, article.pytorch-article .function dt .sig-paren, article.pytorch-article .attribute dt .sig-paren, article.pytorch-article .class dt .sig-paren {
+    color: #404040 !important;
+}
+
+.article.pytorch-article .function dt:hover .viewcode-link, article.pytorch-article .attribute dt:hover .viewcode-link, article.pytorch-article .class dt:hover .viewcode-link {
+    color: #009900 !important;
+}
+
+.article.pytorch-article .function dt > code, article.pytorch-article .attribute dt > code, article.pytorch-article .class .attribute dt > code, article.pytorch-article .class dt > code {
+    color: #009900 !important;
+}
+
+.align-center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}

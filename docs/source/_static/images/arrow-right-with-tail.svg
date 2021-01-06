@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="13px"
+   height="13px"
+   viewBox="0 0 13 13"
+   version="1.1"
+   id="svg15"
+   sodipodi:docname="arrow-right-with-tail-green.svg"
+   inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)">
+  <metadata
+     id="metadata19">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>Page 1</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="3840"
+     inkscape:window-height="2094"
+     id="namedview17"
+     showgrid="false"
+     inkscape:zoom="80.153846"
+     inkscape:cx="6.6497121"
+     inkscape:cy="6.5"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg15" />
+  <!-- Generator: Sketch 51.2 (57519) - http://www.bohemiancoding.com/sketch -->
+  <title
+     id="title2">Page 1</title>
+  <desc
+     id="desc4">Created with Sketch.</desc>
+  <defs
+     id="defs6" />
+  <g
+     id="desktop"
+     stroke="none"
+     stroke-width="1"
+     fill="none"
+     fill-rule="evenodd">
+    <g
+       id="01_Home"
+       transform="translate(-1202.000000, -1930.000000)"
+       fill="#EE4C2C">
+      <g
+         id="community"
+         transform="translate(-18.000000, 1075.000000)">
+        <g
+           id="newsletter"
+           transform="translate(740.000000, 843.000000)">
+          <g
+             id="Page-1"
+             transform="translate(480.000000, 12.000000)">
+            <polygon
+               id="Fill-1"
+               points="4.87266 1.28206 8.83939333 5.24792667 8.83939333 2.68346 6.15532667 0.00026" />
+            <polygon
+               id="Fill-2"
+               points="8.83896 5.24836 -0.000173333333 5.24836 -0.000173333333 7.06142667 8.83896 7.06142667 4.87222667 11.02816 6.15489333 12.3108267 12.3108267 6.15489333 11.4034267 5.24836" />
+          </g>
+        </g>
+      </g>
+    </g>
+  </g>
+  <path
+     style="fill:#009900;stroke-width:0.012476"
+     d="M 5.520636,11.66507 4.8844176,11.02876 6.8680578,9.04509 8.851698,7.0614203 H 4.425849 0 V 6.1569098 5.2523992 H 5.6984806 11.396961 L 11.849125,5.7046909 12.30129,6.1569825 9.2290722,9.2291812 6.1568544,12.30138 Z"
+     id="path844" />
+  <path
+     style="fill:#009900;stroke-width:0.012476"
+     d="M 6.8514682,3.2521409 4.876161,1.2768034 5.5165354,0.64507925 6.1569098,0.01335516 7.4950211,1.3510342 l 1.3381114,1.3376789 -0.00318,1.2693827 -0.00318,1.2693826 z"
+     id="path846" />
+</svg>

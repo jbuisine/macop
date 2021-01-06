@@ -8,71 +8,64 @@ class TestCommand(distutils.command.check.check):
 
         # run tests using doctest
         import doctest
-        
-        # folders
-        # from macop.algorithms import Algorithm
-        print("==============================")
-        print("Run test program...")
-        from macop.solutions.BinarySolution import BinarySolution
-        from macop.evaluators.EvaluatorExample import evaluatorExample
 
-        from macop.operators.mutators.SimpleMutation import SimpleMutation
-        from macop.operators.mutators.SimpleBinaryMutation import SimpleBinaryMutation
-        from macop.operators.crossovers.SimpleCrossover import SimpleCrossover
-        from macop.operators.crossovers.RandomSplitCrossover import RandomSplitCrossover
-
-        from macop.operators.policies.RandomPolicy import RandomPolicy
-        from macop.operators.policies.UCBPolicy import UCBPolicy
-
-        from macop.algorithms.mono.IteratedLocalSearch import IteratedLocalSearch as ILS
-        from macop.callbacks.BasicCheckpoint import BasicCheckpoint
+        # set specific seed for pseudo-random process
         import random
+        import numpy as np
+
+        # discrete and continuous solutions module
+        from macop.solutions import discrete
+        from macop.solutions import continuous
+
+        # operators module
+        from macop.operators.discrete import mutators as discrete_mutators
+        from macop.operators.discrete import crossovers as discrete_crossovers
+
+        # policies module
+        from macop.policies import classicals
+        from macop.policies import reinforcement
+
+        # evaluators module
+        from macop.evaluators.discrete import mono as discrete_mono
+        from macop.evaluators.discrete import multi as discrete_multi
+
+        # algorithms
+        from macop.algorithms import mono as algo_mono
+        from macop.algorithms import multi as algo_multi
+
+        # run all doctest
+        print("==============================")
+        print("Runs test command...")
 
         random.seed(42)
+        np.random.seed(42)
+        # discrete solutions module
+        doctest.testmod(discrete)
+        doctest.testmod(continuous)
 
-        elements_score = [ random.randint(1, 20) for _ in range(30) ]
-        elements_weight = [ random.randint(2, 5) for _ in range(30) ]
+        random.seed(42)
+        np.random.seed(42)
+        # operators module
+        doctest.testmod(discrete_mutators)
+        doctest.testmod(discrete_crossovers)
 
-        def knapsackWeight(solution):
+        random.seed(42)
+        np.random.seed(42)
+        # policies module
+        doctest.testmod(classicals)
+        doctest.testmod(reinforcement)
 
-            weight_sum = 0
-            for index, elem in enumerate(solution._data):
-                weight_sum += elements_weight[index] * elem
+        random.seed(42)
+        np.random.seed(42)
+        # policies module
+        doctest.testmod(discrete_mono)
+        doctest.testmod(discrete_multi)
 
-            return weight_sum
-
-        # default validator
-        def validator(solution):
-
-            if knapsackWeight(solution) <= 80:
-                return True
-            else:
-                False
-
-        # define init random solution
-        def init():
-            return BinarySolution([], 30).random(validator)
-
-        def evaluator(solution):
-
-            fitness = 0
-            for index, elem in enumerate(solution._data):
-                fitness += (elements_score[index] * elem)
-
-            return fitness
-
-        operators = [SimpleBinaryMutation(), SimpleMutation(), SimpleCrossover(), RandomSplitCrossover()]
-        policy = UCBPolicy(operators)
-        # callback = BasicCheckpoint(_every=5, _filepath=filepath)
-
-        algo = ILS(init, evaluator, operators, policy, validator, maximise=True)
-        
-        # add callback into callback list
-        # algo.addCallback(callback)
-        algo.run(200)
-
-        print("==============================")
-        print("Run test using doctest...")
+        random.seed(42)
+        np.random.seed(42)
+        # policies module
+        doctest.testmod(algo_mono)
+        doctest.testmod(algo_multi)
 
         # pass test using doctest
         distutils.command.check.check.run(self)
@@ -80,7 +73,7 @@ class TestCommand(distutils.command.check.check):
 
 setup(
     name='macop',
-    version='1.0.5',
+    version='1.0.6',
     description='Minimalist And Customisable Optimisation Package',
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
@@ -95,17 +88,17 @@ setup(
     author='Jérôme BUISINE',
     author_email='jerome.buisine@univ-littoral.fr',
     license='MIT',
-    packages=['macop', 
-        'macop.algorithms', 
-        'macop.algorithms.mono', 
-        'macop.algorithms.multi', 
-        'macop.callbacks', 
-        'macop.evaluators', 
-        'macop.operators',  
-        'macop.operators.mutators',  
-        'macop.operators.crossovers',  
-        'macop.operators.policies', 
-        'macop.solutions', 
+    packages=['macop',
+        'macop.algorithms',
+        'macop.callbacks',
+        'macop.evaluators',
+        'macop.evaluators.discrete',
+        'macop.evaluators.continuous',
+        'macop.operators',
+        'macop.operators.discrete',
+        'macop.operators.continuous',
+        'macop.policies',
+        'macop.solutions',
         'macop.utils'],
     install_requires=[
         'numpy',

@@ -4,19 +4,20 @@ import os
 import random
 
 # module imports
-from macop.solutions.BinarySolution import BinarySolution
-from macop.evaluators.EvaluatorExample import evaluatorExample
+from macop.solutions.discrete import BinarySolution
+from macop.evaluators.discrete.mono import KnapsackEvaluator
 
-from macop.operators.mutators.SimpleMutation import SimpleMutation
-from macop.operators.mutators.SimpleBinaryMutation import SimpleBinaryMutation
-from macop.operators.crossovers.SimpleCrossover import SimpleCrossover
-from macop.operators.crossovers.RandomSplitCrossover import RandomSplitCrossover
+from macop.operators.discrete.mutators import SimpleMutation
+from macop.operators.discrete.mutators import SimpleBinaryMutation
+from macop.operators.discrete.crossovers import SimpleCrossover
+from macop.operators.discrete.crossovers import RandomSplitCrossover
 
-from macop.operators.policies.RandomPolicy import RandomPolicy
-from macop.operators.policies.UCBPolicy import UCBPolicy
+from macop.policies.classicals import RandomPolicy
+from macop.policies.reinforcement import UCBPolicy
 
-from macop.algorithms.mono.IteratedLocalSearch import IteratedLocalSearch as ILS
-from macop.callbacks.BasicCheckpoint import BasicCheckpoint
+from macop.algorithms.mono import IteratedLocalSearch as ILS
+from macop.algorithms.mono import HillClimberFirstImprovment
+from macop.callbacks.classicals import BasicCheckpoint
 
 if not os.path.exists('data'):
     os.makedirs('data')
@@ -47,15 +48,8 @@ def validator(solution):
 
 # define init random solution
 def init():
-    return BinarySolution([], 30).random(validator)
+    return BinarySolution.random(30, validator)
 
-def evaluator(solution):
-
-    fitness = 0
-    for index, elem in enumerate(solution._data):
-        fitness += (elements_score[index] * elem)
-
-    return fitness
 
 filepath = "data/checkpoints.csv"
 
@@ -64,15 +58,18 @@ def main():
     operators = [SimpleBinaryMutation(), SimpleMutation(), SimpleCrossover(), RandomSplitCrossover()]
     policy = UCBPolicy(operators)
     callback = BasicCheckpoint(every=5, filepath=filepath)
+    evaluator = KnapsackEvaluator(data={'worths': elements_score})
 
-    algo = ILS(init, evaluator, operators, policy, validator, maximise=True)
+    # passing global evaluation param from ILS
+    hcfi = HillClimberFirstImprovment(init, evaluator, operators, policy, validator, maximise=True, verbose=False)
+    algo = ILS(init, evaluator, operators, policy, validator, localSearch=hcfi, maximise=True, verbose=False)
     
     # add callback into callback list
     algo.addCallback(callback)
 
     bestSol = algo.run(1000)
 
-    print('Solution score is {}'.format(evaluator(bestSol)))
+    print('Solution score is {}'.format(evaluator.compute(bestSol)))
     print('Solution weigth is {}'.format(knapsackWeight(bestSol)))
 
 if __name__ == "__main__":

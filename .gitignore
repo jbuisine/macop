@@ -52,14 +52,11 @@ coverage.xml
 # Django stuff:
 *.log
 
-# Sphinx documentation
-docs/_build/
-
 # PyBuilder
 target/
 
 data
 examples/data
-!docs/build
+docs/_build
 .vscode
 .python-version

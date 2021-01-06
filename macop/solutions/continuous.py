@@ -1,0 +1,2 @@
+"""Continuous solution classes implementation
+"""

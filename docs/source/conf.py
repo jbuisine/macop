@@ -14,18 +14,20 @@
 #
 import os
 import sys
+import asteroid_sphinx_theme
+
 sys.path.insert(0, os.path.abspath('../../../macop'))
 
 # -- Project information -----------------------------------------------------
 
-project = 'macop'
+project = 'Macop'
 copyright = '2020, Jérôme BUISINE'
 author = 'Jérôme BUISINE'
 
 # The short X.Y version
-version = '1.0.5'
+version = '1.0.6'
 # The full version, including alpha/beta/rc tags
-release = 'v1.0.5'
+release = 'v1.0.6'
 
 
 # -- General configuration ---------------------------------------------------
@@ -46,6 +48,19 @@ extensions = [
     'sphinx.ext.viewcode',
     'sphinx.ext.coverage',
     #'autoapi.extension' 
+]
+
+# These folders are copied to the documentation's HTML output
+html_static_path = ['_static']
+
+# These paths are either relative to html_static_path
+# or fully qualified paths (eg. https://...)
+html_css_files = [
+    'css/custom.css',
+]
+
+html_js_files = [
+    'js/custom.js',
 ]
 
 # autoapi_add_toctree_entry = True
@@ -81,7 +96,7 @@ language = None
 exclude_patterns = []
 
 # The name of the Pygments (syntax highlighting) style to use.
-pygments_style = None
+pygments_style = 'default'
 
 
 # -- Options for HTML output -------------------------------------------------
@@ -89,7 +104,11 @@ pygments_style = None
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = 'sphinx_rtd_theme'
+#html_theme = 'sphinx_rtd_theme'
+#html_theme = 'divio_docs_theme'
+
+html_theme = 'asteroid_sphinx_theme' # use the theme in subdir 'theme'
+# html_theme_path = ['.'] # make sphinx search for themes in current dir
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
