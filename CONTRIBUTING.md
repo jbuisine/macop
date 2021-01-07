@@ -8,7 +8,7 @@ Contribution guidelines
 
 # Welcome !
 
-Thank you for taking the time to read this guide for the package's contribution. I'm glad to know that you may bring a lot to the IPFML package. This document will show you the good development practices used in the project and how you can easily participate in its evolution!
+Thank you for taking the time to read this guide for the package's contribution. I'm glad to know that you may bring a lot to the **Macop** package. This document will show you the good development practices used in the project and how you can easily participate in its evolution!
 
 # Table of contents
 
@@ -71,18 +71,16 @@ Note that the **yapf** package is used during build process of **macop** package
 In order to allow quick access to the code, the project follows the documentation conventions (docstring) proposed by Google. Here an example:
 
 ```python
-'''Divide image into equal size blocks
+''' Binary integer solution class
 
-  Args:
-      image: PIL Image or Numpy array
-      block: tuple (width, height) representing the size of each dimension of the block
-      pil: block type returned (default True)
+    - store solution as a binary array (example: [0, 1, 0, 1, 1])
+    - associated size is the size of the array
+    - mainly use for selecting or not an element in a list of valuable objects
 
-  Returns:
-      list containing all 2D Numpy blocks (in RGB or not)
-
-  Raises:
-      ValueError: If `image_width` or `image_heigt` are not compatible to produce correct block sizes
+    Attributes:
+       data: {ndarray} --  array of binary values
+       size: {int} -- size of binary array values
+       score: {float} -- fitness score value
 '''
 ```
 
@@ -101,26 +99,24 @@ This project use the [doctest](https://docs.python.org/3/library/doctest.html) p
 
 # TODO : add custom example
 ```python
-"""Cauchy noise filter to apply on image
+""" Initialise binary solution using specific data
 
-  Args:
-      image: image used as input (2D or 3D image representation)
-      n: used to set importance of noise [1, 999]
-      identical: keep or not identical noise distribution for each canal if RGB Image (default False)
-      distribution_interval: set the distribution interval of normal law distribution (default (0, 1))
-      k: variable that specifies the amount of noise to be taken into account in the output image (default 0.0002)
+    Args:
+        data: {ndarray} --  array of binary values
+        size: {int} -- size of binary array values
 
-  Returns:
-      2D Numpy array with Cauchy noise applied
+    Example:
 
-  Example:
-
-  >>> from ipfml.filters.noise import cauchy_noise
-  >>> import numpy as np
-  >>> image = np.random.uniform(0, 255, 10000).reshape((100, 100))
-  >>> noisy_image = cauchy_noise(image, 10)
-  >>> noisy_image.shape
-  (100, 100)
+    >>> from macop.solutions.discrete import BinarySolution
+    >>> # build of a solution using specific data and size
+    >>> data = [0, 1, 0, 1, 1]
+    >>> solution = BinarySolution(data, len(data))
+    >>> # check data content
+    >>> sum(solution._data) == 3
+    True
+    >>> # clone solution
+    >>> solution_copy = solution.clone()
+    >>> all(solution_copy._data == solution._data)
 """
 ```
 
@@ -164,5 +160,17 @@ You can also add your own labels too or add priority label:
 - prio:**low**
 - prio:**normal**
 - prio:**high**
+
+Main common required issue header:
+
+```
+Package version: X.X.X
+Issue label: XXXXX
+Priority: prio:**level**
+Targeted modules: `macop.algorithms`, `macop.policies`
+Operating System: Manjaro Linux
+
+Description: XXXXX
+```
 
 Whatever the problem reported, I will thank you for your contribution to this project. So do not hesitate.

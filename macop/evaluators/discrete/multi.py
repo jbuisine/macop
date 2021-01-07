@@ -1,7 +1,7 @@
 """Multi-objective evaluators classes 
 """
 # main imports
-from ..base import Evaluator
+from macop.evaluators.base import Evaluator
 
 
 class WeightedSum(Evaluator):

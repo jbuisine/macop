@@ -5,7 +5,7 @@ import random
 import sys
 
 # module imports
-from ..base import Crossover
+from macop.operators.base import Crossover
 
 
 class SimpleCrossover(Crossover):

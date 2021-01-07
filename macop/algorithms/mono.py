@@ -5,7 +5,7 @@
 import logging
 
 # module imports
-from .base import Algorithm
+from macop.algorithms.base import Algorithm
 
 
 class HillClimberFirstImprovment(Algorithm):

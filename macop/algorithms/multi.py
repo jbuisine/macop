@@ -6,11 +6,11 @@ import logging
 import math
 import numpy as np
 import sys
-from ..utils.progress import macop_text, macop_line, macop_progress
+from macop.utils.progress import macop_text, macop_line, macop_progress
 
 # module imports
-from .base import Algorithm
-from ..evaluators.discrete.multi import WeightedSum
+from macop.algorithms.base import Algorithm
+from macop.evaluators.discrete.multi import WeightedSum
 
 
 class MOEAD(Algorithm):

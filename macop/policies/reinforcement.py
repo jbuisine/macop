@@ -7,8 +7,8 @@ import math
 import numpy as np
 
 # module imports
-from .base import Policy
-from ..operators.base import KindOperator
+from macop.policies.base import Policy
+from macop.operators.base import KindOperator
 
 
 class UCBPolicy(Policy):

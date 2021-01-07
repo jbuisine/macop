@@ -4,7 +4,7 @@
 import random
 
 # module imports
-from .base import Policy
+from macop.policies.base import Policy
 
 
 class RandomPolicy(Policy):

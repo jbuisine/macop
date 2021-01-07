@@ -25,7 +25,7 @@
 
 Based on all of these generic and/or implemented functionalities, the user will be able to quickly develop a solution to his problem while retaining the possibility of remaining in control of his development by overloading existing functionalities if necessary.
 
-Main idea about this Python package is that it does not implement the whole available algorithms in the literature but let the possibility to the user to quickly develop and test its own algorithms and strategies. The main objective of this package is to be the most flexible as possible and hence, to offer a maximum of implementation possibilities.
+Main idea about this Python package is that it does not which doesn't implement every algorithm in the literature but let the possibility to the user to quickly develop and test its own algorithms and strategies. The main objective of this package is to provide maximum flexibility, which allows for easy experimentation in implementation..
 
 ## Documentation
 

@@ -4,7 +4,7 @@
 # main imports
 import logging
 import sys, os
-from ..utils.progress import macop_text, macop_line, macop_progress
+from macop.utils.progress import macop_text, macop_line, macop_progress
 
 
 # Generic algorithm class

@@ -4,7 +4,7 @@ import logging
 from abc import abstractmethod
 
 
-from ..operators.base import KindOperator
+from macop.operators.base import KindOperator
 
 
 # define policy to choose `operator` function at current iteration

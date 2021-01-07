@@ -5,7 +5,7 @@ import random
 import sys
 
 # module imports
-from ..base import Mutation
+from macop.operators.base import Mutation
 
 
 class SimpleMutation(Mutation):
