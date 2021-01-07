@@ -1,9 +1,9 @@
-7. Operator choices
+Operator choices
 ===================
 
 The ``policy`` feature of **Macop** enables to choose the next operator to apply during the search process of the algorithm based on specific criterion.
 
-7.1. Why using policy ?
+Why using policy ?
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 Sometimes the nature of the problem and its instance can strongly influence the search results when using mutation operators or crossovers. 
@@ -20,7 +20,7 @@ The operator choice problem can be seen as the desire to find the best solution 
     However, it will not be detailed here. You can refer to the API documentation for more details.
 
 
-7.2. Custom policy
+Custom policy
 ~~~~~~~~~~~~~~~~~~
 
 In our case, we are not going to exploit a complex enough implementation of a ``policy``. Simply, we will use a random choice of operator.

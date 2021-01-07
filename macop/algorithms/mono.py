@@ -17,7 +17,7 @@ class HillClimberFirstImprovment(Algorithm):
 
     Attributes:
         initalizer: {function} -- basic function strategy to initialize solution
-        evaluator: {function} -- basic function in order to obtained fitness (mono or multiple objectives)
+        evaluator: {Evaluator} -- evaluator instance in order to obtained fitness (mono or multiple objectives)
         operators: {[Operator]} -- list of operator to use when launching algorithm
         policy: {Policy} -- Policy class implementation strategy to select operators
         validator: {function} -- basic function to check if solution is valid or not under some constraints
@@ -116,7 +116,7 @@ class HillClimberBestImprovment(Algorithm):
 
     Attributes:
         initalizer: {function} -- basic function strategy to initialize solution
-        evaluator: {function} -- basic function in order to obtained fitness (mono or multiple objectives)
+        evaluator: {Evaluator} -- evaluator instance in order to obtained fitness (mono or multiple objectives)
         operators: {[Operator]} -- list of operator to use when launching algorithm
         policy: {Policy} -- Policy class implementation strategy to select operators
         validator: {function} -- basic function to check if solution is valid or not under some constraints

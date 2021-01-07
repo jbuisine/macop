@@ -1,11 +1,11 @@
-3. Solutions
+Solutions
 =============
 
 Representing a solution to a specific problem is very important in an optimisation process. In this example, we will always use the **knapsack problem** as a basis.
 
 In a first step, the management of the solutions by the macop package will be presented. Then a specific implementation for the current problem will be detailed.
 
-3.1. Generic Solution
+Generic Solution
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Inside ``macop.solutions.base`` module of `Macop`, the ``Solution`` class is available. It's an abstract solution class structure which:
@@ -67,13 +67,13 @@ Allowing to initialize it randomly or not (using constructor or ``random`` metho
 
 We will now see how to define a type of solution specific to our problem.
 
-3.2. Solution representation for knapsack
+Solution representation for knapsack
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 We will now use the abstract ``Solution`` type available in the ``macop.solutions.base`` module in order to define our own solution.
 First of all, let's look at the representation of our knapsack problem. **How to represent the solution?**
 
-3.2.1. Knapsack solution
+Knapsack solution
 ************************
 
 A valid solution can be shown below where the sum of the object weights is 15 and the sum of the selected objects values is 8 (its fitness):
@@ -90,7 +90,7 @@ Its representation can be translate as a **binary array** with value:
 
 where selected objects have **1** as value otherwise **0**.
 
-3.2.2. Binary Solution
+Binary Solution
 **********************
 
 We will now define our own type of solution by inheriting from ``macop.solutions.base.Solution``, which we will call ``BinarySolution``.

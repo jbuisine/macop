@@ -68,11 +68,8 @@ class SimpleCrossover(Crossover):
         # copy data of solution
         firstData = solution1._data.copy()
 
-        # get best solution from current algorithm
-        if solution2 is None:
-            copy_solution = self._algo._bestSolution.clone()
-        else:
-            copy_solution = solution2.clone()
+        # copy of solution2 as output solution
+        copy_solution = solution2.clone()
 
         splitIndex = int(size / 2)
 
@@ -143,11 +140,8 @@ class RandomSplitCrossover(Crossover):
         # copy data of solution
         firstData = solution1._data.copy()
 
-        # get best solution from current algorithm
-        if solution2 is None:
-            copy_solution = self._algo._bestSolution.clone()
-        else:
-            copy_solution = solution2.clone()
+        # copy of solution2 as output solution
+        copy_solution = solution2.clone()
 
         splitIndex = random.randint(0, size)
 

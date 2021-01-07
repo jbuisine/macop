@@ -1,9 +1,9 @@
-5. Use of evaluators
+Use of evaluators
 ====================
 
 Now that it is possible to generate a solution randomly or not. It is important to know the value associated with this solution. We will then speak of evaluation of the solution. With the score associated with it, the `fitness`.
 
-5.1. Generic evaluator
+Generic evaluator
 ~~~~~~~~~~~~~~~~~~~~~~
 
 As for the management of solutions, a generic evaluator class ``macop.evaluators.base.Evaluator`` is developed within **Macop**:
@@ -38,7 +38,7 @@ Abstract Evaluator class is used for computing fitness score associated to a sol
 
 We must therefore now create our own evaluator based on the proposed structure.
 
-5.2. Custom evaluator
+Custom evaluator
 ~~~~~~~~~~~~~~~~~~~~~
 
 To create our own evaluator, we need both:

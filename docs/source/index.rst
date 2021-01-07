@@ -15,7 +15,9 @@ What's **Macop** ?
    :caption: Contents:
 
    description
+
    documentations/index
+
    api
    contributing
 

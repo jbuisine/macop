@@ -1,2 +1,2 @@
-10. Others features
+Others features
 ===================

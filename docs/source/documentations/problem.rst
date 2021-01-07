@@ -1,9 +1,9 @@
-2. Problem instance
+Problem instance
 ===================
 
 In this tutorial, we introduce the way of using **Macop** and running your algorithm quickly using the well known `knapsack` problem.
 
-2.1 Problem definition
+Problem definition
 ~~~~~~~~~~~~~~~~~~~~~~
 
 The **knapsack problem** is a problem in combinatorial optimisation: Given a set of items, each with a weight and a value, determine the number of each item to include in a collection so that the total weight is less than or equal to a given limit and the total value is as large as possible.
@@ -22,7 +22,7 @@ In this problem, we try to optimise the value associated with the objects we wis
     It is a combinatorial and therefore discrete problem. **Macop** decomposes its package into two parts, which is related to discrete optimisation on the one hand, and continuous optimisation on the other hand. This will be detailed later.
 
 
-2.2 Problem implementation
+Problem implementation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 During the whole tutorial, the example used is based on the previous illustration with:

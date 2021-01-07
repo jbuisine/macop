@@ -1,9 +1,9 @@
-6. Apply operators to solution
+Apply operators to solution
 ==============================
 
 Applying an operator to a solution consists of modifying the current state of the solution in order to obtain a new one. The goal is to find a better solution in the search space.
 
-6.1. Operators definition
+Operators definition
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In the discrete optimisation literature, we can categorise operators into two sections:
@@ -69,7 +69,7 @@ Like the evaluator, the operator keeps **track of the algorithm** (using ``setAl
 
 We will now detail these categories of operators and suggest some relative to our problem.
 
-6.2. Mutator operator
+Mutator operator
 ~~~~~~~~~~~~~~~~~~~~~
 
 As detailed, the mutation operator consists in having a minimum impact on the current state of our solution. Here is an example of a modification that could be done for our problem.
@@ -134,7 +134,7 @@ We can now instanciate our new operator in order to obtain a new solution:
     The developed ``SimpleBinaryMutation`` is available into ``macop.operators.discrete.mutators.SimpleBinaryMutation`` in **Macop**.
 
 
-6.3. Crossover operator
+Crossover operator
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 
@@ -195,7 +195,6 @@ We can now use the crossover operator created to generate new solutions. Here is
 
 .. warning::
     The developed ``SimpleCrossover`` is available into ``macop.operators.discrete.crossovers.SimpleCrossover`` in **Macop**.
-    However, the choice of halves of the merged data is made randomly. In addition, the second solution can be omitted, 
-    by default the operator will crossover between ``solution1`` and the best current solution of the algorithm.
+    However, the choice of halves of the merged data is made randomly.
 
 Next part introduce the ``policy`` feature of **Macop** which enables to choose the next operator to apply during the search process based on specific criterion.
