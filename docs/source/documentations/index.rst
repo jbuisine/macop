@@ -11,6 +11,7 @@ It will gradually take up the major ideas developed within **Macop** to allow fo
 
 .. toctree::
    :maxdepth: 1
+   :numbered:
    :caption: Contents:
 
    introduction

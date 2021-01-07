@@ -7,8 +7,8 @@ import logging
 import numpy as np
 
 # module imports
-from .base import Callback
-from ..utils.progress import macop_text, macop_line
+from macop.callbacks.base import Callback
+from macop.utils.progress import macop_text, macop_line
 
 
 class BasicCheckpoint(Callback):

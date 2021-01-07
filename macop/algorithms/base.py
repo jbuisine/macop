@@ -4,7 +4,7 @@
 # main imports
 import logging
 import sys, os
-from ..utils.progress import macop_text, macop_line, macop_progress
+from macop.utils.progress import macop_text, macop_line, macop_progress
 
 
 # Generic algorithm class
@@ -23,9 +23,9 @@ class Algorithm():
 
     Attributes:
         initializer: {function} -- basic function strategy to initialize solution
-        evaluator: {function} -- basic function in order to obtained fitness (mono or multiple objectives)
+        evaluator: {Evaluator} -- evaluator instance in order to obtained fitness (mono or multiple objectives)
         operators: {[Operator]} -- list of operator to use when launching algorithm
-        policy: {Policy} -- Policy class implementation strategy to select operators
+        policy: {Policy} -- Policy implementation strategy to select operators
         validator: {function} -- basic function to check if solution is valid or not under some constraints
         maximise: {bool} -- specify kind of optimisation problem 
         verbose: {bool} -- verbose or not information about the algorithm
@@ -306,21 +306,6 @@ class Algorithm():
 
     def information(self):
         logging.info(f"-- Best {self._bestSolution} - SCORE {self._bestSolution.fitness()}")
-
-    # def __blockPrint(self):
-    #     """Private method which disables console prints when running algorithm if specified when instancing algorithm
-    #     """
-    #     sys.stdout = open(os.devnull, 'w')
-
-    # def __enablePrint(self):
-    #     """Private which enables console prints when running algorithm
-    #     """
-    #     sys.stdout = sys.__stdout__
-
-    # def __del__(self):
-    #     # enable prints when object is deleted
-    #     if not self._verbose:
-    #         self.__enablePrint()
 
     def __str__(self):
         return f"{type(self).__name__} using {type(self._bestSolution).__name__}"

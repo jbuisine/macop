@@ -1,7 +1,7 @@
 """Knapsack evaluators classes
 """
 # main imports
-from ..base import Evaluator
+from macop.evaluators.base import Evaluator
 
 
 class KnapsackEvaluator(Evaluator):

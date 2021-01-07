@@ -7,7 +7,8 @@ import math
 import numpy as np
 
 # module imports
-from .base import Policy
+from macop.policies.base import Policy
+from macop.operators.base import KindOperator
 
 
 class UCBPolicy(Policy):
@@ -101,7 +102,7 @@ class UCBPolicy(Policy):
         else:
             return self._operators[random.choice(indices)]
 
-    def apply(self, solution):
+    def apply(self, solution1, solution2=None):
         """
         Apply specific operator chosen to create new solution, computes its fitness and returns solution
 
@@ -109,7 +110,8 @@ class UCBPolicy(Policy):
         - selected operator occurence is also increased
 
         Args:
-            solution: {Solution} -- the solution to use for generating new solution
+            solution1: {Solution} -- the first solution to use for generating new solution
+            solution2: {Solution} -- the second solution to use for generating new solution (in case of specific crossover, default is best solution from algorithm)
 
         Returns:
             {Solution} -- new generated solution
@@ -118,10 +120,23 @@ class UCBPolicy(Policy):
         operator = self.select()
 
         logging.info("---- Applying %s on %s" %
-                     (type(operator).__name__, solution))
+                     (type(operator).__name__, solution1))
+
+        # default value of solution2 is current best solution
+        if solution2 is None and self._algo is not None:
+            solution2 = self._algo._bestSolution
+
+        # avoid use of crossover if only one solution is passed
+        if solution2 is None and operator._kind == KindOperator.CROSSOVER:
+
+            while operator._kind == KindOperator.CROSSOVER:            
+                operator = self.select()
 
         # apply operator on solution
-        newSolution = operator.apply(solution)
+        if operator._kind == KindOperator.CROSSOVER:
+            newSolution = operator.apply(solution1, solution2)
+        else:
+            newSolution = operator.apply(solution1)
 
         # compute fitness of new solution
         newSolution.evaluate(self._algo._evaluator)
@@ -129,10 +144,10 @@ class UCBPolicy(Policy):
         # compute fitness improvment rate
         if self._algo._maximise:
             fir = (newSolution.fitness() -
-                   solution.fitness()) / solution.fitness()
+                   solution1.fitness()) / solution1.fitness()
         else:
-            fir = (solution.fitness() -
-                   newSolution.fitness()) / solution.fitness()
+            fir = (solution1.fitness() -
+                   newSolution.fitness()) / solution1.fitness()
 
         operator_index = self._operators.index(operator)
 
@@ -141,6 +156,6 @@ class UCBPolicy(Policy):
 
         self._occurences[operator_index] += 1
 
-        logging.info("---- Obtaining %s" % (solution))
+        logging.info("---- Obtaining %s" % (newSolution))
 
         return newSolution

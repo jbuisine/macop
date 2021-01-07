@@ -1,10 +1,10 @@
-4. Validate a solution
+Validate a solution
 ======================
 
 When an optimisation problem requires respecting certain constraints, Macop allows you to quickly verify that a solution is valid. 
 It is based on a defined function taking a solution as input and returning the validity criterion (true or false).
 
-4.1. Validator definition
+Validator definition
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 An invalid solution can be shown below where the sum of the object weights is greater than 15:
@@ -41,7 +41,7 @@ To avoid taking into account invalid solutions, we can define our function which
         return weight_sum <= 15
 
 
-4.2. Use of validator
+Use of validator
 ~~~~~~~~~~~~~~~~~~~~~
 
 We can now generate solutions randomly by passing our validation function as a parameter:

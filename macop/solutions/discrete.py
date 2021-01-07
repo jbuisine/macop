@@ -3,7 +3,7 @@
 import numpy as np
 
 # modules imports
-from .base import Solution
+from macop.solutions.base import Solution
 
 
 class BinarySolution(Solution):
