@@ -178,6 +178,11 @@ Let's implement an algorithm well known under the name of hill climber best impr
 
 .. code-block:: python
 
+    """
+    module imports
+    """
+    from macop.algorithms.base import Algorithm
+
     class HillClimberBestImprovment(Algorithm):
 
         def run(self, evaluations):
@@ -273,6 +278,11 @@ We are going to implement a more specific algorithm allowing to take a new param
 Let's called this new algorithm ``IteratedLocalSearch``:
 
 .. code-block:: python
+
+    """
+    module imports
+    """
+    from macop.algorithms.base import Algorithm
 
     class IteratedLocalSearch(Algorithm):
         
