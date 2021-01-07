@@ -25,9 +25,11 @@ bibliography: paper.bib
 
 Optimisation problems are frequently encountered in science and industry. Given a real-valued function $f$ defined on a set called the search space $X$, optimising the function $f$ consists of finding a point $x \in X$ en that has the optimal value $f(x)$, or at least constructing a sequence $(x_t)_{t \in \mathbf{N}} \in X^\mathbb{N}$ that is close to the optimum. Depending on the search space $X$, optimisation problems can be globally classified as discrete problems (e.g. $X=\{0,1\}^n$) or as continuous problems (e.g. $X=\mathbb{R}^n$). Tools for modelling and solving discrete and continuous problems are proposed in the literature.
 
-In this paper, `Macop` for `Minimalist And Customisable Optimisation Package`, is a proposed optimisation Python package which doesn't implement the whole available algorithms in the literature, but let you the possibility to quickly develop and test your own algorithm and strategies. The main objective of this package is to be the most flexible as possible and hence, to offer a maximum of implementation possibilities.
+In this paper, `Macop` for `Minimalist And Customisable Optimisation Package`, is a proposed as a discrete optimisation Python package which doesn't implement the whole available algorithms in the literature, but let you the possibility to quickly develop and test your own algorithm and strategies. The main objective of this package is to be the most flexible as possible and hence, to offer a maximum of implementation possibilities.
 
-An underlying objective is to enable this package to be used for quick implementations and in educational contexts as well. Allowing students to quickly develop their own algorithms.
+Based on a common interaction loop (see \autoref{fig:macop-behaviour}) of all the algorithms. Macop wants to allow users to quickly focus on one of these features.
+
+![Macop behaviour.\label{fig:macop-behaviour}](docs/source/_static/documentations/macop_behaviour.png)
 
 # Motivation
 
@@ -35,7 +37,7 @@ Most of the operational research libraries developed in Python offer users eithe
 
 During thesis work, the search for a solution with complex evaluation was necessary. The assessment in question consisted of evaluating a model fitted with a selected subset of available features for a feature set. Binary solution was used as appreciation for selected or non-selected feature from the available set of features. The solution was therefore a new model obtained and its fitness which is the score obtained on the test data set. Exploring all the solutions was not feasible given the large amount of exploration space available. Otherwise, it would have been preferable to use a Recursive Features Elimination (RFE) method [@DBLP:journals/remotesensing/PullanagariKY18; @DBLP:conf/icmla/ChenJ07].
 
-This is why it was preferred to focus on operational research methods, even if the optimal solution is not found, a good solution is still sufficient for the study case. Available libraries in the literature did not allow this kind of implementation of an evaluation function quickly and this is why the development of a Python package has been undertaken. This package was then adapted to correspond to a formalism of implementing algorithms and problems from a simple and generic structure, hence the term minimalist in Macop.
+This is why it was preferred to focus on operational research methods, even if the optimal solution is not found, a good solution is still sufficient for the study case. Available libraries in the literature did not allow this kind of implementation of an evaluation function quickly and this is why the development of a Python package has been undertaken. This package was then adapted to correspond to a formalism of implementing algorithms and problems from a simple and generic structure, hence the term minimalist in **Macop**.
 
 # Description
 
@@ -43,15 +45,18 @@ At the beginning of the development of this library, the idea of making it as mo
 
 The package consists of main several modules:
 
-- `algorithms`: generic and implemented OR algorithms.
-- `evaluator`: contains all the implemented evaluation functions.
-- `solutions`: all declared solutions classes used to represent problem data.
-- `operators`: mutators, crossovers update of solution. This module also has policy classes to manage the way of update and use solution.
-- `callbacks`: contains Callback classes for making callback instructions every number of evaluations.
+- **solutions:** representation of the solution ;
+- **validator:** such as constraint programmig, a `validator` is function which is used for validate or not a solution data state ;
+- **evaluator:** stores problem instance data and implement a `compute` method in order to evaluate a solution ;
+- **operators:** mutators, crossovers update of solution ;
+- **policies:** the way you choose the available operators (might be using reinforcement learning) ;
+- **algorithms:** generic and implemented optimisation research algorithms ;
+- **callbacks:** callbacks to automatically keep track of the search space advancement.
+
 
 The primary advantage of using Python is that it allows you to dynamically add new members within the new implemented solution or algorithm classes. This of course does not close the possibilities of extension and storage of information within solutions and algorithms. It all depends on the need in question.
 
-## Implemented algorithms
+## Implemented algorithms as example
 
 Both single and multi-objective algorithms have been implemented for demonstration purposes. 
 
@@ -75,11 +80,11 @@ The use of callback instance, allows both to do an action every $k$ evaluations 
 
 ## Documentation
 
-Fully documented examples for mono and multi-objectives implementations are available at [https://jbuisine.github.io/macop/](https://jbuisine.github.io/macop/).
+Fully documented examples of the usage of **Macop** is available at [https://jbuisine.github.io/macop/](https://jbuisine.github.io/macop/).
 
 # Conclusion
 
-Macop aims to allow the modelling of discrete (usually combinatorial), and continuous problems. It is therefore open to expansion and not closed specifically to a problem.
+Macop aims to allow the modelling of discrete (usually combinatorial). It is therefore open to expansion and not closed specifically to a problem.
 
 Macop proposes a simple structure of interaction of the main elements (algorithms, operators, solutions, AOS, callbacks) for the resolution of operational research problems. From its generic structure, it is possible, thanks to the dynamic programming paradigm of the Python language, to easily allow the extension and development of new algorithms and problems. Based on simple concepts, this package can therefore meet the needs of the rapid problem implementation. It can also be used for quick case studies.
 
