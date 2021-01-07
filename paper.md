@@ -29,7 +29,7 @@ In this paper, `Macop` for `Minimalist And Customisable Optimisation Package`, i
 
 Based on a common interaction loop (see \autoref{fig:macop-behaviour}) of all the algorithms. Macop wants to allow users to quickly focus on one of these features.
 
-![Macop behaviour.\label{fig:macop-behaviour}](docs/source/_static/documentation/macop_behaviour_reduced.png)
+![Macop common interation loop.\label{fig:macop-behaviour}](docs/source/_static/documentation/macop_behaviour_reduced.png)
 
 # Motivation
 
