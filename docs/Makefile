@@ -12,7 +12,7 @@ help:
 	@$(SPHINXBUILD) -M help "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
 
 rst:
-	sphinx-apidoc -o ./source ../rawls/
+	sphinx-apidoc -o --implicit-namespaces ./source ../rawls/
 
 .PHONY: help Makefile
 
