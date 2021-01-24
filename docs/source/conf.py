@@ -21,7 +21,7 @@ sys.path.insert(0, os.path.abspath('../../../macop'))
 # -- Project information -----------------------------------------------------
 
 project = 'Macop'
-copyright = '2020, Jérôme BUISINE'
+copyright = '2021, Jérôme BUISINE'
 author = 'Jérôme BUISINE'
 
 # The short X.Y version
