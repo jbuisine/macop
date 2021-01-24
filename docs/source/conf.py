@@ -21,13 +21,13 @@ sys.path.insert(0, os.path.abspath('../../../macop'))
 # -- Project information -----------------------------------------------------
 
 project = 'Macop'
-copyright = '2020, Jérôme BUISINE'
+copyright = '2021, Jérôme BUISINE'
 author = 'Jérôme BUISINE'
 
 # The short X.Y version
-version = '1.0.7'
+version = '1.0.8'
 # The full version, including alpha/beta/rc tags
-release = 'v1.0.7'
+release = 'v1.0.8'
 
 
 # -- General configuration ---------------------------------------------------

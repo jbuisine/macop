@@ -1,27 +1,27 @@
-from .algorithms import base
-from .algorithms import mono
-from .algorithms import multi
+from macop.algorithms import base
+from macop.algorithms import mono
+from macop.algorithms import multi
 
-from .callbacks import base
-from .callbacks import classicals
-from .callbacks import multi
+from macop.callbacks import base
+from macop.callbacks import classicals
+from macop.callbacks import multi
 
-from .evaluators import base
-from .evaluators.discrete import mono
-from .evaluators.discrete import multi
+from macop.evaluators import base
+from macop.evaluators.discrete import mono
+from macop.evaluators.discrete import multi
 
-from .operators import base
-from .operators.discrete import mutators
-from .operators.discrete import crossovers
-from .operators.continuous import mutators
-from .operators.continuous import crossovers
+from macop.operators import base
+from macop.operators.discrete import mutators
+from macop.operators.discrete import crossovers
+from macop.operators.continuous import mutators
+from macop.operators.continuous import crossovers
 
-from .policies import base
-from .policies import classicals
-from .policies import reinforcement
+from macop.policies import base
+from macop.policies import classicals
+from macop.policies import reinforcement
 
-from .solutions import base
-from .solutions import continuous
-from .solutions import discrete
+from macop.solutions import base
+from macop.solutions import continuous
+from macop.solutions import discrete
 
-from .utils import progress
+from macop.utils import progress
