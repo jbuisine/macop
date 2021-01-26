@@ -28,7 +28,6 @@ class KnapsackEvaluator(Evaluator):
     >>> evaluator.compute(solution)
     40
     """
-
     def compute(self, solution):
         """Apply the computation of fitness from solution
 

@@ -3,7 +3,6 @@
 import logging
 from abc import abstractmethod
 
-
 from macop.operators.base import KindOperator
 
 
@@ -51,7 +50,7 @@ class Policy():
         # avoid use of crossover if only one solution is passed
         if solution2 is None and operator._kind == KindOperator.CROSSOVER:
 
-            while operator._kind == KindOperator.CROSSOVER:            
+            while operator._kind == KindOperator.CROSSOVER:
                 operator = self.select()
 
         # apply operator on solution

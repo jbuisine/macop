@@ -80,7 +80,6 @@ class BinarySolution(Solution):
         return f"Binary solution {self._data}"
 
 
-
 class CombinatoryIntegerSolution(Solution):
     """
     Combinatory integer solution class

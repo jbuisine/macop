@@ -71,7 +71,8 @@ class BasicCheckpoint(Callback):
                 globalEvaluation = int(data[0])
 
                 if self._algo.getParent() is not None:
-                    self._algo.getParent()._numberOfEvaluations = globalEvaluation
+                    self._algo.getParent(
+                    )._numberOfEvaluations = globalEvaluation
                 else:
                     self._algo._numberOfEvaluations = globalEvaluation
 
@@ -83,12 +84,20 @@ class BasicCheckpoint(Callback):
 
                 self._algo._bestSolution._data = np.array(solutionData)
                 self._algo._bestSolution._score = float(data[2])
-      
+
             macop_line(self._algo)
-            macop_text(self._algo, f'Checkpoint found from `{self._filepath}` file.')
-            macop_text(self._algo, f'Restart algorithm from evaluation {self._algo._numberOfEvaluations}.')
+            macop_text(self._algo,
+                       f'Checkpoint found from `{self._filepath}` file.')
+            macop_text(
+                self._algo,
+                f'Restart algorithm from evaluation {self._algo._numberOfEvaluations}.'
+            )
         else:
-            macop_text(self._algo, 'No backup found... Start running algorithm from evaluation 0.')
-            logging.info("Can't load backup... Backup filepath not valid in Checkpoint")
+            macop_text(
+                self._algo,
+                'No backup found... Start running algorithm from evaluation 0.'
+            )
+            logging.info(
+                "Can't load backup... Backup filepath not valid in Checkpoint")
 
         macop_line(self._algo)

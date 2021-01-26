@@ -75,7 +75,8 @@ class MultiCheckpoint(Callback):
                         globalEvaluation = int(data[0])
 
                         if self._algo.getParent() is not None:
-                            self._algo.getParen()._numberOfEvaluations = globalEvaluation
+                            self._algo.getParen(
+                            )._numberOfEvaluations = globalEvaluation
                         else:
                             self._algo._numberOfEvaluations = globalEvaluation
 
@@ -93,11 +94,20 @@ class MultiCheckpoint(Callback):
                     self._algo._pfPop.append(self._algo._population[i])
 
             macop_line(self._algo)
-            macop_text(self._algo, f'Load of available population from `{self._filepath}`')
-            macop_text(self._algo, f'Restart algorithm from evaluation {self._algo._numberOfEvaluations}.')
+            macop_text(
+                self._algo,
+                f'Load of available population from `{self._filepath}`')
+            macop_text(
+                self._algo,
+                f'Restart algorithm from evaluation {self._algo._numberOfEvaluations}.'
+            )
         else:
-            macop_text(self._algo, 'No backup found... Start running algorithm from evaluation 0.')
-            logging.info("Can't load backup... Backup filepath not valid in Checkpoint")
+            macop_text(
+                self._algo,
+                'No backup found... Start running algorithm from evaluation 0.'
+            )
+            logging.info(
+                "Can't load backup... Backup filepath not valid in Checkpoint")
 
         macop_line(self._algo)
 
@@ -169,9 +179,15 @@ class ParetoCheckpoint(Callback):
                     self._algo._pfPop[i]._data = solutionData
                     self._algo._pfPop[i]._scores = scores
 
-            macop_text(self._algo, f'Load of available pareto front backup from `{ self._filepath}`')
-        else:           
-            macop_text(self._algo, 'No pareto front found... Start running algorithm with new pareto front population.')
+            macop_text(
+                self._algo,
+                f'Load of available pareto front backup from `{ self._filepath}`'
+            )
+        else:
+            macop_text(
+                self._algo,
+                'No pareto front found... Start running algorithm with new pareto front population.'
+            )
             logging.info("No pareto front backup used...")
 
         macop_line(self._algo)

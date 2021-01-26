@@ -4,6 +4,7 @@
 from abc import abstractmethod
 from copy import deepcopy
 
+
 class Solution():
     """Base abstract solution class structure
     
@@ -11,7 +12,6 @@ class Solution():
     - get size (shape) of specific data representation
     - stores the score of the solution
     """
-
     def __init__(self, data, size):
         """
         Abstract solution class constructor

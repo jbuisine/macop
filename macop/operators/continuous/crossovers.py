@@ -6,4 +6,3 @@ import sys
 
 # module imports
 from macop.operators.base import Crossover
-
