@@ -1,13 +1,12 @@
 QAP Problem instance generation
 ===============================
 
-To define a quadratic problem, we will use the available mQAP_ multi-objective quadratic problem generator. 
+To define our quadratic assignment problem instance, we will use the available mQAP_ multi-objective quadratic problem generator. 
 
 Genration of the instance
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 We will limit ourselves here to a single objective for the purposes of this example. The file **makeQAPuni.cc**, will be used to generate the instance.
-
 
 .. code:: bash
 
@@ -37,7 +36,7 @@ We are now going to load this instance via a Python code which will be useful to
 
 .. code:: Python
 
-    qap_instance_file = 'instances/qap/qap_instance.txt'
+    qap_instance_file = 'qap_instance.txt'
 
     n = 100 # the instance size
 

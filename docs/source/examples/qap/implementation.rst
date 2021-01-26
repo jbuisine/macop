@@ -144,12 +144,12 @@ If you are uncomfortable with some of the elements in the code that will follow,
     algo = ILS(init, evaluator, operators, policy, validator, localSearch=hcfi, maximise=False, verbose=True)
 
     # run the algorithm
-    bestSol = algo.run(100000, ls_evaluations=100)
+    bestSol = algo.run(10000, ls_evaluations=100)
 
-    print('Solution score is {}'.format(evaluator.compute(bestSol)))
+    print('Solution for QAP instance score is {}'.format(evaluator.compute(bestSol)))
 
 
-QAP problem solving is now possible with Macop. As a reminder, the complete code is available in the qapExample.py_ file.
+QAP problem solving is now possible with **Macop**. As a reminder, the complete code is available in the qapExample.py_ file.
 
 .. _qapExample.py: https://github.com/jbuisine/macop/blob/master/examples/qapExample.py
 .. _documentation: https://jbuisine.github.io/macop/_build/html/documentations

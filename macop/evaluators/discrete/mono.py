@@ -43,9 +43,8 @@ class KnapsackEvaluator(Evaluator):
 
         return fitness
 
-
 class QAPEvaluator(Evaluator):
-    """QAP evaluator class which enables to compute qap solution using specific `_data`
+    """Quadratic Assignment Problem (QAP) evaluator class which enables to compute qap solution using specific `_data`
 
     Solutions use for this evaluator are with type of `macop.solutions.discrete.CombinatoryIntegerSolution`
 
@@ -57,14 +56,14 @@ class QAPEvaluator(Evaluator):
     Example:
 
     >>> import random
+    >>> import numpy as np
     >>> # combinatory solution import
     >>> from macop.solutions.discrete import CombinatoryIntegerSolution
     >>> # evaluator import
-    >>> from macop.evaluators.discrete.QAPEvaluator import QAPEvaluator
+    >>> from macop.evaluators.discrete.mono import QAPEvaluator
     >>> # define problem data using QAP example instance
-    >>> qap_instance_file = '../../../examples/instances/qap/qap_instance.txt'
+    >>> qap_instance_file = 'examples/instances/qap/qap_instance.txt'
     >>> n = 100 # problem size
-    >>> size = len(solution_data)
     >>> # loading data
     >>> f = open(qap_instance_file, 'r')
     >>> file_data = f.readlines()
@@ -81,7 +80,7 @@ class QAPEvaluator(Evaluator):
     >>> solution = CombinatoryIntegerSolution.random(n)
     >>> # compute solution score
     >>> evaluator.compute(solution)
-    40
+    6397983.0
     """
     def compute(self, solution):
         """Apply the computation of fitness from solution
@@ -96,5 +95,58 @@ class QAPEvaluator(Evaluator):
         for index_i, val_i in enumerate(solution._data):
             for index_j, val_j in enumerate(solution._data):
                 fitness += self._data['F'][index_i, index_j] * self._data['D'][val_i, val_j]
+
+        return fitness
+
+
+
+class UBQPEvaluator(Evaluator):
+    """Unconstrained Binary Quadratic Programming (UBQP) evaluator class which enables to compute UBQP solution using specific `_data`
+
+    - stores into its `_data` dictionary attritute required measures when computing a UBQP solution
+    - `_data['Q']` matrix of size n x n with real values data (stored as numpy array)
+    - `compute` method enables to compute and associate a score to a given UBQP solution
+
+    Example:
+
+    >>> import random
+    >>> import numpy as np
+    >>> # binary solution import
+    >>> from macop.solutions.discrete import BinarySolution
+    >>> # evaluator import
+    >>> from macop.evaluators.discrete.mono import UBQPEvaluator
+    >>> # define problem data using UBQP example instance
+    >>> ubqp_instance_file = 'examples/instances/ubqp/ubqp_instance.txt'
+    >>> n = 100 # problem size
+    >>> # loading data
+    >>> f = open(ubqp_instance_file, 'r')
+    >>> file_data = f.readlines()
+    >>> # get all string floating point values of matrix
+    >>> Q_data = ''.join([ line.replace('\\n', '') for line in file_data[8:] ])
+    >>> # load the concatenate obtained string
+    >>> Q_matrix = np.fromstring(Q_data, dtype=float, sep=' ').reshape(n, n)
+    >>> f.close()    
+    >>> # create evaluator instance using loading data
+    >>> evaluator = UBQPEvaluator(data={'Q': Q_matrix})
+    >>> # create new random combinatory solution using n, the instance QAP size
+    >>> solution = BinarySolution.random(n)
+    >>> # compute solution score
+    >>> evaluator.compute(solution)
+    477.0
+    """
+
+    def compute(self, solution):
+        """Apply the computation of fitness from solution
+
+        Args:
+            solution: {Solution} -- UBQP solution instance
+    
+        Returns:
+            {float} -- fitness score of solution
+        """
+        fitness = 0
+        for index_i, val_i in enumerate(solution._data):
+            for index_j, val_j in enumerate(solution._data):
+                fitness += self._data['Q'][index_i, index_j] * val_i * val_j
 
         return fitness

@@ -2,18 +2,16 @@
 import logging
 import os
 import random
+import numpy as np
 
 # module imports
 from macop.solutions.discrete import BinarySolution
-from macop.evaluators.discrete.mono import KnapsackEvaluator
+from macop.evaluators.discrete.mono import UBQPEvaluator
 
 from macop.operators.discrete.mutators import SimpleMutation
 from macop.operators.discrete.mutators import SimpleBinaryMutation
-from macop.operators.discrete.crossovers import SimpleCrossover
-from macop.operators.discrete.crossovers import RandomSplitCrossover
 
 from macop.policies.classicals import RandomPolicy
-from macop.policies.reinforcement import UCBPolicy
 
 from macop.algorithms.mono import IteratedLocalSearch as ILS
 from macop.algorithms.mono import HillClimberFirstImprovment
@@ -27,50 +25,53 @@ logging.basicConfig(format='%(asctime)s %(message)s', filename='data/example.log
 
 random.seed(42)
 
-elements_score = [ random.randint(1, 20) for _ in range(30) ]
-elements_weight = [ random.randint(2, 5) for _ in range(30) ]
+# usefull instance data
+n = 100
+ubqp_instance_file = 'instances/ubqp/ubqp_instance.txt'
+filepath = "data/checkpoints_ubqp.csv"
 
-def knapsackWeight(solution):
-
-    weight_sum = 0
-    for index, elem in enumerate(solution._data):
-        weight_sum += elements_weight[index] * elem
-
-    return weight_sum
 
 # default validator
 def validator(solution):
-
-    if knapsackWeight(solution) <= 80:
-        return True
-    else:
-        False
+    return True
 
 # define init random solution
 def init():
-    return BinarySolution.random(30, validator)
+    return BinarySolution.random(n, validator)
 
 
 filepath = "data/checkpoints.csv"
 
 def main():
 
-    operators = [SimpleBinaryMutation(), SimpleMutation(), SimpleCrossover(), RandomSplitCrossover()]
-    policy = UCBPolicy(operators)
+    # load UBQP instance
+    with open(ubqp_instance_file, 'r') as f:
+
+        lines = f.readlines()
+
+        # get all string floating point values of matrix
+        Q_data = ''.join([ line.replace('\n', '') for line in lines[8:] ])
+
+        # load the concatenate obtained string
+        Q_matrix = np.fromstring(Q_data, dtype=float, sep=' ').reshape(n, n)
+
+    print(f'Q_matrix shape: {Q_matrix.shape}')
+
+    operators = [SimpleBinaryMutation(), SimpleMutation()]
+    policy = RandomPolicy(operators)
     callback = BasicCheckpoint(every=5, filepath=filepath)
-    evaluator = KnapsackEvaluator(data={'worths': elements_score})
+    evaluator = UBQPEvaluator(data={'Q': Q_matrix})
 
     # passing global evaluation param from ILS
-    hcfi = HillClimberFirstImprovment(init, evaluator, operators, policy, validator, maximise=True, verbose=False)
-    algo = ILS(init, evaluator, operators, policy, validator, localSearch=hcfi, maximise=True, verbose=False)
+    hcfi = HillClimberFirstImprovment(init, evaluator, operators, policy, validator, maximise=True, verbose=True)
+    algo = ILS(init, evaluator, operators, policy, validator, localSearch=hcfi, maximise=True, verbose=True)
     
     # add callback into callback list
     algo.addCallback(callback)
 
-    bestSol = algo.run(1000)
+    bestSol = algo.run(10000, ls_evaluations=100)
 
-    print('Solution score is {}'.format(evaluator.compute(bestSol)))
-    print('Solution weigth is {}'.format(knapsackWeight(bestSol)))
+    print('Solution for UBQP instance score is {}'.format(evaluator.compute(bestSol)))
 
 if __name__ == "__main__":
     main()

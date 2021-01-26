@@ -72,9 +72,9 @@ def main():
     # add callback into callback list
     algo.addCallback(callback)
 
-    bestSol = algo.run(100000, ls_evaluations=100)
+    bestSol = algo.run(10000, ls_evaluations=100)
 
-    print('Solution score is {}'.format(evaluator.compute(bestSol)))
+    print('Solution for QAP instance score is {}'.format(evaluator.compute(bestSol)))
 
 if __name__ == "__main__":
     main()

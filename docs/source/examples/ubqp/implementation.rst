@@ -28,16 +28,15 @@ The resulting solution obtained:
 
 
 UBQP Evaluator
-~~~~~~~~~~~~~
+~~~~~~~~~~~~~~
 
 Now that we have the structure of our solutions, and the means to generate them, we will seek to evaluate them.
 
-To do this, we need to create a new evaluator specific to our problem and the relative evaluation function:
+To do this, we need to create a new evaluator specific to our problem and the relative evaluation function we need to maximise:
 
-- :math:`min_{ϕ∈S_n}\sum_{i=1}^{n}{\sum_{j=1}^{n}{f_{ij}⋅d_{\phi(i)\phi(j)}}}`
+- :math:`f(x)=x′Qx=\sum_{i=1}^{n}{\sum_{j=1}^{n}{q_{ij}⋅x_i⋅x_j}}`
 
 So we are going to create a class that will inherit from the abstract class ``macop.evalutarors.base.Evaluator``:
-
 
 .. code:: python
 
@@ -55,7 +54,7 @@ So we are going to create a class that will inherit from the abstract class ``ma
         """Apply the computation of fitness from solution
 
         Args:
-            solution: {Solution} -- QAP solution instance
+            solution: {Solution} -- UBQP solution instance
     
         Returns:
             {float} -- fitness score of solution
@@ -63,19 +62,19 @@ So we are going to create a class that will inherit from the abstract class ``ma
         fitness = 0
         for index_i, val_i in enumerate(solution._data):
             for index_j, val_j in enumerate(solution._data):
-                fitness += self._data['F'][index_i, index_j] * self._data['D'][val_i, val_j]
+                fitness += self._data['Q'][index_i, index_j] * val_i * val_j
 
         return fitness
 
-The cost function for the quadratic problem is now well defined.
+The cost function for the Unconstrained binary quadratic problem is now well defined.
 
 .. warning::
-    The class proposed here, is available in the Macop package ``macop.evaluators.discrete.mono.QAPEvaluator``.
+    The class proposed here, is available in the Macop package ``macop.evaluators.discrete.mono.UBQPEvaluator``.
 
 Running algorithm
 ~~~~~~~~~~~~~~~~~
 
-Now that the necessary tools are available, we will be able to deal with our problem and look for solutions in the search space of our QAP instance.
+Now that the necessary tools are available, we will be able to deal with our problem and look for solutions in the search space of our UBQP instance.
 
 Here we will use local search algorithms already implemented in **Macop**.
 
@@ -87,10 +86,10 @@ If you are uncomfortable with some of the elements in the code that will follow,
     import numpy as np
 
     # module imports
-    from macop.solutions.discrete import CombinatoryIntegerSolution
-    from macop.evaluators.discrete.mono import QAPEvaluator
+    from macop.solutions.discrete import BinarySolution
+    from macop.evaluators.discrete.mono import UBQPEvaluator
 
-    from macop.operators.discrete.mutators import SimpleMutation
+    from macop.operators.discrete.mutators import SimpleMutation, SimpleBinaryMutation
 
     from macop.policies.classicals import RandomPolicy
 
@@ -101,53 +100,47 @@ If you are uncomfortable with some of the elements in the code that will follow,
     n = 100
     qap_instance_file = 'qap_instance.txt'
 
-    # default validator (check the consistency of our data, i.e. only unique element)
+    # default validator
     def validator(solution):
-        if len(list(solution._data)) > len(set(list(solution._data))):
-            print("not valid")
-            return False
         return True
 
     # define init random solution
     def init():
-        return CombinatoryIntegerSolution.random(n, validator)
+        return BinarySolution.random(n, validator)
 
-    # load qap instance
-    with open(qap_instance_file, 'r') as f:
-        file_data = f.readlines()
-        print(f'Instance information {file_data[0]}')
+    # load UBQP instance
+    with open(ubqp_instance_file, 'r') as f:
 
-        D_lines = file_data[1:n + 1]
-        D_data = ''.join(D_lines).replace('\n', '')
+        lines = f.readlines()
 
-        F_lines = file_data[n:2 * n + 1]
-        F_data = ''.join(F_lines).replace('\n', '')
+        # get all string floating point values of matrix
+        Q_data = ''.join([ line.replace('\n', '') for line in lines[8:] ])
 
-    D_matrix = np.fromstring(D_data, dtype=float, sep=' ').reshape(n, n)
-    print(f'D matrix shape: {D_matrix.shape}')
-    F_matrix = np.fromstring(F_data, dtype=float, sep=' ').reshape(n, n)
-    print(f'F matrix shape: {F_matrix.shape}')
+        # load the concatenate obtained string
+        Q_matrix = np.fromstring(Q_data, dtype=float, sep=' ').reshape(n, n)
+
+    print(f'Q_matrix shape: {Q_matrix.shape}')
 
     # only one operator here
-    operators = [SimpleMutation()]
+    operators = [SimpleMutation(), SimpleBinaryMutation()]
 
-    # random policy even if list of solution has only one element
+    # random policy
     policy = RandomPolicy(operators)
 
-    # use of loaded data from QAP instance
-    evaluator = QAPEvaluator(data={'F': F_matrix, 'D': D_matrix})
+    # use of loaded data from UBQP instance
+    evaluator = UBQPEvaluator(data={'Q': Q_matrix})
 
     # passing global evaluation param from ILS
-    hcfi = HillClimberFirstImprovment(init, evaluator, operators, policy, validator, maximise=False, verbose=True)
-    algo = ILS(init, evaluator, operators, policy, validator, localSearch=hcfi, maximise=False, verbose=True)
+    hcfi = HillClimberFirstImprovment(init, evaluator, operators, policy, validator, maximise=True, verbose=True)
+    algo = ILS(init, evaluator, operators, policy, validator, localSearch=hcfi, maximise=True, verbose=True)
 
     # run the algorithm
-    bestSol = algo.run(100000, ls_evaluations=100)
+    bestSol = algo.run(10000, ls_evaluations=100)
 
-    print('Solution score is {}'.format(evaluator.compute(bestSol)))
+    print('Solution for UBQP instance score is {}'.format(evaluator.compute(bestSol)))
 
 
-QAP problem solving is now possible with Macop. As a reminder, the complete code is available in the qapExample.py_ file.
+UBQP problem solving is now possible with **Macop**. As a reminder, the complete code is available in the ubqpExample.py_ file.
 
-.. _qapExample.py: https://github.com/jbuisine/macop/blob/master/examples/qapExample.py
+.. _ubqpExample.py: https://github.com/jbuisine/macop/blob/master/examples/ubqpExample.py
 .. _documentation: https://jbuisine.github.io/macop/_build/html/documentations

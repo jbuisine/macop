@@ -1,7 +1,6 @@
 UBQP problem definition
 =======================
 
-
 Understand the UBQP Problem
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

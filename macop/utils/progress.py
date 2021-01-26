@@ -79,4 +79,4 @@ def macop_progress(algo, evaluations, max):
     # go to line
     if progress >= 1.:
         print()
-        print(macop_line(algo))
+        macop_line(algo)
