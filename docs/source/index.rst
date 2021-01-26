@@ -8,7 +8,7 @@ Minimalist And Customisable Optimisation Package
 What's **Macop** ?
 ------------------
 
-**Macop** is a discrete optimisation Python package which not which doesn't implement every algorithm in the literature but provides the ability to quickly develop and test your own algorithm and strategies. The main objective of this package is to provide maximum flexibility, which allows for easy experimentation in implementation..
+**Macop** is a discrete optimisation Python package which not which doesn't implement every algorithm in the literature but provides the ability to quickly develop and test your own algorithm and strategies. The main objective of this package is to provide maximum flexibility, which allows for easy experimentation in implementation.
 
 .. toctree::
    :maxdepth: 1
@@ -19,6 +19,9 @@ What's **Macop** ?
    documentations/index
 
    api
+
+   examples
+
    contributing
 
 Indices and tables

@@ -10,7 +10,7 @@ Validator definition
 An invalid solution can be shown below where the sum of the object weights is greater than 15:
 
 .. image:: ../_static/documentation/project_knapsack_invalid.png
-   :width:  800 px
+   :width:  85 %
    :align: center
 
 In fact, **[1, 0, 1, 0, 0]** is an invalid solution as we have a weight of **16** which violates the knapsack capacity constraint.

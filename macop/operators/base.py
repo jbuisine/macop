@@ -51,7 +51,6 @@ class Mutation(Operator):
         raise NotImplementedError
 
 
-
 class Crossover(Operator):
     """Abstract crossover extend from Operator
 

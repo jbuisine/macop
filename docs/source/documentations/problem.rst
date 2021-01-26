@@ -12,7 +12,7 @@ The **knapsack problem** is a problem in combinatorial optimisation: Given a set
 The image below provides an illustration of the problem:
 
 .. image:: ../_static/documentation/knapsack_problem.png
-   :width: 300 px
+   :width: 40 %
    :align: center
 
 
@@ -28,7 +28,7 @@ Problem implementation
 During the whole tutorial, the example used is based on the previous illustration with:
 
 .. image:: ../_static/documentation/project_knapsack_problem.png
-   :width: 600 px
+   :width: 85 %
    :align: center
 
 

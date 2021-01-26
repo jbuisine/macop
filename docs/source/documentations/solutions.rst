@@ -79,7 +79,7 @@ Knapsack solution
 A valid solution can be shown below where the sum of the object weights is 15 and the sum of the selected objects values is 8 (its fitness):
 
 .. image:: ../_static/documentation/project_knapsack_solution.png
-   :width:  800 px
+   :width:  85 %
    :align: center
 
 Its representation can be translate as a **binary array** with value:

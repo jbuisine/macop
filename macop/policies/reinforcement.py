@@ -69,7 +69,6 @@ class UCBPolicy(Policy):
         self._C = C
         self._exp_rate = exp_rate
 
-
     def select(self):
         """Select using Upper Confidence Bound the next operator to use (using acquired rewards)
 
@@ -129,7 +128,7 @@ class UCBPolicy(Policy):
         # avoid use of crossover if only one solution is passed
         if solution2 is None and operator._kind == KindOperator.CROSSOVER:
 
-            while operator._kind == KindOperator.CROSSOVER:            
+            while operator._kind == KindOperator.CROSSOVER:
                 operator = self.select()
 
         # apply operator on solution

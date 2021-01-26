@@ -75,7 +75,7 @@ Mutator operator
 As detailed, the mutation operator consists in having a minimum impact on the current state of our solution. Here is an example of a modification that could be done for our problem.
 
 .. image:: ../_static/documentation/project_knapsack_mutator.png
-   :width:  800 px
+   :width:  90 %
    :align: center
 
 In this example we change a bit value randomly and obtain a new solution from our search space.
@@ -141,7 +141,7 @@ Crossover operator
 Inspired by Darwin's theory of evolution, crossover starts from two solutions to generate a so-called offspring solution composed of the fusion of the data of the parent solutions.
 
 .. image:: ../_static/documentation/project_knapsack_crossover.png
-   :width:  800 px
+   :width:  95%
    :align: center
 
 In this example we merge two solutions with a specific splitting criterion in order to obtain an offspring.

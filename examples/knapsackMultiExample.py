@@ -24,7 +24,7 @@ if not os.path.exists('data'):
     os.makedirs('data')
 
 # logging configuration
-logging.basicConfig(format='%(asctime)s %(message)s', filename='data/exampleMOEAD.log', level=logging.DEBUG)
+logging.basicConfig(format='%(asctime)s %(message)s', filename='data/example_MOEAD_knapsack.log', level=logging.DEBUG)
 
 random.seed(42)
 

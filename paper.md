@@ -6,8 +6,14 @@ tags:
   - Mono-objective
   - Multi-objective
 authors:
-  - name: Jérôme BUISINE
+  - name: Jérôme Buisine
     orcid: 0000-0001-6071-744X
+    affiliation: 1 # (Multiple affiliations must be quoted)
+  - name: Samuel Delepoulle
+    # orcid: 0000-0002-8897-0858
+    affiliation: 1 # (Multiple affiliations must be quoted)
+  - name: Christophe Renaud
+    # orcid: 0000-0002-9826-8667
     affiliation: 1 # (Multiple affiliations must be quoted)
 affiliations:
  - name: Univ. Littoral Côte d’Opale, LISIC Calais, France, F-62100
@@ -23,7 +29,7 @@ bibliography: paper.bib
 
 # Summary
 
-Optimisation problems are frequently encountered in science and industry. Given a real-valued function $f$ defined on a set called the search space $X$, optimising the function $f$ consists of finding a point $x \in X$ that has the optimal value $f(x)$, or at least constructing a sequence $(x_t)_{t \in \mathbf{N}} \in X^\mathbb{N}$ that is close to the optimum. Depending on the search space $X$, optimisation problems can be globally classified as discrete problems (e.g. $X=\{0,1\}^n$) or as continuous problems (e.g. $X=\mathbb{R}^n$). Tools for modelling and solving discrete and continuous problems are proposed in the literature [@ceres-solver].
+Optimisation problems are frequently encountered in science and industry. Given a real-valued function $f$ defined on a set called the search space $X$, optimising the function $f$ consists of finding a point $x \in X$ that has the optimal value $f(x)$, or at least constructing a sequence $(x_t)_{t \in \mathbf{N}} \in X^\mathbb{N}$ that is close to the optimum. Depending on the search space $X$, optimisation problems can be globally classified as discrete problems (e.g. $X=\{0,1\}^n$) or as continuous problems (e.g. $X=\mathbb{R}^n$). Tools for modelling and solving discrete [@solid-solver] and continuous [@ceres-solver] problems are proposed in the literature.
 
 In this paper, `Macop` for `Minimalist And Customisable Optimisation Package`, is a proposed as a discrete optimisation Python package which doesn't implement every algorithm in the literature, but provides the ability to quickly develop and test your own algorithm and strategies. The main objective of this package is to provide maximum flexibility, which allows for easy experimentation in implementation.
 

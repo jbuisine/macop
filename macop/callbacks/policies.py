@@ -75,8 +75,10 @@ class UCBCheckpoint(Callback):
                 self._algo._policy._occurences = [
                     float(f) for f in occurrencesLine.split(';')
                 ]
-            
-            macop_text(self._algo, f'Load of available UCB policy data from `{self._filepath}`')
+
+            macop_text(
+                self._algo,
+                f'Load of available UCB policy data from `{self._filepath}`')
         else:
             macop_text(self._algo, 'No UCB data found, use default UCB policy')
             logging.info("No UCB data found...")

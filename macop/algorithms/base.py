@@ -127,7 +127,6 @@ class Algorithm():
         """
         self._parent = parent
 
-
     def initRun(self):
         """
         Initialize the current solution and best solution using the `initialiser` function
@@ -154,7 +153,6 @@ class Algorithm():
 
             current_algorithm._numberOfEvaluations += 1
             current_algorithm = current_algorithm._parent
-            
 
     def getGlobalEvaluation(self):
         """Get the global number of evaluation (if inner algorithm)
@@ -281,8 +279,9 @@ class Algorithm():
         else:
             self._numberOfEvaluations = 0
 
-        logging.info("Run %s with %s evaluations" %
-                     (self.__str__(), evaluations))
+        logging.info(
+            f"Run {self.__str__()} with {(self.__str__(), evaluations)} evaluations"
+        )
 
     def progress(self):
         """
@@ -293,19 +292,27 @@ class Algorithm():
                 callback.run()
 
         if self._verbose:
-            macop_progress(self, self.getGlobalEvaluation(), self.getGlobalMaxEvaluation())
+            macop_progress(self, self.getGlobalEvaluation(),
+                           self.getGlobalMaxEvaluation())
 
-        logging.info(f"-- {type(self).__name__} evaluation {self._numberOfEvaluations} of {self._maxEvaluations} ({((self._numberOfEvaluations / self._maxEvaluations) * 100):.2f}%) - BEST SCORE {self._bestSolution.fitness()}")
+        logging.info(
+            f"-- {type(self).__name__} evaluation {self._numberOfEvaluations} of {self._maxEvaluations} - BEST SCORE {self._bestSolution._score}"
+        )
 
     def end(self):
         """Display end message into `run` method
         """
-    
-        macop_text(self, f'({type(self).__name__}) Found after {self._numberOfEvaluations} evaluations \n   - {self._bestSolution}')
+
+        macop_text(
+            self,
+            f'({type(self).__name__}) Found after {self._numberOfEvaluations} evaluations \n   - {self._bestSolution}'
+        )
         macop_line(self)
 
     def information(self):
-        logging.info(f"-- Best {self._bestSolution} - SCORE {self._bestSolution.fitness()}")
+        logging.info(
+            f"-- Best {self._bestSolution} - SCORE {self._bestSolution.fitness()}"
+        )
 
     def __str__(self):
         return f"{type(self).__name__} using {type(self._bestSolution).__name__}"

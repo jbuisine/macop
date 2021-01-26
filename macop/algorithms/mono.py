@@ -93,7 +93,9 @@ class HillClimberFirstImprovment(Algorithm):
                 self.increaseEvaluation()
 
                 self.progress()
-                logging.info(f"---- Current {newSolution} - SCORE {newSolution.fitness()}")
+                logging.info(
+                    f"---- Current {newSolution} - SCORE {newSolution.fitness()}"
+                )
 
                 # stop algorithm if necessary
                 if self.stop():
@@ -102,8 +104,10 @@ class HillClimberFirstImprovment(Algorithm):
             # set new current solution using best solution found in this neighbor search
             self._currentSolution = self._bestSolution
 
-        logging.info(f"End of {type(self).__name__}, best solution found {self._bestSolution}")
-        
+        logging.info(
+            f"End of {type(self).__name__}, best solution found {self._bestSolution}"
+        )
+
         return self._bestSolution
 
 
@@ -191,7 +195,9 @@ class HillClimberBestImprovment(Algorithm):
                 self.increaseEvaluation()
 
                 self.progress()
-                logging.info(f"---- Current {newSolution} - SCORE {newSolution.fitness()}")
+                logging.info(
+                    f"---- Current {newSolution} - SCORE {newSolution.fitness()}"
+                )
 
                 # stop algorithm if necessary
                 if self.stop():
@@ -200,8 +206,10 @@ class HillClimberBestImprovment(Algorithm):
             # set new current solution using best solution found in this neighbor search
             self._currentSolution = self._bestSolution
 
-        logging.info(f"End of {type(self).__name__}, best solution found {self._bestSolution}")
-        
+        logging.info(
+            f"End of {type(self).__name__}, best solution found {self._bestSolution}"
+        )
+
         return self._bestSolution
 
 
@@ -268,14 +276,14 @@ class IteratedLocalSearch(Algorithm):
                  maximise=True,
                  parent=None,
                  verbose=True):
-        
-        super().__init__(initializer, evaluator, operators, policy, validator, maximise, parent, verbose)
+
+        super().__init__(initializer, evaluator, operators, policy, validator,
+                         maximise, parent, verbose)
 
         # specific local search associated with current algorithm
         self._localSearch = localSearch
         # need to attach current algorithm as parent
         self._localSearch.setParent(self)
-
 
     def run(self, evaluations, ls_evaluations=100):
         """
@@ -319,8 +327,10 @@ class IteratedLocalSearch(Algorithm):
 
             self.information()
 
-        logging.info(f"End of {type(self).__name__}, best solution found {self._bestSolution}")
-        
+        logging.info(
+            f"End of {type(self).__name__}, best solution found {self._bestSolution}"
+        )
+
         self.end()
 
         return self._bestSolution

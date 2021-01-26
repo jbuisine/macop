@@ -25,9 +25,9 @@ copyright = '2021, Jérôme BUISINE'
 author = 'Jérôme BUISINE'
 
 # The short X.Y version
-version = '1.0.8'
+version = '1.0.9'
 # The full version, including alpha/beta/rc tags
-release = 'v1.0.8'
+release = 'v1.0.9'
 
 
 # -- General configuration ---------------------------------------------------
@@ -47,6 +47,7 @@ extensions = [
     'sphinx.ext.autosummary',
     'sphinx.ext.viewcode',
     'sphinx.ext.coverage',
+    #'sphinx.ext.pngmath',
     #'autoapi.extension' 
 ]
 

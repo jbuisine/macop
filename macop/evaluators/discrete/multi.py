@@ -35,7 +35,6 @@ class WeightedSum(Evaluator):
     >>> weighted_score
     50.8
     """
-
     def compute(self, solution):
         """Apply the computation of fitness from solution
 
@@ -48,9 +47,13 @@ class WeightedSum(Evaluator):
         Returns:
             {float} -- weighted-sum of the fitness scores
         """
-        scores = [evaluator.compute(solution) for evaluator in self._data['evaluators']]
+        scores = [
+            evaluator.compute(solution)
+            for evaluator in self._data['evaluators']
+        ]
 
         # associate objectives scores to solution
         solution._scores = scores
 
-        return sum([scores[i] * w for i, w in enumerate(self._data['weights'])])
+        return sum(
+            [scores[i] * w for i, w in enumerate(self._data['weights'])])

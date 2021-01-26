@@ -107,7 +107,7 @@ class MOEAD(Algorithm):
 
         if mu < T:
             raise ValueError('`mu` cannot be less than `T`')
-            
+
         if mu < T:
             raise ValueError('`mu` cannot be less than `T`')
 
@@ -141,14 +141,23 @@ class MOEAD(Algorithm):
         for i in range(self._mu):
 
             # compute weight sum from solution
-            sub_evaluator = WeightedSum(data={'evaluators': evaluator, 'weights': weights[i]})
+            sub_evaluator = WeightedSum(data={
+                'evaluators': evaluator,
+                'weights': weights[i]
+            })
 
             # intialize each sub problem
             # use copy of list to keep track for each sub problem
-            subProblem = MOSubProblem(i, weights[i],
-                                      initializer, sub_evaluator,
-                                      operators.copy(), policy, validator,
-                                      maximise, self, verbose=self._verbose)
+            subProblem = MOSubProblem(i,
+                                      weights[i],
+                                      initializer,
+                                      sub_evaluator,
+                                      operators.copy(),
+                                      policy,
+                                      validator,
+                                      maximise,
+                                      self,
+                                      verbose=self._verbose)
 
             self._subProblems.append(subProblem)
 
@@ -213,7 +222,8 @@ class MOEAD(Algorithm):
                 # for each neighbor of current sub problem update solution if better
                 improvment = False
                 for j in self._neighbors[i]:
-                    if spBestSolution.fitness() > self._subProblems[j]._bestSolution.fitness():
+                    if spBestSolution.fitness(
+                    ) > self._subProblems[j]._bestSolution.fitness():
 
                         # create new solution based on current new if better, computes fitness associated to new solution for sub problem
                         newSolution = spBestSolution.clone()
@@ -241,7 +251,9 @@ class MOEAD(Algorithm):
                 if self.stop():
                     break
 
-        logging.info(f"End of {type(self).__name__}, best solution found {self._population}")
+        logging.info(
+            f"End of {type(self).__name__}, best solution found {self._population}"
+        )
 
         self.end()
 
@@ -255,9 +267,12 @@ class MOEAD(Algorithm):
             for callback in self._callbacks:
                 callback.run()
 
-        macop_progress(self, self.getGlobalEvaluation(), self.getGlobalMaxEvaluation())
+        macop_progress(self, self.getGlobalEvaluation(),
+                       self.getGlobalMaxEvaluation())
 
-        logging.info(f"-- {type(self).__name__} evaluation {self._numberOfEvaluations} of {self._maxEvaluations} ({((self._numberOfEvaluations) / self._maxEvaluations * 100.):.2f}%)")
+        logging.info(
+            f"-- {type(self).__name__} evaluation {self._numberOfEvaluations} of {self._maxEvaluations} ({((self._numberOfEvaluations) / self._maxEvaluations * 100.):.2f}%)"
+        )
 
     def setNeighbors(self):
 
@@ -339,9 +354,12 @@ class MOEAD(Algorithm):
 
     def end(self):
         """Display end message into `run` method
-        """ 
+        """
 
-        macop_text(self, f'({type(self).__name__}) Found after {self._numberOfEvaluations} evaluations')
+        macop_text(
+            self,
+            f'({type(self).__name__}) Found after {self._numberOfEvaluations} evaluations'
+        )
 
         for i, solution in enumerate(self._pfPop):
             macop_text(self, f'  - [{i}] {solution._scores} : {solution}')
@@ -426,8 +444,8 @@ class MOSubProblem(Algorithm):
                  parent=None,
                  verbose=True):
 
-        super().__init__(initalizer, evaluator, operators, policy,
-                         validator, maximise, parent)
+        super().__init__(initalizer, evaluator, operators, policy, validator,
+                         maximise, parent)
 
         self._index = index
         self._weights = weights
@@ -477,8 +495,11 @@ class MOSubProblem(Algorithm):
             if self.stop():
                 break
 
-            logging.info(f"---- Current {newSolution} - SCORE {newSolution.fitness()}")
+            logging.info(
+                f"---- Current {newSolution} - SCORE {newSolution.fitness()}")
 
-            logging.info(f"End of {type(self).__name__}, best solution found {self._bestSolution}")
+            logging.info(
+                f"End of {type(self).__name__}, best solution found {self._bestSolution}"
+            )
 
         return self._bestSolution
