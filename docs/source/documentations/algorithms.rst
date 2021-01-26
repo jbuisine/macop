@@ -9,7 +9,7 @@ Find local and global optima
 Overall, in an optimization process, we will seek to find the best, or the best solutions that minimize or maximize our objective function (fitness score obtained) in order to respond to our problem.
 
 .. image:: ../_static/documentation/search_space.png
-   :width:  800 px
+   :width:  95 %
    :align: center
 
 Sometimes, the search space can be very simple. A local search can provide access to the global optimum as shown in figure (a) above. 
@@ -270,7 +270,7 @@ The way to counter this problem is to allow the algorithm to exit the exploitati
 The idea is to make a leap in the search space in order to find a new local optimum which can be the global optimum. The explained process is illustrated below:
 
 .. image:: ../_static/documentation/search_space_simple.png
-   :width:  400 px
+   :width:  45 %
    :align: center
 
 

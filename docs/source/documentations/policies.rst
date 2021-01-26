@@ -12,7 +12,7 @@ Automated operator choice strategies have also been developed in the literature,
 The operator choice problem can be seen as the desire to find the best solution generation operator at the next evaluation that will be the most conducive to precisely improving the solution.
 
 .. image:: ../_static/documentation/operators_choice.png
-   :width:  400 px
+   :width:  45 %
    :align: center
 
 .. note::

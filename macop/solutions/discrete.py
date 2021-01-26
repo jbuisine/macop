@@ -84,7 +84,7 @@ class CombinatoryIntegerSolution(Solution):
     """
     Combinatory integer solution class
 
-    - store solution as a binary array (example: [0, 1, 0, 1, 1])
+    - store solution as a combinatory array (example: [1, 3, 0, 2])
     - associated size is the size of the array
     - mainly use for selecting or not an element in a list of valuable objects
 

@@ -31,7 +31,7 @@ footer a {
     color: #009900 !important;   
 }
 
-colgroup :first-child {
+div[id=api] colgroup :first-child {
     width: 60% !important;
 }
 

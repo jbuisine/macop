@@ -6,7 +6,7 @@ It decomposes the original multi-objective problem into a number of single-objec
 MOEA/D is a state-of-art algorithm in aggregation-based approaches for multi-objective optimization.
 
 .. image:: ../_static/documentation/search_space_moead.png
-   :width:  400 px
+   :width:  45 %
    :align: center
 
 
@@ -14,3 +14,7 @@ As illustrated below, the two main objectives are sub-divised into 5 single-obje
 
 - ``macop.algorithms.multi.MOSubProblem`` class defines each sub-problem of MOEA/D.
 - ``macop.algorithms.multi.MOEAD`` class exploits ``MOSubProblem`` and implements MOEA/D using weighted-sum of objectives method.
+
+An example with MOEAD for knapsack problem is available in knapsackMultiExample.py_.
+
+.. _knapsackMultiExample.py: https://github.com/jbuisine/macop/blob/master/examples/knapsackMultiExample.py
