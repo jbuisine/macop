@@ -30,9 +30,11 @@ class BinarySolution(Solution):
         Example:
 
         >>> from macop.solutions.discrete import BinarySolution
+        >>>
         >>> # build of a solution using specific data and size
         >>> data = [0, 1, 0, 1, 1]
         >>> solution = BinarySolution(data, len(data))
+        >>>
         >>> # check data content
         >>> sum(solution.getData()) == 3
         True
@@ -58,6 +60,8 @@ class BinarySolution(Solution):
         Example:
 
         >>> from macop.solutions.discrete import BinarySolution
+        >>>
+        >>> # generate random solution using specific validator
         >>> validator = lambda solution: True if sum(solution.getData()) > 5 else False
         >>> solution = BinarySolution.random(10, validator)
         >>> sum(solution.getData()) > 5
@@ -128,6 +132,8 @@ class CombinatoryIntegerSolution(Solution):
         Example:
 
         >>> from macop.solutions.discrete import CombinatoryIntegerSolution
+        >>>
+        >>> # generate random solution using specific validator
         >>> validator = lambda solution: True if sum(solution.getData()) > 5 else False
         >>> solution = CombinatoryIntegerSolution.random(5, validator)
         >>> sum(solution.getData()) > 5
@@ -201,6 +207,8 @@ class IntegerSolution(Solution):
         >>> from macop.solutions.discrete import IntegerSolution
         >>> import numpy as np
         >>> np.random.seed(42)
+        >>>
+        >>> # generate random solution using specific validator
         >>> validator = lambda solution: True if sum(solution.getData()) > 5 else False
         >>> solution = IntegerSolution.random(5, validator)
         >>> sum(solution.getData()) > 10

@@ -9,8 +9,8 @@ Implemented problem examples
 .. toctree::
    :maxdepth: 1
 
-   examples/qap/index
-   examples/ubqp/index
+   examples/qap/global
+   examples/ubqp/global
 
 
 Available code examples

@@ -62,7 +62,7 @@ We can now generate solutions randomly by passing our validation function as a p
     solution = BinarySolution.random(5, validator)
 
 
-.. warning::
+.. caution::
     If the search space for valid solutions is very small compared to the overall search space, this can involve a considerable time for validating the solution and therefore obtaining a solution.
 
 The validation of a solution is therefore now possible. In the next part we will focus on the evaluation of a solution.

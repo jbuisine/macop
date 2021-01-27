@@ -19,7 +19,7 @@ Contents
 
    description
 
-   documentations/index
+   documentations
 
    api
 
@@ -42,7 +42,7 @@ Flexible discrete optimisation package allowing a quick implementation of your p
 
 
 Indices and tables
-------------------
+~~~~~~~~~~~~~~~~~~
 
 * :ref:`genindex`
 * :ref:`modindex`

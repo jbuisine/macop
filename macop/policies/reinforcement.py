@@ -23,32 +23,44 @@ class UCBPolicy(Policy):
 
     Attributes:
         operators: {[Operator]} -- list of selected operators for the algorithm
-        C: {float} -- The second half of the UCB equation adds exploration, with the degree of exploration being controlled by the hyper-parameter `C`.
+        C: {float} -- The second half of the UCB equation adds exploration, with the degree of exploration being controlled by the hyper-parameter ``C``.
         exp_rate: {float} -- exploration rate (probability to choose randomly next operator)
         rewards: {[float]} -- list of summed rewards obtained for each operator
         occurrences: {[int]} -- number of use (selected) of each operator
+
+    The value of attribute ``C`` will allow us to specify whether we wish to exploit or explore further in relation to our earned rewards. 
+    A low value of ``C`` (e.g. 2) will allow more exploitation, while a high value of ``C`` (e.g. 1000) will allow exploration.
+
+    The ``exp_rate`` variable avoids using an operator too much and allows to explore from time to time (especially if the variable ``C`` has a small value). Typical value for ``exp_rate`` can be 0.9.
 
     Example:
 
     >>> # operators import
     >>> from macop.operators.discrete.crossovers import SimpleCrossover
     >>> from macop.operators.discrete.mutators import SimpleMutation
+    >>>
     >>> # policy import
     >>> from macop.policies.reinforcement import UCBPolicy
+    >>>
     >>> # solution and algorithm
     >>> from macop.solutions.discrete import BinarySolution
     >>> from macop.algorithms.mono import IteratedLocalSearch
     >>> from macop.algorithms.mono import HillClimberFirstImprovment
+    >>>
     >>> # evaluator import
     >>> from macop.evaluators.discrete.mono import KnapsackEvaluator
     >>> # evaluator initialization (worths objects passed into data)
+    >>>
     >>> worths = [ random.randint(0, 20) for i in range(20) ]
     >>> evaluator = KnapsackEvaluator(data={'worths': worths})
+    >>>
     >>> # validator specification (based on weights of each objects)
     >>> weights = [ random.randint(5, 30) for i in range(20) ]
     >>> validator = lambda solution: True if sum([weights[i] for i, value in enumerate(solution.getData()) if value == 1]) < 200 else False
+    >>>
     >>> # initialiser function with lambda function
     >>> initialiser = lambda x=20: BinarySolution.random(x, validator)
+    >>>
     >>> # operators list with crossover and mutation
     >>> operators = [SimpleCrossover(), SimpleMutation()]
     >>> policy = UCBPolicy(operators)
@@ -62,7 +74,7 @@ class UCBPolicy(Policy):
     >>> policy.occurences # one more due to first evaluation
     [51, 53]
     """
-    def __init__(self, operators, C=100., exp_rate=0.5):
+    def __init__(self, operators, C=100., exp_rate=0.9):
         """UCB Policy initialiser
 
         Args:

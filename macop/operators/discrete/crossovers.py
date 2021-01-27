@@ -19,22 +19,29 @@ class SimpleCrossover(Crossover):
     >>> # operators import
     >>> from macop.operators.discrete.crossovers import SimpleCrossover
     >>> from macop.operators.discrete.mutators import SimpleMutation
+    >>>
     >>> # policy import
     >>> from macop.policies.reinforcement import UCBPolicy
-    >>> # solution and algorithm
+    >>>
+    >>> # solution and algorithm imports
     >>> from macop.solutions.discrete import BinarySolution
     >>> from macop.algorithms.mono import IteratedLocalSearch
     >>> from macop.algorithms.mono import HillClimberFirstImprovment
+    >>>
     >>> # evaluator import
     >>> from macop.evaluators.discrete.mono import KnapsackEvaluator
+    >>>
     >>> # evaluator initialization (worths objects passed into data)
     >>> worths = [ random.randint(0, 20) for i in range(10) ]
     >>> evaluator = KnapsackEvaluator(data={'worths': worths})
+    >>>
     >>> # validator specification (based on weights of each objects)
     >>> weights = [ random.randint(20, 30) for i in range(10) ]
     >>> validator = lambda solution: True if sum([weights[i] for i, value in enumerate(solution.getData()) if value == 1]) < 200 else False
-    >>> # initialiser function with lambda function
+    >>>
+    >>> # initialiser function for binary solution using specific solution size
     >>> initialiser = lambda x=10: BinarySolution.random(x, validator)
+    >>>
     >>> # operators list with crossover and mutation
     >>> simple_crossover = SimpleCrossover()
     >>> simple_mutation = SimpleMutation()
@@ -42,6 +49,7 @@ class SimpleCrossover(Crossover):
     >>> policy = UCBPolicy(operators)
     >>> local_search = HillClimberFirstImprovment(initialiser, evaluator, operators, policy, validator, maximise=True, verbose=False)
     >>> algo = IteratedLocalSearch(initialiser, evaluator, operators, policy, validator, localSearch=local_search, maximise=True, verbose=False)
+    >>>
     >>> # using best solution, simple crossover is applied
     >>> best_solution = algo.run(100)
     >>> list(best_solution.getData())
@@ -92,22 +100,29 @@ class RandomSplitCrossover(Crossover):
     >>> # operators import
     >>> from macop.operators.discrete.crossovers import RandomSplitCrossover
     >>> from macop.operators.discrete.mutators import SimpleMutation
+    >>>
     >>> # policy import
     >>> from macop.policies.reinforcement import UCBPolicy
-    >>> # solution and algorithm
+    >>>
+    >>> # solution and algorithm imports
     >>> from macop.solutions.discrete import BinarySolution
     >>> from macop.algorithms.mono import IteratedLocalSearch
     >>> from macop.algorithms.mono import HillClimberFirstImprovment
+    >>>
     >>> # evaluator import
     >>> from macop.evaluators.discrete.mono import KnapsackEvaluator
+    >>>
     >>> # evaluator initialization (worths objects passed into data)
     >>> worths = [ random.randint(0, 20) for i in range(10) ]
     >>> evaluator = KnapsackEvaluator(data={'worths': worths})
+    >>>
     >>> # validator specification (based on weights of each objects)
     >>> weights = [ random.randint(20, 30) for i in range(10) ]
     >>> validator = lambda solution: True if sum([weights[i] for i, value in enumerate(solution.getData()) if value == 1]) < 200 else False
-    >>> # initialiser function with lambda function
+    >>>
+    >>> # initialiser function for binary solution using specific solution size
     >>> initialiser = lambda x=10: BinarySolution.random(x, validator)
+    >>>
     >>> # operators list with crossover and mutation
     >>> random_split_crossover = RandomSplitCrossover()
     >>> simple_mutation = SimpleMutation()
@@ -115,6 +130,7 @@ class RandomSplitCrossover(Crossover):
     >>> policy = UCBPolicy(operators)
     >>> local_search = HillClimberFirstImprovment(initialiser, evaluator, operators, policy, validator, maximise=True, verbose=False)
     >>> algo = IteratedLocalSearch(initialiser, evaluator, operators, policy, validator, localSearch=local_search, maximise=True, verbose=False)
+    >>>
     >>> # using best solution, simple crossover is applied
     >>> best_solution = algo.run(100)
     >>> list(best_solution.getData())

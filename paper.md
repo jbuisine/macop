@@ -44,9 +44,14 @@ Most of the operational research libraries developed in Python offer users eithe
 On the other hand, available libraries [@pyopt-paper; @hart2017pyomo] in the literature did not allow to attach custom evaluation function to each algorithm used in this hierarchy of algorithms.
 Indeed, it is sometimes possible that the main algorithm manages local searches. Each local search may evaluate the solution differently using a different evaluation function of the parent algorithm (the main algorithm). Such as example, using a surrogate mathematical model [@10.1145/3321707.3321800] with a quick-to-evaluate function if the real evaluation function is very expensive in time. This is why in `Macop`, each algorithm can have its own mechanism (or partially), i.e. its evaluation function, its solution update operators, as well as its solution update policy. This is independent of the parent algorithm to which it is linked. This means that only the results (solutions found) are exchanged.
 
-This package was then adapted to correspond to a formalism of implementing algorithms and problems from a simple and generic structure, hence the term minimalist in **Macop**.
+Hence, motivation behind **Macop** is a flexible discrete optimisation package allowing a quick implementation of problems. In particular it meets the following needs:
 
-Macop wants to allow users to quickly focus on one of proposed features from its interaction main loop.
+- **Common basis:** the interaction loop during the solution finding process proposed within the package is common to all heuristics. This allows the user to modify only a part of this interaction loop if necessary without rendering the process non-functional.
+- **Hierarchy:** a hierarchical algorithm management system is available, especially when an algorithm needs to manage local searches. This hierarchy remains transparent to the user. The main algorithm will be able to manage and control the process of searching for solutions.
+- **Flexibility:** although the algorithms are dependent on each other, it is possible that their internal management is different. This means that the ways in which solutions are evaluated and updated, for example, may be different.
+- **Abstraction:** thanks to the modular separability of the package, it is quickly possible to implement new problems, solutions representation, way to evaluate, update solutions within the package.
+- **Extensible:** the package is open to extension, i.e. it does not partition the user in these developer choices. It can just as well implement continuous optimization problems if needed while making use of the main interaction loop proposed by the package.
+- **Easy Setup:** As a Pure Python package distributed is `pip` installable and easy to use.
 
 # Description
 
@@ -65,7 +70,7 @@ The package consists of main several modules:
 
 The primary advantage of using Python is that it allows you to dynamically add new members within the new implemented solution or algorithm classes. This of course does not close the possibilities of extension and storage of information within solutions and algorithms. It all depends on the need in question.
 
-## In `macop.algorihtms` module:
+## In `macop.algorithms` module:
 
 Both single and multi-objective algorithms have been implemented for demonstration purposes. 
 

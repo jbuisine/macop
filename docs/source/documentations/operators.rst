@@ -193,7 +193,7 @@ We can now use the crossover operator created to generate new solutions. Here is
     # obtaining new solution using crossover
     offspring = crossover.apply(solution1, solution2)
 
-.. warning::
+.. tip::
     The developed ``SimpleCrossover`` is available into ``macop.operators.discrete.crossovers.SimpleCrossover`` in **Macop**.
     However, the choice of halves of the merged data is made randomly.
 

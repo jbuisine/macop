@@ -30,29 +30,38 @@ class HillClimberFirstImprovment(Algorithm):
     Example:
 
     >>> import random
+    >>>
     >>> # operators import
     >>> from macop.operators.discrete.crossovers import SimpleCrossover
     >>> from macop.operators.discrete.mutators import SimpleMutation
+    >>>
     >>> # policy import
     >>> from macop.policies.classicals import RandomPolicy
-    >>> # solution and algorithm
+    >>>
+    >>> # solution and algorithm imports
     >>> from macop.solutions.discrete import BinarySolution
     >>> from macop.algorithms.mono import HillClimberFirstImprovment
+    >>>
     >>> # evaluator import
     >>> from macop.evaluators.discrete.mono import KnapsackEvaluator
+    >>>
     >>> # evaluator initialization (worths objects passed into data)
     >>> problem_size = 20
     >>> worths = [ random.randint(0, 20) for i in range(problem_size) ]
     >>> evaluator = KnapsackEvaluator(data={'worths': worths})
+    >>>
     >>> # validator specification (based on weights of each objects)
     >>> weights = [ random.randint(5, 30) for i in range(problem_size) ]
     >>> validator = lambda solution: True if sum([weights[i] for i, value in enumerate(solution.getData()) if value == 1]) < 200 else False
-    >>> # initialiser function with lambda function
+    >>>
+    >>> # initialiser function for binary solution using specific solution size
     >>> initialiser = lambda x=20: BinarySolution.random(x, validator)
+    >>>
     >>> # operators list with crossover and mutation
     >>> operators = [SimpleCrossover(), SimpleMutation()]
     >>> policy = RandomPolicy(operators)
     >>> algo = HillClimberFirstImprovment(initialiser, evaluator, operators, policy, validator, maximise=True, verbose=False)
+    >>>
     >>> # run the algorithm
     >>> solution = algo.run(100)
     >>> solution._score
@@ -134,29 +143,38 @@ class HillClimberBestImprovment(Algorithm):
     Example:
 
     >>> import random
+    >>>
     >>> # operators import
     >>> from macop.operators.discrete.crossovers import SimpleCrossover
     >>> from macop.operators.discrete.mutators import SimpleMutation
+    >>>
     >>> # policy import
     >>> from macop.policies.classicals import RandomPolicy
-    >>> # solution and algorithm
+    >>>
+    >>> # solution and algorithm imports
     >>> from macop.solutions.discrete import BinarySolution
     >>> from macop.algorithms.mono import HillClimberBestImprovment
+    >>>
     >>> # evaluator import
     >>> from macop.evaluators.discrete.mono import KnapsackEvaluator
+    >>>
     >>> # evaluator initialization (worths objects passed into data)
     >>> problem_size = 20
     >>> worths = [ random.randint(0, 20) for i in range(problem_size) ]
     >>> evaluator = KnapsackEvaluator(data={'worths': worths})
+    >>>
     >>> # validator specification (based on weights of each objects)
     >>> weights = [ random.randint(5, 30) for i in range(problem_size) ]
     >>> validator = lambda solution: True if sum([weights[i] for i, value in enumerate(solution.getData()) if value == 1]) < 200 else False
-    >>> # initialiser function with lambda function
+    >>>
+    >>> # initialiser function for binary solution using specific solution size
     >>> initialiser = lambda x=20: BinarySolution.random(x, validator)
+    >>>
     >>> # operators list with crossover and mutation
     >>> operators = [SimpleCrossover(), SimpleMutation()]
     >>> policy = RandomPolicy(operators)
     >>> algo = HillClimberBestImprovment(initialiser, evaluator, operators, policy, validator, maximise=True, verbose=False)
+    >>>
     >>> # run the algorithm
     >>> solution = algo.run(100)
     >>> solution._score
@@ -239,32 +257,41 @@ class IteratedLocalSearch(Algorithm):
     Example:
 
     >>> import random
+    >>>
     >>> # operators import
     >>> from macop.operators.discrete.crossovers import SimpleCrossover
     >>> from macop.operators.discrete.mutators import SimpleMutation
+    >>>
     >>> # policy import
     >>> from macop.policies.classicals import RandomPolicy
-    >>> # solution and algorithm
+    >>>
+    >>> # import for solution and algorithm
     >>> from macop.solutions.discrete import BinarySolution
     >>> from macop.algorithms.mono import IteratedLocalSearch
     >>> from macop.algorithms.mono import HillClimberFirstImprovment
+    >>>
     >>> # evaluator import
     >>> from macop.evaluators.discrete.mono import KnapsackEvaluator
+    >>>
     >>> # evaluator initialization (worths objects passed into data)
     >>> problem_size = 20
     >>> worths = [ random.randint(0, 20) for i in range(problem_size) ]
     >>> evaluator = KnapsackEvaluator(data={'worths': worths})
+    >>>
     >>> # validator specification (based on weights of each objects)
     >>> weights = [ random.randint(5, 30) for i in range(problem_size) ]
     >>> validator = lambda solution: True if sum([weights[i] for i, value in enumerate(solution.getData()) if value == 1]) < 200 else False
+    >>>
     >>> # initialiser function with lambda function
     >>> initialiser = lambda x=20: BinarySolution.random(x, validator)
+    >>>
     >>> # operators list with crossover and mutation
     >>> operators = [SimpleCrossover(), SimpleMutation()]
     >>> policy = RandomPolicy(operators)
     >>> local_search = HillClimberFirstImprovment(initialiser, evaluator, operators, policy, validator, maximise=True, verbose=False)
     >>> algo = IteratedLocalSearch(initialiser, evaluator, operators, policy, validator, localSearch=local_search, maximise=True, verbose=False)
-    >>> # run the algorithm
+    >>>
+    >>> # run the algorithm using specific number of evaluations for local search
     >>> solution = algo.run(100, ls_evaluations=10)
     >>> solution._score
     137

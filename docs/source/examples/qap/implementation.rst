@@ -71,7 +71,7 @@ So we are going to create a class that will inherit from the abstract class ``ma
 
 The cost function for the quadratic problem is now well defined.
 
-.. warning::
+.. tip::
     The class proposed here, is available in the Macop package ``macop.evaluators.discrete.mono.QAPEvaluator``.
 
 Running algorithm
