@@ -58,8 +58,8 @@ Main idea about this Python package is that it does not which doesn't implement 
 Fully documentation of package with examples is [available](https://jbuisine.github.io/macop). 
 
 You can also see examples of use:
--  in the [knapsackExample.py](https://github.com/jbuisine/macop/blob/master/examples/knapsackExample.py) for mono-objective instance.
--  in the [knapsackMultiExample.py](https://github.com/jbuisine/macop/blob/master/examples/knapsackMultiExample.py) for multi-objective instance.
+-  in the [knapsackExample.py](https://github.com/jbuisine/macop/blob/master/examples/knapsackExample.py) for mono-objective knapsack instance.
+-  in the [knapsackMultiExample.py](https://github.com/jbuisine/macop/blob/master/examples/knapsackMultiExample.py) for multi-objective knapsack instance.
 -  in the [qapExample.py](https://github.com/jbuisine/macop/blob/master/examples/qapExample.py) for mono-objective QAP instance.
 -  in the [ubqpExample.py](https://github.com/jbuisine/macop/blob/master/examples/ubqpExample.py) for mono-objective UBQP problem instance.
 
@@ -69,7 +69,7 @@ You can also see examples of use:
 git submodule add https://github.com/jbuisine/macop.git
 ```
 
-## Current projects which use `Macop`
+## Current projects which use `Macop`:
 
 - [@prise3d/noise-detection-attributes-optimization](https://github.com/prise-3d/noise-detection-attributes-optimization): use of a parent algorithm with the real (but very expensive) evaluation function, and then inner local searches which use a substitution model (a model that has learned to approximate the real cost function with a quick-to-evaluate function). Hence, two evaluation functions have been used in order to accelerate the search in the set of solutions.
 
