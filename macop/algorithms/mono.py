@@ -16,7 +16,7 @@ class HillClimberFirstImprovment(Algorithm):
     - And do these steps until a number of evaluation (stopping criterion) is reached.
 
     Attributes:
-        initalizer: {function} -- basic function strategy to initialize solution
+        initalizer: {function} -- basic function strategy to initialise solution
         evaluator: {Evaluator} -- evaluator instance in order to obtained fitness (mono or multiple objectives)
         operators: {[Operator]} -- list of operator to use when launching algorithm
         policy: {Policy} -- Policy class implementation strategy to select operators
@@ -24,7 +24,8 @@ class HillClimberFirstImprovment(Algorithm):
         maximise: {bool} -- specify kind of optimisation problem 
         currentSolution: {Solution} -- current solution managed for current evaluation
         bestSolution: {Solution} -- best solution found so far during running algorithm
-        callbacks: {[Callback]} -- list of Callback class implementation to do some instructions every number of evaluations and `load` when initializing algorithm
+        callbacks: {[Callback]} -- list of Callback class implementation to do some instructions every number of evaluations and `load` when initialising algorithm
+        parent: {Algorithm} -- parent algorithm reference in case of inner Algorithm instance (optional)
     
     Example:
 
@@ -46,12 +47,12 @@ class HillClimberFirstImprovment(Algorithm):
     >>> # validator specification (based on weights of each objects)
     >>> weights = [ random.randint(5, 30) for i in range(problem_size) ]
     >>> validator = lambda solution: True if sum([weights[i] for i, value in enumerate(solution.getData()) if value == 1]) < 200 else False
-    >>> # initializer function with lambda function
-    >>> initializer = lambda x=20: BinarySolution.random(x, validator)
+    >>> # initialiser function with lambda function
+    >>> initialiser = lambda x=20: BinarySolution.random(x, validator)
     >>> # operators list with crossover and mutation
     >>> operators = [SimpleCrossover(), SimpleMutation()]
     >>> policy = RandomPolicy(operators)
-    >>> algo = HillClimberFirstImprovment(initializer, evaluator, operators, policy, validator, maximise=True, verbose=False)
+    >>> algo = HillClimberFirstImprovment(initialiser, evaluator, operators, policy, validator, maximise=True, verbose=False)
     >>> # run the algorithm
     >>> solution = algo.run(100)
     >>> solution._score
@@ -68,10 +69,10 @@ class HillClimberFirstImprovment(Algorithm):
             {Solution} -- best solution found
         """
 
-        # by default use of mother method to initialize variables
+        # by default use of mother method to initialise variables
         super().run(evaluations)
 
-        # initialize current solution and best solution
+        # initialise current solution and best solution
         self.initRun()
 
         solutionSize = self._currentSolution._size
@@ -119,7 +120,7 @@ class HillClimberBestImprovment(Algorithm):
     - And do these steps until a number of evaluation (stopping criterion) is reached.
 
     Attributes:
-        initalizer: {function} -- basic function strategy to initialize solution
+        initalizer: {function} -- basic function strategy to initialise solution
         evaluator: {Evaluator} -- evaluator instance in order to obtained fitness (mono or multiple objectives)
         operators: {[Operator]} -- list of operator to use when launching algorithm
         policy: {Policy} -- Policy class implementation strategy to select operators
@@ -127,7 +128,8 @@ class HillClimberBestImprovment(Algorithm):
         maximise: {bool} -- specify kind of optimisation problem 
         currentSolution: {Solution} -- current solution managed for current evaluation
         bestSolution: {Solution} -- best solution found so far during running algorithm
-        callbacks: {[Callback]} -- list of Callback class implementation to do some instructions every number of evaluations and `load` when initializing algorithm
+        callbacks: {[Callback]} -- list of Callback class implementation to do some instructions every number of evaluations and `load` when initialising algorithm
+        parent: {Algorithm} -- parent algorithm reference in case of inner Algorithm instance (optional)
     
     Example:
 
@@ -149,12 +151,12 @@ class HillClimberBestImprovment(Algorithm):
     >>> # validator specification (based on weights of each objects)
     >>> weights = [ random.randint(5, 30) for i in range(problem_size) ]
     >>> validator = lambda solution: True if sum([weights[i] for i, value in enumerate(solution.getData()) if value == 1]) < 200 else False
-    >>> # initializer function with lambda function
-    >>> initializer = lambda x=20: BinarySolution.random(x, validator)
+    >>> # initialiser function with lambda function
+    >>> initialiser = lambda x=20: BinarySolution.random(x, validator)
     >>> # operators list with crossover and mutation
     >>> operators = [SimpleCrossover(), SimpleMutation()]
     >>> policy = RandomPolicy(operators)
-    >>> algo = HillClimberBestImprovment(initializer, evaluator, operators, policy, validator, maximise=True, verbose=False)
+    >>> algo = HillClimberBestImprovment(initialiser, evaluator, operators, policy, validator, maximise=True, verbose=False)
     >>> # run the algorithm
     >>> solution = algo.run(100)
     >>> solution._score
@@ -171,10 +173,10 @@ class HillClimberBestImprovment(Algorithm):
             {Solution} -- best solution found
         """
 
-        # by default use of mother method to initialize variables
+        # by default use of mother method to initialise variables
         super().run(evaluations)
 
-        # initialize current solution and best solution
+        # initialise current solution and best solution
         self.initRun()
 
         solutionSize = self._currentSolution._size
@@ -222,7 +224,7 @@ class IteratedLocalSearch(Algorithm):
     - Restart this process until stopping critirion (number of expected evaluations).
 
     Attributes:
-        initalizer: {function} -- basic function strategy to initialize solution
+        initalizer: {function} -- basic function strategy to initialise solution
         evaluator: {function} -- basic function in order to obtained fitness (mono or multiple objectives)
         operators: {[Operator]} -- list of operator to use when launching algorithm
         policy: {Policy} -- Policy class implementation strategy to select operators
@@ -231,7 +233,8 @@ class IteratedLocalSearch(Algorithm):
         currentSolution: {Solution} -- current solution managed for current evaluation
         bestSolution: {Solution} -- best solution found so far during running algorithm
         localSearch: {Algorithm} -- current local search into ILS
-        callbacks: {[Callback]} -- list of Callback class implementation to do some instructions every number of evaluations and `load` when initializing algorithm
+        callbacks: {[Callback]} -- list of Callback class implementation to do some instructions every number of evaluations and `load` when initialising algorithm
+        parent: {Algorithm} -- parent algorithm reference in case of inner Algorithm instance (optional)
     
     Example:
 
@@ -254,20 +257,20 @@ class IteratedLocalSearch(Algorithm):
     >>> # validator specification (based on weights of each objects)
     >>> weights = [ random.randint(5, 30) for i in range(problem_size) ]
     >>> validator = lambda solution: True if sum([weights[i] for i, value in enumerate(solution.getData()) if value == 1]) < 200 else False
-    >>> # initializer function with lambda function
-    >>> initializer = lambda x=20: BinarySolution.random(x, validator)
+    >>> # initialiser function with lambda function
+    >>> initialiser = lambda x=20: BinarySolution.random(x, validator)
     >>> # operators list with crossover and mutation
     >>> operators = [SimpleCrossover(), SimpleMutation()]
     >>> policy = RandomPolicy(operators)
-    >>> local_search = HillClimberFirstImprovment(initializer, evaluator, operators, policy, validator, maximise=True, verbose=False)
-    >>> algo = IteratedLocalSearch(initializer, evaluator, operators, policy, validator, localSearch=local_search, maximise=True, verbose=False)
+    >>> local_search = HillClimberFirstImprovment(initialiser, evaluator, operators, policy, validator, maximise=True, verbose=False)
+    >>> algo = IteratedLocalSearch(initialiser, evaluator, operators, policy, validator, localSearch=local_search, maximise=True, verbose=False)
     >>> # run the algorithm
     >>> solution = algo.run(100, ls_evaluations=10)
     >>> solution._score
     137
     """
     def __init__(self,
-                 initializer,
+                 initialiser,
                  evaluator,
                  operators,
                  policy,
@@ -276,8 +279,21 @@ class IteratedLocalSearch(Algorithm):
                  maximise=True,
                  parent=None,
                  verbose=True):
+        """Iterated Local Search Algorithm initialisation with use of specific LocalSearch {Algorithm} instance
 
-        super().__init__(initializer, evaluator, operators, policy, validator,
+        Args:
+            initialiser: {function} -- basic function strategy to initialise solution
+            evaluator: {Evaluator} -- evaluator instance in order to obtained fitness (mono or multiple objectives)
+            operators: {[Operator]} -- list of operator to use when launching algorithm
+            policy: {Policy} -- Policy implementation strategy to select operators
+            validator: {function} -- basic function to check if solution is valid or not under some constraints
+            localSearch: {Algorithm} -- current local search into ILS
+            maximise: {bool} -- specify kind of optimisation problem 
+            parent: {Algorithm} -- parent algorithm reference in case of inner Algorithm instance (optional)
+            verbose: {bool} -- verbose or not information about the algorithm
+        """
+
+        super().__init__(initialiser, evaluator, operators, policy, validator,
                          maximise, parent, verbose)
 
         # specific local search associated with current algorithm
@@ -297,13 +313,13 @@ class IteratedLocalSearch(Algorithm):
             {Solution} -- best solution found
         """
 
-        # by default use of mother method to initialize variables
+        # by default use of mother method to initialise variables
         super().run(evaluations)
 
         # enable resuming for ILS
         self.resume()
 
-        # initialize current solution
+        # initialise current solution
         self.initRun()
 
         # add same callbacks

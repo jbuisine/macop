@@ -21,7 +21,7 @@ class BinarySolution(Solution):
     """
     def __init__(self, data, size):
         """
-        Initialize binary solution using specific data
+        initialise binary solution using specific data
 
         Args:
             data: {ndarray} --  array of binary values
@@ -95,7 +95,7 @@ class CombinatoryIntegerSolution(Solution):
     """
     def __init__(self, data, size):
         """
-        Initialize integer solution using specific data
+        initialise integer solution using specific data
 
         Args:
             data: {ndarray} --  array of integer values
@@ -163,7 +163,7 @@ class IntegerSolution(Solution):
     """
     def __init__(self, data, size):
         """
-        Initialize integer solution using specific data
+        initialise integer solution using specific data
 
         Args:
             data: {ndarray} --  array of binary values

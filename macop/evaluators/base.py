@@ -11,15 +11,9 @@ class Evaluator():
     """Abstract Evaluator class which enables to compute solution using specific `_data` 
     """
     def __init__(self, data: dict):
-                """Apply the computation of fitness from solution
-
-        Fitness is a float value for mono-objective or set of float values if multi-objective evaluation
-
+        """Initialise Evaluator instance which stores into its `_data` dictionary attritute required measures when computing a solution
         Args:
-            solution: {Solution} -- Solution instance
-
-        Return:
-            {float} -- computed solution score (float or set of float if multi-objective evaluation)
+            data: {dict} -- specific data dictionnary
         """
         self._data = data
 

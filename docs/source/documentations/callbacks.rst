@@ -101,9 +101,9 @@ We are going to create our own Callback instance called ``BasicCheckpoint`` whic
 
                 # create specific line with solution data
                 solutionData = ""
-                solutionSize = len(solution._data)
+                solutionSize = len(solution.getData())
 
-                for index, val in enumerate(solution._data):
+                for index, val in enumerate(solution.getData()):
                     solutionData += str(val)
 
                     if index < solutionSize - 1:
@@ -145,12 +145,12 @@ We are going to create our own Callback instance called ``BasicCheckpoint`` whic
                     # get best solution data information
                     solutionData = list(map(int, data[1].split(' ')))
 
-                    # avoid uninitialized solution
+                    # avoid uninitialised solution
                     if self._algo._bestSolution is None:
-                        self._algo._bestSolution = self._algo._initializer()
+                        self._algo._bestSolution = self._algo.initialiser()
 
                     # set to algorithm the lastest obtained best solution
-                    self._algo._bestSolution._data = np.array(solutionData)
+                    self._algo._bestsolution.getData() = np.array(solutionData)
                     self._algo._bestSolution._score = float(data[2])
 
 
@@ -203,10 +203,10 @@ If we want to exploit this functionality, then we will need to exploit them with
             Run the iterated local search algorithm using local search
             """
 
-            # by default use of mother method to initialize variables
+            # by default use of mother method to initialise variables
             super().run(evaluations)
 
-            # initialize current solution
+            # initialise current solution
             self.initRun()
 
             # restart using callbacks backup list

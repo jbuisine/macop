@@ -35,7 +35,7 @@ To avoid taking into account invalid solutions, we can define our function which
 
         for i, w in enumerate(elements_weight):
             # add weight if current object is set to 1
-            weight_sum += w * solution._data[i]
+            weight_sum += w * solution.getData()[i]
         
         # validation condition
         return weight_sum <= 15

@@ -43,6 +43,7 @@ class KnapsackEvaluator(Evaluator):
 
         return fitness
 
+
 class QAPEvaluator(Evaluator):
     """Quadratic Assignment Problem (QAP) evaluator class which enables to compute qap solution using specific `_data`
 
@@ -94,10 +95,11 @@ class QAPEvaluator(Evaluator):
         fitness = 0
         for index_i, val_i in enumerate(solution.getData()):
             for index_j, val_j in enumerate(solution.getData()):
-                fitness += self._data['F'][index_i, index_j] * self._data['D'][val_i, val_j]
+                fitness += self._data['F'][index_i,
+                                           index_j] * self._data['D'][val_i,
+                                                                      val_j]
 
         return fitness
-
 
 
 class UBQPEvaluator(Evaluator):
@@ -134,7 +136,6 @@ class UBQPEvaluator(Evaluator):
     >>> evaluator.compute(solution)
     477.0
     """
-
     def compute(self, solution):
         """Apply the computation of fitness from solution
 

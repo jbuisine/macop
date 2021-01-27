@@ -20,7 +20,7 @@ class MOEAD(Algorithm):
         mu: {int} -- number of sub problems
         T: {[float]} -- number of neightbors for each sub problem
         nObjectives: {int} -- number of objectives (based of number evaluator)
-        initializer: {function} -- basic function strategy to initialize solution
+        initialiser: {function} -- basic function strategy to initialise solution
         evaluator: {[function]} -- list of basic function in order to obtained fitness (multiple objectives)
         operators: {[Operator]} -- list of operator to use when launching algorithm
         policy: {Policy} -- Policy class implementation strategy to select operators
@@ -30,7 +30,8 @@ class MOEAD(Algorithm):
         population: [{Solution}] -- population of solution, one for each sub problem
         pfPop: [{Solution}] -- pareto front population
         weights: [[{float}]] -- random weights used for custom mu sub problems
-        callbacks: {[Callback]} -- list of Callback class implementation to do some instructions every number of evaluations and `load` when initializing algorithm
+        callbacks: {[Callback]} -- list of Callback class implementation to do some instructions every number of evaluations and `load` when initialising algorithm
+        parent: {Algorithm} -- parent algorithm reference in case of inner Algorithm instance (optional)
 
     >>> import random
     >>> # operators import
@@ -52,13 +53,13 @@ class MOEAD(Algorithm):
     >>> # validator specification (based on weights of each objects)
     >>> weights = [ random.randint(5, 30) for i in range(problem_size) ]
     >>> validator = lambda solution: True if sum([weights[i] for i, value in enumerate(solution.getData()) if value == 1]) < 200 else False
-    >>> # initializer function with lambda function
-    >>> initializer = lambda x=20: BinarySolution.random(x, validator)
+    >>> # initialiser function with lambda function
+    >>> initialiser = lambda x=20: BinarySolution.random(x, validator)
     >>> # operators list with crossover and mutation
     >>> operators = [SimpleCrossover(), SimpleMutation()]
     >>> policy = RandomPolicy(operators)
     >>> # MOEAD use multi-objective, hence list of evaluators with mu=100 and T=10
-    >>> algo = MOEAD(20, 5, initializer, [evaluator1, evaluator2], operators, policy, validator, maximise=True, verbose=False)
+    >>> algo = MOEAD(20, 5, initialiser, [evaluator1, evaluator2], operators, policy, validator, maximise=True, verbose=False)
     >>> # run the algorithm and get the pareto front obtained
     >>> pf_solutions = algo.run(100)
     >>> # check size of expected pareto
@@ -68,7 +69,7 @@ class MOEAD(Algorithm):
     def __init__(self,
                  mu,
                  T,
-                 initializer,
+                 initialiser,
                  evaluator,
                  operators,
                  policy,
@@ -76,13 +77,28 @@ class MOEAD(Algorithm):
                  maximise=True,
                  parent=None,
                  verbose=True):
+        """Multi-Ojective Evolutionary Algorithm with Scalar Decomposition initialisation
+
+        Args:
+            mu: {int} -- number of sub problems
+            T: {[float]} -- number of neightbors for each sub problem
+            initialiser: {function} -- basic function strategy to initialise solution
+            evaluator: {[function]} -- list of basic function in order to obtained fitness (multiple objectives)
+            operators: {[Operator]} -- list of operator to use when launching algorithm
+            policy: {Policy} -- Policy class implementation strategy to select operators
+            validator: {function} -- basic function to check if solution is valid or not under some constraints
+            maximise: {bool} -- specify kind of optimisation problem
+            parent: {Algorithm} -- parent algorithm reference in case of inner Algorithm instance (optional)
+            verbose: {bool} -- verbose or not information about the algorithm
+        """
 
         # redefinition of constructor to well use `initRun` method
-        self._initializer = initializer
-        self._evaluator = evaluator
+        self.initialiser = initialiser
+        self.evaluator = evaluator
+        self.validator = validator
+
         self._operators = operators
-        self._policy = policy
-        self._validator = validator
+        self.policy = policy
         self._callbacks = []
 
         # by default
@@ -103,7 +119,7 @@ class MOEAD(Algorithm):
             operator.setAlgo(self)
 
         # by default track reference for policy
-        self._policy.setAlgo(self)
+        self.policy.setAlgo(self)
 
         if mu < T:
             raise ValueError('`mu` cannot be less than `T`')
@@ -114,7 +130,7 @@ class MOEAD(Algorithm):
         self._mu = mu
         self._T = T
 
-        # initialize neighbors for each sub problem
+        # initialise neighbors for each sub problem
         self.setNeighbors()
 
         weights = []
@@ -150,7 +166,7 @@ class MOEAD(Algorithm):
             # use copy of list to keep track for each sub problem
             subProblem = MOSubProblem(i,
                                       weights[i],
-                                      initializer,
+                                      initialiser,
                                       sub_evaluator,
                                       operators.copy(),
                                       policy,
@@ -161,7 +177,8 @@ class MOEAD(Algorithm):
 
             self._subProblems.append(subProblem)
 
-        self._population = [None for n in range(self._mu)]
+        self.population = [None for n in range(self._mu)]
+
         self._pfPop = []
 
         # ref point based on number of evaluators
@@ -174,7 +191,7 @@ class MOEAD(Algorithm):
 
     def initRun(self):
         """
-        Method which initialiazes or re-initializes the whole algorithm context specifically for MOEAD
+        Method which initialiazes or re-initialises the whole algorithm context specifically for MOEAD
         """
         # initialization is done during run method
         pass
@@ -190,18 +207,18 @@ class MOEAD(Algorithm):
             {Solution} -- best solution found
         """
 
-        # by default use of mother method to initialize variables
+        # by default use of mother method to initialise variables
         super().run(evaluations)
 
         # enable callback resume for MOEAD
         self.resume()
 
-        # initialize each sub problem if no backup
+        # initialise each sub problem if no backup
         for i in range(self._mu):
 
             if self._subProblems[i]._bestSolution is None:
                 self._subProblems[i].run(1)
-                self._population[i] = self._subProblems[i]._bestSolution
+                self.population[i] = self._subProblems[i]._bestSolution
 
         # if no backup for pf population
         if len(self._pfPop) == 0:
@@ -233,7 +250,7 @@ class MOEAD(Algorithm):
                         self._subProblems[j]._bestSolution = newSolution
 
                         # update population solution for this sub problem
-                        self._population[j] = newSolution
+                        self.population[j] = newSolution
 
                         improvment = True
 
@@ -252,7 +269,7 @@ class MOEAD(Algorithm):
                     break
 
         logging.info(
-            f"End of {type(self).__name__}, best solution found {self._population}"
+            f"End of {type(self).__name__}, best solution found {self.population}"
         )
 
         self.end()
@@ -301,19 +318,19 @@ class MOEAD(Algorithm):
     def updateRefPoint(self, solution):
 
         if self._maximise:
-            for i in range(len(self._evaluator)):
-                if solution._scores[i] > self._refPoint[i]:
-                    self._refPoint[i] = solution._scores[i]
+            for i in range(len(self.evaluator)):
+                if solution.scores[i] > self._refPoint[i]:
+                    self._refPoint[i] = solution.scores[i]
         else:
-            for i in range(len(self._evaluator)):
+            for i in range(len(self.evaluator)):
                 if solution.scores[i] < self._refPoint[i]:
-                    self._refPoint[i] = solution._scores[i]
+                    self._refPoint[i] = solution.scores[i]
 
     def paretoFront(self, population):
 
         paFront = []
         indexes = []
-        nObjectives = len(self._evaluator)
+        nObjectives = len(self.evaluator)
         nSolutions = len(population)
 
         # find dominated solution
@@ -333,12 +350,12 @@ class MOEAD(Algorithm):
                 nDominated = 0
 
                 # check number of dominated objectives of current solution by the others solution
-                for k in range(len(self._evaluator)):
+                for k in range(len(self.evaluator)):
                     if self._maximise:
-                        if population[i]._scores[k] < population[j]._scores[k]:
+                        if population[i].scores[k] < population[j].scores[k]:
                             nDominated += 1
                     else:
-                        if population[i]._scores[k] > population[j]._scores[k]:
+                        if population[i].scores[k] > population[j].scores[k]:
                             nDominated += 1
 
                 if nDominated == nObjectives:
@@ -352,6 +369,22 @@ class MOEAD(Algorithm):
 
         return paFront
 
+    def getResult(self):
+        """Get the expected result of the current algorithm
+
+        Returns:
+            [{Solution}] -- pareto front population
+        """
+        return self._pfPop
+
+    def setDefaultResult(self, result):
+        """Set current default result of the algorithm
+
+        Args:
+            result: {object} -- expected result data of the current algorithm
+        """
+        self._pfPop = result
+
     def end(self):
         """Display end message into `run` method
         """
@@ -362,7 +395,7 @@ class MOEAD(Algorithm):
         )
 
         for i, solution in enumerate(self._pfPop):
-            macop_text(self, f'  - [{i}] {solution._scores} : {solution}')
+            macop_text(self, f'  - [{i}] {solution.scores} : {solution}')
 
         macop_line(self)
 
@@ -371,10 +404,10 @@ class MOEAD(Algorithm):
         logging.info("-- Pareto front :")
 
         for i, solution in enumerate(self._pfPop):
-            logging.info(f"-- {i}] SCORE {solution._scores} - {solution}")
+            logging.info(f"-- {i}] SCORE {solution.scores} - {solution}")
 
     def __str__(self):
-        return f"{type(self).__name__} using {type(self._population).__name__}"
+        return f"{type(self).__name__} using {type(self.population).__name__}"
 
 
 class MOSubProblem(Algorithm):
@@ -383,7 +416,7 @@ class MOSubProblem(Algorithm):
     Attributes:
         index: {int} -- sub problem index
         weights: {[float]} -- sub problems objectives weights
-        initalizer: {function} -- basic function strategy to initialize solution
+        initalizer: {function} -- basic function strategy to initialise solution
         evaluator: {function} -- basic function in order to obtained fitness (mono or multiple objectives)
         operators: {[Operator]} -- list of operator to use when launching algorithm
         policy: {Policy} -- Policy class implementation strategy to select operators
@@ -392,7 +425,8 @@ class MOSubProblem(Algorithm):
         verbose: {bool} -- verbose or not information about the algorithm
         currentSolution: {Solution} -- current solution managed for current evaluation
         bestSolution: {Solution} -- best solution found so far during running algorithm
-        callbacks: {[Callback]} -- list of Callback class implementation to do some instructions every number of evaluations and `load` when initializing algorithm
+        callbacks: {[Callback]} -- list of Callback class implementation to do some instructions every number of evaluations and `load` when initialising algorithm
+        parent: {Algorithm} -- parent algorithm reference in case of inner Algorithm instance (optional)
     
     Example:
 
@@ -416,17 +450,17 @@ class MOSubProblem(Algorithm):
     >>> # validator specification (based on weights of each objects)
     >>> weights = [ random.randint(5, 30) for i in range(problem_size) ]
     >>> validator = lambda solution: True if sum([weights[i] for i, value in enumerate(solution.getData()) if value == 1]) < 200 else False
-    >>> # initializer function with lambda function
-    >>> initializer = lambda x=20: BinarySolution.random(x, validator)
+    >>> # initialiser function with lambda function
+    >>> initialiser = lambda x=20: BinarySolution.random(x, validator)
     >>> # operators list with crossover and mutation
     >>> operators = [SimpleCrossover(), SimpleMutation()]
     >>> policy = RandomPolicy(operators)
-    >>> algo = MOEAD(20, 5, initializer, [evaluator1, evaluator2], operators, policy, validator, maximise=True, verbose=False)
+    >>> algo = MOEAD(20, 5, initialiser, [evaluator1, evaluator2], operators, policy, validator, maximise=True, verbose=False)
     >>> # weights of the sub problem
     >>> sub_problem_weights = [0.4, 0.6]
     >>> sub_evaluator = WeightedSum(data={'evaluators': [evaluator1, evaluator2], 'weights': sub_problem_weights})
     >>> # first parameter is the index of the MOSubProblem
-    >>> subProblem = MOSubProblem(0, sub_problem_weights, initializer, sub_evaluator, operators, policy, validator, maximise=True, parent=algo, verbose=False)
+    >>> subProblem = MOSubProblem(0, sub_problem_weights, initialiser, sub_evaluator, operators, policy, validator, maximise=True, parent=algo, verbose=False)
     >>> # run the algorithm
     >>> solution = subProblem.run(100)
     >>> solution._score
@@ -443,6 +477,20 @@ class MOSubProblem(Algorithm):
                  maximise=True,
                  parent=None,
                  verbose=True):
+        """Specific multi-objective sub problem used into MOEAD
+
+        Args:
+            index: {int} -- sub problem index
+            weights: {[float]} -- sub problems objectives weights
+            initalizer: {function} -- basic function strategy to initialise solution
+            evaluator: {function} -- basic function in order to obtained fitness (mono or multiple objectives)
+            operators: {[Operator]} -- list of operator to use when launching algorithm
+            policy: {Policy} -- Policy class implementation strategy to select operators
+            validator: {function} -- basic function to check if solution is valid or not under some constraints
+            maximise: {bool} -- specify kind of optimisation problem 
+            parent: {Algorithm} -- parent algorithm reference in case of inner Algorithm instance (optional)
+            verbose: {bool} -- verbose or not information about the algorithm
+        """
 
         super().__init__(initalizer, evaluator, operators, policy, validator,
                          maximise, parent)
@@ -463,10 +511,10 @@ class MOSubProblem(Algorithm):
             {Solution} -- best solution found
         """
 
-        # by default use of mother method to initialize variables
+        # by default use of mother method to initialise variables
         super().run(evaluations)
 
-        # initialize solution if necessary
+        # initialise solution if necessary
         if self._bestSolution is None:
             self.initRun()
 
@@ -477,7 +525,7 @@ class MOSubProblem(Algorithm):
         for _ in range(evaluations):
 
             # keep reference of sub problem used
-            self._policy.setAlgo(self)
+            self.policy.setAlgo(self)
 
             # update solution using policy
             newSolution = self.update(self._bestSolution)

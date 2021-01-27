@@ -53,7 +53,7 @@ class WeightedSum(Evaluator):
         ]
 
         # associate objectives scores to solution
-        solution._scores = scores
+        solution.scores = scores
 
         return sum(
             [scores[i] * w for i, w in enumerate(self._data['weights'])])

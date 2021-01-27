@@ -74,10 +74,16 @@ class Solution():
         """
         self._data = data
 
+    def setScore(self, score):
+        """
+        Set solution score as wished
+        """
+        self._score = score
+
     @staticmethod
     def random(size, validator=None):
         """
-        Initialize solution using random data with validator or not
+        initialise solution using random data with validator or not
 
         Args:
             size: {int} -- expected solution size to generate

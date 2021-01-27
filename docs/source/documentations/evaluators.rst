@@ -61,13 +61,13 @@ We will define the ``KnapsackEvaluator`` class, which will therefore allow us to
 
             # `_data` contains worths array values of objects
             fitness = 0
-            for index, elem in enumerate(solution._data):
+            for index, elem in enumerate(solution.getData()):
                 fitness += self._data['worths'][index] * elem
 
             return fitness
 
 
-It is now possible to initialize our new evaluator with specific data of our problem instance:
+It is now possible to initialise our new evaluator with specific data of our problem instance:
 
 .. code-block:: python
 

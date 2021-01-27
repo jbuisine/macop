@@ -52,7 +52,8 @@ class SimpleMutation(Mutation):
         temp = copy_solution.getData()[firstCell]
 
         # swicth values
-        copy_solution.getData()[firstCell] = copy_solution.getData()[secondCell]
+        copy_solution.getData()[firstCell] = copy_solution.getData(
+        )[secondCell]
         copy_solution.getData()[secondCell] = temp
 
         return copy_solution

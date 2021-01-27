@@ -47,7 +47,7 @@ Some specific methods are available:
         @staticmethod
         def random(size, validator=None):
             """
-            Initialize solution using random data with validator or not
+            initialise solution using random data with validator or not
             """
             ...
 
@@ -60,7 +60,7 @@ Some specific methods are available:
 
 From these basic methods, it is possible to manage a representation of a solution to our problem. 
 
-Allowing to initialize it randomly or not (using constructor or ``random`` method), to evaluate it (``evaluate`` method) and to check some constraints of validation of the solution (``isValid`` method).
+Allowing to initialise it randomly or not (using constructor or ``random`` method), to evaluate it (``evaluate`` method) and to check some constraints of validation of the solution (``isValid`` method).
 
 .. note::
     Only one of these methods needs specification if we create our own type of solution. This is the ``random`` method, which depends on the need of the problem.
@@ -113,7 +113,7 @@ We will also have to implement the ``random`` method to create a new random solu
 
             # create binary array of specific size using numpy random module
             data = np.random.randint(2, size=size)
-            # initialize new solution using constructor
+            # initialise new solution using constructor
             solution = BinarySolution(data, size)
 
             # check if validator is set

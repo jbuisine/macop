@@ -33,21 +33,21 @@ class SimpleCrossover(Crossover):
     >>> # validator specification (based on weights of each objects)
     >>> weights = [ random.randint(20, 30) for i in range(10) ]
     >>> validator = lambda solution: True if sum([weights[i] for i, value in enumerate(solution.getData()) if value == 1]) < 200 else False
-    >>> # initializer function with lambda function
-    >>> initializer = lambda x=10: BinarySolution.random(x, validator)
+    >>> # initialiser function with lambda function
+    >>> initialiser = lambda x=10: BinarySolution.random(x, validator)
     >>> # operators list with crossover and mutation
     >>> simple_crossover = SimpleCrossover()
     >>> simple_mutation = SimpleMutation()
     >>> operators = [simple_crossover, simple_mutation]
     >>> policy = UCBPolicy(operators)
-    >>> local_search = HillClimberFirstImprovment(initializer, evaluator, operators, policy, validator, maximise=True, verbose=False)
-    >>> algo = IteratedLocalSearch(initializer, evaluator, operators, policy, validator, localSearch=local_search, maximise=True, verbose=False)
+    >>> local_search = HillClimberFirstImprovment(initialiser, evaluator, operators, policy, validator, maximise=True, verbose=False)
+    >>> algo = IteratedLocalSearch(initialiser, evaluator, operators, policy, validator, localSearch=local_search, maximise=True, verbose=False)
     >>> # using best solution, simple crossover is applied
     >>> best_solution = algo.run(100)
     >>> list(best_solution.getData())
     [1, 1, 0, 1, 0, 1, 1, 1, 0, 1]
-    >>> new_solution_1 = initializer()
-    >>> new_solution_2 = initializer()
+    >>> new_solution_1 = initialiser()
+    >>> new_solution_2 = initialiser()
     >>> offspring_solution = simple_crossover.apply(new_solution_1, new_solution_2)
     >>> list(offspring_solution.getData())
     [0, 1, 1, 0, 1, 0, 1, 1, 0, 1]
@@ -106,21 +106,21 @@ class RandomSplitCrossover(Crossover):
     >>> # validator specification (based on weights of each objects)
     >>> weights = [ random.randint(20, 30) for i in range(10) ]
     >>> validator = lambda solution: True if sum([weights[i] for i, value in enumerate(solution.getData()) if value == 1]) < 200 else False
-    >>> # initializer function with lambda function
-    >>> initializer = lambda x=10: BinarySolution.random(x, validator)
+    >>> # initialiser function with lambda function
+    >>> initialiser = lambda x=10: BinarySolution.random(x, validator)
     >>> # operators list with crossover and mutation
     >>> random_split_crossover = RandomSplitCrossover()
     >>> simple_mutation = SimpleMutation()
     >>> operators = [random_split_crossover, simple_mutation]
     >>> policy = UCBPolicy(operators)
-    >>> local_search = HillClimberFirstImprovment(initializer, evaluator, operators, policy, validator, maximise=True, verbose=False)
-    >>> algo = IteratedLocalSearch(initializer, evaluator, operators, policy, validator, localSearch=local_search, maximise=True, verbose=False)
+    >>> local_search = HillClimberFirstImprovment(initialiser, evaluator, operators, policy, validator, maximise=True, verbose=False)
+    >>> algo = IteratedLocalSearch(initialiser, evaluator, operators, policy, validator, localSearch=local_search, maximise=True, verbose=False)
     >>> # using best solution, simple crossover is applied
     >>> best_solution = algo.run(100)
     >>> list(best_solution.getData())
     [1, 1, 1, 0, 1, 0, 1, 1, 1, 0]
-    >>> new_solution_1 = initializer()
-    >>> new_solution_2 = initializer()
+    >>> new_solution_1 = initialiser()
+    >>> new_solution_2 = initialiser()
     >>> offspring_solution = random_split_crossover.apply(new_solution_1, new_solution_2)
     >>> list(offspring_solution.getData())
     [0, 0, 0, 1, 1, 0, 0, 1, 0, 0]

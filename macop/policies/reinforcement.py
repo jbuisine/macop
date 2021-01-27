@@ -47,27 +47,38 @@ class UCBPolicy(Policy):
     >>> # validator specification (based on weights of each objects)
     >>> weights = [ random.randint(5, 30) for i in range(20) ]
     >>> validator = lambda solution: True if sum([weights[i] for i, value in enumerate(solution.getData()) if value == 1]) < 200 else False
-    >>> # initializer function with lambda function
-    >>> initializer = lambda x=20: BinarySolution.random(x, validator)
+    >>> # initialiser function with lambda function
+    >>> initialiser = lambda x=20: BinarySolution.random(x, validator)
     >>> # operators list with crossover and mutation
     >>> operators = [SimpleCrossover(), SimpleMutation()]
     >>> policy = UCBPolicy(operators)
-    >>> local_search = HillClimberFirstImprovment(initializer, evaluator, operators, policy, validator, maximise=True, verbose=False)
-    >>> algo = IteratedLocalSearch(initializer, evaluator, operators, policy, validator, localSearch=local_search, maximise=True, verbose=False)
-    >>> policy._occurences
+    >>> local_search = HillClimberFirstImprovment(initialiser, evaluator, operators, policy, validator, maximise=True, verbose=False)
+    >>> algo = IteratedLocalSearch(initialiser, evaluator, operators, policy, validator, localSearch=local_search, maximise=True, verbose=False)
+    >>> policy.occurences
     [0, 0]
     >>> solution = algo.run(100)
     >>> type(solution).__name__
     'BinarySolution'
-    >>> policy._occurences # one more due to first evaluation
+    >>> policy.occurences # one more due to first evaluation
     [51, 53]
     """
     def __init__(self, operators, C=100., exp_rate=0.5):
+        """UCB Policy initialiser
+
+        Args:
+            operators: {[Operator]} -- list of selected operators for the algorithm
+            C: {float} -- The second half of the UCB equation adds exploration, with the degree of exploration being controlled by the hyper-parameter `C`.
+            exp_rate: {float} -- exploration rate (probability to choose randomly next operator)
+        """
+
+        # private members
         self._operators = operators
-        self._rewards = [0. for o in self._operators]
-        self._occurences = [0 for o in self._operators]
         self._C = C
         self._exp_rate = exp_rate
+
+        # public members
+        self.rewards = [0. for o in self._operators]
+        self.occurences = [0 for o in self._operators]
 
     def select(self):
         """Select using Upper Confidence Bound the next operator to use (using acquired rewards)
@@ -76,7 +87,7 @@ class UCBPolicy(Policy):
             {Operator}: the selected operator
         """
 
-        indices = [i for i, o in enumerate(self._occurences) if o == 0]
+        indices = [i for i, o in enumerate(self.occurences) if o == 0]
 
         # random choice following exploration rate
         if np.random.uniform(0, 1) <= self._exp_rate:
@@ -88,12 +99,12 @@ class UCBPolicy(Policy):
 
             # if operator have at least be used one time
             ucbValues = []
-            nVisits = sum(self._occurences)
+            nVisits = sum(self.occurences)
 
             for i in range(len(self._operators)):
 
-                ucbValue = self._rewards[i] + self._C * math.sqrt(
-                    math.log(nVisits) / (self._occurences[i] + 0.1))
+                ucbValue = self.rewards[i] + self._C * math.sqrt(
+                    math.log(nVisits) / (self.occurences[i] + 0.1))
                 ucbValues.append(ucbValue)
 
             return self._operators[ucbValues.index(max(ucbValues))]
@@ -123,7 +134,7 @@ class UCBPolicy(Policy):
 
         # default value of solution2 is current best solution
         if solution2 is None and self._algo is not None:
-            solution2 = self._algo._bestSolution
+            solution2 = self._algo.getResult()
 
         # avoid use of crossover if only one solution is passed
         if solution2 is None and operator._kind == KindOperator.CROSSOVER:
@@ -138,7 +149,7 @@ class UCBPolicy(Policy):
             newSolution = operator.apply(solution1)
 
         # compute fitness of new solution
-        newSolution.evaluate(self._algo._evaluator)
+        newSolution.evaluate(self._algo.evaluator)
 
         # compute fitness improvment rate
         if self._algo._maximise:
@@ -151,9 +162,9 @@ class UCBPolicy(Policy):
         operator_index = self._operators.index(operator)
 
         if fir > 0:
-            self._rewards[operator_index] += fir
+            self.rewards[operator_index] += fir
 
-        self._occurences[operator_index] += 1
+        self.occurences[operator_index] += 1
 
         logging.info("---- Obtaining %s" % (newSolution))
 

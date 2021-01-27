@@ -105,10 +105,10 @@ The modification applied here is just a bit swapped. Let's define the ``SimpleBi
             copy_solution = solution.clone()
 
             # swicth values
-            if copy_solution._data[cell]:
-                copy_solution._data[cell] = 0
+            if copy_solution.getData()[cell]:
+                copy_solution.getData()[cell] = 0
             else:
-                copy_solution._data[cell] = 1
+                copy_solution.getData()[cell] = 1
 
             # return the new obtained solution
             return copy_solution
@@ -172,7 +172,7 @@ The first half of solution 1 will be saved and added to the second half of solut
             # copy of solution 2
             copy_solution = solution2.clone()
 
-            copy_solution._data[splitIndex:] = firstData[splitIndex:]
+            copy_solution.getData()[splitIndex:] = firstData[splitIndex:]
 
             return copy_solution
 

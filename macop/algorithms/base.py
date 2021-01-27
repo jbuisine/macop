@@ -22,7 +22,7 @@ class Algorithm():
 
 
     Attributes:
-        initializer: {function} -- basic function strategy to initialize solution
+        initialiser: {function} -- basic function strategy to initialise solution
         evaluator: {Evaluator} -- evaluator instance in order to obtained fitness (mono or multiple objectives)
         operators: {[Operator]} -- list of operator to use when launching algorithm
         policy: {Policy} -- Policy implementation strategy to select operators
@@ -31,11 +31,11 @@ class Algorithm():
         verbose: {bool} -- verbose or not information about the algorithm
         currentSolution: {Solution} -- current solution managed for current evaluation comparison
         bestSolution: {Solution} -- best solution found so far during running algorithm
-        callbacks: {[Callback]} -- list of Callback class implementation to do some instructions every number of evaluations and `load` when initializing algorithm
+        callbacks: {[Callback]} -- list of Callback class implementation to do some instructions every number of evaluations and `load` when initialising algorithm
         parent: {Algorithm} -- parent algorithm reference in case of inner Algorithm instance (optional)
     """
     def __init__(self,
-                 initializer,
+                 initialiser,
                  evaluator,
                  operators,
                  policy,
@@ -43,13 +43,27 @@ class Algorithm():
                  maximise=True,
                  parent=None,
                  verbose=True):
+        """Basic Algorithm initialisation
+
+        Args:
+            initialiser: {function} -- basic function strategy to initialise solution
+            evaluator: {Evaluator} -- evaluator instance in order to obtained fitness (mono or multiple objectives)
+            operators: {[Operator]} -- list of operator to use when launching algorithm
+            policy: {Policy} -- Policy implementation strategy to select operators
+            validator: {function} -- basic function to check if solution is valid or not under some constraints
+            maximise: {bool} -- specify kind of optimisation problem 
+            parent: {Algorithm} -- parent algorithm reference in case of inner Algorithm instance (optional)
+            verbose: {bool} -- verbose or not information about the algorithm
+        """
+
+        # public members intialization
+        self.initialiser = initialiser
+        self.evaluator = evaluator
+        self.validator = validator
+        self.policy = policy
 
         # protected members intialization
-        self._initializer = initializer
-        self._evaluator = evaluator
         self._operators = operators
-        self._policy = policy
-        self._validator = validator
         self._callbacks = []
         self._bestSolution = None
         self._currentSolution = None
@@ -75,9 +89,9 @@ class Algorithm():
 
         # also track reference for policy
         if self._parent is not None:
-            self._policy.setAlgo(self.getParent())
+            self.policy.setAlgo(self.getParent())
         else:
-            self._policy.setAlgo(self)
+            self.policy.setAlgo(self)
 
     def addCallback(self, callback):
         """Add new callback to algorithm specifying usefull parameters
@@ -127,15 +141,33 @@ class Algorithm():
         """
         self._parent = parent
 
+    def getResult(self):
+        """Get the expected result of the current algorithm
+
+        By default the best solution (but can be anything you want)
+
+        Returns:
+            {object} -- expected result data of the current algorithm
+        """
+        return self._bestSolution
+
+    def setDefaultResult(self, result):
+        """Set current default result of the algorithm
+
+        Args:
+            result: {object} -- expected result data of the current algorithm
+        """
+        self._bestSolution = result
+
     def initRun(self):
         """
-        Initialize the current solution and best solution using the `initialiser` function
+        initialise the current solution and best solution using the `initialiser` function
         """
 
-        self._currentSolution = self._initializer()
+        self._currentSolution = self.initialiser()
 
         # evaluate current solution
-        self._currentSolution.evaluate(self._evaluator)
+        self._currentSolution.evaluate(self.evaluator)
         self.increaseEvaluation()
 
         # keep in memory best known solution (current solution)
@@ -166,6 +198,22 @@ class Algorithm():
             return parent_algorithm.getGlobalEvaluation()
 
         return self._numberOfEvaluations
+
+    def getEvaluation(self):
+        """Get the current number of evaluation
+
+        Returns:
+            {int} -- current number of evaluation
+        """
+        return self._numberOfEvaluations
+
+    def setEvaluation(self, evaluations):
+        """Set the current number of evaluation
+
+        Args:
+            evaluations: {int} -- current expected number of evaluation
+        """
+        self._numberOfEvaluations = evaluations
 
     def getGlobalMaxEvaluation(self):
         """Get the global max number of evaluation (if inner algorithm)
@@ -206,7 +254,7 @@ class Algorithm():
         Note: 
             if multi-objective problem this method can be updated using array of `evaluator`
         """
-        return solution.evaluate(self._evaluator)
+        return solution.evaluate(self.evaluator)
 
     def update(self, solution):
         """
@@ -221,13 +269,13 @@ class Algorithm():
         """
 
         # two parameters are sent if specific crossover solution are wished
-        sol = self._policy.apply(solution)
+        sol = self.policy.apply(solution)
 
         # compute fitness of new solution if not already computed
         if sol._score is None:
-            sol.evaluate(self._evaluator)
+            sol.evaluate(self.evaluator)
 
-        if (sol.isValid(self._validator)):
+        if (sol.isValid(self.validator)):
             return sol
         else:
             logging.info("-- New solution is not valid %s" % sol)
@@ -246,7 +294,7 @@ class Algorithm():
         Returns:
             {bool} -- `True` if better
         """
-        if not solution.isValid(self._validator):
+        if not solution.isValid(self.validator):
             return False
 
         # depending of problem to solve (maximizing or minimizing)

@@ -25,7 +25,7 @@ class BasicCheckpoint(Callback):
         Check if necessary to do backup based on `every` variable
         """
         # get current best solution
-        solution = self._algo._bestSolution
+        solution = self._algo.getResult()
 
         currentEvaluation = self._algo.getGlobalEvaluation()
 
@@ -71,26 +71,25 @@ class BasicCheckpoint(Callback):
                 globalEvaluation = int(data[0])
 
                 if self._algo.getParent() is not None:
-                    self._algo.getParent(
-                    )._numberOfEvaluations = globalEvaluation
+                    self._algo.getParent().setEvaluation(globalEvaluation)
                 else:
-                    self._algo._numberOfEvaluations = globalEvaluation
+                    self._algo.setEvaluation(globalEvaluation)
 
                 # get best solution data information
                 solutionData = list(map(int, data[1].split(' ')))
 
-                if self._algo._bestSolution is None:
-                    self._algo._bestSolution = self._algo._initializer()
+                if self._algo.getResult() is None:
+                    self._algo.setDefaultResult(self._algo.initialiser())
 
-                self._algo._bestsolution.setData(np.array(solutionData))
-                self._algo._bestSolution._score = float(data[2])
+                self._algo.getResult().setData(np.array(solutionData))
+                self._algo.getResult().setScore(float(data[2]))
 
             macop_line(self._algo)
             macop_text(self._algo,
                        f'Checkpoint found from `{self._filepath}` file.')
             macop_text(
                 self._algo,
-                f'Restart algorithm from evaluation {self._algo._numberOfEvaluations}.'
+                f'Restart algorithm from evaluation {self._algo.getEvaluation()}.'
             )
         else:
             macop_text(
