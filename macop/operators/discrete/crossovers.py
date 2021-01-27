@@ -32,7 +32,7 @@ class SimpleCrossover(Crossover):
     >>> evaluator = KnapsackEvaluator(data={'worths': worths})
     >>> # validator specification (based on weights of each objects)
     >>> weights = [ random.randint(20, 30) for i in range(10) ]
-    >>> validator = lambda solution: True if sum([weights[i] for i, value in enumerate(solution._data) if value == 1]) < 200 else False
+    >>> validator = lambda solution: True if sum([weights[i] for i, value in enumerate(solution.getData()) if value == 1]) < 200 else False
     >>> # initializer function with lambda function
     >>> initializer = lambda x=10: BinarySolution.random(x, validator)
     >>> # operators list with crossover and mutation
@@ -44,12 +44,12 @@ class SimpleCrossover(Crossover):
     >>> algo = IteratedLocalSearch(initializer, evaluator, operators, policy, validator, localSearch=local_search, maximise=True, verbose=False)
     >>> # using best solution, simple crossover is applied
     >>> best_solution = algo.run(100)
-    >>> list(best_solution._data)
+    >>> list(best_solution.getData())
     [1, 1, 0, 1, 0, 1, 1, 1, 0, 1]
     >>> new_solution_1 = initializer()
     >>> new_solution_2 = initializer()
     >>> offspring_solution = simple_crossover.apply(new_solution_1, new_solution_2)
-    >>> list(offspring_solution._data)
+    >>> list(offspring_solution.getData())
     [0, 1, 1, 0, 1, 0, 1, 1, 0, 1]
     """
     def apply(self, solution1, solution2=None):
@@ -74,9 +74,9 @@ class SimpleCrossover(Crossover):
         splitIndex = int(size / 2)
 
         if random.uniform(0, 1) > 0.5:
-            copy_solution._data[splitIndex:] = firstData[splitIndex:]
+            copy_solution.getData()[splitIndex:] = firstData[splitIndex:]
         else:
-            copy_solution._data[:splitIndex] = firstData[:splitIndex]
+            copy_solution.getData()[:splitIndex] = firstData[:splitIndex]
 
         return copy_solution
 
@@ -105,7 +105,7 @@ class RandomSplitCrossover(Crossover):
     >>> evaluator = KnapsackEvaluator(data={'worths': worths})
     >>> # validator specification (based on weights of each objects)
     >>> weights = [ random.randint(20, 30) for i in range(10) ]
-    >>> validator = lambda solution: True if sum([weights[i] for i, value in enumerate(solution._data) if value == 1]) < 200 else False
+    >>> validator = lambda solution: True if sum([weights[i] for i, value in enumerate(solution.getData()) if value == 1]) < 200 else False
     >>> # initializer function with lambda function
     >>> initializer = lambda x=10: BinarySolution.random(x, validator)
     >>> # operators list with crossover and mutation
@@ -117,12 +117,12 @@ class RandomSplitCrossover(Crossover):
     >>> algo = IteratedLocalSearch(initializer, evaluator, operators, policy, validator, localSearch=local_search, maximise=True, verbose=False)
     >>> # using best solution, simple crossover is applied
     >>> best_solution = algo.run(100)
-    >>> list(best_solution._data)
+    >>> list(best_solution.getData())
     [1, 1, 1, 0, 1, 0, 1, 1, 1, 0]
     >>> new_solution_1 = initializer()
     >>> new_solution_2 = initializer()
     >>> offspring_solution = random_split_crossover.apply(new_solution_1, new_solution_2)
-    >>> list(offspring_solution._data)
+    >>> list(offspring_solution.getData())
     [0, 0, 0, 1, 1, 0, 0, 1, 0, 0]
     """
     def apply(self, solution1, solution2=None):
@@ -146,8 +146,8 @@ class RandomSplitCrossover(Crossover):
         splitIndex = random.randint(0, size)
 
         if random.uniform(0, 1) > 0.5:
-            copy_solution._data[splitIndex:] = firstData[splitIndex:]
+            copy_solution.getData()[splitIndex:] = firstData[splitIndex:]
         else:
-            copy_solution._data[:splitIndex] = firstData[:splitIndex]
+            copy_solution.getData()[:splitIndex] = firstData[:splitIndex]
 
         return copy_solution

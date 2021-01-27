@@ -34,11 +34,11 @@ class BinarySolution(Solution):
         >>> data = [0, 1, 0, 1, 1]
         >>> solution = BinarySolution(data, len(data))
         >>> # check data content
-        >>> sum(solution._data) == 3
+        >>> sum(solution.getData()) == 3
         True
         >>> # clone solution
         >>> solution_copy = solution.clone()
-        >>> all(solution_copy._data == solution._data)
+        >>> all(solution_copy._data == solution.getData())
         True
         """
         super().__init__(np.array(data), size)
@@ -58,9 +58,9 @@ class BinarySolution(Solution):
         Example:
 
         >>> from macop.solutions.discrete import BinarySolution
-        >>> validator = lambda solution: True if sum(solution._data) > 5 else False
+        >>> validator = lambda solution: True if sum(solution.getData()) > 5 else False
         >>> solution = BinarySolution.random(10, validator)
-        >>> sum(solution._data) > 5
+        >>> sum(solution.getData()) > 5
         True
         """
 
@@ -105,10 +105,10 @@ class CombinatoryIntegerSolution(Solution):
         >>> import numpy as np
         >>> data = np.arange(5)
         >>> solution = CombinatoryIntegerSolution(data, 5)
-        >>> sum(solution._data) == 10
+        >>> sum(solution.getData()) == 10
         True
         >>> solution_copy = solution.clone()
-        >>> all(solution_copy._data == solution._data)
+        >>> all(solution_copy._data == solution.getData())
         True
         """
         super().__init__(data, size)
@@ -128,9 +128,9 @@ class CombinatoryIntegerSolution(Solution):
         Example:
 
         >>> from macop.solutions.discrete import CombinatoryIntegerSolution
-        >>> validator = lambda solution: True if sum(solution._data) > 5 else False
+        >>> validator = lambda solution: True if sum(solution.getData()) > 5 else False
         >>> solution = CombinatoryIntegerSolution.random(5, validator)
-        >>> sum(solution._data) > 5
+        >>> sum(solution.getData()) > 5
         True
         """
 
@@ -176,10 +176,10 @@ class IntegerSolution(Solution):
         >>> np.random.seed(42)
         >>> data = np.random.randint(5, size=10)
         >>> solution = IntegerSolution(data, 10)
-        >>> sum(solution._data)
+        >>> sum(solution.getData())
         28
         >>> solution_copy = solution.clone()
-        >>> all(solution_copy._data == solution._data)
+        >>> all(solution_copy._data == solution.getData())
         True
         """
         super().__init__(data, size)
@@ -201,9 +201,9 @@ class IntegerSolution(Solution):
         >>> from macop.solutions.discrete import IntegerSolution
         >>> import numpy as np
         >>> np.random.seed(42)
-        >>> validator = lambda solution: True if sum(solution._data) > 5 else False
+        >>> validator = lambda solution: True if sum(solution.getData()) > 5 else False
         >>> solution = IntegerSolution.random(5, validator)
-        >>> sum(solution._data) > 10
+        >>> sum(solution.getData()) > 10
         True
         """
 

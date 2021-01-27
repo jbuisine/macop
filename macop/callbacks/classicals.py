@@ -35,9 +35,9 @@ class BasicCheckpoint(Callback):
             logging.info("Checkpoint is done into " + self._filepath)
 
             solutionData = ""
-            solutionSize = len(solution._data)
+            solutionSize = len(solution.getData())
 
-            for index, val in enumerate(solution._data):
+            for index, val in enumerate(solution.getData()):
                 solutionData += str(val)
 
                 if index < solutionSize - 1:
@@ -82,7 +82,7 @@ class BasicCheckpoint(Callback):
                 if self._algo._bestSolution is None:
                     self._algo._bestSolution = self._algo._initializer()
 
-                self._algo._bestSolution._data = np.array(solutionData)
+                self._algo._bestsolution.setData(np.array(solutionData))
                 self._algo._bestSolution._score = float(data[2])
 
             macop_line(self._algo)

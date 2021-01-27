@@ -38,9 +38,9 @@ class MultiCheckpoint(Callback):
 
                 for solution in population:
                     solutionData = ""
-                    solutionSize = len(solution._data)
+                    solutionSize = len(solution.getData())
 
-                    for index, val in enumerate(solution._data):
+                    for index, val in enumerate(solution.getData()):
                         solutionData += str(val)
 
                         if index < solutionSize - 1:
@@ -139,9 +139,9 @@ class ParetoCheckpoint(Callback):
 
                 for solution in pfPop:
                     solutionData = ""
-                    solutionSize = len(solution._data)
+                    solutionSize = len(solution.getData())
 
-                    for index, val in enumerate(solution._data):
+                    for index, val in enumerate(solution.getData()):
                         solutionData += str(val)
 
                         if index < solutionSize - 1:

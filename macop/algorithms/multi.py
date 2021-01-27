@@ -51,7 +51,7 @@ class MOEAD(Algorithm):
     >>> evaluator2 = KnapsackEvaluator(data={'worths': worths2})
     >>> # validator specification (based on weights of each objects)
     >>> weights = [ random.randint(5, 30) for i in range(problem_size) ]
-    >>> validator = lambda solution: True if sum([weights[i] for i, value in enumerate(solution._data) if value == 1]) < 200 else False
+    >>> validator = lambda solution: True if sum([weights[i] for i, value in enumerate(solution.getData()) if value == 1]) < 200 else False
     >>> # initializer function with lambda function
     >>> initializer = lambda x=20: BinarySolution.random(x, validator)
     >>> # operators list with crossover and mutation
@@ -415,7 +415,7 @@ class MOSubProblem(Algorithm):
     >>> evaluator2 = KnapsackEvaluator(data={'worths': worths2})
     >>> # validator specification (based on weights of each objects)
     >>> weights = [ random.randint(5, 30) for i in range(problem_size) ]
-    >>> validator = lambda solution: True if sum([weights[i] for i, value in enumerate(solution._data) if value == 1]) < 200 else False
+    >>> validator = lambda solution: True if sum([weights[i] for i, value in enumerate(solution.getData()) if value == 1]) < 200 else False
     >>> # initializer function with lambda function
     >>> initializer = lambda x=20: BinarySolution.random(x, validator)
     >>> # operators list with crossover and mutation

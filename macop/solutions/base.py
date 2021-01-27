@@ -8,7 +8,7 @@ from copy import deepcopy
 class Solution():
     """Base abstract solution class structure
     
-    - stores solution data representation into `data` attribute
+    - stores solution data representation into ndarray `data` attribute
     - get size (shape) of specific data representation
     - stores the score of the solution
     """
@@ -17,8 +17,8 @@ class Solution():
         Abstract solution class constructor
 
         Attributes:
-            data: {ndarray} --  array of binary values
-            size: {int} -- size of binary array values
+            data: {ndarray} --  ndarray of values
+            size: {int} -- size of ndarray values
             score: {float} -- fitness score value
         """
         self._data = data
@@ -58,6 +58,21 @@ class Solution():
             {float} -- fitness score value
         """
         return self._score
+
+    def getData(self):
+        """
+        Returns solution data
+
+        Returns:
+            {ndarray} -- data values
+        """
+        return self._data
+
+    def setData(self, data):
+        """
+        Set solution data
+        """
+        self._data = data
 
     @staticmethod
     def random(size, validator=None):

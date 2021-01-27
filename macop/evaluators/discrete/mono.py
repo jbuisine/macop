@@ -38,7 +38,7 @@ class KnapsackEvaluator(Evaluator):
             {float} -- fitness score of solution
         """
         fitness = 0
-        for index, elem in enumerate(solution._data):
+        for index, elem in enumerate(solution.getData()):
             fitness += self._data['worths'][index] * elem
 
         return fitness
@@ -92,8 +92,8 @@ class QAPEvaluator(Evaluator):
             {float} -- fitness score of solution
         """
         fitness = 0
-        for index_i, val_i in enumerate(solution._data):
-            for index_j, val_j in enumerate(solution._data):
+        for index_i, val_i in enumerate(solution.getData()):
+            for index_j, val_j in enumerate(solution.getData()):
                 fitness += self._data['F'][index_i, index_j] * self._data['D'][val_i, val_j]
 
         return fitness
@@ -145,8 +145,8 @@ class UBQPEvaluator(Evaluator):
             {float} -- fitness score of solution
         """
         fitness = 0
-        for index_i, val_i in enumerate(solution._data):
-            for index_j, val_j in enumerate(solution._data):
+        for index_i, val_i in enumerate(solution.getData()):
+            for index_j, val_j in enumerate(solution.getData()):
                 fitness += self._data['Q'][index_i, index_j] * val_i * val_j
 
         return fitness
