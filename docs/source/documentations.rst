@@ -385,7 +385,7 @@ It is now possible to initialise our new evaluator with specific data of our pro
     solution_fitness = solution.fitness()
 
 .. note::
-    The current developed ``KnapsackEvaluator`` is available into macop.evaluators.mono.KnapsackEvaluator_ in **Macop**.
+    The current developed ``KnapsackEvaluator`` is available into macop.evaluators.discrete.mono.KnapsackEvaluator_ in **Macop**.
 
 In the next part we will see how to modify our current solution with the use of modification operator.
 
@@ -1338,14 +1338,14 @@ An example with MOEAD for knapsack problem is available in knapsackMultiExample.
 .. _macop.solutions.discrete.BinarySolution: macop/macop.solutions.discrete.html#macop.solutions.discrete.BinarySolution
 
 .. _macop.evaluators.base.Evaluator: macop/macop.evaluators.base.html#macop.evaluators.base.Evaluator
-.. _macop.evaluators.mono.KnapsackEvaluator: macop/macop.evaluators.mono.html#macop.evaluators.mono.KnapsackEvaluator
+.. _macop.evaluators.discrete.mono.KnapsackEvaluator: macop/macop.evaluators.discrete.mono.html#macop.evaluators.discrete.mono.KnapsackEvaluator
 
 .. _macop.operators.base: macop/macop.operators.base.html#module-macop.operators.base
 .. _macop.operators.discrete.mutators.SimpleBinaryMutation: macop/macop.operators.discrete.mutators.html#macop.operators.discrete.mutators.SimpleBinaryMutation
 .. _macop.operators.discrete.crossovers.SimpleCrossover: macop/macop.operators.discrete.crossovers.html#macop.operators.discrete.crossovers.SimpleCrossover
 
-.. _macop.policies.reinforcement: macop.policies.reinforcement.html#module-macop.policies.reinforcement
-.. _macop.policies.base: macop.policies.base.html#module-macop.policies.base
+.. _macop.policies.reinforcement: macop/macop.policies.reinforcement.html#module-macop.policies.reinforcement
+.. _macop.policies.base: macop/macop.policies.base.html#module-macop.policies.base
 
 .. _macop.callbacks.base.Callback: macop/macop.callbacks.base.html#macop.callbacks.base.Callback
 
