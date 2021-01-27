@@ -92,7 +92,7 @@ In a first step, the management of the solutions by the macop package will be pr
 Generic Solution
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Inside ``macop.solutions.base`` module of `Macop`, the ``Solution`` class is available. It's an abstract solution class structure which:
+Inside macop.solutions.base_ module of `Macop`, the ``Solution`` class is available. It's an abstract solution class structure which:
 
 - stores the solution data representation into its ``data`` attribute
 - get ``size`` (shape) of specific data representation
@@ -154,7 +154,7 @@ We will now see how to define a type of solution specific to our problem.
 Solution representation for knapsack
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-We will now use the abstract ``Solution`` type available in the ``macop.solutions.base`` module in order to define our own solution.
+We will now use the abstract ``Solution`` type available in the macop.solutions.base_ module in order to define our own solution.
 First of all, let's look at the representation of our knapsack problem. **How to represent the solution?**
 
 Knapsack solution
@@ -177,7 +177,7 @@ where selected objects have **1** as value otherwise **0**.
 Binary Solution
 **********************
 
-We will now define our own type of solution by inheriting from ``macop.solutions.base.Solution``, which we will call ``BinarySolution``.
+We will now define our own type of solution by inheriting from macop.solutions.base.Solution_, which we will call ``BinarySolution``.
 
 First we will define our new class as inheriting functionality from ``Solution`` (such as child class). 
 We will also have to implement the ``random`` method to create a new random solution.
@@ -212,7 +212,7 @@ We will also have to implement the ``random`` method to create a new random solu
             return solution
 
 .. note::
-    The current developed ``BinarySolution`` is available into ``macop.solutions.discrete.BinarySolution`` in **Macop**.
+    The current developed ``BinarySolution`` is available into macop.solutions.discrete.BinarySolution_ in **Macop**.
 
 Using this new Solution representation, we can now generate solution randomly:
 
@@ -299,7 +299,7 @@ Now that it is possible to generate a solution randomly or not. It is important 
 Generic evaluator
 ~~~~~~~~~~~~~~~~~~~~~~
 
-As for the management of solutions, a generic evaluator class ``macop.evaluators.base.Evaluator`` is developed within **Macop**:
+As for the management of solutions, a generic evaluator class macop.evaluators.base.Evaluator_ is developed within **Macop**:
 
 Abstract Evaluator class is used for computing fitness score associated to a solution. To evaluate all the solutions, this class:
 
@@ -385,7 +385,7 @@ It is now possible to initialise our new evaluator with specific data of our pro
     solution_fitness = solution.fitness()
 
 .. note::
-    The current developed ``KnapsackEvaluator`` is available into ``macop.evaluators.mono.KnapsackEvaluator`` in **Macop**.
+    The current developed ``KnapsackEvaluator`` is available into macop.evaluators.mono.KnapsackEvaluator_ in **Macop**.
 
 In the next part we will see how to modify our current solution with the use of modification operator.
 
@@ -402,7 +402,7 @@ In the discrete optimisation literature, we can categorise operators into two se
 - **mutators**: modification of one or more elements of a solution from its current state.
 - **crossovers**: Inspired by Darwin's theory of evolution, we are going here from two solutions to generate a so-called offspring solution composed of the fusion of the data of the parent solutions.
 
-Inside **Macop**, operators are also decomposed into these two categories. Inside ``macop.operators.discrete.base``, generic class ``Operator`` enables to manage any kind of operator.
+Inside **Macop**, operators are also decomposed into these two categories. Inside macop.operators.base_, generic class ``Operator`` enables to manage any kind of operator.
 
 .. code-block:: python
 
@@ -522,7 +522,7 @@ We can now instanciate our new operator in order to obtain a new solution:
 
 
 .. note::
-    The developed ``SimpleBinaryMutation`` is available into ``macop.operators.discrete.mutators.SimpleBinaryMutation`` in **Macop**.
+    The developed ``SimpleBinaryMutation`` is available into macop.operators.discrete.mutators.SimpleBinaryMutation_ in **Macop**.
 
 
 Crossover operator
@@ -585,7 +585,7 @@ We can now use the crossover operator created to generate new solutions. Here is
     offspring = crossover.apply(solution1, solution2)
 
 .. tip::
-    The developed ``SimpleCrossover`` is available into ``macop.operators.discrete.crossovers.SimpleCrossover`` in **Macop**.
+    The developed ``SimpleCrossover`` is available into macop.operators.discrete.crossovers.SimpleCrossover_ in **Macop**.
     However, the choice of halves of the merged data is made randomly.
 
 Next part introduce the ``policy`` feature of **Macop** which enables to choose the next operator to apply during the search process based on specific criterion.
@@ -608,7 +608,7 @@ The operator choice problem can be seen as the desire to find the best solution 
    :align: center
 
 .. note::
-    An implementation using reinforcement learning has been developed as an example in the ``macop.policies.reinforcement`` module. 
+    An implementation using reinforcement learning has been developed as an example in the macop.policies.reinforcement_ module. 
     However, it will not be detailed here. You can refer to the API documentation for more details.
 
 
@@ -617,7 +617,7 @@ Custom policy
 
 In our case, we are not going to exploit a complex enough implementation of a ``policy``. Simply, we will use a random choice of operator.
 
-First, let's take a look of the ``policy`` abstract class available in ``macop.policies.base``:
+First, let's take a look of the ``policy`` abstract class available in macop.policies.base_:
 
 .. code-block:: python
 
@@ -719,7 +719,7 @@ Abstract algorithm class
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 An abstract class is proposed within Macop to generalize the management of an algorithm and therefore of a heuristic. 
-It is located in the ``macop.algorithms.base`` module. 
+It is located in the macop.algorithms.base_ module. 
 
 We will pay attention to the different methods of which she is composed. This class enables to manage some common usages of operation research algorithms:
 
@@ -1068,7 +1068,7 @@ Then, we use this local search in our ``run`` method to allow a better search fo
 
 
 .. note:: 
-    These two last algorithms developed are available in the library within the module ``maocp.algorithms.mono``.
+    These two last algorithms developed are available in the library within the module macop.algorithms.mono_.
 
 We have one final feature to explore in the next part. This is the notion of ``callback``.
 
@@ -1112,7 +1112,7 @@ Callbacks introduction
 Having output logs can help to understand an error that has occurred, however all the progress of the research carried out may be lost. 
 For this, the functionality relating to callbacks has been developed.
 
-Within **Macop**, a callback is a specific instance of ``macop.callbacks.Callback`` that allows you to perform an action of tracing / saving information **every** ``n`` **evaluations** but also reloading information if necessary when restarting an algorithm.
+Within **Macop**, a callback is a specific instance of macop.callbacks.base.Callback_ that allows you to perform an action of tracing / saving information **every** ``n`` **evaluations** but also reloading information if necessary when restarting an algorithm.
 
 
 .. code-block:: python
@@ -1321,9 +1321,33 @@ MOEA/D is a state-of-art algorithm in aggregation-based approaches for multi-obj
 
 As illustrated below, the two main objectives are sub-divised into 5 single-objective optimization sub-problems in order to find the Pareto front.
 
-- ``macop.algorithms.multi.MOSubProblem`` class defines each sub-problem of MOEA/D.
-- ``macop.algorithms.multi.MOEAD`` class exploits ``MOSubProblem`` and implements MOEA/D using weighted-sum of objectives method.
+- macop.algorithms.multi.MOSubProblem_ class defines each sub-problem of MOEA/D.
+- macop.algorithms.multi.MOEAD_ class exploits ``MOSubProblem`` and implements MOEA/D using weighted-sum of objectives method.
 
 An example with MOEAD for knapsack problem is available in knapsackMultiExample.py_.
 
 .. _knapsackMultiExample.py: https://github.com/jbuisine/macop/blob/master/examples/knapsackMultiExample.py
+
+
+
+.. _macop.algorithms.base: macop/macop.algorithms.base.html#module-macop.algorithms.base
+.. _macop.algorithms.mono: macop/macop.algorithms.mono.html#module-macop.algorithms.mono
+
+.. _macop.solutions.base: macop/macop.solutions.base.html#module-macop.solutions.base
+.. _macop.solutions.base.Solution: macop/macop.solutions.base.html#macop.solutions.base.Solution
+.. _macop.solutions.discrete.BinarySolution: macop/macop.solutions.discrete.html#macop.solutions.discrete.BinarySolution
+
+.. _macop.evaluators.base.Evaluator: macop/macop.evaluators.base.html#macop.evaluators.base.Evaluator
+.. _macop.evaluators.mono.KnapsackEvaluator: macop/macop.evaluators.mono.html#macop.evaluators.mono.KnapsackEvaluator
+
+.. _macop.operators.base: macop/macop.operators.base.html#module-macop.operators.base
+.. _macop.operators.discrete.mutators.SimpleBinaryMutation: macop/macop.operators.discrete.mutators.html#macop.operators.discrete.mutators.SimpleBinaryMutation
+.. _macop.operators.discrete.crossovers.SimpleCrossover: macop/macop.operators.discrete.crossovers.html#macop.operators.discrete.crossovers.SimpleCrossover
+
+.. _macop.policies.reinforcement: macop.policies.reinforcement.html#module-macop.policies.reinforcement
+.. _macop.policies.base: macop.policies.base.html#module-macop.policies.base
+
+.. _macop.callbacks.base.Callback: macop/macop.callbacks.base.html#macop.callbacks.base.Callback
+
+.. _macop.algorithms.multi.MOSubProblem: macop/macop.algorithms.multi.html#macop.algorithms.multi.MOSubProblem
+.. _macop.algorithms.multi.MOEAD: macop/macop.algorithms.multi.html#macop.algorithms.multi.MOEAD

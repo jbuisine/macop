@@ -4,7 +4,7 @@ Quadratric Assignment Problem
 
 This example will deal with the use of the **Macop** package in relation to a quadratic assignment problem (QAP). We will use a known example of this problem to associate a set of facilities (:math:`F`) to a set of locations (:math:`L`).
 
-.. image:: ../../_static/examples/qap/factories_qap.png
+.. image:: _static//examples/qap/factories_qap.png
    :width: 50 %
    :align: center
    :alt: Example of QAP facilities to locations problem
@@ -29,7 +29,7 @@ is assigned to location 2, facility 3 is assigned to location 3, and facility 2 
 which means that facility 4 is assigned to location 1, facility 1 is assigned to location 2, facility 3 is assigned to location 3, and facility 2 is assigned to location 3. 
 In the figure, the line between a pair of facilities indicates that there is required flow between the facilities, and the thickness of the line increases with the value of the flow. 
 
-.. image:: ../../_static/examples/qap/factories_qap.png
+.. image:: _static//examples/qap/factories_qap.png
    :width: 50 %
    :align: center
    :alt: Example of QAP facilities to locations problem
@@ -156,7 +156,7 @@ Solution structure definition
 
 Firstly, we are going to use a type of solution that will allow us to define the structure of our solutions.
 
-The available ``macop.solutions.discrete.CombinatoryIntegerSolution`` type of solution within the Macop package represents exactly what one would wish for. 
+The available macop.solutions.discrete.CombinatoryIntegerSolution_ type of solution within the Macop package represents exactly what one would wish for. 
 I.e. a solution that stores a sequence of integers relative to the size of the problem, the order of which is not sorted.
 
 Let's see an example of its use:
@@ -185,7 +185,7 @@ To do this, we need to create a new evaluator specific to our problem and the re
 
 - :math:`min_{ϕ∈S_n}\sum_{i=1}^{n}{\sum_{j=1}^{n}{f_{ij}⋅d_{\phi(i)\phi(j)}}}`
 
-So we are going to create a class that will inherit from the abstract class ``macop.evalutarors.base.Evaluator``:
+So we are going to create a class that will inherit from the abstract class macop.evaluators.base.Evaluator_:
 
 
 .. code:: python
@@ -220,7 +220,7 @@ So we are going to create a class that will inherit from the abstract class ``ma
 The cost function for the quadratic problem is now well defined.
 
 .. tip::
-    The class proposed here, is available in the Macop package ``macop.evaluators.discrete.mono.QAPEvaluator``.
+    The class proposed here, is available in the Macop package macop.evaluators.discrete.mono.QAPEvaluator_.
 
 Running algorithm
 ~~~~~~~~~~~~~~~~~
@@ -301,3 +301,8 @@ QAP problem solving is now possible with **Macop**. As a reminder, the complete 
 
 .. _qapExample.py: https://github.com/jbuisine/macop/blob/master/examples/qapExample.py
 .. _documentation: https://jbuisine.github.io/macop/_build/html/documentations
+
+
+.. _macop.solutions.discrete.CombinatoryIntegerSolution: macop/macop.solutions.discrete.html#macop.solutions.discrete.CombinatoryIntegerSolution
+.. _macop.evaluators.base.Evaluator: macop/macop.evaluators.base.html#macop.evaluators.base.Evaluator
+.. _macop.evaluators.discrete.mono.QAPEvaluator: macop/macop.evaluators.discrete.mono.html#macop.evaluators.discrete.mono.QAPEvaluator

@@ -87,7 +87,7 @@ Solution structure definition
 
 Firstly, we are going to use a type of solution that will allow us to define the structure of our solutions.
 
-The available ``macop.solutions.discrete.BinarySolution`` type of solution within the Macop package represents exactly what one would wish for. 
+The available macop.solutions.discrete.BinarySolution_ type of solution within the Macop package represents exactly what one would wish for. 
 
 Let's see an example of its use:
 
@@ -115,7 +115,7 @@ To do this, we need to create a new evaluator specific to our problem and the re
 
 - :math:`f(x)=x′Qx=\sum_{i=1}^{n}{\sum_{j=1}^{n}{q_{ij}⋅x_i⋅x_j}}`
 
-So we are going to create a class that will inherit from the abstract class ``macop.evalutarors.base.Evaluator``:
+So we are going to create a class that will inherit from the abstract class macop.evaluators.base.Evaluator_:
 
 .. code:: python
 
@@ -148,7 +148,7 @@ So we are going to create a class that will inherit from the abstract class ``ma
 The cost function for the Unconstrained binary quadratic problem is now well defined.
 
 .. tip::
-    The class proposed here, is available in the Macop package ``macop.evaluators.discrete.mono.UBQPEvaluator``.
+    The class proposed here, is available in the Macop package macop.evaluators.discrete.mono.UBQPEvaluator_.
 
 Running algorithm
 ~~~~~~~~~~~~~~~~~
@@ -177,7 +177,7 @@ If you are uncomfortable with some of the elements in the code that will follow,
 
     # usefull instance data
     n = 100
-    qap_instance_file = 'qap_instance.txt'
+    ubqp_instance_file = 'ubqp_instance.txt'
 
     # default validator
     def validator(solution):
@@ -223,3 +223,8 @@ UBQP problem solving is now possible with **Macop**. As a reminder, the complete
 
 .. _ubqpExample.py: https://github.com/jbuisine/macop/blob/master/examples/ubqpExample.py
 .. _documentation: https://jbuisine.github.io/macop/_build/html/documentations
+
+
+.. _macop.solutions.discrete.BinarySolution: macop/macop.solutions.discrete.html#macop.solutions.discrete.BinarySolution
+.. _macop.evaluators.base.Evaluator: macop/macop.evaluators.base.html#macop.evaluators.base.Evaluator
+.. _macop.evaluators.discrete.mono.UBQPEvaluator: macop/macop.evaluators.discrete.mono.html#macop.evaluators.discrete.mono.UBQPEvaluator
