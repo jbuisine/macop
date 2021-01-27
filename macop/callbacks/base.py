@@ -16,6 +16,12 @@ class Callback():
         filepath: {str} -- file path where checkpoints will be saved
     """
     def __init__(self, every, filepath):
+        """Callback abstract initialiser
+
+        Args:
+            every: {int} -- checkpoint frequency used (based on number of evaluations)
+            filepath: {str} -- file path where checkpoints will be saved
+        """
 
         self._algo = None
         self._every = every

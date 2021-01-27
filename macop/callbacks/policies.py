@@ -37,20 +37,20 @@ class UCBCheckpoint(Callback):
 
                 rewardsLine = ''
 
-                for i, r in enumerate(self._algo._policy._rewards):
+                for i, r in enumerate(self._algo.policy.rewards):
                     rewardsLine += str(r)
 
-                    if i != len(self._algo._policy._rewards) - 1:
+                    if i != len(self._algo.policy.rewards) - 1:
                         rewardsLine += ';'
 
                 f.write(rewardsLine + '\n')
 
                 occurrencesLine = ''
 
-                for i, o in enumerate(self._algo._policy._occurences):
+                for i, o in enumerate(self._algo.policy.occurences):
                     occurrencesLine += str(o)
 
-                    if i != len(self._algo._policy._occurences) - 1:
+                    if i != len(self._algo.policy.occurences) - 1:
                         occurrencesLine += ';'
 
                 f.write(occurrencesLine + '\n')
@@ -69,10 +69,10 @@ class UCBCheckpoint(Callback):
                 rewardsLine = lines[0].replace('\n', '')
                 occurrencesLine = lines[1].replace('\n', '')
 
-                self._algo._policy._rewards = [
+                self._algo.policy.rewards = [
                     float(f) for f in rewardsLine.split(';')
                 ]
-                self._algo._policy._occurences = [
+                self._algo.policy.occurences = [
                     float(f) for f in occurrencesLine.split(';')
                 ]
 

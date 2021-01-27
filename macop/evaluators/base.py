@@ -10,7 +10,11 @@ from abc import abstractmethod
 class Evaluator():
     """Abstract Evaluator class which enables to compute solution using specific `_data` 
     """
-    def __init__(self, data):
+    def __init__(self, data: dict):
+        """Initialise Evaluator instance which stores into its `_data` dictionary attritute required measures when computing a solution
+        Args:
+            data: {dict} -- specific data dictionnary
+        """
         self._data = data
 
     @abstractmethod

@@ -15,9 +15,11 @@ Thank you for taking the time to read this guide for the package's contribution.
 
 1. [Submission processes](#submission-process)
 
-    1.2. [Submit an issue](#submit-an-issue)
+    1.1. [Submit an issue](#submit-an-issue)
 
-    1.1. [Pull request](#pull-request)
+    1.2. [Pull request](#pull-request)
+
+    1.3. [Seek support](#seek-support)
 
 2. [Coding conventions](#coding-conventions)
 
@@ -62,6 +64,11 @@ To enhance the package, do not hesitate to fix bug or missing feature. To do tha
 
 Whatever the problem reported, I will thank you for your contribution to this project. So do not hesitate.
 
+## Seek support
+
+If you have any problem with the use of the package, issue or pull request submission, do not hesitate to let a message to [https://github.com/jbuisine/macop/discussions](https://github.com/jbuisine/macop/discussions). Especially in the question and answer section. 
+
+You can also contact me at the following email address: `contact@jeromebuisine.fr`.
 
 # Coding conventions
 
@@ -126,11 +133,11 @@ This project uses the [doctest](https://docs.python.org/3/library/doctest.html) 
     >>> data = [0, 1, 0, 1, 1]
     >>> solution = BinarySolution(data, len(data))
     >>> # check data content
-    >>> sum(solution._data) == 3
+    >>> sum(solution.getData()) == 3
     True
     >>> # clone solution
     >>> solution_copy = solution.clone()
-    >>> all(solution_copy._data == solution._data)
+    >>> all(solution_copy._data == solution.getData())
 """
 ```
 

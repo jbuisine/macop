@@ -73,14 +73,14 @@ class TestCommand(distutils.command.check.check):
 
 setup(
     name='macop',
-    version='1.0.9',
+    version='1.0.11',
     description='Minimalist And Customisable Optimisation Package',
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
     classifiers=[
-        'Development Status :: 4 - Beta',
+        'Development Status :: 5 - Production/Stable',
         'License :: OSI Approved :: MIT License',
-        'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
         'Topic :: Scientific/Engineering',
         'Topic :: Utilities'
     ],

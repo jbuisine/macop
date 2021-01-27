@@ -20,11 +20,11 @@ class SimpleMutation(Mutation):
     >>> from macop.solutions.discrete import BinarySolution
     >>> from macop.operators.discrete.mutators import SimpleMutation
     >>> solution = BinarySolution.random(5)
-    >>> list(solution._data)
+    >>> list(solution.getData())
     [1, 0, 0, 0, 1]
     >>> mutator = SimpleMutation()
     >>> mutation_solution = mutator.apply(solution)
-    >>> list(mutation_solution._data)
+    >>> list(mutation_solution.getData())
     [0, 0, 1, 0, 1]
     """
     def apply(self, solution):
@@ -49,11 +49,12 @@ class SimpleMutation(Mutation):
             firstCell = random.randint(0, size - 1)
             secondCell = random.randint(0, size - 1)
 
-        temp = copy_solution._data[firstCell]
+        temp = copy_solution.getData()[firstCell]
 
         # swicth values
-        copy_solution._data[firstCell] = copy_solution._data[secondCell]
-        copy_solution._data[secondCell] = temp
+        copy_solution.getData()[firstCell] = copy_solution.getData(
+        )[secondCell]
+        copy_solution.getData()[secondCell] = temp
 
         return copy_solution
 
@@ -70,11 +71,11 @@ class SimpleBinaryMutation(Mutation):
     >>> from macop.solutions.discrete import BinarySolution
     >>> from macop.operators.discrete.mutators import SimpleBinaryMutation
     >>> solution = BinarySolution.random(5)
-    >>> list(solution._data)
+    >>> list(solution.getData())
     [0, 1, 0, 0, 0]
     >>> mutator = SimpleBinaryMutation()
     >>> mutation_solution = mutator.apply(solution)
-    >>> list(mutation_solution._data)
+    >>> list(mutation_solution.getData())
     [1, 1, 0, 0, 0]
     """
     def apply(self, solution):
@@ -94,9 +95,9 @@ class SimpleBinaryMutation(Mutation):
         copy_solution = solution.clone()
 
         # swicth values
-        if copy_solution._data[cell]:
-            copy_solution._data[cell] = 0
+        if copy_solution.getData()[cell]:
+            copy_solution.getData()[cell] = 0
         else:
-            copy_solution._data[cell] = 1
+            copy_solution.getData()[cell] = 1
 
         return copy_solution

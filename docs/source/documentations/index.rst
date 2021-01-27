@@ -1,5 +1,5 @@
-Documentation
-==============
+A tour of Macop
+===================
 
 .. image:: ../_static/logo_macop.png
    :width: 300 px

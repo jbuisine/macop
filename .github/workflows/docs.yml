@@ -22,7 +22,6 @@ jobs:
     - name: Commit documentation changes
       run: |
         git clone https://github.com/jbuisine/macop.git --branch gh-pages --single-branch gh-pages
-        ls -l docs/_build
         cp -r docs/* gh-pages/docs
         cd gh-pages
         touch .nojekyll

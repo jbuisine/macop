@@ -34,7 +34,7 @@ We will pay attention to the different methods of which she is composed. This cl
 
 She is composed of few default attributes:
 
-- initializer: {function} -- basic function strategy to initialize solution
+- initialiser: {function} -- basic function strategy to initialise solution
 - evaluator: {Evaluator} -- evaluator instance in order to obtained fitness (mono or multiple objectives)
 - operators: {[Operator]} -- list of operator to use when launching algorithm
 - policy: {Policy} -- Policy instance strategy to select operators
@@ -43,7 +43,7 @@ She is composed of few default attributes:
 - verbose: {bool} -- verbose or not information about the algorithm
 - currentSolution: {Solution} -- current solution managed for current evaluation comparison
 - bestSolution: {Solution} -- best solution found so far during running algorithm
-- callbacks: {[Callback]} -- list of Callback class implementation to do some instructions every number of evaluations and `load` when initializing algorithm
+- callbacks: {[Callback]} -- list of Callback class implementation to do some instructions every number of evaluations and `load` when initialising algorithm
 - parent: {Algorithm} -- parent algorithm reference in case of inner Algorithm instance (optional)
 
 .. code-block:: python
@@ -51,7 +51,7 @@ She is composed of few default attributes:
     class Algorithm():
 
         def __init__(self,
-                    initializer,
+                    initialiser,
                     evaluator,
                     operators,
                     policy,
@@ -88,7 +88,7 @@ She is composed of few default attributes:
 
         def initRun(self):
             """
-            Initialize the current solution and best solution using the `initialiser` function
+            initialise the current solution and best solution using the `initialiser` function
             """
             ...
 
@@ -155,12 +155,12 @@ The ``evaluate``, ``update`` and ``isBetter`` will be used a lot when looking fo
 In particular the ``update`` function, which will call the ``policy`` instance to generate a new valid solution.
 ``isBetter`` method is also overloadable especially if the algorithm does not take any more into account than a single solution to be verified (verification via a population for example).
 
-The ``initRun`` method specify the way you intialise your algorithm (``bestSolution`` and ``currentSolution`` as example) if algorithm not already initialized.
+The ``initRun`` method specify the way you intialise your algorithm (``bestSolution`` and ``currentSolution`` as example) if algorithm not already initialised.
 
 .. note:: 
     The ``initRun`` method can also be used for intialise population of solutions instead of only one best solution, if you want to manage a genetic algorithm.
 
-Most important part is the ``run`` method. Into abstract, the ``run`` method only initialized the current number of evaluation for the algorithm based on the parent algorithm if we are into inner algorithm.
+Most important part is the ``run`` method. Into abstract, the ``run`` method only initialised the current number of evaluation for the algorithm based on the parent algorithm if we are into inner algorithm.
 It is always **mandatory** to call the parent class ``run`` method using ``super().run(evaluations)``. Then, using ``evaluations`` parameter which is the number of evaluations budget to run, we can process or continue to find solutions into search space.
 
 .. warning::
@@ -190,10 +190,10 @@ Let's implement an algorithm well known under the name of hill climber best impr
             Run a local search algorithm
             """
 
-            # by default use of mother method to initialize variables
+            # by default use of mother method to initialise variables
             super().run(evaluations)
 
-            # initialize current solution and best solution
+            # initialise current solution and best solution
             self.initRun()
 
             solutionSize = self._currentSolution._size
@@ -238,7 +238,7 @@ We will also need to define a **solution initialisation function** so that the a
     evaluator = KnapsackEvaluator(data={'worths': elements_score})
 
     # valid instance using lambda
-    validator = lambda solution: sum([ elements_weight[i] * solution._data[i] for i in range(len(solution._data))]) <= 15
+    validator = lambda solution: sum([ elements_weight[i] * solution.getData()[i] for i in range(len(solution.getData()))]) <= 15
     
     # initialiser instance using lambda with default param value
     initialiser = lambda x=5: BinarySolution.random(x, validator)
@@ -287,7 +287,7 @@ Let's called this new algorithm ``IteratedLocalSearch``:
     class IteratedLocalSearch(Algorithm):
         
         def __init__(self,
-                    initializer,
+                    initialiser,
                     evaluator,
                     operators,
                     policy,
@@ -297,7 +297,7 @@ Let's called this new algorithm ``IteratedLocalSearch``:
                     parent=None,
                     verbose=True):
             
-            super().__init__(initializer, evaluator, operators, policy, validator, maximise, parent, verbose)
+            super().__init__(initialiser, evaluator, operators, policy, validator, maximise, parent, verbose)
 
             # specific local search associated with current algorithm
             self._localSearch = localSearch
@@ -311,10 +311,10 @@ Let's called this new algorithm ``IteratedLocalSearch``:
             Run the iterated local search algorithm using local search
             """
 
-            # by default use of mother method to initialize variables
+            # by default use of mother method to initialise variables
             super().run(evaluations)
 
-            # initialize current solution
+            # initialise current solution
             self.initRun()
 
             # local search algorithm implementation
@@ -348,7 +348,7 @@ Then, we use this local search in our ``run`` method to allow a better search fo
     evaluator = KnapsackEvaluator(data={'worths': elements_score})
 
     # valid instance using lambda
-    validator = lambda solution: sum([ elements_weight[i] * solution._data[i] for i in range(len(solution._data))]) <= 15
+    validator = lambda solution: sum([ elements_weight[i] * solution.getData()[i] for i in range(len(solution.getData()))]) <= 15
     
     # initialiser instance using lambda with default param value
     initialiser = lambda x=5: BinarySolution.random(x, validator)
@@ -361,7 +361,7 @@ Then, we use this local search in our ``run`` method to allow a better search fo
     
     # maximizing algorithm (relative to knapsack problem)
     localSearch = HillClimberBestImprovment(initialiser, evaluator, operators, policy, validator, maximise=True, verbose=False)
-    algo = IteratedLocalSearch(initializer, evaluator, operators, policy, validator, localSearch=local_search, maximise=True, verbose=False)
+    algo = IteratedLocalSearch(initialiser, evaluator, operators, policy, validator, localSearch=local_search, maximise=True, verbose=False)
 
     # run the algorithm using local search and get solution found 
     solution = algo.run(evaluations=100, ls_evaluations=10)

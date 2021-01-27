@@ -17,6 +17,8 @@ class Operator():
     """
     @abstractmethod
     def __init__(self):
+        """Abstract Operator initialiser
+        """
         pass
 
     @abstractmethod
@@ -45,9 +47,19 @@ class Mutation(Operator):
         kind: {KindOperator} -- specify the kind of operator
     """
     def __init__(self):
+        """Mutation initialiser in order to specify kind of Operator
+        """
         self._kind = KindOperator.MUTATOR
 
     def apply(self, solution):
+        """Apply mutation over solution in order to obtained new solution
+
+        Args:
+            solution: {Solution} -- solution to use in order to create new solution
+
+        Return:
+            {Solution} -- new generated solution
+        """
         raise NotImplementedError
 
 
@@ -58,7 +70,18 @@ class Crossover(Operator):
         kind: {KindOperator} -- specify the kind of operator
     """
     def __init__(self):
+        """Crossover initialiser in order to specify kind of Operator
+        """
         self._kind = KindOperator.CROSSOVER
 
     def apply(self, solution1, solution2=None):
+        """Apply crossover using two solutions in order to obtained new solution
+
+        Args:
+            solution1: {Solution} -- the first solution to use for generating new solution
+            solution2: {Solution} -- the second solution to use for generating new solution
+
+        Return:
+            {Solution} -- new generated solution
+        """
         raise NotImplementedError

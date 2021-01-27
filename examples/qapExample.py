@@ -33,7 +33,7 @@ filepath = "data/checkpoints_qap.csv"
 
 # default validator
 def validator(solution):
-    if len(list(solution._data)) > len(set(list(solution._data))):
+    if len(list(solution.getData())) > len(set(list(solution.getData()))):
         print("not valid")
         return False
     return True

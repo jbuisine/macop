@@ -100,7 +100,7 @@ We can now use this operator choice policy to update our current solution:
     # pass two solutions in parameters in case of selected crossover operator
     new_solution = policy.apply(solution1, solution2)
 
-.. warning::
+.. caution::
     By default if ``solution2`` parameter is not provided into ``policy.apply`` method for crossover, the best solution known is used from the algorithm linked to the ``policy``.
 
 Updating solutions is therefore now possible with our policy. It is high time to dive into the process of optimizing solutions and digging into our research space.

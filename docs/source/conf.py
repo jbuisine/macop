@@ -25,9 +25,9 @@ copyright = '2021, Jérôme BUISINE'
 author = 'Jérôme BUISINE'
 
 # The short X.Y version
-version = '1.0.9'
+version = '1.0.11'
 # The full version, including alpha/beta/rc tags
-release = 'v1.0.9'
+release = 'v1.0.11'
 
 
 # -- General configuration ---------------------------------------------------
@@ -154,6 +154,9 @@ html_static_path = ['_static']
 # 'searchbox.html']``.
 #
 # html_sidebars = {}
+# html_sidebars = { '**': ['globaltoc.html', 'relations.html', 'sourcelink.html', 'searchbox.html'] }
+
+html_sidebars = {'**': ['fulltoc.html', 'relations.html', 'sourcelink.html', 'searchbox.html']}
 
 # -- Options for HTMLHelp output ---------------------------------------------
 

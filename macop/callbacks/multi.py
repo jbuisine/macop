@@ -25,7 +25,7 @@ class MultiCheckpoint(Callback):
         Check if necessary to do backup based on `every` variable
         """
         # get current population
-        population = self._algo._population
+        population = self._algo.population
 
         currentEvaluation = self._algo.getGlobalEvaluation()
 
@@ -38,9 +38,9 @@ class MultiCheckpoint(Callback):
 
                 for solution in population:
                     solutionData = ""
-                    solutionSize = len(solution._data)
+                    solutionSize = len(solution.getData())
 
-                    for index, val in enumerate(solution._data):
+                    for index, val in enumerate(solution.getData()):
                         solutionData += str(val)
 
                         if index < solutionSize - 1:
@@ -48,8 +48,8 @@ class MultiCheckpoint(Callback):
 
                     line = str(currentEvaluation) + ';'
 
-                    for i in range(len(self._algo._evaluator)):
-                        line += str(solution._scores[i]) + ';'
+                    for i in range(len(self._algo.evaluator)):
+                        line += str(solution.scores[i]) + ';'
 
                     line += solutionData + ';\n'
 
@@ -80,18 +80,18 @@ class MultiCheckpoint(Callback):
                         else:
                             self._algo._numberOfEvaluations = globalEvaluation
 
-                    nObjectives = len(self._algo._evaluator)
+                    nObjectives = len(self._algo.evaluator)
                     scores = [float(s) for s in data[1:nObjectives + 1]]
 
                     # get best solution data information
                     solutionData = list(map(int, data[-1].split(' ')))
 
-                    # initialize and fill with data
-                    self._algo._population[i] = self._algo._initializer()
-                    self._algo._population[i]._data = np.array(solutionData)
-                    self._algo._population[i]._scores = scores
+                    # initialise and fill with data
+                    self._algo.population[i] = self._algo.initialiser()
+                    self._algo.population[i].setData(np.array(solutionData))
+                    self._algo.population[i].scores = scores
 
-                    self._algo._pfPop.append(self._algo._population[i])
+                    self._algo._pfPop.append(self._algo.population[i])
 
             macop_line(self._algo)
             macop_text(
@@ -139,9 +139,9 @@ class ParetoCheckpoint(Callback):
 
                 for solution in pfPop:
                     solutionData = ""
-                    solutionSize = len(solution._data)
+                    solutionSize = len(solution.getData())
 
-                    for index, val in enumerate(solution._data):
+                    for index, val in enumerate(solution.getData()):
                         solutionData += str(val)
 
                         if index < solutionSize - 1:
@@ -149,8 +149,8 @@ class ParetoCheckpoint(Callback):
 
                     line = ''
 
-                    for i in range(len(self._algo._evaluator)):
-                        line += str(solution._scores[i]) + ';'
+                    for i in range(len(self._algo.evaluator)):
+                        line += str(solution.scores[i]) + ';'
 
                     line += solutionData + ';\n'
 
@@ -170,14 +170,14 @@ class ParetoCheckpoint(Callback):
 
                     data = line.replace(';\n', '').split(';')
 
-                    nObjectives = len(self._algo._evaluator)
+                    nObjectives = len(self._algo.evaluator)
                     scores = [float(s) for s in data[0:nObjectives]]
 
                     # get best solution data information
                     solutionData = list(map(int, data[-1].split(' ')))
 
                     self._algo._pfPop[i]._data = solutionData
-                    self._algo._pfPop[i]._scores = scores
+                    self._algo._pfPop[i].scores = scores
 
             macop_text(
                 self._algo,

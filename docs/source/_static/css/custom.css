@@ -6,6 +6,15 @@
     background-image: url("../logo_macop.png") !important;
 }
 
+@media only screen and (max-width: 900px) {
+
+    .header-logo {
+        background-size: 93px 30px !important;
+        height: 33px !important;
+        margin-top: 1px !important;
+    }
+}
+
 .pytorch-left-menu-search input[type="text"] {
     border-color: #009900 !important;
 }
@@ -33,6 +42,14 @@ footer a {
 
 div[id=api] colgroup :first-child {
     width: 60% !important;
+}
+
+table.docutils colgroup :first-child {
+    width: 60% !important;
+}
+
+table.colwidths-given colgroup :first-child {
+    width: 30% !important;
 }
 
 .rst-content a:link, .rst-content a:visited, .rst-content a:hover {
@@ -67,4 +84,8 @@ div[id=api] colgroup :first-child {
     display: block;
     margin-left: auto;
     margin-right: auto;
+}
+
+.tutorials-header .main-menu-open-button {
+    display: none !important;
 }

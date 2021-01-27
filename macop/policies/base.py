@@ -14,6 +14,11 @@ class Policy():
         operators: {[Operator]} -- list of selected operators for the algorithm
     """
     def __init__(self, operators):
+        """Initialise new Policy instance using specific list of operators
+
+        Args:
+            operators: [{}] -- list of operators to use
+        """
         self._operators = operators
 
     @abstractmethod
@@ -45,7 +50,7 @@ class Policy():
 
         # default value of solution2 is current best solution
         if solution2 is None and self._algo is not None:
-            solution2 = self._algo._bestSolution
+            solution2 = self._algo.getResult()
 
         # avoid use of crossover if only one solution is passed
         if solution2 is None and operator._kind == KindOperator.CROSSOVER:
