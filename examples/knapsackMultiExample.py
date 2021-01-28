@@ -35,7 +35,7 @@ elements_weight = [ random.randint(90, 100) for _ in range(500) ]
 def knapsackWeight(solution):
 
     weight_sum = 0
-    for index, elem in enumerate(solution.getData()):
+    for index, elem in enumerate(solution.data):
         weight_sum += elements_weight[index] * elem
 
     return weight_sum

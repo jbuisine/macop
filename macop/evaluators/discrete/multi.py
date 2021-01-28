@@ -48,10 +48,10 @@ class WeightedSum(Evaluator):
         - Compute weighted-sum for these objectives
 
         Args:
-            solution: {Solution} -- Solution instance
+            solution: {:class:`~macop.solutions.base.Solution`} -- Solution instance
     
         Returns:
-            {float} -- weighted-sum of the fitness scores
+            {float}: weighted-sum of the fitness scores
         """
         scores = [
             evaluator.compute(solution)

@@ -16,7 +16,7 @@ class BasicCheckpoint(Callback):
     BasicCheckpoint is used for loading previous computations and start again after loading checkpoint
 
     Attributes:
-        algo: {Algorithm} -- main algorithm instance reference
+        algo: {:class:`~macop.algorithms.base.Algorithm`} -- main algorithm instance reference
         every: {int} -- checkpoint frequency used (based on number of evaluations)
         filepath: {str} -- file path where checkpoints will be saved
     """
@@ -25,7 +25,7 @@ class BasicCheckpoint(Callback):
         Check if necessary to do backup based on `every` variable
         """
         # get current best solution
-        solution = self._algo.getResult()
+        solution = self._algo.result
 
         currentEvaluation = self._algo.getGlobalEvaluation()
 
@@ -34,17 +34,17 @@ class BasicCheckpoint(Callback):
 
             logging.info("Checkpoint is done into " + self._filepath)
 
-            solutionData = ""
-            solutionSize = len(solution.getData())
+            solution.data = ""
+            solutionSize = len(solution.data)
 
-            for index, val in enumerate(solution.getData()):
-                solutionData += str(val)
+            for index, val in enumerate(solution.data):
+                solution.data += str(val)
 
                 if index < solutionSize - 1:
-                    solutionData += ' '
+                    solution.data += ' '
 
-            line = str(currentEvaluation) + ';' + solutionData + ';' + str(
-                solution.fitness()) + ';\n'
+            line = str(currentEvaluation) + ';' + solution.data + ';' + str(
+                solution.fitness) + ';\n'
 
             # check if file exists
             if not os.path.exists(self._filepath):
@@ -76,13 +76,13 @@ class BasicCheckpoint(Callback):
                     self._algo.setEvaluation(globalEvaluation)
 
                 # get best solution data information
-                solutionData = list(map(int, data[1].split(' ')))
+                solution.data = list(map(int, data[1].split(' ')))
 
-                if self._algo.getResult() is None:
-                    self._algo.setDefaultResult(self._algo.initialiser())
+                if self._algo.result is None:
+                    self._algo.result(self._algo.initialiser())
 
-                self._algo.getResult().setData(np.array(solutionData))
-                self._algo.getResult().setScore(float(data[2]))
+                self._algo.result.data = np.array(solution.data)
+                self._algo.result.fitness = float(data[2])
 
             macop_line(self._algo)
             macop_text(self._algo,

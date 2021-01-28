@@ -238,7 +238,7 @@ We will also need to define a **solution initialisation function** so that the a
     evaluator = KnapsackEvaluator(data={'worths': elements_score})
 
     # valid instance using lambda
-    validator = lambda solution: sum([ elements_weight[i] * solution.getData()[i] for i in range(len(solution.getData()))]) <= 15
+    validator = lambda solution: sum([ elements_weight[i] * solution.getdata = )[i] for i in range(len(solution.getdata = )))]) <= 15
     
     # initialiser instance using lambda with default param value
     initialiser = lambda x=5: BinarySolution.random(x, validator)
@@ -254,7 +254,7 @@ We will also need to define a **solution initialisation function** so that the a
 
     # run the algorithm and get solution found
     solution = algo.run(100)
-    print(solution.fitness())
+    print(solution.fitness)
 
 
 .. note::
@@ -348,7 +348,7 @@ Then, we use this local search in our ``run`` method to allow a better search fo
     evaluator = KnapsackEvaluator(data={'worths': elements_score})
 
     # valid instance using lambda
-    validator = lambda solution: sum([ elements_weight[i] * solution.getData()[i] for i in range(len(solution.getData()))]) <= 15
+    validator = lambda solution: sum([ elements_weight[i] * solution.getdata = )[i] for i in range(len(solution.getdata = )))]) <= 15
     
     # initialiser instance using lambda with default param value
     initialiser = lambda x=5: BinarySolution.random(x, validator)
@@ -365,7 +365,7 @@ Then, we use this local search in our ``run`` method to allow a better search fo
 
     # run the algorithm using local search and get solution found 
     solution = algo.run(evaluations=100, ls_evaluations=10)
-    print(solution.fitness())
+    print(solution.fitness)
 
 
 .. note:: 

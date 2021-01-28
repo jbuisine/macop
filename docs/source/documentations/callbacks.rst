@@ -28,7 +28,7 @@ Here is an example of use when running an algorithm:
 
     # run the algorithm using local search and get solution found 
     solution = algo.run(evaluations=100)
-    print(solution.fitness())
+    print(solution.fitness)
 
 Hence, log data are saved into ``data/example.log`` in our example.
 
@@ -100,18 +100,18 @@ We are going to create our own Callback instance called ``BasicCheckpoint`` whic
             if currentEvaluation % self._every == 0:
 
                 # create specific line with solution data
-                solutionData = ""
-                solutionSize = len(solution.getData())
+                solution.data = ""
+                solutionSize = len(solution.getdata = ))
 
-                for index, val in enumerate(solution.getData()):
-                    solutionData += str(val)
+                for index, val in enumerate(solution.getdata = )):
+                    solution.data += str(val)
 
                     if index < solutionSize - 1:
-                        solutionData += ' '
+                        solution.data += ' '
 
                 # number of evaluations done, solution data and fitness score
-                line = str(currentEvaluation) + ';' + solutionData + ';' + str(
-                    solution.fitness()) + ';\n'
+                line = str(currentEvaluation) + ';' + solution.data + ';' + str(
+                    solution.fitness) + ';\n'
 
                 # check if file exists
                 if not os.path.exists(self._filepath):
@@ -143,14 +143,14 @@ We are going to create our own Callback instance called ``BasicCheckpoint`` whic
                         self._algo._numberOfEvaluations = globalEvaluation
 
                     # get best solution data information
-                    solutionData = list(map(int, data[1].split(' ')))
+                    solution.data = list(map(int, data[1].split(' ')))
 
                     # avoid uninitialised solution
                     if self._algo._bestSolution is None:
                         self._algo._bestSolution = self._algo.initialiser()
 
                     # set to algorithm the lastest obtained best solution
-                    self._algo._bestsolution.getData() = np.array(solutionData)
+                    self._algo._bestsolution.getdata = ) = np.array(solution.data)
                     self._algo._bestSolution._score = float(data[2])
 
 
@@ -171,7 +171,7 @@ In this way, it is possible to specify the use of a callback to our algorithm in
 
     # run the algorithm using local search and get solution found 
     solution = algo.run(evaluations=100)
-    print(solution.fitness())
+    print(solution.fitness)
 
 
 .. note::

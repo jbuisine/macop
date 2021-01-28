@@ -25,9 +25,9 @@ copyright = '2021, Jérôme BUISINE'
 author = 'Jérôme BUISINE'
 
 # The short X.Y version
-version = '1.0.11'
+version = '1.0.12'
 # The full version, including alpha/beta/rc tags
-release = 'v1.0.11'
+release = 'v1.0.12'
 
 
 # -- General configuration ---------------------------------------------------
@@ -47,9 +47,13 @@ extensions = [
     'sphinx.ext.autosummary',
     'sphinx.ext.viewcode',
     'sphinx.ext.coverage',
+    'sphinx.ext.intersphinx',
     #'sphinx.ext.pngmath',
     #'autoapi.extension' 
 ]
+
+# Enable numref
+numfig = True
 
 # These folders are copied to the documentation's HTML output
 html_static_path = ['_static']

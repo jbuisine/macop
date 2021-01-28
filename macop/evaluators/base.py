@@ -24,7 +24,7 @@ class Evaluator():
         Fitness is a float value for mono-objective or set of float values if multi-objective evaluation
 
         Args:
-            solution: {Solution} -- Solution instance
+            solution: {:class:`~macop.solutions.base.Solution`} -- Solution instance
 
         Return:
             {float} -- computed solution score (float or set of float if multi-objective evaluation)
@@ -36,6 +36,6 @@ class Evaluator():
            The reason is to better manage evaluator instance if necessary
 
         Args:
-            algo: {Algorithm} -- the algorithm reference runned
+            algo: {:class:`~macop.algorithms.base.Algorithm`} -- the algorithm reference runned
         """
         self._algo = algo

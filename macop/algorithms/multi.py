@@ -22,16 +22,16 @@ class MOEAD(Algorithm):
         nObjectives: {int} -- number of objectives (based of number evaluator)
         initialiser: {function} -- basic function strategy to initialise solution
         evaluator: {[function]} -- list of basic function in order to obtained fitness (multiple objectives)
-        operators: {[Operator]} -- list of operator to use when launching algorithm
-        policy: {Policy} -- Policy class implementation strategy to select operators
+        operators: {[:class:`~macop.operators.base.Operator`]} -- list of operator to use when launching algorithm
+        policy: {:class:`~macop.policies.base.Policy`} -- Policy class implementation strategy to select operators
         validator: {function} -- basic function to check if solution is valid or not under some constraints
         maximise: {bool} -- specify kind of optimisation problem
         verbose: {bool} -- verbose or not information about the algorithm
-        population: [{Solution}] -- population of solution, one for each sub problem
-        pfPop: [{Solution}] -- pareto front population
+        population: [{:class:`~macop.solutions.base.Solution`}] -- population of solution, one for each sub problem
+        pfPop: [{:class:`~macop.solutions.base.Solution`}] -- pareto front population
         weights: [[{float}]] -- random weights used for custom mu sub problems
-        callbacks: {[Callback]} -- list of Callback class implementation to do some instructions every number of evaluations and `load` when initialising algorithm
-        parent: {Algorithm} -- parent algorithm reference in case of inner Algorithm instance (optional)
+        callbacks: {[:class:`~macop.callbacks.base.Callback`]} -- list of Callback class implementation to do some instructions every number of evaluations and `load` when initialising algorithm
+        parent: {:class:`~macop.algorithms.base.Algorithm`} -- parent algorithm reference in case of inner Algorithm instance (optional)
 
     >>> import random
     >>>
@@ -58,7 +58,7 @@ class MOEAD(Algorithm):
     >>>
     >>> # validator specification (based on weights of each objects)
     >>> weights = [ random.randint(5, 30) for i in range(problem_size) ]
-    >>> validator = lambda solution: True if sum([weights[i] for i, value in enumerate(solution.getData()) if value == 1]) < 200 else False
+    >>> validator = lambda solution: True if sum([weights[i] for i, value in enumerate(solution.data) if value == 1]) < 200 else False
     >>>
     >>> # initialiser function for binary solution using specific solution size
     >>> initialiser = lambda x=20: BinarySolution.random(x, validator)
@@ -95,11 +95,11 @@ class MOEAD(Algorithm):
             T: {[float]} -- number of neightbors for each sub problem
             initialiser: {function} -- basic function strategy to initialise solution
             evaluator: {[function]} -- list of basic function in order to obtained fitness (multiple objectives)
-            operators: {[Operator]} -- list of operator to use when launching algorithm
-            policy: {Policy} -- Policy class implementation strategy to select operators
+            operators: {[:class:`~macop.operators.base.Operator`]} -- list of operator to use when launching algorithm
+            policy: {:class:`~macop.policies.base.Policy`} -- Policy class implementation strategy to select operators
             validator: {function} -- basic function to check if solution is valid or not under some constraints
             maximise: {bool} -- specify kind of optimisation problem
-            parent: {Algorithm} -- parent algorithm reference in case of inner Algorithm instance (optional)
+            parent: {:class:`~macop.algorithms.base.Algorithm`} -- parent algorithm reference in case of inner Algorithm instance (optional)
             verbose: {bool} -- verbose or not information about the algorithm
         """
 
@@ -215,7 +215,7 @@ class MOEAD(Algorithm):
             evaluations: {int} -- number of Local search evaluations
             
         Returns:
-            {Solution} -- best solution found
+            {:class:`~macop.solutions.base.Solution`}: best solution found
         """
 
         # by default use of mother method to initialise variables
@@ -250,8 +250,7 @@ class MOEAD(Algorithm):
                 # for each neighbor of current sub problem update solution if better
                 improvment = False
                 for j in self._neighbors[i]:
-                    if spBestSolution.fitness(
-                    ) > self._subProblems[j]._bestSolution.fitness():
+                    if spBestSolution.fitness > self._subProblems[j]._bestSolution.fitness:
 
                         # create new solution based on current new if better, computes fitness associated to new solution for sub problem
                         newSolution = spBestSolution.clone()
@@ -380,15 +379,15 @@ class MOEAD(Algorithm):
 
         return paFront
 
-    def getResult(self):
+    def result(self):
         """Get the expected result of the current algorithm
 
         Returns:
-            [{Solution}] -- pareto front population
+            [{:class:`~macop.solutions.base.Solution`}]: pareto front population
         """
         return self._pfPop
 
-    def setDefaultResult(self, result):
+    def result(self, result):
         """Set current default result of the algorithm
 
         Args:
@@ -429,15 +428,15 @@ class MOSubProblem(Algorithm):
         weights: {[float]} -- sub problems objectives weights
         initalizer: {function} -- basic function strategy to initialise solution
         evaluator: {function} -- basic function in order to obtained fitness (mono or multiple objectives)
-        operators: {[Operator]} -- list of operator to use when launching algorithm
-        policy: {Policy} -- Policy class implementation strategy to select operators
+        operators: {[:class:`~macop.operators.base.Operator`]} -- list of operator to use when launching algorithm
+        policy: {:class:`~macop.policies.base.Policy`} -- Policy class implementation strategy to select operators
         validator: {function} -- basic function to check if solution is valid or not under some constraints
         maximise: {bool} -- specify kind of optimisation problem 
         verbose: {bool} -- verbose or not information about the algorithm
-        currentSolution: {Solution} -- current solution managed for current evaluation
-        bestSolution: {Solution} -- best solution found so far during running algorithm
-        callbacks: {[Callback]} -- list of Callback class implementation to do some instructions every number of evaluations and `load` when initialising algorithm
-        parent: {Algorithm} -- parent algorithm reference in case of inner Algorithm instance (optional)
+        currentSolution: {:class:`~macop.solutions.base.Solution`} -- current solution managed for current evaluation
+        bestSolution: {:class:`~macop.solutions.base.Solution`} -- best solution found so far during running algorithm
+        callbacks: {[:class:`~macop.callbacks.base.Callback`]} -- list of Callback class implementation to do some instructions every number of evaluations and `load` when initialising algorithm
+        parent: {:class:`~macop.algorithms.base.Algorithm`} -- parent algorithm reference in case of inner Algorithm instance (optional)
     
     Example:
 
@@ -466,7 +465,7 @@ class MOSubProblem(Algorithm):
     >>>
     >>> # validator specification (based on weights of each objects)
     >>> weights = [ random.randint(5, 30) for i in range(problem_size) ]
-    >>> validator = lambda solution: True if sum([weights[i] for i, value in enumerate(solution.getData()) if value == 1]) < 200 else False
+    >>> validator = lambda solution: True if sum([weights[i] for i, value in enumerate(solution.data) if value == 1]) < 200 else False
     >>>
     >>> # initialiser function for binary solution using specific solution size
     >>> initialiser = lambda x=20: BinarySolution.random(x, validator)
@@ -506,11 +505,11 @@ class MOSubProblem(Algorithm):
             weights: {[float]} -- sub problems objectives weights
             initalizer: {function} -- basic function strategy to initialise solution
             evaluator: {function} -- basic function in order to obtained fitness (mono or multiple objectives)
-            operators: {[Operator]} -- list of operator to use when launching algorithm
-            policy: {Policy} -- Policy class implementation strategy to select operators
+            operators: {[:class:`~macop.operators.base.Operator`]} -- list of operator to use when launching algorithm
+            policy: {:class:`~macop.policies.base.Policy`} -- Policy class implementation strategy to select operators
             validator: {function} -- basic function to check if solution is valid or not under some constraints
             maximise: {bool} -- specify kind of optimisation problem 
-            parent: {Algorithm} -- parent algorithm reference in case of inner Algorithm instance (optional)
+            parent: {:class:`~macop.algorithms.base.Algorithm`} -- parent algorithm reference in case of inner Algorithm instance (optional)
             verbose: {bool} -- verbose or not information about the algorithm
         """
 
@@ -530,7 +529,7 @@ class MOSubProblem(Algorithm):
             evaluations: {int} -- number of evaluations
             
         Returns:
-            {Solution} -- best solution found
+            {:class:`~macop.solutions.base.Solution`}: best solution found
         """
 
         # by default use of mother method to initialise variables
@@ -566,7 +565,7 @@ class MOSubProblem(Algorithm):
                 break
 
             logging.info(
-                f"---- Current {newSolution} - SCORE {newSolution.fitness()}")
+                f"---- Current {newSolution} - SCORE {newSolution.fitness}")
 
             logging.info(
                 f"End of {type(self).__name__}, best solution found {self._bestSolution}"

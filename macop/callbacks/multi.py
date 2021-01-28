@@ -16,7 +16,7 @@ class MultiCheckpoint(Callback):
     MultiCheckpoint is used for loading previous computations and start again after loading checkpoint
 
     Attributes:
-        algo: {Algorithm} -- main algorithm instance reference
+        algo: {:class:`~macop.algorithms.base.Algorithm`} -- main algorithm instance reference
         every: {int} -- checkpoint frequency used (based on number of evaluations)
         filepath: {str} -- file path where checkpoints will be saved
     """
@@ -37,21 +37,21 @@ class MultiCheckpoint(Callback):
             with open(self._filepath, 'w') as f:
 
                 for solution in population:
-                    solutionData = ""
-                    solutionSize = len(solution.getData())
+                    solution.data = ""
+                    solutionSize = len(solution.data)
 
-                    for index, val in enumerate(solution.getData()):
-                        solutionData += str(val)
+                    for index, val in enumerate(solution.data):
+                        solution.data += str(val)
 
                         if index < solutionSize - 1:
-                            solutionData += ' '
+                            solution.data += ' '
 
                     line = str(currentEvaluation) + ';'
 
                     for i in range(len(self._algo.evaluator)):
                         line += str(solution.scores[i]) + ';'
 
-                    line += solutionData + ';\n'
+                    line += solution.data + ';\n'
 
                     f.write(line)
 
@@ -84,11 +84,11 @@ class MultiCheckpoint(Callback):
                     scores = [float(s) for s in data[1:nObjectives + 1]]
 
                     # get best solution data information
-                    solutionData = list(map(int, data[-1].split(' ')))
+                    solution.data = list(map(int, data[-1].split(' ')))
 
                     # initialise and fill with data
                     self._algo.population[i] = self._algo.initialiser()
-                    self._algo.population[i].setData(np.array(solutionData))
+                    self._algo.population[i].data = np.array(solution.data)
                     self._algo.population[i].scores = scores
 
                     self._algo._pfPop.append(self._algo.population[i])
@@ -117,7 +117,7 @@ class ParetoCheckpoint(Callback):
     Pareto checkpoint is used for loading previous computations and start again after loading checkpoint
 
     Attributes:
-        algo: {Algorithm} -- main algorithm instance reference
+        algo: {:class:`~macop.algorithms.base.Algorithm`} -- main algorithm instance reference
         every: {int} -- checkpoint frequency used (based on number of evaluations)
         filepath: {str} -- file path where checkpoints will be saved
     """
@@ -126,7 +126,7 @@ class ParetoCheckpoint(Callback):
         Check if necessary to do backup based on `every` variable
         """
         # get current population
-        pfPop = self._algo._pfPop
+        pfPop = self._algo.result
 
         currentEvaluation = self._algo.getGlobalEvaluation()
 
@@ -138,21 +138,21 @@ class ParetoCheckpoint(Callback):
             with open(self._filepath, 'w') as f:
 
                 for solution in pfPop:
-                    solutionData = ""
-                    solutionSize = len(solution.getData())
+                    solution.data = ""
+                    solutionSize = len(solution.data)
 
-                    for index, val in enumerate(solution.getData()):
-                        solutionData += str(val)
+                    for index, val in enumerate(solution.data):
+                        solution.data += str(val)
 
                         if index < solutionSize - 1:
-                            solutionData += ' '
+                            solution.data += ' '
 
                     line = ''
 
                     for i in range(len(self._algo.evaluator)):
                         line += str(solution.scores[i]) + ';'
 
-                    line += solutionData + ';\n'
+                    line += solution.data + ';\n'
 
                     f.write(line)
 
@@ -174,10 +174,10 @@ class ParetoCheckpoint(Callback):
                     scores = [float(s) for s in data[0:nObjectives]]
 
                     # get best solution data information
-                    solutionData = list(map(int, data[-1].split(' ')))
+                    solution.data = list(map(int, data[-1].split(' ')))
 
-                    self._algo._pfPop[i]._data = solutionData
-                    self._algo._pfPop[i].scores = scores
+                    self._algo.result[i].data = solution.data
+                    self._algo.result[i].scores = scores
 
             macop_text(
                 self._algo,

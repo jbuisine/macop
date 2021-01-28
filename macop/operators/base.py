@@ -26,7 +26,7 @@ class Operator():
         """Apply the current operator transformation
 
         Args:
-            solution: {Solution} -- Solution instance
+            solution: {:class:`~macop.solutions.base.Solution`} -- Solution instance
         """
         pass
 
@@ -35,7 +35,7 @@ class Operator():
            The reason is to better manage operator instance
 
         Args:
-            algo: {Algorithm} -- the algorithm reference runned
+            algo: {:class:`~macop.algorithms.base.Algorithm`} -- the algorithm reference runned
         """
         self._algo = algo
 
@@ -44,7 +44,7 @@ class Mutation(Operator):
     """Abstract Mutation extend from Operator
 
     Attributes:
-        kind: {KindOperator} -- specify the kind of operator
+        kind: {:class:`~macop.operators.base.KindOperator`} -- specify the kind of operator
     """
     def __init__(self):
         """Mutation initialiser in order to specify kind of Operator
@@ -55,10 +55,10 @@ class Mutation(Operator):
         """Apply mutation over solution in order to obtained new solution
 
         Args:
-            solution: {Solution} -- solution to use in order to create new solution
+            solution: {:class:`~macop.solutions.base.Solution`} -- solution to use in order to create new solution
 
         Return:
-            {Solution} -- new generated solution
+            {:class:`~macop.solutions.base.Solution`} -- new generated solution
         """
         raise NotImplementedError
 
@@ -67,7 +67,7 @@ class Crossover(Operator):
     """Abstract crossover extend from Operator
 
     Attributes:
-        kind: {KindOperator} -- specify the kind of operator
+        kind: {:class:`~macop.operators.base.KindOperator`} -- specify the kind of operator
     """
     def __init__(self):
         """Crossover initialiser in order to specify kind of Operator
@@ -78,10 +78,10 @@ class Crossover(Operator):
         """Apply crossover using two solutions in order to obtained new solution
 
         Args:
-            solution1: {Solution} -- the first solution to use for generating new solution
-            solution2: {Solution} -- the second solution to use for generating new solution
+            solution1: {:class:`~macop.solutions.base.Solution`} -- the first solution to use for generating new solution
+            solution2: {:class:`~macop.solutions.base.Solution`} -- the second solution to use for generating new solution
 
         Return:
-            {Solution} -- new generated solution
+            {:class:`~macop.solutions.base.Solution`} -- new generated solution
         """
         raise NotImplementedError

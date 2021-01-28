@@ -36,11 +36,11 @@ class BinarySolution(Solution):
         >>> solution = BinarySolution(data, len(data))
         >>>
         >>> # check data content
-        >>> sum(solution.getData()) == 3
+        >>> sum(solution.data) == 3
         True
         >>> # clone solution
         >>> solution_copy = solution.clone()
-        >>> all(solution_copy._data == solution.getData())
+        >>> all(solution_copy.data == solution.data)
         True
         """
         super().__init__(np.array(data), size)
@@ -55,16 +55,16 @@ class BinarySolution(Solution):
             validator: {function} -- specific function which validates or not a solution (if None, not validation is applied)
 
         Returns:
-            {BinarySolution} -- new generated binary solution
+            {:class:`~macop.solutions.discrete.BinarySolution`}: new generated binary solution
 
         Example:
 
         >>> from macop.solutions.discrete import BinarySolution
         >>>
         >>> # generate random solution using specific validator
-        >>> validator = lambda solution: True if sum(solution.getData()) > 5 else False
+        >>> validator = lambda solution: True if sum(solution.data) > 5 else False
         >>> solution = BinarySolution.random(10, validator)
-        >>> sum(solution.getData()) > 5
+        >>> sum(solution.data) > 5
         True
         """
 
@@ -109,10 +109,10 @@ class CombinatoryIntegerSolution(Solution):
         >>> import numpy as np
         >>> data = np.arange(5)
         >>> solution = CombinatoryIntegerSolution(data, 5)
-        >>> sum(solution.getData()) == 10
+        >>> sum(solution.data) == 10
         True
         >>> solution_copy = solution.clone()
-        >>> all(solution_copy._data == solution.getData())
+        >>> all(solution_copy.data == solution.data)
         True
         """
         super().__init__(data, size)
@@ -127,16 +127,16 @@ class CombinatoryIntegerSolution(Solution):
             validator: {function} -- specific function which validates or not a solution (if None, not validation is applied)
 
         Returns:
-            {CombinatoryIntegerSolution} -- new generated combinatory integer solution
+            {:class:`~macop.solutions.discrete.CombinatoryIntegerSolution`}: new generated combinatory integer solution
 
         Example:
 
         >>> from macop.solutions.discrete import CombinatoryIntegerSolution
         >>>
         >>> # generate random solution using specific validator
-        >>> validator = lambda solution: True if sum(solution.getData()) > 5 else False
+        >>> validator = lambda solution: True if sum(solution.data) > 5 else False
         >>> solution = CombinatoryIntegerSolution.random(5, validator)
-        >>> sum(solution.getData()) > 5
+        >>> sum(solution.data) > 5
         True
         """
 
@@ -182,10 +182,10 @@ class IntegerSolution(Solution):
         >>> np.random.seed(42)
         >>> data = np.random.randint(5, size=10)
         >>> solution = IntegerSolution(data, 10)
-        >>> sum(solution.getData())
+        >>> sum(solution.data)
         28
         >>> solution_copy = solution.clone()
-        >>> all(solution_copy._data == solution.getData())
+        >>> all(solution_copy.data == solution.data)
         True
         """
         super().__init__(data, size)
@@ -200,7 +200,7 @@ class IntegerSolution(Solution):
             validator: {function} -- specific function which validates or not a solution (if None, not validation is applied)
 
         Returns:
-            {IntegerSolution} -- new generated integer solution
+            {:class:`~macop.solutions.discrete.IntegerSolution`}: new generated integer solution
 
         Example:
 
@@ -209,9 +209,9 @@ class IntegerSolution(Solution):
         >>> np.random.seed(42)
         >>>
         >>> # generate random solution using specific validator
-        >>> validator = lambda solution: True if sum(solution.getData()) > 5 else False
+        >>> validator = lambda solution: True if sum(solution.data) > 5 else False
         >>> solution = IntegerSolution.random(5, validator)
-        >>> sum(solution.getData()) > 10
+        >>> sum(solution.data) > 10
         True
         """
 

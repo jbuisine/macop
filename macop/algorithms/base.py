@@ -23,16 +23,16 @@ class Algorithm():
 
     Attributes:
         initialiser: {function} -- basic function strategy to initialise solution
-        evaluator: {Evaluator} -- evaluator instance in order to obtained fitness (mono or multiple objectives)
-        operators: {[Operator]} -- list of operator to use when launching algorithm
-        policy: {Policy} -- Policy implementation strategy to select operators
+        evaluator: {:class:`~macop.evaluators.base.Evaluator`} -- evaluator instance in order to obtained fitness (mono or multiple objectives)
+        operators: {[:class:`~macop.operators.base.Operator`]} -- list of operator to use when launching algorithm
+        policy: {:class:`~macop.policies.base.Policy`} -- Policy implementation strategy to select operators
         validator: {function} -- basic function to check if solution is valid or not under some constraints
         maximise: {bool} -- specify kind of optimisation problem 
         verbose: {bool} -- verbose or not information about the algorithm
-        currentSolution: {Solution} -- current solution managed for current evaluation comparison
-        bestSolution: {Solution} -- best solution found so far during running algorithm
-        callbacks: {[Callback]} -- list of Callback class implementation to do some instructions every number of evaluations and `load` when initialising algorithm
-        parent: {Algorithm} -- parent algorithm reference in case of inner Algorithm instance (optional)
+        currentSolution: {:class:`~macop.solutions.base.Solution`} -- current solution managed for current evaluation comparison
+        bestSolution: {:class:`~macop.solutions.base.Solution`} -- best solution found so far during running algorithm
+        callbacks: {[:class:`~macop.callbacks.base.Callback`]} -- list of Callback class implementation to do some instructions every number of evaluations and `load` when initialising algorithm
+        parent: {:class:`~macop.algorithms.base.Algorithm`} -- parent algorithm reference in case of inner Algorithm instance (optional)
     """
     def __init__(self,
                  initialiser,
@@ -47,12 +47,12 @@ class Algorithm():
 
         Args:
             initialiser: {function} -- basic function strategy to initialise solution
-            evaluator: {Evaluator} -- evaluator instance in order to obtained fitness (mono or multiple objectives)
-            operators: {[Operator]} -- list of operator to use when launching algorithm
-            policy: {Policy} -- Policy implementation strategy to select operators
+            evaluator: {:class:`~macop.evaluators.base.Evaluator`} -- evaluator instance in order to obtained fitness (mono or multiple objectives)
+            operators: {[:class:`~macop.operators.base.Operator`]} -- list of operator to use when launching algorithm
+            policy: {:class:`~macop.policies.base.Policy`} -- Policy implementation strategy to select operators
             validator: {function} -- basic function to check if solution is valid or not under some constraints
             maximise: {bool} -- specify kind of optimisation problem 
-            parent: {Algorithm} -- parent algorithm reference in case of inner Algorithm instance (optional)
+            parent: {:class:`~macop.algorithms.base.Algorithm`} -- parent algorithm reference in case of inner Algorithm instance (optional)
             verbose: {bool} -- verbose or not information about the algorithm
         """
 
@@ -97,7 +97,7 @@ class Algorithm():
         """Add new callback to algorithm specifying usefull parameters
 
         Args:
-            callback: {Callback} -- specific Callback instance
+            callback: {:class:`~macop.callbacks.base.Callback`} -- specific Callback instance
         """
         # specify current main algorithm reference for callback
         if self._parent is not None:
@@ -120,7 +120,7 @@ class Algorithm():
         """Recursively find the main parent algorithm attached of the current algorithm
 
         Returns:
-            {Algorithm} -- main algorithm set for this algorithm
+            {:class:`~macop.algorithms.base.Algorithm`}: main algorithm set for this algorithm
         """
 
         current_algorithm = self
@@ -137,21 +137,23 @@ class Algorithm():
         """Set parent algorithm to current algorithm
 
         Args:
-            parent: {Algorithm} -- main algorithm set for this algorithm
+            parent: {:class:`~macop.algorithms.base.Algorithm`} -- main algorithm set for this algorithm
         """
         self._parent = parent
 
-    def getResult(self):
+    @property
+    def result(self):
         """Get the expected result of the current algorithm
 
         By default the best solution (but can be anything you want)
 
         Returns:
-            {object} -- expected result data of the current algorithm
+            {object}: expected result data of the current algorithm
         """
         return self._bestSolution
 
-    def setDefaultResult(self, result):
+    @result.setter
+    def result(self, result):
         """Set current default result of the algorithm
 
         Args:
@@ -190,7 +192,7 @@ class Algorithm():
         """Get the global number of evaluation (if inner algorithm)
 
         Returns:
-            {int} -- current global number of evaluation
+            {int}: current global number of evaluation
         """
         parent_algorithm = self.getParent()
 
@@ -203,7 +205,7 @@ class Algorithm():
         """Get the current number of evaluation
 
         Returns:
-            {int} -- current number of evaluation
+            {int}: current number of evaluation
         """
         return self._numberOfEvaluations
 
@@ -219,7 +221,7 @@ class Algorithm():
         """Get the global max number of evaluation (if inner algorithm)
 
         Returns:
-            {int} -- current global max number of evaluation
+            {int}: current global max number of evaluation
         """
 
         parent_algorithm = self.getParent()
@@ -246,10 +248,10 @@ class Algorithm():
         Evaluate a solution using evaluator passed when intialize algorithm
 
         Args:
-            solution: {Solution} -- solution to evaluate
+            solution: {:class:`~macop.solutions.base.Solution`} -- solution to evaluate
 
         Returns: 
-            {float} -- fitness score of solution which is not already evaluated or changed
+            {float}: fitness score of solution which is not already evaluated or changed
 
         Note: 
             if multi-objective problem this method can be updated using array of `evaluator`
@@ -262,10 +264,10 @@ class Algorithm():
         Check if solution is valid after modification and returns it
         
         Args:
-            solution: {Solution} -- solution to update using current policy
+            solution: {:class:`~macop.solutions.base.Solution`} -- solution to update using current policy
 
         Returns:
-            {Solution} -- updated solution obtained by the selected operator
+            {:class:`~macop.solutions.base.Solution`}: updated solution obtained by the selected operator
         """
 
         # two parameters are sent if specific crossover solution are wished
@@ -289,20 +291,20 @@ class Algorithm():
         - fitness comparison is done using problem nature (maximising or minimising)
 
         Args:
-            solution: {Solution} -- solution to compare with best one
+            solution: {:class:`~macop.solutions.base.Solution`} -- solution to compare with best one
 
         Returns:
-            {bool} -- `True` if better
+            {bool}:`True` if better
         """
         if not solution.isValid(self.validator):
             return False
 
         # depending of problem to solve (maximizing or minimizing)
         if self._maximise:
-            if solution.fitness() > self._bestSolution.fitness():
+            if solution.fitness > self._bestSolution.fitness:
                 return True
         else:
-            if solution.fitness() < self._bestSolution.fitness():
+            if solution.fitness < self._bestSolution.fitness:
                 return True
 
         # by default
@@ -359,7 +361,7 @@ class Algorithm():
 
     def information(self):
         logging.info(
-            f"-- Best {self._bestSolution} - SCORE {self._bestSolution.fitness()}"
+            f"-- Best {self._bestSolution} - SCORE {self._bestSolution.fitness}"
         )
 
     def __str__(self):
