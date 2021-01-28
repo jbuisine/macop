@@ -165,11 +165,9 @@ class UCBPolicy(Policy):
 
         # compute fitness improvment rate
         if self._algo._maximise:
-            fir = (newSolution.fitness -
-                   solution1.fitness) / solution1.fitness
+            fir = (newSolution.fitness - solution1.fitness) / solution1.fitness
         else:
-            fir = (solution1.fitness -
-                   newSolution.fitness) / solution1.fitness
+            fir = (solution1.fitness - newSolution.fitness) / solution1.fitness
 
         operator_index = self._operators.index(operator)
 

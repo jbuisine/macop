@@ -250,7 +250,8 @@ class MOEAD(Algorithm):
                 # for each neighbor of current sub problem update solution if better
                 improvment = False
                 for j in self._neighbors[i]:
-                    if spBestSolution.fitness > self._subProblems[j]._bestSolution.fitness:
+                    if spBestSolution.fitness > self._subProblems[
+                            j]._bestSolution.fitness:
 
                         # create new solution based on current new if better, computes fitness associated to new solution for sub problem
                         newSolution = spBestSolution.clone()
