@@ -11,7 +11,7 @@ class Policy():
     """Abstract class which is used for applying strategy when selecting and applying operator 
 
     Attributes:
-        operators: {[Operator]} -- list of selected operators for the algorithm
+        operators: {[:class:`~macop.operators.base.Operator`]} -- list of selected operators for the algorithm
     """
     def __init__(self, operators):
         """Initialise new Policy instance using specific list of operators
@@ -27,7 +27,7 @@ class Policy():
         Select specific operator
 
         Returns:
-            {Operator} -- selected operator
+            {:class:`~macop.operators.base.Operator`}: selected operator
         """
         pass
 
@@ -36,11 +36,11 @@ class Policy():
         Apply specific operator chosen to create new solution, compute its fitness and return solution
         
         Args:
-            solution1: {Solution} -- the first solution to use for generating new solution
-            solution2: {Solution} -- the second solution to use for generating new solution (in case of specific crossover, default is best solution from algorithm)
+            solution1: {:class:`~macop.solutions.base.Solution`} -- the first solution to use for generating new solution
+            solution2: {:class:`~macop.solutions.base.Solution`} -- the second solution to use for generating new solution (in case of specific crossover, default is best solution from algorithm)
 
         Returns:
-            {Solution} -- new generated solution
+            {:class:`~macop.solutions.base.Solution`}: new generated solution
         """
 
         operator = self.select()
@@ -50,7 +50,7 @@ class Policy():
 
         # default value of solution2 is current best solution
         if solution2 is None and self._algo is not None:
-            solution2 = self._algo.getResult()
+            solution2 = self._algo.result
 
         # avoid use of crossover if only one solution is passed
         if solution2 is None and operator._kind == KindOperator.CROSSOVER:
@@ -73,6 +73,6 @@ class Policy():
            The reason is to better manage the operator choices (use of rewards as example)
 
         Args:
-            algo: {Algorithm} -- the algorithm reference runned
+            algo: {:class:`~macop.algorithms.base.Algorithm`} -- the algorithm reference runned
         """
         self._algo = algo

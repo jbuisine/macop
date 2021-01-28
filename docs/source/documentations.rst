@@ -122,9 +122,31 @@ Some specific methods are available:
             """
             ...
 
+        @property
         def fitness(self):
             """
-            Returns fitness score
+            Returns fitness score (by default `score` private attribute)
+            """
+            ...
+
+        @fitness.setter
+        def fitness(self, score):
+            """
+            Set solution score as wished (by default `score` private attribute)
+            """
+            ...
+
+        @property
+        def data(self):
+            """
+            Returns solution data (by default `data` private attribute)
+            """
+            ...
+
+        @data.setter
+        def data(self, data):
+            """
+            Set solution data (by default `data` private attribute)
             """
             ...
 
@@ -141,6 +163,8 @@ Some specific methods are available:
             """
             ...
 
+.. caution::
+    An important thing here are the ``fitness`` and ``data`` functions brought as an editable attribute by the ``@property`` and ``@XXXXX.setter`` decorators. The idea is to allow the user to modify these functions in order to change the expected result of the algorithm regardless of the data to be returned/modified. 
 
 From these basic methods, it is possible to manage a representation of a solution to our problem. 
 
@@ -259,7 +283,7 @@ To avoid taking into account invalid solutions, we can define our function which
 
         for i, w in enumerate(elements_weight):
             # add weight if current object is set to 1
-            weight_sum += w * solution.getData()[i]
+            weight_sum += w * solution.data[i]
         
         # validation condition
         return weight_sum <= 15
@@ -354,7 +378,7 @@ We will define the ``KnapsackEvaluator`` class, which will therefore allow us to
 
             # `_data` contains worths array values of objects
             fitness = 0
-            for index, elem in enumerate(solution.getData()):
+            for index, elem in enumerate(solution.data):
                 fitness += self._data['worths'][index] * elem
 
             return fitness
@@ -382,7 +406,7 @@ It is now possible to initialise our new evaluator with specific data of our pro
     solution_fitness = solution.evaluate(evaluator)
 
     # score is also stored into solution
-    solution_fitness = solution.fitness()
+    solution_fitness = solution.fitness
 
 .. note::
     The current developed ``KnapsackEvaluator`` is available into macop.evaluators.discrete.mono.KnapsackEvaluator_ in **Macop**.
@@ -437,7 +461,7 @@ Like the evaluator, the operator keeps **track of the algorithm** (using ``setAl
         """Abstract Mutation extend from Operator
 
         Attributes:
-            kind: {KindOperator} -- specify the kind of operator
+            kind: {:class:`~macop.operators.base.KindOperator`} -- specify the kind of operator
         """
         def __init__(self):
             self._kind = KindOperator.MUTATOR
@@ -450,7 +474,7 @@ Like the evaluator, the operator keeps **track of the algorithm** (using ``setAl
         """Abstract crossover extend from Operator
 
         Attributes:
-            kind: {KindOperator} -- specify the kind of operator
+            kind: {:class:`~macop.operators.base.KindOperator`} -- specify the kind of operator
         """
         def __init__(self):
             self._kind = KindOperator.CROSSOVER
@@ -496,10 +520,10 @@ The modification applied here is just a bit swapped. Let's define the ``SimpleBi
             copy_solution = solution.clone()
 
             # swicth values
-            if copy_solution.getData()[cell]:
-                copy_solution.getData()[cell] = 0
+            if copy_solution.data[cell]:
+                copy_solution.data[cell] = 0
             else:
-                copy_solution.getData()[cell] = 1
+                copy_solution.data[cell] = 1
 
             # return the new obtained solution
             return copy_solution
@@ -563,7 +587,7 @@ The first half of solution 1 will be saved and added to the second half of solut
             # copy of solution 2
             copy_solution = solution2.clone()
 
-            copy_solution.getData()[splitIndex:] = firstData[splitIndex:]
+            copy_solution.data[splitIndex:] = firstData[splitIndex:]
 
             return copy_solution
 
@@ -734,16 +758,16 @@ We will pay attention to the different methods of which she is composed. This cl
 She is composed of few default attributes:
 
 - initialiser: {function} -- basic function strategy to initialise solution
-- evaluator: {Evaluator} -- evaluator instance in order to obtained fitness (mono or multiple objectives)
-- operators: {[Operator]} -- list of operator to use when launching algorithm
-- policy: {Policy} -- Policy instance strategy to select operators
+- evaluator: {:class:`~macop.evaluators.base.Evaluator`} -- evaluator instance in order to obtained fitness (mono or multiple objectives)
+- operators: {[:class:`~macop.operators.base.Operator`]} -- list of operator to use when launching algorithm
+- policy: {:class:`~macop.policies.base.Policy`} -- Policy instance strategy to select operators
 - validator: {function} -- basic function to check if solution is valid or not under some constraints
 - maximise: {bool} -- specify kind of optimisation problem 
 - verbose: {bool} -- verbose or not information about the algorithm
-- currentSolution: {Solution} -- current solution managed for current evaluation comparison
-- bestSolution: {Solution} -- best solution found so far during running algorithm
-- callbacks: {[Callback]} -- list of Callback class implementation to do some instructions every number of evaluations and `load` when initialising algorithm
-- parent: {Algorithm} -- parent algorithm reference in case of inner Algorithm instance (optional)
+- currentSolution: {:class:`~macop.solutions.base.Solution`} -- current solution managed for current evaluation comparison
+- bestSolution: {:class:`~macop.solutions.base.Solution`} -- best solution found so far during running algorithm
+- callbacks: {[:class:`~macop.callbacks.base.Callback`]} -- list of Callback class implementation to do some instructions every number of evaluations and `load` when initialising algorithm
+- parent: {:class:`~macop.algorithms.base.Algorithm`} -- parent algorithm reference in case of inner Algorithm instance (optional)
 
 .. code-block:: python
 
@@ -772,6 +796,20 @@ She is composed of few default attributes:
             """
             ...
 
+        @property
+        def result(self):
+            """Get the expected result of the current algorithm
+
+            By default the best solution (but can be anything you want)
+            """
+            ...
+
+        @result.setter
+        def result(self, result):
+            """Set current default result of the algorithm
+            """
+            ...
+
         def getParent(self):
             """
             Recursively find the main parent algorithm attached of the current algorithm
@@ -783,7 +821,6 @@ She is composed of few default attributes:
             Set parent algorithm to current algorithm
             """
             ...
-
 
         def initRun(self):
             """
@@ -847,6 +884,9 @@ She is composed of few default attributes:
             ...
 
 
+.. caution::
+    An important thing here are the ``result`` functions brought as an editable attribute by the ``@property`` and ``@result.setter`` decorators. The idea is to allow the user to modify these functions in order to change the expected result of the algorithm regardless of the data to be returned/modified. 
+
 The notion of hierarchy between algorithms is introduced here. We can indeed have certain dependencies between algorithms. 
 The methods ``increaseEvaluation``, ``getGlobalEvaluation`` and ``getGlobalMaxEvaluation`` ensure that the expected global number of evaluations is correctly managed, just like the ``stop`` method for the search stop criterion.
 
@@ -864,6 +904,7 @@ It is always **mandatory** to call the parent class ``run`` method using ``super
 
 .. warning::
     The other methods such as ``addCallback``, ``resume`` and ``progress`` will be detailed in the next part focusing on the notion of callback.
+
 
 Local search algorithm
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -937,7 +978,7 @@ We will also need to define a **solution initialisation function** so that the a
     evaluator = KnapsackEvaluator(data={'worths': elements_score})
 
     # valid instance using lambda
-    validator = lambda solution: sum([ elements_weight[i] * solution.getData()[i] for i in range(len(solution.getData()))]) <= 15
+    validator = lambda solution: sum([ elements_weight[i] * solution.data[i] for i in range(len(solution.data))]) <= 15
     
     # initialiser instance using lambda with default param value
     initialiser = lambda x=5: BinarySolution.random(x, validator)
@@ -953,7 +994,7 @@ We will also need to define a **solution initialisation function** so that the a
 
     # run the algorithm and get solution found
     solution = algo.run(100)
-    print(solution.fitness())
+    print(solution.fitness)
 
 
 .. note::
@@ -1047,7 +1088,7 @@ Then, we use this local search in our ``run`` method to allow a better search fo
     evaluator = KnapsackEvaluator(data={'worths': elements_score})
 
     # valid instance using lambda
-    validator = lambda solution: sum([ elements_weight[i] * solution.getData()[i] for i in range(len(solution.getData()))]) <= 15
+    validator = lambda solution: sum([ elements_weight[i] * solution.data[i] for i in range(len(solution.data))]) <= 15
     
     # initialiser instance using lambda with default param value
     initialiser = lambda x=5: BinarySolution.random(x, validator)
@@ -1064,7 +1105,7 @@ Then, we use this local search in our ``run`` method to allow a better search fo
 
     # run the algorithm using local search and get solution found 
     solution = algo.run(evaluations=100, ls_evaluations=10)
-    print(solution.fitness())
+    print(solution.fitness)
 
 
 .. note:: 
@@ -1102,7 +1143,7 @@ Here is an example of use when running an algorithm:
 
     # run the algorithm using local search and get solution found 
     solution = algo.run(evaluations=100)
-    print(solution.fitness())
+    print(solution.fitness)
 
 Hence, log data are saved into ``data/example.log`` in our example.
 
@@ -1174,18 +1215,18 @@ We are going to create our own Callback instance called ``BasicCheckpoint`` whic
             if currentEvaluation % self._every == 0:
 
                 # create specific line with solution data
-                solutionData = ""
-                solutionSize = len(solution.getData())
+                solution.data = ""
+                solutionSize = len(solution.data)
 
-                for index, val in enumerate(solution.getData()):
-                    solutionData += str(val)
+                for index, val in enumerate(solution.data):
+                    solution.data += str(val)
 
                     if index < solutionSize - 1:
-                        solutionData += ' '
+                        solution.data += ' '
 
                 # number of evaluations done, solution data and fitness score
-                line = str(currentEvaluation) + ';' + solutionData + ';' + str(
-                    solution.fitness()) + ';\n'
+                line = str(currentEvaluation) + ';' + solution.data + ';' + str(
+                    solution.fitness) + ';\n'
 
                 # check if file exists
                 if not os.path.exists(self._filepath):
@@ -1217,14 +1258,14 @@ We are going to create our own Callback instance called ``BasicCheckpoint`` whic
                         self._algo._numberOfEvaluations = globalEvaluation
 
                     # get best solution data information
-                    solutionData = list(map(int, data[1].split(' ')))
+                    solution.data = list(map(int, data[1].split(' ')))
 
                     # avoid uninitialised solution
                     if self._algo._bestSolution is None:
                         self._algo._bestSolution = self._algo.initialiser()
 
                     # set to algorithm the lastest obtained best solution
-                    self._algo._bestsolution.getData() = np.array(solutionData)
+                    self._algo._bestsolution.data = np.array(solution.data)
                     self._algo._bestSolution._score = float(data[2])
 
 
@@ -1245,7 +1286,7 @@ In this way, it is possible to specify the use of a callback to our algorithm in
 
     # run the algorithm using local search and get solution found 
     solution = algo.run(evaluations=100)
-    print(solution.fitness())
+    print(solution.fitness)
 
 
 .. note::

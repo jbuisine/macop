@@ -22,7 +22,7 @@ class UCBPolicy(Policy):
     - Resource link: https://banditalgs.com/2016/09/18/the-upper-confidence-bound-algorithm/
 
     Attributes:
-        operators: {[Operator]} -- list of selected operators for the algorithm
+        operators: {[:class:`~macop.operators.base.Operator`]} -- list of selected operators for the algorithm
         C: {float} -- The second half of the UCB equation adds exploration, with the degree of exploration being controlled by the hyper-parameter ``C``.
         exp_rate: {float} -- exploration rate (probability to choose randomly next operator)
         rewards: {[float]} -- list of summed rewards obtained for each operator
@@ -56,7 +56,7 @@ class UCBPolicy(Policy):
     >>>
     >>> # validator specification (based on weights of each objects)
     >>> weights = [ random.randint(5, 30) for i in range(20) ]
-    >>> validator = lambda solution: True if sum([weights[i] for i, value in enumerate(solution.getData()) if value == 1]) < 200 else False
+    >>> validator = lambda solution: True if sum([weights[i] for i, value in enumerate(solution.data) if value == 1]) < 200 else False
     >>>
     >>> # initialiser function with lambda function
     >>> initialiser = lambda x=20: BinarySolution.random(x, validator)
@@ -72,13 +72,13 @@ class UCBPolicy(Policy):
     >>> type(solution).__name__
     'BinarySolution'
     >>> policy.occurences # one more due to first evaluation
-    [51, 53]
+    [53, 50]
     """
     def __init__(self, operators, C=100., exp_rate=0.9):
         """UCB Policy initialiser
 
         Args:
-            operators: {[Operator]} -- list of selected operators for the algorithm
+            operators: {[:class:`~macop.operators.base.Operator`]} -- list of selected operators for the algorithm
             C: {float} -- The second half of the UCB equation adds exploration, with the degree of exploration being controlled by the hyper-parameter `C`.
             exp_rate: {float} -- exploration rate (probability to choose randomly next operator)
         """
@@ -96,7 +96,7 @@ class UCBPolicy(Policy):
         """Select using Upper Confidence Bound the next operator to use (using acquired rewards)
 
         Returns:
-            {Operator}: the selected operator
+            {:class:`~macop.operators.base.Operator`}: the selected operator
         """
 
         indices = [i for i, o in enumerate(self.occurences) if o == 0]
@@ -132,11 +132,11 @@ class UCBPolicy(Policy):
         - selected operator occurence is also increased
 
         Args:
-            solution1: {Solution} -- the first solution to use for generating new solution
-            solution2: {Solution} -- the second solution to use for generating new solution (in case of specific crossover, default is best solution from algorithm)
+            solution1: {:class:`~macop.solutions.base.Solution`} -- the first solution to use for generating new solution
+            solution2: {:class:`~macop.solutions.base.Solution`} -- the second solution to use for generating new solution (in case of specific crossover, default is best solution from algorithm)
 
         Returns:
-            {Solution} -- new generated solution
+            {:class:`~macop.solutions.base.Solution`}: new generated solution
         """
 
         operator = self.select()
@@ -146,7 +146,7 @@ class UCBPolicy(Policy):
 
         # default value of solution2 is current best solution
         if solution2 is None and self._algo is not None:
-            solution2 = self._algo.getResult()
+            solution2 = self._algo.result
 
         # avoid use of crossover if only one solution is passed
         if solution2 is None and operator._kind == KindOperator.CROSSOVER:
@@ -165,11 +165,9 @@ class UCBPolicy(Policy):
 
         # compute fitness improvment rate
         if self._algo._maximise:
-            fir = (newSolution.fitness() -
-                   solution1.fitness()) / solution1.fitness()
+            fir = (newSolution.fitness - solution1.fitness) / solution1.fitness
         else:
-            fir = (solution1.fitness() -
-                   newSolution.fitness()) / solution1.fitness()
+            fir = (solution1.fitness - newSolution.fitness) / solution1.fitness
 
         operator_index = self._operators.index(operator)
 

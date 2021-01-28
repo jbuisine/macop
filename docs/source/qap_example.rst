@@ -211,8 +211,8 @@ So we are going to create a class that will inherit from the abstract class maco
             {float} -- fitness score of solution
         """
         fitness = 0
-        for index_i, val_i in enumerate(solution.getData()):
-            for index_j, val_j in enumerate(solution.getData()):
+        for index_i, val_i in enumerate(solution.getdata = )):
+            for index_j, val_j in enumerate(solution.getdata = )):
                 fitness += self._data['F'][index_i, index_j] * self._data['D'][val_i, val_j]
 
         return fitness
@@ -253,7 +253,7 @@ If you are uncomfortable with some of the elements in the code that will follow,
 
     # default validator (check the consistency of our data, i.e. only unique element)
     def validator(solution):
-        if len(list(solution.getData())) > len(set(list(solution.getData()))):
+        if len(list(solution.getdata = ))) > len(set(list(solution.getdata = )))):
             print("not valid")
             return False
         return True

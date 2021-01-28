@@ -14,10 +14,10 @@ from macop.utils.progress import macop_text, macop_line
 class UCBCheckpoint(Callback):
     """
     UCB checkpoint is used for loading previous Upper Confidence Bound data and start again after loading checkpoint
-    Need to be the same operators used during previous run (see `macop.policies.reinforcement.UCBPolicy` for more details)
+    Need to be the same operators used during previous run (see :class:`~macop.policies.reinforcement.UCBPolicy` for more details)
 
     Attributes:
-        algo: {Algorithm} -- main algorithm instance reference
+        algo: {:class:`~macop.algorithms.base.Algorithm`} -- main algorithm instance reference
         every: {int} -- checkpoint frequency used (based on number of evaluations)
         filepath: {str} -- file path where checkpoints will be saved
     """

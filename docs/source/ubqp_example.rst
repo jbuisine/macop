@@ -139,8 +139,8 @@ So we are going to create a class that will inherit from the abstract class maco
             {float} -- fitness score of solution
         """
         fitness = 0
-        for index_i, val_i in enumerate(solution.getData()):
-            for index_j, val_j in enumerate(solution.getData()):
+        for index_i, val_i in enumerate(solution.getdata = )):
+            for index_j, val_j in enumerate(solution.getdata = )):
                 fitness += self._data['Q'][index_i, index_j] * val_i * val_j
 
         return fitness

@@ -36,13 +36,13 @@ class KnapsackEvaluator(Evaluator):
         """Apply the computation of fitness from solution
 
         Args:
-            solution: {Solution} -- Solution instance
+            solution: {:class:`~macop.solutions.base.Solution`} -- Solution instance
     
         Returns:
-            {float} -- fitness score of solution
+            {float}: fitness score of solution
         """
         fitness = 0
-        for index, elem in enumerate(solution.getData()):
+        for index, elem in enumerate(solution.data):
             fitness += self._data['worths'][index] * elem
 
         return fitness
@@ -98,14 +98,14 @@ class QAPEvaluator(Evaluator):
         """Apply the computation of fitness from solution
 
         Args:
-            solution: {Solution} -- QAP solution instance
+            solution: {:class:`~macop.solutions.base.Solution`} -- QAP solution instance
     
         Returns:
-            {float} -- fitness score of solution
+            {float}: fitness score of solution
         """
         fitness = 0
-        for index_i, val_i in enumerate(solution.getData()):
-            for index_j, val_j in enumerate(solution.getData()):
+        for index_i, val_i in enumerate(solution.data):
+            for index_j, val_j in enumerate(solution.data):
                 fitness += self._data['F'][index_i,
                                            index_j] * self._data['D'][val_i,
                                                                       val_j]
@@ -159,14 +159,14 @@ class UBQPEvaluator(Evaluator):
         """Apply the computation of fitness from solution
 
         Args:
-            solution: {Solution} -- UBQP solution instance
+            solution: {:class:`~macop.solutions.base.Solution`} -- UBQP solution instance
     
         Returns:
-            {float} -- fitness score of solution
+            {float}: fitness score of solution
         """
         fitness = 0
-        for index_i, val_i in enumerate(solution.getData()):
-            for index_j, val_j in enumerate(solution.getData()):
+        for index_i, val_i in enumerate(solution.data):
+            for index_j, val_j in enumerate(solution.data):
                 fitness += self._data['Q'][index_i, index_j] * val_i * val_j
 
         return fitness

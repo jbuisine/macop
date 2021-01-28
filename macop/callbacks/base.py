@@ -11,7 +11,7 @@ class Callback():
     Callback abstract class in order to compute some instruction every evaluation
 
     Attributes:
-        algo: {Algorithm} -- main algorithm instance reference
+        algo: {:class:`~macop.algorithms.base.Algorithm`} -- main algorithm instance reference
         every: {int} -- checkpoint frequency used (based on number of evaluations)
         filepath: {str} -- file path where checkpoints will be saved
     """
@@ -37,7 +37,7 @@ class Callback():
         """Specify the main algorithm instance reference
 
         Args:
-            algo: {Algorithm} -- main algorithm instance reference
+            algo: {:class:`~macop.algorithms.base.Algorithm`} -- main algorithm instance reference
         """
         self._algo = algo
 

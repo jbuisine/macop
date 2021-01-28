@@ -33,7 +33,7 @@ class Solution():
             validator: {function} -- specific function which validates or not a solution
 
         Returns:
-            {bool} -- `True` is solution is valid
+            {bool}: `True` is solution is valid
         """
         return validator(self)
 
@@ -45,40 +45,44 @@ class Solution():
             _evaluator: {function} -- specific function which computes fitness of solution
 
         Returns:
-            {float} -- fitness score value
+            {float}: fitness score value
         """
         self._score = evaluator.compute(self)
         return self._score
 
+    @property
     def fitness(self):
         """
-        Returns fitness score
+        Returns fitness score (by default `score` private attribute)
 
         Returns:
-            {float} -- fitness score value
+            {float}: fitness score value
         """
         return self._score
 
-    def getData(self):
+    @fitness.setter
+    def fitness(self, score):
         """
-        Returns solution data
+        Set solution score as wished (by default `score` private attribute)
+        """
+        self._score = score
+
+    @property
+    def data(self):
+        """
+        Returns solution data (by default `data` private attribute)
 
         Returns:
-            {ndarray} -- data values
+            {object}: data values
         """
         return self._data
 
-    def setData(self, data):
+    @data.setter
+    def data(self, data):
         """
-        Set solution data
+        Set solution data (by default `data` private attribute)
         """
         self._data = data
-
-    def setScore(self, score):
-        """
-        Set solution score as wished
-        """
-        self._score = score
 
     @staticmethod
     def random(size, validator=None):
@@ -90,7 +94,7 @@ class Solution():
             validator: {function} -- specific function which validates or not a solution (if None, not validation is applied)
 
         Returns:
-            {Solution} -- generated solution
+            {:class:`~macop.solutions.base.Solution`}: generated solution
         """
         return None
 
@@ -98,7 +102,7 @@ class Solution():
         """Clone the current solution and its data, but without keeping evaluated `_score`
 
         Returns:
-            {Solution} -- clone of current solution
+            {:class:`~macop.solutions.base.Solution`}: clone of current solution
         """
         copy_solution = deepcopy(self)
         copy_solution._score = None

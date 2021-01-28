@@ -41,7 +41,7 @@ Flexible discrete optimisation package allowing a quick implementation of your p
 
 The primary advantage of using Python is that it allows you to dynamically add new members within the new implemented solution or algorithm classes. This of course does not close the possibilities of extension and storage of information within solutions and algorithms. It all depends on the need in question.
 
-### In `macop.algorihtms` module:
+### In `macop.algorithms` module:
 
 Both single and multi-objective algorithms have been implemented for demonstration purposes. 
 

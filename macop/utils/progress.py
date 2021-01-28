@@ -15,7 +15,7 @@ def macop_text(algo, msg):
     """Display Macop message to user interface
 
     Args:
-        algo: {Algorithm} -- current algorithm instance
+        algo: {:class:`~macop.algorithms.base.Algorithm`} -- current algorithm instance
         msg: {str} -- message to display
     """
     if algo._verbose:
@@ -28,7 +28,7 @@ def macop_line(algo):
     """Macop split line
 
     Args:
-        algo: {Algorithm} -- current algorithm instance
+        algo: {:class:`~macop.algorithms.base.Algorithm`} -- current algorithm instance
     """
 
     if not algo._verbose:
@@ -50,7 +50,7 @@ def macop_progress(algo, evaluations, max):
     """Progress line of macop
 
     Args:
-        algo: {Algorithm} -- current algorithm instance
+        algo: {:class:`~macop.algorithms.base.Algorithm`} -- current algorithm instance
         evaluations: {int} -- current number of evaluations
         max: {int} -- max number of expected evaluations
     """

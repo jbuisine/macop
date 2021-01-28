@@ -17,15 +17,15 @@ class HillClimberFirstImprovment(Algorithm):
 
     Attributes:
         initalizer: {function} -- basic function strategy to initialise solution
-        evaluator: {Evaluator} -- evaluator instance in order to obtained fitness (mono or multiple objectives)
-        operators: {[Operator]} -- list of operator to use when launching algorithm
-        policy: {Policy} -- Policy class implementation strategy to select operators
+        evaluator: {:class:`~macop.evaluators.base.Evaluator`} -- evaluator instance in order to obtained fitness (mono or multiple objectives)
+        operators: {[:class:`~macop.operators.base.Operator`]} -- list of operator to use when launching algorithm
+        policy: {:class:`~macop.policies.base.Policy`} -- Policy class implementation strategy to select operators
         validator: {function} -- basic function to check if solution is valid or not under some constraints
         maximise: {bool} -- specify kind of optimisation problem 
-        currentSolution: {Solution} -- current solution managed for current evaluation
-        bestSolution: {Solution} -- best solution found so far during running algorithm
-        callbacks: {[Callback]} -- list of Callback class implementation to do some instructions every number of evaluations and `load` when initialising algorithm
-        parent: {Algorithm} -- parent algorithm reference in case of inner Algorithm instance (optional)
+        currentSolution: {:class:`~macop.solutions.base.Solution`} -- current solution managed for current evaluation
+        bestSolution: {:class:`~macop.solutions.base.Solution`} -- best solution found so far during running algorithm
+        callbacks: {[:class:`~macop.callbacks.base.Callback`]} -- list of Callback class implementation to do some instructions every number of evaluations and `load` when initialising algorithm
+        parent: {:class:`~macop.algorithms.base.Algorithm`} -- parent algorithm reference in case of inner Algorithm instance (optional)
     
     Example:
 
@@ -52,7 +52,7 @@ class HillClimberFirstImprovment(Algorithm):
     >>>
     >>> # validator specification (based on weights of each objects)
     >>> weights = [ random.randint(5, 30) for i in range(problem_size) ]
-    >>> validator = lambda solution: True if sum([weights[i] for i, value in enumerate(solution.getData()) if value == 1]) < 200 else False
+    >>> validator = lambda solution: True if sum([weights[i] for i, value in enumerate(solution.data) if value == 1]) < 200 else False
     >>>
     >>> # initialiser function for binary solution using specific solution size
     >>> initialiser = lambda x=20: BinarySolution.random(x, validator)
@@ -75,7 +75,7 @@ class HillClimberFirstImprovment(Algorithm):
             evaluations: {int} -- number of Local search evaluations
             
         Returns:
-            {Solution} -- best solution found
+            {:class:`~macop.solutions.base.Solution`}: best solution found
         """
 
         # by default use of mother method to initialise variables
@@ -104,7 +104,7 @@ class HillClimberFirstImprovment(Algorithm):
 
                 self.progress()
                 logging.info(
-                    f"---- Current {newSolution} - SCORE {newSolution.fitness()}"
+                    f"---- Current {newSolution} - SCORE {newSolution.fitness}"
                 )
 
                 # stop algorithm if necessary
@@ -130,15 +130,15 @@ class HillClimberBestImprovment(Algorithm):
 
     Attributes:
         initalizer: {function} -- basic function strategy to initialise solution
-        evaluator: {Evaluator} -- evaluator instance in order to obtained fitness (mono or multiple objectives)
-        operators: {[Operator]} -- list of operator to use when launching algorithm
-        policy: {Policy} -- Policy class implementation strategy to select operators
+        evaluator: {:class:`~macop.evaluators.base.Evaluator`} -- evaluator instance in order to obtained fitness (mono or multiple objectives)
+        operators: {[:class:`~macop.operators.base.Operator`]} -- list of operator to use when launching algorithm
+        policy: {:class:`~macop.policies.base.Policy`} -- Policy class implementation strategy to select operators
         validator: {function} -- basic function to check if solution is valid or not under some constraints
         maximise: {bool} -- specify kind of optimisation problem 
-        currentSolution: {Solution} -- current solution managed for current evaluation
-        bestSolution: {Solution} -- best solution found so far during running algorithm
-        callbacks: {[Callback]} -- list of Callback class implementation to do some instructions every number of evaluations and `load` when initialising algorithm
-        parent: {Algorithm} -- parent algorithm reference in case of inner Algorithm instance (optional)
+        currentSolution: {:class:`~macop.solutions.base.Solution`} -- current solution managed for current evaluation
+        bestSolution: {:class:`~macop.solutions.base.Solution`} -- best solution found so far during running algorithm
+        callbacks: {[:class:`~macop.callbacks.base.Callback`]} -- list of Callback class implementation to do some instructions every number of evaluations and `load` when initialising algorithm
+        parent: {:class:`~macop.algorithms.base.Algorithm`} -- parent algorithm reference in case of inner Algorithm instance (optional)
     
     Example:
 
@@ -165,7 +165,7 @@ class HillClimberBestImprovment(Algorithm):
     >>>
     >>> # validator specification (based on weights of each objects)
     >>> weights = [ random.randint(5, 30) for i in range(problem_size) ]
-    >>> validator = lambda solution: True if sum([weights[i] for i, value in enumerate(solution.getData()) if value == 1]) < 200 else False
+    >>> validator = lambda solution: True if sum([weights[i] for i, value in enumerate(solution.data) if value == 1]) < 200 else False
     >>>
     >>> # initialiser function for binary solution using specific solution size
     >>> initialiser = lambda x=20: BinarySolution.random(x, validator)
@@ -188,7 +188,7 @@ class HillClimberBestImprovment(Algorithm):
             evaluations: {int} -- number of Local search evaluations
             
         Returns:
-            {Solution} -- best solution found
+            {:class:`~macop.solutions.base.Solution`}: best solution found
         """
 
         # by default use of mother method to initialise variables
@@ -216,7 +216,7 @@ class HillClimberBestImprovment(Algorithm):
 
                 self.progress()
                 logging.info(
-                    f"---- Current {newSolution} - SCORE {newSolution.fitness()}"
+                    f"---- Current {newSolution} - SCORE {newSolution.fitness}"
                 )
 
                 # stop algorithm if necessary
@@ -244,15 +244,15 @@ class IteratedLocalSearch(Algorithm):
     Attributes:
         initalizer: {function} -- basic function strategy to initialise solution
         evaluator: {function} -- basic function in order to obtained fitness (mono or multiple objectives)
-        operators: {[Operator]} -- list of operator to use when launching algorithm
-        policy: {Policy} -- Policy class implementation strategy to select operators
+        operators: {[:class:`~macop.operators.base.Operator`]} -- list of operator to use when launching algorithm
+        policy: {:class:`~macop.policies.base.Policy`} -- Policy class implementation strategy to select operators
         validator: {function} -- basic function to check if solution is valid or not under some constraints
         maximise: {bool} -- specify kind of optimisation problem 
-        currentSolution: {Solution} -- current solution managed for current evaluation
-        bestSolution: {Solution} -- best solution found so far during running algorithm
-        localSearch: {Algorithm} -- current local search into ILS
-        callbacks: {[Callback]} -- list of Callback class implementation to do some instructions every number of evaluations and `load` when initialising algorithm
-        parent: {Algorithm} -- parent algorithm reference in case of inner Algorithm instance (optional)
+        currentSolution: {:class:`~macop.solutions.base.Solution`} -- current solution managed for current evaluation
+        bestSolution: {:class:`~macop.solutions.base.Solution`} -- best solution found so far during running algorithm
+        localSearch: {:class:`~macop.algorithms.base.Algorithm`} -- current local search into ILS
+        callbacks: {[:class:`~macop.callbacks.base.Callback`]} -- list of Callback class implementation to do some instructions every number of evaluations and `load` when initialising algorithm
+        parent: {:class:`~macop.algorithms.base.Algorithm`} -- parent algorithm reference in case of inner Algorithm instance (optional)
     
     Example:
 
@@ -280,7 +280,7 @@ class IteratedLocalSearch(Algorithm):
     >>>
     >>> # validator specification (based on weights of each objects)
     >>> weights = [ random.randint(5, 30) for i in range(problem_size) ]
-    >>> validator = lambda solution: True if sum([weights[i] for i, value in enumerate(solution.getData()) if value == 1]) < 200 else False
+    >>> validator = lambda solution: True if sum([weights[i] for i, value in enumerate(solution.data) if value == 1]) < 200 else False
     >>>
     >>> # initialiser function with lambda function
     >>> initialiser = lambda x=20: BinarySolution.random(x, validator)
@@ -306,17 +306,17 @@ class IteratedLocalSearch(Algorithm):
                  maximise=True,
                  parent=None,
                  verbose=True):
-        """Iterated Local Search Algorithm initialisation with use of specific LocalSearch {Algorithm} instance
+        """Iterated Local Search Algorithm initialisation with use of specific LocalSearch {:class:`~macop.algorithms.base.Algorithm`} instance
 
         Args:
             initialiser: {function} -- basic function strategy to initialise solution
-            evaluator: {Evaluator} -- evaluator instance in order to obtained fitness (mono or multiple objectives)
-            operators: {[Operator]} -- list of operator to use when launching algorithm
-            policy: {Policy} -- Policy implementation strategy to select operators
+            evaluator: {:class:`~macop.evaluators.base.Evaluator`} -- evaluator instance in order to obtained fitness (mono or multiple objectives)
+            operators: {[:class:`~macop.operators.base.Operator`]} -- list of operator to use when launching algorithm
+            policy: {:class:`~macop.policies.base.Policy`} -- Policy implementation strategy to select operators
             validator: {function} -- basic function to check if solution is valid or not under some constraints
-            localSearch: {Algorithm} -- current local search into ILS
+            localSearch: {:class:`~macop.algorithms.base.Algorithm`} -- current local search into ILS
             maximise: {bool} -- specify kind of optimisation problem 
-            parent: {Algorithm} -- parent algorithm reference in case of inner Algorithm instance (optional)
+            parent: {:class:`~macop.algorithms.base.Algorithm`} -- parent algorithm reference in case of inner Algorithm instance (optional)
             verbose: {bool} -- verbose or not information about the algorithm
         """
 
@@ -337,7 +337,7 @@ class IteratedLocalSearch(Algorithm):
             ls_evaluations: {int} -- number of Local search evaluations (default: 100)
 
         Returns:
-            {Solution} -- best solution found
+            {:class:`~macop.solutions.base.Solution`}: best solution found
         """
 
         # by default use of mother method to initialise variables

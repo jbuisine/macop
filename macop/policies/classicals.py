@@ -11,7 +11,7 @@ class RandomPolicy(Policy):
     """Policy class implementation which is used for select operator randomly from the `operators` list
 
     Attributes:
-        operators: {[Operator]} -- list of selected operators for the algorithm
+        operators: {[:class:`~macop.operators.base.Operator`]} -- list of selected operators for the algorithm
 
     Example:
 
@@ -31,7 +31,7 @@ class RandomPolicy(Policy):
         """Select randomly the next operator to use
 
         Returns:
-            {Operator}: the selected operator
+            {:class:`~macop.operators.base.Operator`}: the selected operator
 
         """
         # choose operator randomly

@@ -61,7 +61,7 @@ We will define the ``KnapsackEvaluator`` class, which will therefore allow us to
 
             # `_data` contains worths array values of objects
             fitness = 0
-            for index, elem in enumerate(solution.getData()):
+            for index, elem in enumerate(solution.getdata = )):
                 fitness += self._data['worths'][index] * elem
 
             return fitness
@@ -89,7 +89,7 @@ It is now possible to initialise our new evaluator with specific data of our pro
     solution_fitness = solution.evaluate(evaluator)
 
     # score is also stored into solution
-    solution_fitness = solution.fitness()
+    solution_fitness = solution.fitness
 
 .. note::
     The current developed ``KnapsackEvaluator`` is available into ``macop.evaluators.mono.KnapsackEvaluator`` in **Macop**.

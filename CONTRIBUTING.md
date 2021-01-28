@@ -95,7 +95,8 @@ In order to facilitate the integration of new modules, do not hesitate to let me
 In order to allow quick access to the code, the project follows the documentation conventions (docstring) proposed by Google. Here an example:
 
 ```python
-''' Binary integer solution class
+class BinarySolution():
+"""Binary integer solution class
 
     - store solution as a binary array (example: [0, 1, 0, 1, 1])
     - associated size is the size of the array
@@ -105,7 +106,27 @@ In order to allow quick access to the code, the project follows the documentatio
        data: {ndarray} --  array of binary values
        size: {int} -- size of binary array values
        score: {float} -- fitness score value
-'''
+"""
+```
+
+For method:
+```python
+class BinarySolution():
+
+...
+
+def random(self, validator):
+    """
+    Intialize binary array with use of validator to generate valid random solution
+
+    Args:
+        size: {int} -- expected solution size to generate
+        validator: {function} -- specific function which validates or not a solution (if None, not validation is applied)
+
+    Returns:
+        {:class:`~macop.solutions.discrete.BinarySolution`}: new generated binary solution
+    """
+    ...
 ```
 
 You can generate documentation and display updates using these following commands:
@@ -133,11 +154,11 @@ This project uses the [doctest](https://docs.python.org/3/library/doctest.html) 
     >>> data = [0, 1, 0, 1, 1]
     >>> solution = BinarySolution(data, len(data))
     >>> # check data content
-    >>> sum(solution.getData()) == 3
+    >>> sum(solution.data) == 3
     True
     >>> # clone solution
     >>> solution_copy = solution.clone()
-    >>> all(solution_copy._data == solution.getData())
+    >>> all(solution_copy._data == solution.data)
 """
 ```
 
