@@ -100,7 +100,7 @@ Fully documented examples of the usage of **Macop** is available at [https://jbu
 
 `Macop` aims to allow the modelling of discrete (usually combinatorial). It is therefore open to expansion and not closed specifically to a problem.
 
-`Macop` proposes a simple structure of interaction of the main elements (algorithms, operators, solutions, AOS, callbacks) for the resolution of operational research problems. From its generic structure, it is possible, thanks to the flexible programming paradigm of the Python language, to easily allow the extension and development of new algorithms and problems. Based on simple concepts, this package can therefore meet the needs of the rapid problem implementation. It can also be used for quick case studies.
+`Macop` proposes a simple structure of interaction of the main elements (algorithms, operators, solutions, policies, callbacks) for the resolution of operational research problems inside an interaction loop. From its generic structure, it is possible, thanks to the flexible programming paradigm of the Python language, to easily allow the extension and development of new algorithms and problems. Based on simple concepts, this package can therefore meet the needs of the rapid problem implementation.
 
 # Acknowledgements
 
