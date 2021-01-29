@@ -132,8 +132,9 @@ def random(self, validator):
 You can generate documentation and display updates using these following commands:
 
 ```
-bash build.sh
-firefox docs/build/index.html
+cd docs
+make clean && make html
+firefox _build/html/index.html
 ```
 
 ## Test implementation
