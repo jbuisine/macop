@@ -73,7 +73,7 @@ html_js_files = [
 # autoapi_dirs = ['../../rawls']
 
 autosummary_generate = True
-autodoc_default_flags = ['members']
+autodoc_default_flags = ['class', 'members', 'inherited-members', 'show-inheritance']
 autodoc_member_order = 'groupwise'
 
 # Add any paths that contain templates here, relative to this directory.

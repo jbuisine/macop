@@ -27,7 +27,7 @@ Flexible discrete optimisation package allowing a quick implementation of your p
 - **Flexibility:** although the algorithms are dependent on each other, it is possible that their internal management is different. This means that the ways in which solutions are evaluated and updated, for example, may be different.
 - **Abstraction:** thanks to the modular separability of the package, it is quickly possible to implement new problems, solutions representation, way to evaluate, update solutions within the package.
 - **Extensible:** the package is open to extension, i.e. it does not partition the user in these developer choices. It can just as well implement continuous optimization problems if needed while making use of the main interaction loop proposed by the package.
-- **Easy Setup:** As a Pure Python package distributed is ``pip`` installable and easy to use.
+- **Easy Setup:** as a pure Python package distributed is ``pip`` installable and easy to use.
 
 
 
