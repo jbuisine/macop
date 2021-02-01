@@ -84,7 +84,7 @@ class HillClimberFirstImprovment(Algorithm):
         # initialise current solution and best solution
         self.initRun()
 
-        solutionSize = self._currentSolution._size
+        solutionSize = self._currentSolution.size
 
         # local search algorithm implementation
         while not self.stop():
@@ -197,7 +197,7 @@ class HillClimberBestImprovment(Algorithm):
         # initialise current solution and best solution
         self.initRun()
 
-        solutionSize = self._currentSolution._size
+        solutionSize = self._currentSolution.size
 
         # local search algorithm implementation
         while not self.stop():

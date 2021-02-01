@@ -196,7 +196,7 @@ Let's implement an algorithm well known under the name of hill climber best impr
             # initialise current solution and best solution
             self.initRun()
 
-            solutionSize = self._currentSolution._size
+            solutionSize = self._currentSolution.size
 
             # local search algorithm implementation
             while not self.stop():
