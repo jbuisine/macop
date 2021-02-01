@@ -75,7 +75,7 @@ class MultiCheckpoint(Callback):
                         globalEvaluation = int(data[0])
 
                         if self._algo.getParent() is not None:
-                            self._algo.getParen(
+                            self._algo.getParent(
                             )._numberOfEvaluations = globalEvaluation
                         else:
                             self._algo._numberOfEvaluations = globalEvaluation

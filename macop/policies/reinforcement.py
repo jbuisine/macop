@@ -31,7 +31,7 @@ class UCBPolicy(Policy):
     The value of attribute ``C`` will allow us to specify whether we wish to exploit or explore further in relation to our earned rewards. 
     A low value of ``C`` (e.g. 2) will allow more exploitation, while a high value of ``C`` (e.g. 1000) will allow exploration.
 
-    The ``exp_rate`` variable avoids using an operator too much and allows to explore from time to time (especially if the variable ``C`` has a small value). Typical value for ``exp_rate`` can be 0.9.
+    The ``exp_rate`` variable avoids using an operator too much and allows to explore from time to time (especially if the variable ``C`` has a small value). Typical value for ``exp_rate`` can be 0.1.
 
     Example:
 
@@ -74,7 +74,7 @@ class UCBPolicy(Policy):
     >>> policy.occurences # one more due to first evaluation
     [53, 50]
     """
-    def __init__(self, operators, C=100., exp_rate=0.9):
+    def __init__(self, operators, C=100., exp_rate=0.1):
         """UCB Policy initialiser
 
         Args:
