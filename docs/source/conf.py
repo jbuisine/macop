@@ -25,9 +25,9 @@ copyright = '2021, Jérôme BUISINE'
 author = 'Jérôme BUISINE'
 
 # The short X.Y version
-version = '1.0.13'
+version = '1.0.14'
 # The full version, including alpha/beta/rc tags
-release = 'v1.0.13'
+release = 'v1.0.14'
 
 
 # -- General configuration ---------------------------------------------------
