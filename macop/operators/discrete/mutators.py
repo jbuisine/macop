@@ -37,7 +37,7 @@ class SimpleMutation(Mutation):
             {:class:`~macop.solutions.base.Solution`}: new generated solution
         """
 
-        size = solution._size
+        size = solution.size
 
         firstCell = 0
         secondCell = 0
@@ -87,7 +87,7 @@ class SimpleBinaryMutation(Mutation):
             {:class:`~macop.solutions.base.Solution`}: new generated solution
         """
 
-        size = solution._size
+        size = solution.size
         cell = random.randint(0, size - 1)
 
         # copy of solution

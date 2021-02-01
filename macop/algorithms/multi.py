@@ -380,6 +380,7 @@ class MOEAD(Algorithm):
 
         return paFront
 
+    @property
     def result(self):
         """Get the expected result of the current algorithm
 
@@ -388,6 +389,7 @@ class MOEAD(Algorithm):
         """
         return self._pfPop
 
+    @result.setter
     def result(self, result):
         """Set current default result of the algorithm
 

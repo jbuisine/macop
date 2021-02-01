@@ -37,21 +37,21 @@ class MultiCheckpoint(Callback):
             with open(self._filepath, 'w') as f:
 
                 for solution in population:
-                    solution.data = ""
+                    solution_data = ""
                     solutionSize = len(solution.data)
 
                     for index, val in enumerate(solution.data):
-                        solution.data += str(val)
+                        solution_data += str(val)
 
                         if index < solutionSize - 1:
-                            solution.data += ' '
+                            solution_data += ' '
 
                     line = str(currentEvaluation) + ';'
 
                     for i in range(len(self._algo.evaluator)):
                         line += str(solution.scores[i]) + ';'
 
-                    line += solution.data + ';\n'
+                    line += solution_data + ';\n'
 
                     f.write(line)
 
@@ -84,14 +84,14 @@ class MultiCheckpoint(Callback):
                     scores = [float(s) for s in data[1:nObjectives + 1]]
 
                     # get best solution data information
-                    solution.data = list(map(int, data[-1].split(' ')))
+                    current_data = list(map(int, data[-1].split(' ')))
 
                     # initialise and fill with data
                     self._algo.population[i] = self._algo.initialiser()
-                    self._algo.population[i].data = np.array(solution.data)
+                    self._algo.population[i].data = np.array(current_data)
                     self._algo.population[i].scores = scores
 
-                    self._algo._pfPop.append(self._algo.population[i])
+                    self._algo.result.append(self._algo.population[i])
 
             macop_line(self._algo)
             macop_text(
@@ -138,21 +138,21 @@ class ParetoCheckpoint(Callback):
             with open(self._filepath, 'w') as f:
 
                 for solution in pfPop:
-                    solution.data = ""
+                    solution_data = ""
                     solutionSize = len(solution.data)
 
                     for index, val in enumerate(solution.data):
-                        solution.data += str(val)
+                        solution_data += str(val)
 
                         if index < solutionSize - 1:
-                            solution.data += ' '
+                            solution_data += ' '
 
                     line = ''
 
                     for i in range(len(self._algo.evaluator)):
                         line += str(solution.scores[i]) + ';'
 
-                    line += solution.data + ';\n'
+                    line += solution_data + ';\n'
 
                     f.write(line)
 
@@ -174,9 +174,9 @@ class ParetoCheckpoint(Callback):
                     scores = [float(s) for s in data[0:nObjectives]]
 
                     # get best solution data information
-                    solution.data = list(map(int, data[-1].split(' ')))
+                    current_data = list(map(int, data[-1].split(' ')))
 
-                    self._algo.result[i].data = solution.data
+                    self._algo.result[i].data = np.array(current_data)
                     self._algo.result[i].scores = scores
 
             macop_text(

@@ -71,7 +71,7 @@ class SimpleCrossover(Crossover):
             {:class:`~macop.solutions.base.Solution`}: new generated solution
         """
 
-        size = solution1._size
+        size = solution1.size
 
         # copy data of solution
         firstData = solution1.data.copy()
@@ -151,7 +151,7 @@ class RandomSplitCrossover(Crossover):
         Returns:
             {:class:`~macop.solutions.base.Solution`}: new generated solution
         """
-        size = solution1._size
+        size = solution1.size
 
         # copy data of solution
         firstData = solution1.data.copy()

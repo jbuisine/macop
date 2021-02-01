@@ -150,6 +150,21 @@ Some specific methods are available:
             """
             ...
 
+
+        @property
+        def size(self):
+            """
+            Returns solution size (by default `size` private attribute)
+            """
+            ...
+
+        @size.setter
+        def size(self, size):
+            """
+            Set solution size (by default `size` private attribute)
+            """
+            ...
+
         @staticmethod
         def random(size, validator=None):
             """
@@ -164,7 +179,7 @@ Some specific methods are available:
             ...
 
 .. caution::
-    An important thing here are the ``fitness`` and ``data`` functions brought as an editable attribute by the ``@property`` and ``@XXXXX.setter`` decorators. The idea is to allow the user to modify these functions in order to change the expected result of the algorithm regardless of the data to be returned/modified. 
+    An important thing here are the ``fitness``, ``size`` and ``data`` functions brought as an editable attribute by the ``@property`` and ``@XXXXX.setter`` decorators. The idea is to allow the user to modify these functions in order to change the expected result of the algorithm regardless of the data to be returned/modified. 
 
 From these basic methods, it is possible to manage a representation of a solution to our problem. 
 
@@ -513,7 +528,7 @@ The modification applied here is just a bit swapped. Let's define the ``SimpleBi
         def apply(self, solution):
             
             # obtain targeted cell using solution size
-            size = solution._size
+            size = solution.size
             cell = random.randint(0, size - 1)
 
             # copy of solution
@@ -576,7 +591,7 @@ The first half of solution 1 will be saved and added to the second half of solut
 
         def apply(self, solution1, solution2):
             
-            size = solution1._size
+            size = solution1.size
 
             # default split index used
             splitIndex = int(size / 2)
@@ -936,7 +951,7 @@ Let's implement an algorithm well known under the name of hill climber best impr
             # initialise current solution and best solution
             self.initRun()
 
-            solutionSize = self._currentSolution._size
+            solutionSize = self._currentSolution.size
 
             # local search algorithm implementation
             while not self.stop():

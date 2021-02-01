@@ -84,6 +84,23 @@ class Solution():
         """
         self._data = data
 
+    @property
+    def size(self):
+        """
+        Returns solution size (by default `size` private attribute)
+
+        Returns:
+            {object}: data size
+        """
+        return self._size
+
+    @size.setter
+    def size(self, size):
+        """
+        Set solution size (by default `size` private attribute)
+        """
+        self._size = size
+
     @staticmethod
     def random(size, validator=None):
         """

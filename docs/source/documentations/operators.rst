@@ -98,7 +98,7 @@ The modification applied here is just a bit swapped. Let's define the ``SimpleBi
         def apply(self, solution):
             
             # obtain targeted cell using solution size
-            size = solution._size
+            size = solution.size
             cell = random.randint(0, size - 1)
 
             # copy of solution
@@ -161,7 +161,7 @@ The first half of solution 1 will be saved and added to the second half of solut
 
         def apply(self, solution1, solution2):
             
-            size = solution1._size
+            size = solution1.size
 
             # default split index used
             splitIndex = int(size / 2)
