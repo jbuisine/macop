@@ -6,10 +6,10 @@ Introduction
 - **solutions:** representation of the solution;
 - **validator:** such as constraint programmig, a `validator` is function which is used for validate or not a solution data state;
 - **evaluator:** stores problem instance data and implement a `compute` method in order to evaluate a solution;
-- **operators:** mutators, crossovers update of solution;
+- **operators:** mutators, crossovers operators for update and obtain new solution;
 - **policies:** the way you choose the available operators (might be using reinforcement learning);
 - **algorithms:** generic and implemented optimisation research algorithms;
-- **callbacks:** callbacks to automatically keep track of the search space advancement.
+- **callbacks:** callbacks to automatically keep track of the search space advancement and restart from previous state if nedded.
 
 .. image:: ../_static/documentation/macop_behaviour.png
    :width: 50 %

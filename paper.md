@@ -31,9 +31,9 @@ bibliography: paper.bib
 
 Optimisation problems are frequently encountered in science and industry. Given a real-valued function $f$ defined on a set called the search space $X$, optimising the function $f$ consists of finding a point $x \in X$ that has the optimal value $f(x)$, or at least constructing a sequence $(x_t)_{t \in \mathbf{N}} \in X^\mathbb{N}$ that is close to the optimum. Depending on the search space $X$, optimisation problems can be globally classified as discrete problems (e.g. $X=\{0,1\}^n$) or as continuous problems (e.g. $X=\mathbb{R}^n$). Tools for modelling and solving discrete [@solid-solver] and continuous [@ceres-solver] problems are proposed in the literature.
 
-In this paper, `Macop` for `Minimalist And Customisable Optimisation Package`, is a proposed as a discrete optimisation Python package which doesn't implement every algorithm in the literature, but provides the ability to quickly develop and test your own algorithm and strategies. The main objective of this package is to provide maximum flexibility, which allows for easy experimentation in implementation.
+In this paper, `Macop` for `Minimalist And Customisable Optimisation Package`, is a proposed as a discrete optimisation Python package which doesn't implement every algorithm in the literature, but provides the ability to quickly develop and test your own algorithm and strategies. The main objective of this package is to provide maximum flexibility, which allows easy implementation when experimenting new algorithms.
 
-Based on a common interaction loop (see \autoref{fig:macop-behaviour}) of all the algorithms. `Macop` wants to allow users to quickly focus on one of these features.
+Based on a common interaction loop (see \autoref{fig:macop-behaviour}) of all the algorithms. `Macop` wants to allow users to quickly focus on one of the main parts of this loop.
 
 ![Macop common interation loop.\label{fig:macop-behaviour}](docs/source/_static/documentation/macop_behaviour_reduced.png)
 
@@ -42,33 +42,33 @@ Based on a common interaction loop (see \autoref{fig:macop-behaviour}) of all th
 Most of the operational research libraries developed in Python offer users either problems and algorithms where it is possible to choose parameters to obtain optimal (or near optimal) results such as proposed in [@MaherMiltenbergerPedrosoRehfeldtSchwarzSerrano2016], or, libraries targeted to a specific problem or algorithm such as [@simanneal-solver]. Another package is proposed in [@solid-solver] which is a comprehensive gradient-free optimization framework written in Python. It seems very similar to `Macop`. However, hiearchic dependencies between algorithms, the notion of callbacks and adaptive operator selection are proposed within `Macop`.
 
 On the other hand, available libraries [@pyopt-paper; @hart2017pyomo] in the literature did not allow to attach custom evaluation function to each algorithm used in this hierarchy of algorithms.
-Indeed, it is sometimes possible that the main algorithm manages local searches. Each local search may evaluate the solution differently using a different evaluation function of the parent algorithm (the main algorithm). Such as example, using a surrogate mathematical model [@10.1145/3321707.3321800] with a quick-to-evaluate function if the real evaluation function is very expensive in time. This is why in `Macop`, each algorithm can have its own mechanism (or partially), i.e. its evaluation function, its solution update operators, as well as its solution update policy. This is independent of the parent algorithm to which it is linked. This means that only the results (solutions found) are exchanged.
+Indeed, it is sometimes possible that the main algorithm manages local searches. Each local search may evaluate the solution differently using a different evaluation function of the parent algorithm (the main algorithm). Such as example, using a surrogate mathematical model [@10.1145/3321707.3321800] with a quick-to-evaluate function if the real evaluation function is very expensive in time. This is why in `Macop`, each algorithm can have its own mechanism (or partially), i.e. its evaluation function, its operators for obtaining new solution, as well as its solution update policy. This is independent of the parent algorithm to which it is linked. This means that only the results (solutions found) are exchanged.
 
 Hence, motivation behind **Macop** is a flexible discrete optimisation package allowing a quick implementation of problems. In particular it meets the following needs:
 
 - **Common basis:** the interaction loop during the solution finding process proposed within the package is common to all heuristics. This allows the user to modify only a part of this interaction loop if necessary without rendering the process non-functional.
 - **Hierarchy:** a hierarchical algorithm management system is available, especially when an algorithm needs to manage local searches. This hierarchy remains transparent to the user. The main algorithm will be able to manage and control the process of searching for solutions.
-- **Flexibility:** although the algorithms are dependent on each other, it is possible that their internal management is different. This means that the ways in which solutions are evaluated and updated, for example, may be different.
+- **Flexibility:** although the algorithms are dependent on each other, it is possible that their internal management (search mechanism) is different. This means that the ways in which solutions are evaluated and updated, for example, may be different.
 - **Abstraction:** thanks to the modular separability of the package, it is quickly possible to implement new problems, solutions representation, way to evaluate, update solutions within the package.
 - **Extensible:** the package is open to extension, i.e. it does not partition the user in these developer choices. It can just as well implement continuous optimization problems if needed while making use of the main interaction loop proposed by the package.
 - **Easy Setup:** as a pure Python package distributed is `pip` installable and easy to use.
 
 # Description
 
-At the beginning of the development of this library, the idea of making it as modular as possible was topical. By dividing the library into sub-module forms considered to be the most important to build and solve an optimisation problem.
+At the beginning of the development of this library, the idea of making it as modular as possible was topical. The library divide into sub-module forms considered to be the most important to build and solve an optimisation problem.
 
 The package consists of main several modules:
 
 - **solutions:** representation of the solution;
 - **validator:** such as constraint programming, a `validator` is function which is used for validate or not a solution data state;
 - **evaluator:** stores problem instance data and implement a `compute` method in order to evaluate a solution;
-- **operators:** mutators, crossovers update of solution;
+- **operators:** mutators, crossovers operators for update and obtain new solution;
 - **policies:** the way you choose the available operators (might be using reinforcement learning);
 - **algorithms:** generic and implemented optimisation research algorithms;
-- **callbacks:** callbacks to automatically keep track of the search space advancement.
+- **callbacks:** callbacks to automatically keep track of the search space advancement and restart from previous state if nedded.
 
 
-The primary advantage of using Python is that it allows you to dynamically add new members within the new implemented solution or algorithm classes. This of course does not close the possibilities of extension and storage of information within solutions and algorithms. It all depends on the need in question.
+The primary advantage of using Python is that it allows you to dynamically add new members within the new implemented solution or algorithm classes. This of course does not close the possibilities of extension and storage of information within solutions and algorithms. It all depends on the current need.
 
 ## In `macop.algorithms` module:
 
@@ -98,7 +98,7 @@ Fully documented examples of the usage of **Macop** is available at [https://jbu
 
 # Conclusion
 
-`Macop` aims to allow the modelling of discrete (usually combinatorial) optimisation problem. It is therefore open to expansion and not closed specifically to a problem.
+`Macop` aims to allow the modelling of discrete (usually combinatorial) optimisation problem. It is therefore open to expansion and not closed specifically to a kind of problem.
 
 `Macop` proposes a simple structure of interaction of the main elements (algorithms, operators, solutions, policies, callbacks) for the resolution of operational research problems inside an interaction loop. From its generic structure, it is possible, thanks to the flexible programming paradigm of the Python language, to easily allow the extension and development of new algorithms and problems. Based on simple concepts, this package can therefore meet the needs of the rapid problem implementation.
 
