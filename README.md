@@ -1,6 +1,6 @@
 # Minimalist And Customisable Optimisation Package
 
-[![status](https://joss.theoj.org/papers/9ea7d55c4fa83808f96929cb87adff3e/status.svg)](https://joss.theoj.org/papers/9ea7d55c4fa83808f96929cb87adff3e) ![](https://img.shields.io/github/workflow/status/jbuisine/macop/build?style=flat-square) ![](https://img.shields.io/pypi/v/macop?style=flat-square) ![](https://img.shields.io/pypi/dm/macop?style=flat-square)
+[![status](https://joss.theoj.org/papers/9ea7d55c4fa83808f96929cb87adff3e/status.svg)](https://joss.theoj.org/papers/9ea7d55c4fa83808f96929cb87adff3e) ![](https://img.shields.io/github/workflow/status/jbuisine/macop/build) ![](https://img.shields.io/pypi/v/macop) ![](https://img.shields.io/pypi/dm/macop)
 
 
 <p align="center">
