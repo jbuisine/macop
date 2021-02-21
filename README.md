@@ -1,7 +1,10 @@
 # Minimalist And Customisable Optimisation Package
 
-[![status](https://joss.theoj.org/papers/9ea7d55c4fa83808f96929cb87adff3e/status.svg)](https://joss.theoj.org/papers/9ea7d55c4fa83808f96929cb87adff3e) ![](https://img.shields.io/github/workflow/status/jbuisine/macop/build) ![](https://img.shields.io/pypi/v/macop) ![](https://img.shields.io/pypi/dm/macop)
-
+[![status](https://joss.theoj.org/papers/9ea7d55c4fa83808f96929cb87adff3e/status.svg)](https://joss.theoj.org/papers/9ea7d55c4fa83808f96929cb87adff3e) 
+[![](https://img.shields.io/github/workflow/status/jbuisine/macop/build)](https://github.com/jbuisine/macop/actions/workflows/python-app.yml)
+[![PyPI](https://img.shields.io/pypi/v/macop)](https://pypi.org/project/macop/) 
+[![](https://img.shields.io/pypi/dm/macop)](https://pypi.org/project/macop/)
+[![GitHub](https://img.shields.io/github/license/jbuisine/macop?style=flat)](https://github.com/jbuisine/macop/blob/master/LICENCE)
 
 <p align="center">
     <img src="https://github.com/jbuisine/macop/blob/master/docs/source/_static/logo_macop.png" alt="" width="50%">
