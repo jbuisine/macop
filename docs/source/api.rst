@@ -122,7 +122,7 @@ macop.solutions
 Continuous Optimisation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Although continuous optimization is not the priority of this package, the idea is to leave the possibility to any user to implement or even propose implementations related to this kind of problem. The modules are here for the moment empty but present to establish the structure relative to these types of implementations.
+Although continuous optimization is not the priority of this package, the idea is to leave the possibility to any user to implement or even propose implementations related to this kind of problem. The modules are here for the moment nearly empty (only with Zdt functions example) but present to establish the structure relative to these types of implementations.
 
 If a user wishes to propose these developments so that they can be added in a future version of the package, he can refer to the guidelines_ for contributions of the package.
 
@@ -134,7 +134,8 @@ macop.evaluators
 .. autosummary::
    :toctree: macop
    
-   macop.evaluators.continuous
+   macop.evaluators.discrete.mono
+   macop.evaluators.discrete.multi
 
 macop.operators
 -------------------

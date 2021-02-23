@@ -1,4 +1,4 @@
-"""Mono-objective evaluators classes
+"""Mono-objective evaluators classes for discrete problem
 """
 # main imports
 from macop.evaluators.base import Evaluator

@@ -1,4 +1,4 @@
-"""Multi-objective evaluators classes 
+"""Multi-objective evaluators classes for discrete problem
 """
 # main imports
 from macop.evaluators.base import Evaluator

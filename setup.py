@@ -21,6 +21,9 @@ class TestCommand(distutils.command.check.check):
         from macop.operators.discrete import mutators as discrete_mutators
         from macop.operators.discrete import crossovers as discrete_crossovers
 
+        from macop.operators.continuous import mutators as continuous_mutators
+        from macop.operators.continuous import crossovers as continuous_crossovers
+
         # policies module
         from macop.policies import classicals
         from macop.policies import reinforcement
@@ -48,6 +51,12 @@ class TestCommand(distutils.command.check.check):
         # operators module
         doctest.testmod(discrete_mutators)
         doctest.testmod(discrete_crossovers)
+
+        random.seed(42)
+        np.random.seed(42)
+        # operators module
+        doctest.testmod(continuous_mutators)
+        doctest.testmod(continuous_crossovers)
 
         random.seed(42)
         np.random.seed(42)

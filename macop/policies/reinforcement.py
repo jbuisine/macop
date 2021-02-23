@@ -72,7 +72,7 @@ class UCBPolicy(Policy):
     >>> type(solution).__name__
     'BinarySolution'
     >>> policy.occurences # one more due to first evaluation
-    [53, 50]
+    [50, 52]
     """
     def __init__(self, operators, C=100., exp_rate=0.1):
         """UCB Policy initialiser
