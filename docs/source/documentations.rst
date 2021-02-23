@@ -1363,8 +1363,11 @@ If we want to exploit this functionality, then we will need to exploit them with
 All the features of **Macop** were presented. The next section will aim to quickly present the few implementations proposed within **Macop** to highlight the modulality of the package.
 
 
-Implementation examples
+Advanced usages
 =======================
+
+Multi-objective discrete optimisation
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Within the API of **Macop**, you can find an implementation of The Multi-objective evolutionary algorithm based on decomposition (MOEA/D) is a general-purpose algorithm for approximating the Pareto set of multi-objective optimization problems. 
 It decomposes the original multi-objective problem into a number of single-objective optimization sub-problems and then uses an evolutionary process to optimize these sub-problems simultaneously and cooperatively. 
@@ -1384,7 +1387,22 @@ An example with MOEAD for knapsack problem is available in knapsackMultiExample.
 
 .. _knapsackMultiExample.py: https://github.com/jbuisine/macop/blob/master/examples/knapsackMultiExample.py
 
+Continuous Zdt problems
+~~~~~~~~~~~~~~~~~~~~~~~
 
+Even if the package is not primarily intended for continuous optimisation, it allows for adaptation to continuous optimisation. 
+
+Based on the Zdt_ benchmarks function, it offers an implementation of Solution, Operator and Evaluator to enable the optimisation of this kind of problem.
+
+.. _Zdt: https://en.wikipedia.org/wiki/Test_functions_for_optimization
+
+- macop.solutions.continuous.ContinuousSolution_: manage float array solution in order to represent continuous solution;
+- macop.operators.continuous.mutators.PolynomialMutation_: update solution using polynomial mutation over solution's data;
+- macop.operators.continuous.crossovers.BasicDifferentialEvolutionCrossover_: use of new generated solutions in order to obtain new offspring solution;
+- macop.evaluators.continous.mono.ZdtEvaluator_: continuous evaluator for `Zdt` problem instance. Take into its ``data``, the ``f`` Zdt function;
+- macop.callbacks.classicals.ContinuousCallback_: manage callback and backup of continuous solution.
+
+A complete implementation example with the Rosenbrock_ function is available.
 
 .. _macop.algorithms.base: macop/macop.algorithms.base.html#module-macop.algorithms.base
 .. _macop.algorithms.mono: macop/macop.algorithms.mono.html#module-macop.algorithms.mono
@@ -1407,3 +1425,15 @@ An example with MOEAD for knapsack problem is available in knapsackMultiExample.
 
 .. _macop.algorithms.multi.MOSubProblem: macop/macop.algorithms.multi.html#macop.algorithms.multi.MOSubProblem
 .. _macop.algorithms.multi.MOEAD: macop/macop.algorithms.multi.html#macop.algorithms.multi.MOEAD
+
+.. _macop.solutions.continuous.ContinuousSolution: macop/macop.solutions.continuous.html#macop.solutions.continuous.ContinuousSolution
+
+.. _macop.operators.continuous.mutators.PolynomialMutation: macop/macop.operators.continuous.mutators.html#macop.operators.continuous.mutators.PolynomialMutation
+.. _macop.operators.continuous.crossovers.BasicDifferentialEvolutionCrossover: macop/macop.operators.continuous.crossovers.html#macop.operators.continuous.crossovers.BasicDifferentialEvolutionCrossover
+
+.. _macop.evaluators.continous.mono.ZdtEvaluator: macop/macop.evaluators.continuous.mono.html#macop.evaluators.continous.mono.ZdtEvaluator
+
+.. _macop.callbacks.classicals.ContinuousCallback: macop/macop.callbacks.classicals.html#macop.callbacks.classicals.ContinuousCallback
+
+
+.. _Rosenbrock: https://github.com/jbuisine/macop/blob/master/examples/ZdtExample.py

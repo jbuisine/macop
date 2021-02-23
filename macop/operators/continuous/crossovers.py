@@ -43,23 +43,24 @@ class BasicDifferentialEvolutionCrossover(Crossover):
         self.F = F
 
 
-    def apply(self, solution):
+    def apply(self, solution1, solution2=None):
         """Create new solution based on solution passed as parameter
 
         Args:
-            solution: {:class:`~macop.solutions.base.Solution`} -- the solution to use for generating new solution
+            solution1: {:class:`~macop.solutions.base.Solution`} -- the first solution to use for generating new solution
+            solution2: {:class:`~macop.solutions.base.Solution`} -- the second solution to use for generating new solution
 
         Returns:
             {:class:`~macop.solutions.base.Solution`}: new continuous generated solution
         """
 
-        size = solution.size
+        size = solution1.size
 
-        solution1 = solution.clone()
+        solution1 = solution1.clone()
 
         # create two new random solutions using instance and its static method
-        solution2 = solution.random(size, interval=(self.mini, self.maxi))
-        solution3 = solution.random(size, interval=(self.mini, self.maxi))
+        solution2 = solution1.random(size, interval=(self.mini, self.maxi))
+        solution3 = solution1.random(size, interval=(self.mini, self.maxi))
 
         # apply crossover on the new computed solution
         for i in range(len(solution1.data)):

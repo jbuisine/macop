@@ -134,8 +134,8 @@ macop.evaluators
 .. autosummary::
    :toctree: macop
    
-   macop.evaluators.discrete.mono
-   macop.evaluators.discrete.multi
+   macop.evaluators.continuous.mono
+   macop.evaluators.continuous.multi
 
 macop.operators
 -------------------
