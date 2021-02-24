@@ -19,7 +19,7 @@ class Policy():
         Args:
             operators: [{}] -- list of operators to use
         """
-        self._operators = operators
+        self.operators = operators
 
     @abstractmethod
     def select(self):
@@ -49,8 +49,8 @@ class Policy():
                      (type(operator).__name__, solution1))
 
         # default value of solution2 is current best solution
-        if solution2 is None and self._algo is not None:
-            solution2 = self._algo.result
+        if solution2 is None and self.algo is not None:
+            solution2 = self.algo.result
 
         # avoid use of crossover if only one solution is passed
         if solution2 is None and operator._kind == KindOperator.CROSSOVER:
@@ -75,4 +75,4 @@ class Policy():
         Args:
             algo: {:class:`~macop.algorithms.base.Algorithm`} -- the algorithm reference runned
         """
-        self._algo = algo
+        self.algo = algo

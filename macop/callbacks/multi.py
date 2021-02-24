@@ -25,9 +25,9 @@ class MultiCheckpoint(Callback):
         Check if necessary to do backup based on `every` variable
         """
         # get current population
-        population = self._algo.population
+        population = self.algo.population
 
-        currentEvaluation = self._algo.getGlobalEvaluation()
+        currentEvaluation = self.algo.getGlobalEvaluation()
 
         # backup if necessary
         if currentEvaluation % self._every == 0:
@@ -48,7 +48,7 @@ class MultiCheckpoint(Callback):
 
                     line = str(currentEvaluation) + ';'
 
-                    for i in range(len(self._algo.evaluator)):
+                    for i in range(len(self.algo.evaluator)):
                         line += str(solution.scores[i]) + ';'
 
                     line += solution_data + ';\n'
@@ -74,42 +74,42 @@ class MultiCheckpoint(Callback):
                         # get evaluation  information
                         globalEvaluation = int(data[0])
 
-                        if self._algo.getParent() is not None:
-                            self._algo.getParent(
+                        if self.algo.getParent() is not None:
+                            self.algo.getParent(
                             )._numberOfEvaluations = globalEvaluation
                         else:
-                            self._algo._numberOfEvaluations = globalEvaluation
+                            self.algo._numberOfEvaluations = globalEvaluation
 
-                    nObjectives = len(self._algo.evaluator)
+                    nObjectives = len(self.algo.evaluator)
                     scores = [float(s) for s in data[1:nObjectives + 1]]
 
                     # get best solution data information
                     current_data = list(map(int, data[-1].split(' ')))
 
                     # initialise and fill with data
-                    self._algo.population[i] = self._algo.initialiser()
-                    self._algo.population[i].data = np.array(current_data)
-                    self._algo.population[i].scores = scores
+                    self.algo.population[i] = self.algo.initialiser()
+                    self.algo.population[i].data = np.array(current_data)
+                    self.algo.population[i].scores = scores
 
-                    self._algo.result.append(self._algo.population[i])
+                    self.algo.result.append(self.algo.population[i])
 
-            macop_line(self._algo)
+            macop_line(self.algo)
             macop_text(
-                self._algo,
+                self.algo,
                 f'Load of available population from `{self._filepath}`')
             macop_text(
-                self._algo,
-                f'Restart algorithm from evaluation {self._algo._numberOfEvaluations}.'
+                self.algo,
+                f'Restart algorithm from evaluation {self.algo._numberOfEvaluations}.'
             )
         else:
             macop_text(
-                self._algo,
+                self.algo,
                 'No backup found... Start running algorithm from evaluation 0.'
             )
             logging.info(
                 "Can't load backup... Backup filepath not valid in Checkpoint")
 
-        macop_line(self._algo)
+        macop_line(self.algo)
 
 
 class ParetoCheckpoint(Callback):
@@ -126,9 +126,9 @@ class ParetoCheckpoint(Callback):
         Check if necessary to do backup based on `every` variable
         """
         # get current population
-        pfPop = self._algo.result
+        pfPop = self.algo.result
 
-        currentEvaluation = self._algo.getGlobalEvaluation()
+        currentEvaluation = self.algo.getGlobalEvaluation()
 
         # backup if necessary
         if currentEvaluation % self._every == 0:
@@ -149,7 +149,7 @@ class ParetoCheckpoint(Callback):
 
                     line = ''
 
-                    for i in range(len(self._algo.evaluator)):
+                    for i in range(len(self.algo.evaluator)):
                         line += str(solution.scores[i]) + ';'
 
                     line += solution_data + ';\n'
@@ -170,24 +170,24 @@ class ParetoCheckpoint(Callback):
 
                     data = line.replace(';\n', '').split(';')
 
-                    nObjectives = len(self._algo.evaluator)
+                    nObjectives = len(self.algo.evaluator)
                     scores = [float(s) for s in data[0:nObjectives]]
 
                     # get best solution data information
                     current_data = list(map(int, data[-1].split(' ')))
 
-                    self._algo.result[i].data = np.array(current_data)
-                    self._algo.result[i].scores = scores
+                    self.algo.result[i].data = np.array(current_data)
+                    self.algo.result[i].scores = scores
 
             macop_text(
-                self._algo,
+                self.algo,
                 f'Load of available pareto front backup from `{ self._filepath}`'
             )
         else:
             macop_text(
-                self._algo,
+                self.algo,
                 'No pareto front found... Start running algorithm with new pareto front population.'
             )
             logging.info("No pareto front backup used...")
 
-        macop_line(self._algo)
+        macop_line(self.algo)

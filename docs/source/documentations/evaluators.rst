@@ -12,7 +12,7 @@ Abstract Evaluator class is used for computing fitness score associated to a sol
 
 - stores into its ``_data`` dictionary attritute required measures when computing a solution
 - has a ``compute`` abstract method enable to compute and associate a score to a given solution
-- stores into its ``_algo`` attritute the current algorithm to use (we will talk about algorithm later)
+- stores into its ``algo`` attritute the current algorithm to use (we will talk about algorithm later)
 
 .. code-block: python
 
@@ -34,7 +34,7 @@ Abstract Evaluator class is used for computing fitness score associated to a sol
         """
         Keep into evaluator reference of the whole algorithm
         """
-        self._algo = algo
+        self.algo = algo
 
 We must therefore now create our own evaluator based on the proposed structure.
 

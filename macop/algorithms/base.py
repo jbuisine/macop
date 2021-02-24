@@ -63,7 +63,7 @@ class Algorithm():
         self.policy = policy
 
         # protected members intialization
-        self._operators = operators
+        self.operators = operators
         self._callbacks = []
         self._bestSolution = None
         self._currentSolution = None
@@ -81,7 +81,7 @@ class Algorithm():
         self._verbose = verbose
 
         # track reference of algorihtm into operator (keep an eye into best solution)
-        for operator in self._operators:
+        for operator in self.operators:
             if self._parent is not None:
                 operator.setAlgo(self.getParent())
             else:
@@ -123,13 +123,13 @@ class Algorithm():
             {:class:`~macop.algorithms.base.Algorithm`}: main algorithm set for this algorithm
         """
 
-        current_algorithm = self
+        currentalgorithm = self
         parent_alrogithm = None
 
         # recursively find the main algorithm parent
-        while current_algorithm._parent is not None:
-            parent_alrogithm = current_algorithm._parent
-            current_algorithm = current_algorithm._parent
+        while currentalgorithm._parent is not None:
+            parent_alrogithm = currentalgorithm._parent
+            currentalgorithm = currentalgorithm._parent
 
         return parent_alrogithm
 
@@ -181,12 +181,12 @@ class Algorithm():
         Increase number of evaluation once a solution is evaluated for each dependant algorithm (parents hierarchy)
         """
 
-        current_algorithm = self
+        currentalgorithm = self
 
-        while current_algorithm is not None:
+        while currentalgorithm is not None:
 
-            current_algorithm._numberOfEvaluations += 1
-            current_algorithm = current_algorithm._parent
+            currentalgorithm._numberOfEvaluations += 1
+            currentalgorithm = currentalgorithm._parent
 
     def getGlobalEvaluation(self):
         """Get the global number of evaluation (if inner algorithm)
@@ -194,10 +194,10 @@ class Algorithm():
         Returns:
             {int}: current global number of evaluation
         """
-        parent_algorithm = self.getParent()
+        parentalgorithm = self.getParent()
 
-        if parent_algorithm is not None:
-            return parent_algorithm.getGlobalEvaluation()
+        if parentalgorithm is not None:
+            return parentalgorithm.getGlobalEvaluation()
 
         return self._numberOfEvaluations
 
@@ -224,10 +224,10 @@ class Algorithm():
             {int}: current global max number of evaluation
         """
 
-        parent_algorithm = self.getParent()
+        parentalgorithm = self.getParent()
 
-        if parent_algorithm is not None:
-            return parent_algorithm.getGlobalMaxEvaluation()
+        if parentalgorithm is not None:
+            return parentalgorithm.getGlobalMaxEvaluation()
 
         return self._maxEvaluations
 
@@ -235,11 +235,11 @@ class Algorithm():
         """
         Global stopping criteria (check for parents algorithm hierarchy too)
         """
-        parent_algorithm = self.getParent()
+        parentalgorithm = self.getParent()
 
         # based on global stopping creteria or on its own stopping critera
-        if parent_algorithm is not None:
-            return parent_algorithm._numberOfEvaluations >= parent_algorithm._maxEvaluations or self._numberOfEvaluations >= self._maxEvaluations
+        if parentalgorithm is not None:
+            return parentalgorithm._numberOfEvaluations >= parentalgorithm._maxEvaluations or self._numberOfEvaluations >= self._maxEvaluations
 
         return self._numberOfEvaluations >= self._maxEvaluations
 

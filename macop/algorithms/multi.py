@@ -108,7 +108,7 @@ class MOEAD(Algorithm):
         self.evaluator = evaluator
         self.validator = validator
 
-        self._operators = operators
+        self.operators = operators
         self.policy = policy
         self._callbacks = []
 
@@ -126,7 +126,7 @@ class MOEAD(Algorithm):
         self._verbose = verbose
 
         # track reference of algo into operator (keep an eye into best solution)
-        for operator in self._operators:
+        for operator in self.operators:
             operator.setAlgo(self)
 
         # by default track reference for policy
@@ -543,7 +543,7 @@ class MOSubProblem(Algorithm):
             self.initRun()
 
         # new operators list keep track of current sub problem
-        for op in self._operators:
+        for op in self.operators:
             op.setAlgo(self)
 
         for _ in range(evaluations):

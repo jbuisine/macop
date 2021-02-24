@@ -25,9 +25,9 @@ class BasicCheckpoint(Callback):
         Check if necessary to do backup based on `every` variable
         """
         # get current best solution
-        solution = self._algo.result
+        solution = self.algo.result
 
-        currentEvaluation = self._algo.getGlobalEvaluation()
+        currentEvaluation = self.algo.getGlobalEvaluation()
 
         # backup if necessary
         if currentEvaluation % self._every == 0:
@@ -70,36 +70,36 @@ class BasicCheckpoint(Callback):
                 # get evaluation  information
                 globalEvaluation = int(data[0])
 
-                if self._algo.getParent() is not None:
-                    self._algo.getParent().setEvaluation(globalEvaluation)
+                if self.algo.getParent() is not None:
+                    self.algo.getParent().setEvaluation(globalEvaluation)
                 else:
-                    self._algo.setEvaluation(globalEvaluation)
+                    self.algo.setEvaluation(globalEvaluation)
 
                 # get best solution data information
                 solution_data = list(map(int, data[1].split(' ')))
 
-                if self._algo.result is None:
-                    self._algo.result = self._algo.initialiser()
+                if self.algo.result is None:
+                    self.algo.result = self.algo.initialiser()
 
-                self._algo.result.data = np.array(solution_data)
-                self._algo.result.fitness = float(data[2])
+                self.algo.result.data = np.array(solution_data)
+                self.algo.result.fitness = float(data[2])
 
-            macop_line(self._algo)
-            macop_text(self._algo,
+            macop_line(self.algo)
+            macop_text(self.algo,
                        f'Checkpoint found from `{self._filepath}` file.')
             macop_text(
-                self._algo,
-                f'Restart algorithm from evaluation {self._algo.getEvaluation()}.'
+                self.algo,
+                f'Restart algorithm from evaluation {self.algo.getEvaluation()}.'
             )
         else:
             macop_text(
-                self._algo,
+                self.algo,
                 'No backup found... Start running algorithm from evaluation 0.'
             )
             logging.info(
                 "Can't load backup... Backup filepath not valid in Checkpoint")
 
-        macop_line(self._algo)
+        macop_line(self.algo)
 
 
 class ContinuousCheckpoint(Callback):
@@ -117,9 +117,9 @@ class ContinuousCheckpoint(Callback):
         Check if necessary to do backup based on `every` variable
         """
         # get current best solution
-        solution = self._algo.result
+        solution = self.algo.result
 
-        currentEvaluation = self._algo.getGlobalEvaluation()
+        currentEvaluation = self.algo.getGlobalEvaluation()
 
         # backup if necessary
         if currentEvaluation % self._every == 0:
@@ -162,33 +162,33 @@ class ContinuousCheckpoint(Callback):
                 # get evaluation  information
                 globalEvaluation = int(data[0])
 
-                if self._algo.getParent() is not None:
-                    self._algo.getParent().setEvaluation(globalEvaluation)
+                if self.algo.getParent() is not None:
+                    self.algo.getParent().setEvaluation(globalEvaluation)
                 else:
-                    self._algo.setEvaluation(globalEvaluation)
+                    self.algo.setEvaluation(globalEvaluation)
 
                 # get best solution data information
                 solution_data = list(map(float, data[1].split(' ')))
 
-                if self._algo.result is None:
-                    self._algo.result = self._algo.initialiser()
+                if self.algo.result is None:
+                    self.algo.result = self.algo.initialiser()
 
-                self._algo.result.data = np.array(solution_data)
-                self._algo.result.fitness = float(data[2])
+                self.algo.result.data = np.array(solution_data)
+                self.algo.result.fitness = float(data[2])
 
-            macop_line(self._algo)
-            macop_text(self._algo,
+            macop_line(self.algo)
+            macop_text(self.algo,
                        f'Checkpoint found from `{self._filepath}` file.')
             macop_text(
-                self._algo,
-                f'Restart algorithm from evaluation {self._algo.getEvaluation()}.'
+                self.algo,
+                f'Restart algorithm from evaluation {self.algo.getEvaluation()}.'
             )
         else:
             macop_text(
-                self._algo,
+                self.algo,
                 'No backup found... Start running algorithm from evaluation 0.'
             )
             logging.info(
                 "Can't load backup... Backup filepath not valid in Checkpoint")
 
-        macop_line(self._algo)
+        macop_line(self.algo)

@@ -32,7 +32,7 @@ First, let's take a look of the ``policy`` abstract class available in ``macop.p
     class Policy():
 
         def __init__(self, operators):
-            self._operators = operators
+            self.operators = operators
 
         @abstractmethod
         def select(self):
@@ -54,7 +54,7 @@ First, let's take a look of the ``policy`` abstract class available in ``macop.p
             ...
 
 
-``Policy`` instance will have of ``_operators`` attributs in order to keep track of possible operators when selecting one. 
+``Policy`` instance will have of ``operators`` attributs in order to keep track of possible operators when selecting one. 
 Here, in our implementation we only need to specify the ``select`` abstract method. The ``apply`` method will select the next operator and return the new solution.
 
 .. code-block:: python
@@ -71,8 +71,8 @@ Here, in our implementation we only need to specify the ``select`` abstract meth
             Select specific operator
             """
             # choose operator randomly
-            index = random.randint(0, len(self._operators) - 1)
-            return self._operators[index]
+            index = random.randint(0, len(self.operators) - 1)
+            return self.operators[index]
 
 
 We can now use this operator choice policy to update our current solution:

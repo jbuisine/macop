@@ -26,7 +26,7 @@ class UCBCheckpoint(Callback):
         Check if necessary to do backup based on `every` variable
         """
         # get current population
-        currentEvaluation = self._algo.getGlobalEvaluation()
+        currentEvaluation = self.algo.getGlobalEvaluation()
 
         # backup if necessary
         if currentEvaluation % self._every == 0:
@@ -37,20 +37,20 @@ class UCBCheckpoint(Callback):
 
                 rewardsLine = ''
 
-                for i, r in enumerate(self._algo.policy.rewards):
+                for i, r in enumerate(self.algo.policy.rewards):
                     rewardsLine += str(r)
 
-                    if i != len(self._algo.policy.rewards) - 1:
+                    if i != len(self.algo.policy.rewards) - 1:
                         rewardsLine += ';'
 
                 f.write(rewardsLine + '\n')
 
                 occurrencesLine = ''
 
-                for i, o in enumerate(self._algo.policy.occurences):
+                for i, o in enumerate(self.algo.policy.occurences):
                     occurrencesLine += str(o)
 
-                    if i != len(self._algo.policy.occurences) - 1:
+                    if i != len(self.algo.policy.occurences) - 1:
                         occurrencesLine += ';'
 
                 f.write(occurrencesLine + '\n')
@@ -69,18 +69,18 @@ class UCBCheckpoint(Callback):
                 rewardsLine = lines[0].replace('\n', '')
                 occurrencesLine = lines[1].replace('\n', '')
 
-                self._algo.policy.rewards = [
+                self.algo.policy.rewards = [
                     float(f) for f in rewardsLine.split(';')
                 ]
-                self._algo.policy.occurences = [
+                self.algo.policy.occurences = [
                     float(f) for f in occurrencesLine.split(';')
                 ]
 
             macop_text(
-                self._algo,
+                self.algo,
                 f'Load of available UCB policy data from `{self._filepath}`')
         else:
-            macop_text(self._algo, 'No UCB data found, use default UCB policy')
+            macop_text(self.algo, 'No UCB data found, use default UCB policy')
             logging.info("No UCB data found...")
 
-        macop_line(self._algo)
+        macop_line(self.algo)
