@@ -57,14 +57,14 @@ Hence, motivation behind **Macop** is a flexible discrete optimisation package a
 
 This package would meet the expectations of people wishing to: 
 
-- Solve a complex problem oriented evolutionary algorithm but who do not wish to develop their own framework. They can rely on what the package already proposes but also on its generic and flexible contribution in order to adapt their own content;
+- Solve a complex problem oriented evolutionary algorithm but who do not wish to develop their own framework. They can rely on what the package already proposes but also on its generic and flexible contribution in order to adapt their own content.
 - Conduct research work leading to the rapid modification of meta-heuristics and the interaction of different algorithms. More precisely:
   
-  - test new combinations of algorithms. Changing algorithms during evaluations, e.g. different local searches;
+  - test new combinations of algorithms. Changing algorithms during evaluations, e.g. different local searches.
   - provide reinforcement learning during searches (e.g. adaptive operator choice strategy).
   - test new multi-objective methods quickly thanks to the proposed algorithmic hierarchy allowing to easily decompose the multi-objective problem into single-objective sub-problems.
   
-- Take advantage of a system for launching calculations from a backup in order to avoid any loss in case of unwanted program interruption;
+- Take advantage of a system for launching calculations from a backup in order to avoid any loss in case of unwanted program interruption.
 - Quickly model a problem that is still unknown, i.e. the type of solution and the evaluation function, while taking advantage of the interaction loop proposed by the package.
 
 # Description
