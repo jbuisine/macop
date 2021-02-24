@@ -92,9 +92,9 @@ We are going to create our own Callback instance called ``BasicCheckpoint`` whic
             Check if necessary to do backup based on `every` variable
             """
             # get current best solution
-            solution = self._algo._bestSolution
+            solution = self.algo._bestSolution
 
-            currentEvaluation = self._algo.getGlobalEvaluation()
+            currentEvaluation = self.algo.getGlobalEvaluation()
 
             # backup if necessary every number of evaluations
             if currentEvaluation % self._every == 0:
@@ -137,21 +137,21 @@ We are going to create our own Callback instance called ``BasicCheckpoint`` whic
                     globalEvaluation = int(data[0])
 
                     # restore number of evaluations
-                    if self._algo.getParent() is not None:
-                        self._algo.getParent()._numberOfEvaluations = globalEvaluation
+                    if self.algo.getParent() is not None:
+                        self.algo.getParent()._numberOfEvaluations = globalEvaluation
                     else:
-                        self._algo._numberOfEvaluations = globalEvaluation
+                        self.algo._numberOfEvaluations = globalEvaluation
 
                     # get best solution data information
                     solution.data = list(map(int, data[1].split(' ')))
 
                     # avoid uninitialised solution
-                    if self._algo._bestSolution is None:
-                        self._algo._bestSolution = self._algo.initialiser()
+                    if self.algo._bestSolution is None:
+                        self.algo._bestSolution = self.algo.initialiser()
 
                     # set to algorithm the lastest obtained best solution
-                    self._algo._bestsolution.getdata = ) = np.array(solution.data)
-                    self._algo._bestSolution._score = float(data[2])
+                    self.algo._bestsolution.getdata = ) = np.array(solution.data)
+                    self.algo._bestSolution._score = float(data[2])
 
 
 In this way, it is possible to specify the use of a callback to our algorithm instance:

@@ -100,84 +100,6 @@ Inside macop.solutions.base_ module of `Macop`, the ``Solution`` class is availa
 
 Some specific methods are available:
 
-.. code-block:: python
-
-    class Solution():
-
-        def __init__(self, data, size):
-            """
-            Abstract solution class constructor
-            """
-            ...
-
-        def isValid(self, validator):
-            """
-            Use of custom function which checks if a solution is valid or not
-            """
-            ...
-
-        def evaluate(self, evaluator):
-            """
-            Evaluate solution using specific `evaluator`
-            """
-            ...
-
-        @property
-        def fitness(self):
-            """
-            Returns fitness score (by default `score` private attribute)
-            """
-            ...
-
-        @fitness.setter
-        def fitness(self, score):
-            """
-            Set solution score as wished (by default `score` private attribute)
-            """
-            ...
-
-        @property
-        def data(self):
-            """
-            Returns solution data (by default `data` private attribute)
-            """
-            ...
-
-        @data.setter
-        def data(self, data):
-            """
-            Set solution data (by default `data` private attribute)
-            """
-            ...
-
-
-        @property
-        def size(self):
-            """
-            Returns solution size (by default `size` private attribute)
-            """
-            ...
-
-        @size.setter
-        def size(self, size):
-            """
-            Set solution size (by default `size` private attribute)
-            """
-            ...
-
-        @staticmethod
-        def random(size, validator=None):
-            """
-            initialise solution using random data with validator or not
-            """
-            ...
-
-        def clone(self):
-            """
-            Clone the current solution and its data, but without keeping evaluated `_score`
-            """
-            ...
-
 .. caution::
     An important thing here are the ``fitness``, ``size`` and ``data`` functions brought as an editable attribute by the ``@property`` and ``@XXXXX.setter`` decorators. The idea is to allow the user to modify these functions in order to change the expected result of the algorithm regardless of the data to be returned/modified. 
 
@@ -342,31 +264,9 @@ As for the management of solutions, a generic evaluator class macop.evaluators.b
 
 Abstract Evaluator class is used for computing fitness score associated to a solution. To evaluate all the solutions, this class:
 
-- stores into its ``_data`` dictionary attritute required measures when computing a solution
+- stores into its ``data`` initialiser dictionary attritute required measures when computing a solution
 - has a ``compute`` abstract method enable to compute and associate a score to a given solution
-- stores into its ``_algo`` attritute the current algorithm to use (we will talk about algorithm later)
-
-.. code-block: python
-
-    class Evaluator():
-    """
-    Abstract Evaluator class which enables to compute solution using specific `_data` 
-    """
-    def __init__(self, data):
-        self._data = data
-
-    @abstractmethod
-    def compute(self, solution):
-        """
-        Apply the computation of fitness from solution
-        """
-        pass
-
-    def setAlgo(self, algo):
-        """
-        Keep into evaluator reference of the whole algorithm
-        """
-        self._algo = algo
+- stores into its ``algo`` attritute the current algorithm to use (we will talk about algorithm later)
 
 We must therefore now create our own evaluator based on the proposed structure.
 
@@ -376,7 +276,7 @@ Custom evaluator
 To create our own evaluator, we need both:
 
 - data useful for evaluating a solution
-- calculate the score (fitness) associated with the state of the solution from these data. Hence, implement specific ``compute`` method.
+- compute the fitness associated with the state of the solution from these data. Hence, implement specific ``compute`` method.
 
 We will define the ``KnapsackEvaluator`` class, which will therefore allow us to evaluate solutions to our current problem.
 
@@ -389,7 +289,7 @@ We will define the ``KnapsackEvaluator`` class, which will therefore allow us to
 
     class KnapsackEvaluator(Evaluator):
         
-        def compute(solution):
+        def compute(self, solution):
 
             # `_data` contains worths array values of objects
             fitness = 0
@@ -443,59 +343,9 @@ In the discrete optimisation literature, we can categorise operators into two se
 
 Inside **Macop**, operators are also decomposed into these two categories. Inside macop.operators.base_, generic class ``Operator`` enables to manage any kind of operator.
 
-.. code-block:: python
-
-    class Operator():
-        """
-        Abstract Operator class which enables to update solution applying operator (computation)
-        """
-        @abstractmethod
-        def __init__(self):
-            pass
-
-        @abstractmethod
-        def apply(self, solution):
-            """
-            Apply the current operator transformation
-            """
-            pass
-
-        def setAlgo(self, algo):
-            """
-            Keep into operator reference of the whole algorithm
-            """
-            self._algo = algo
-
 Like the evaluator, the operator keeps **track of the algorithm** (using ``setAlgo`` method) to which he will be linked. This will allow better management of the way in which the operator must take into account the state of current data relating to the evolution of research.
 
 ``Mutation`` and ``Crossover`` classes inherite from ``Operator``. An ``apply`` function is required for any new operator.
-
-.. code-block:: python
-
-    class Mutation(Operator):
-        """Abstract Mutation extend from Operator
-
-        Attributes:
-            kind: {:class:`~macop.operators.base.KindOperator`} -- specify the kind of operator
-        """
-        def __init__(self):
-            self._kind = KindOperator.MUTATOR
-
-        def apply(self, solution):
-            raise NotImplementedError
-
-
-    class Crossover(Operator):
-        """Abstract crossover extend from Operator
-
-        Attributes:
-            kind: {:class:`~macop.operators.base.KindOperator`} -- specify the kind of operator
-        """
-        def __init__(self):
-            self._kind = KindOperator.CROSSOVER
-
-        def apply(self, solution1, solution2):
-            raise NotImplementedError
 
 We will now detail these categories of operators and suggest some relative to our problem.
 
@@ -597,7 +447,7 @@ The first half of solution 1 will be saved and added to the second half of solut
             splitIndex = int(size / 2)
 
             # copy data of solution 1
-            firstData = solution1._data.copy()
+            firstData = solution1.data.copy()
 
             # copy of solution 2
             copy_solution = solution2.clone()
@@ -656,36 +506,10 @@ Custom policy
 
 In our case, we are not going to exploit a complex enough implementation of a ``policy``. Simply, we will use a random choice of operator.
 
-First, let's take a look of the ``policy`` abstract class available in macop.policies.base_:
-
-.. code-block:: python
-
-    class Policy():
-
-        def __init__(self, operators):
-            self._operators = operators
-
-        @abstractmethod
-        def select(self):
-            """
-            Select specific operator
-            """
-            pass
-
-        def apply(self, solution):
-            """
-            Apply specific operator to create new solution, compute its fitness and return it
-            """
-            ...
-
-        def setAlgo(self, algo):
-            """
-            Keep into policy reference of the whole algorithm
-            """
-            ...
+First, let's take a look of the ``Policy`` abstract class available in macop.policies.base_:
 
 
-``Policy`` instance will have of ``_operators`` attributs in order to keep track of possible operators when selecting one. 
+``Policy`` instance will have of ``operators`` attributes in order to keep track of possible operators when selecting one. 
 Here, in our implementation we only need to specify the ``select`` abstract method. The ``apply`` method will select the next operator and return the new solution.
 
 .. code-block:: python
@@ -702,8 +526,8 @@ Here, in our implementation we only need to specify the ``select`` abstract meth
             Select specific operator
             """
             # choose operator randomly
-            index = random.randint(0, len(self._operators) - 1)
-            return self._operators[index]
+            index = random.randint(0, len(self.operators) - 1)
+            return self.operators[index]
 
 
 We can now use this operator choice policy to update our current solution:
@@ -783,121 +607,6 @@ She is composed of few default attributes:
 - bestSolution: {:class:`~macop.solutions.base.Solution`} -- best solution found so far during running algorithm
 - callbacks: {[:class:`~macop.callbacks.base.Callback`]} -- list of Callback class implementation to do some instructions every number of evaluations and `load` when initialising algorithm
 - parent: {:class:`~macop.algorithms.base.Algorithm`} -- parent algorithm reference in case of inner Algorithm instance (optional)
-
-.. code-block:: python
-
-    class Algorithm():
-
-        def __init__(self,
-                    initialiser,
-                    evaluator,
-                    operators,
-                    policy,
-                    validator,
-                    maximise=True,
-                    parent=None,
-                    verbose=True):
-            ...
-
-        def addCallback(self, callback):
-            """
-            Add new callback to algorithm specifying usefull parameters
-            """
-            ...
-
-        def resume(self):
-            """
-            Resume algorithm using Callback instances
-            """
-            ...
-
-        @property
-        def result(self):
-            """Get the expected result of the current algorithm
-
-            By default the best solution (but can be anything you want)
-            """
-            ...
-
-        @result.setter
-        def result(self, result):
-            """Set current default result of the algorithm
-            """
-            ...
-
-        def getParent(self):
-            """
-            Recursively find the main parent algorithm attached of the current algorithm
-            """
-            ...
-
-        def setParent(self, parent):
-            """
-            Set parent algorithm to current algorithm
-            """
-            ...
-
-        def initRun(self):
-            """
-            initialise the current solution and best solution using the `initialiser` function
-            """
-            ...
-
-        def increaseEvaluation(self):
-            """
-            Increase number of evaluation once a solution is evaluated for each dependant algorithm (parents hierarchy)
-            """
-            ...
-                
-        def getGlobalEvaluation(self):
-            """
-            Get the global number of evaluation (if inner algorithm)
-            """
-            ...
-
-        def getGlobalMaxEvaluation(self):
-            """
-            Get the global max number of evaluation (if inner algorithm)
-            """
-            ...
-
-        def stop(self):
-            """
-            Global stopping criteria (check for parents algorithm hierarchy too)
-            """
-            ...
-
-        def evaluate(self, solution):
-            """
-            Evaluate a solution using evaluator passed when intialize algorithm
-            """
-            ...
-
-        def update(self, solution):
-            """
-            Apply update function to solution using specific `policy`
-            Check if solution is valid after modification and returns it
-            """
-            ...
-
-        def isBetter(self, solution):
-            """
-            Check if solution is better than best found
-            """
-            ...
-
-        def run(self, evaluations):
-            """
-            Run the specific algorithm following number of evaluations to find optima
-            """
-            ...
-
-        def progress(self):
-            """
-            Log progress and apply callbacks if necessary
-            """
-            ...
-
 
 .. caution::
     An important thing here are the ``result`` functions brought as an editable attribute by the ``@property`` and ``@result.setter`` decorators. The idea is to allow the user to modify these functions in order to change the expected result of the algorithm regardless of the data to be returned/modified. 
@@ -1171,34 +880,6 @@ For this, the functionality relating to callbacks has been developed.
 Within **Macop**, a callback is a specific instance of macop.callbacks.base.Callback_ that allows you to perform an action of tracing / saving information **every** ``n`` **evaluations** but also reloading information if necessary when restarting an algorithm.
 
 
-.. code-block:: python
-
-    class Callback():
-
-        def __init__(self, every, filepath):
-            ...
-
-        @abstractmethod
-        def run(self):
-            """
-            Check if necessary to do backup based on `every` variable
-            """
-            pass
-
-        @abstractmethod
-        def load(self):
-            """
-            Load last backup line of solution and set algorithm state at this backup
-            """
-            pass
-
-        def setAlgo(self, algo):
-            """
-            Specify the main algorithm instance reference
-            """
-            ...
-
-
 - The ``run`` method will be called during run process of the algo and do backup at each specific number of evaluations. 
 - The ``load`` method will be used to reload the state of the algorithm from the last information saved. All saved data is saved in a file whose name will be specified by the user.
 
@@ -1222,9 +903,9 @@ We are going to create our own Callback instance called ``BasicCheckpoint`` whic
             Check if necessary to do backup based on `every` variable
             """
             # get current best solution
-            solution = self._algo._bestSolution
+            solution = self.algo._bestSolution
 
-            currentEvaluation = self._algo.getGlobalEvaluation()
+            currentEvaluation = self.algo.getGlobalEvaluation()
 
             # backup if necessary every number of evaluations
             if currentEvaluation % self._every == 0:
@@ -1267,21 +948,21 @@ We are going to create our own Callback instance called ``BasicCheckpoint`` whic
                     globalEvaluation = int(data[0])
 
                     # restore number of evaluations
-                    if self._algo.getParent() is not None:
-                        self._algo.getParent()._numberOfEvaluations = globalEvaluation
+                    if self.algo.getParent() is not None:
+                        self.algo.getParent()._numberOfEvaluations = globalEvaluation
                     else:
-                        self._algo._numberOfEvaluations = globalEvaluation
+                        self.algo._numberOfEvaluations = globalEvaluation
 
                     # get best solution data information
                     solution.data = list(map(int, data[1].split(' ')))
 
                     # avoid uninitialised solution
-                    if self._algo._bestSolution is None:
-                        self._algo._bestSolution = self._algo.initialiser()
+                    if self.algo._bestSolution is None:
+                        self.algo._bestSolution = self.algo.initialiser()
 
                     # set to algorithm the lastest obtained best solution
-                    self._algo._bestsolution.data = np.array(solution.data)
-                    self._algo._bestSolution._score = float(data[2])
+                    self.algo._bestsolution.data = np.array(solution.data)
+                    self.algo._bestSolution._score = float(data[2])
 
 
 In this way, it is possible to specify the use of a callback to our algorithm instance:
@@ -1363,8 +1044,11 @@ If we want to exploit this functionality, then we will need to exploit them with
 All the features of **Macop** were presented. The next section will aim to quickly present the few implementations proposed within **Macop** to highlight the modulality of the package.
 
 
-Implementation examples
+Advanced usages
 =======================
+
+Multi-objective discrete optimisation
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Within the API of **Macop**, you can find an implementation of The Multi-objective evolutionary algorithm based on decomposition (MOEA/D) is a general-purpose algorithm for approximating the Pareto set of multi-objective optimization problems. 
 It decomposes the original multi-objective problem into a number of single-objective optimization sub-problems and then uses an evolutionary process to optimize these sub-problems simultaneously and cooperatively. 
@@ -1384,7 +1068,22 @@ An example with MOEAD for knapsack problem is available in knapsackMultiExample.
 
 .. _knapsackMultiExample.py: https://github.com/jbuisine/macop/blob/master/examples/knapsackMultiExample.py
 
+Continuous Zdt problems
+~~~~~~~~~~~~~~~~~~~~~~~
 
+Even if the package is not primarily intended for continuous optimisation, it allows for adaptation to continuous optimisation. 
+
+Based on the Zdt_ benchmarks function, it offers an implementation of Solution, Operator and Evaluator to enable the optimisation of this kind of problem.
+
+.. _Zdt: https://en.wikipedia.org/wiki/Test_functions_for_optimization
+
+- macop.solutions.continuous.ContinuousSolution_: manage float array solution in order to represent continuous solution;
+- macop.operators.continuous.mutators.PolynomialMutation_: update solution using polynomial mutation over solution's data;
+- macop.operators.continuous.crossovers.BasicDifferentialEvolutionCrossover_: use of new generated solutions in order to obtain new offspring solution;
+- macop.evaluators.continous.mono.ZdtEvaluator_: continuous evaluator for `Zdt` problem instance. Take into its ``data``, the ``f`` Zdt function;
+- macop.callbacks.classicals.ContinuousCallback_: manage callback and backup of continuous solution.
+
+A complete implementation example with the Rosenbrock_ function is available.
 
 .. _macop.algorithms.base: macop/macop.algorithms.base.html#module-macop.algorithms.base
 .. _macop.algorithms.mono: macop/macop.algorithms.mono.html#module-macop.algorithms.mono
@@ -1407,3 +1106,15 @@ An example with MOEAD for knapsack problem is available in knapsackMultiExample.
 
 .. _macop.algorithms.multi.MOSubProblem: macop/macop.algorithms.multi.html#macop.algorithms.multi.MOSubProblem
 .. _macop.algorithms.multi.MOEAD: macop/macop.algorithms.multi.html#macop.algorithms.multi.MOEAD
+
+.. _macop.solutions.continuous.ContinuousSolution: macop/macop.solutions.continuous.html#macop.solutions.continuous.ContinuousSolution
+
+.. _macop.operators.continuous.mutators.PolynomialMutation: macop/macop.operators.continuous.mutators.html#macop.operators.continuous.mutators.PolynomialMutation
+.. _macop.operators.continuous.crossovers.BasicDifferentialEvolutionCrossover: macop/macop.operators.continuous.crossovers.html#macop.operators.continuous.crossovers.BasicDifferentialEvolutionCrossover
+
+.. _macop.evaluators.continous.mono.ZdtEvaluator: macop/macop.evaluators.continuous.mono.html#macop.evaluators.continous.mono.ZdtEvaluator
+
+.. _macop.callbacks.classicals.ContinuousCallback: macop/macop.callbacks.classicals.html#macop.callbacks.classicals.ContinuousCallback
+
+
+.. _Rosenbrock: https://github.com/jbuisine/macop/blob/master/examples/ZdtExample.py

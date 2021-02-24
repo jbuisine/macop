@@ -34,7 +34,7 @@ Inside **Macop**, operators are also decomposed into these two categories. Insid
             """
             Keep into operator reference of the whole algorithm
             """
-            self._algo = algo
+            self.algo = algo
 
 Like the evaluator, the operator keeps **track of the algorithm** (using ``setAlgo`` method) to which he will be linked. This will allow better management of the way in which the operator must take into account the state of current data relating to the evolution of research.
 

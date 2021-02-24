@@ -37,7 +37,7 @@ class Operator():
         Args:
             algo: {:class:`~macop.algorithms.base.Algorithm`} -- the algorithm reference runned
         """
-        self._algo = algo
+        self.algo = algo
 
 
 class Mutation(Operator):

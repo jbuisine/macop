@@ -72,7 +72,7 @@ class UCBPolicy(Policy):
     >>> type(solution).__name__
     'BinarySolution'
     >>> policy.occurences # one more due to first evaluation
-    [53, 50]
+    [50, 52]
     """
     def __init__(self, operators, C=100., exp_rate=0.1):
         """UCB Policy initialiser
@@ -84,13 +84,13 @@ class UCBPolicy(Policy):
         """
 
         # private members
-        self._operators = operators
+        self.operators = operators
         self._C = C
         self._exp_rate = exp_rate
 
         # public members
-        self.rewards = [0. for o in self._operators]
-        self.occurences = [0 for o in self._operators]
+        self.rewards = [0. for o in self.operators]
+        self.occurences = [0 for o in self.operators]
 
     def select(self):
         """Select using Upper Confidence Bound the next operator to use (using acquired rewards)
@@ -104,8 +104,8 @@ class UCBPolicy(Policy):
         # random choice following exploration rate
         if np.random.uniform(0, 1) <= self._exp_rate:
 
-            index = random.choice(range(len(self._operators)))
-            return self._operators[index]
+            index = random.choice(range(len(self.operators)))
+            return self.operators[index]
 
         elif len(indices) == 0:
 
@@ -113,16 +113,16 @@ class UCBPolicy(Policy):
             ucbValues = []
             nVisits = sum(self.occurences)
 
-            for i in range(len(self._operators)):
+            for i in range(len(self.operators)):
 
                 ucbValue = self.rewards[i] + self._C * math.sqrt(
                     math.log(nVisits) / (self.occurences[i] + 0.1))
                 ucbValues.append(ucbValue)
 
-            return self._operators[ucbValues.index(max(ucbValues))]
+            return self.operators[ucbValues.index(max(ucbValues))]
 
         else:
-            return self._operators[random.choice(indices)]
+            return self.operators[random.choice(indices)]
 
     def apply(self, solution1, solution2=None):
         """
@@ -145,8 +145,8 @@ class UCBPolicy(Policy):
                      (type(operator).__name__, solution1))
 
         # default value of solution2 is current best solution
-        if solution2 is None and self._algo is not None:
-            solution2 = self._algo.result
+        if solution2 is None and self.algo is not None:
+            solution2 = self.algo.result
 
         # avoid use of crossover if only one solution is passed
         if solution2 is None and operator._kind == KindOperator.CROSSOVER:
@@ -161,15 +161,15 @@ class UCBPolicy(Policy):
             newSolution = operator.apply(solution1)
 
         # compute fitness of new solution
-        newSolution.evaluate(self._algo.evaluator)
+        newSolution.evaluate(self.algo.evaluator)
 
         # compute fitness improvment rate
-        if self._algo._maximise:
+        if self.algo._maximise:
             fir = (newSolution.fitness - solution1.fitness) / solution1.fitness
         else:
             fir = (solution1.fitness - newSolution.fitness) / solution1.fitness
 
-        operator_index = self._operators.index(operator)
+        operator_index = self.operators.index(operator)
 
         if fir > 0:
             self.rewards[operator_index] += fir

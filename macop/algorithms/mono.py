@@ -343,15 +343,15 @@ class IteratedLocalSearch(Algorithm):
         # by default use of mother method to initialise variables
         super().run(evaluations)
 
+        # add same callbacks
+        for callback in self._callbacks:
+            self._localSearch.addCallback(callback)
+
         # enable resuming for ILS
         self.resume()
 
         # initialise current solution
         self.initRun()
-
-        # add same callbacks
-        for callback in self._callbacks:
-            self._localSearch.addCallback(callback)
 
         # local search algorithm implementation
         while not self.stop():

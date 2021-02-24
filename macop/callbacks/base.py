@@ -23,7 +23,7 @@ class Callback():
             filepath: {str} -- file path where checkpoints will be saved
         """
 
-        self._algo = None
+        self.algo = None
         self._every = every
         self._filepath = filepath
 
@@ -39,7 +39,7 @@ class Callback():
         Args:
             algo: {:class:`~macop.algorithms.base.Algorithm`} -- main algorithm instance reference
         """
-        self._algo = algo
+        self.algo = algo
 
     @abstractmethod
     def run(self):

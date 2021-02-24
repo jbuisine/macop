@@ -53,12 +53,12 @@ class SimpleCrossover(Crossover):
     >>> # using best solution, simple crossover is applied
     >>> best_solution = algo.run(100)
     >>> list(best_solution.data)
-    [1, 1, 0, 1, 1, 1, 1, 1, 0, 0]
+    [1, 1, 0, 1, 1, 1, 0, 1, 1, 1]
     >>> new_solution_1 = initialiser()
     >>> new_solution_2 = initialiser()
     >>> offspring_solution = simple_crossover.apply(new_solution_1, new_solution_2)
     >>> list(offspring_solution.data)
-    [0, 1, 0, 0, 0, 1, 1, 0, 1, 1]
+    [1, 0, 1, 1, 0, 0, 0, 1, 0, 0]
     """
     def apply(self, solution1, solution2=None):
         """Create new solution based on best solution found and solution passed as parameter
@@ -139,7 +139,7 @@ class RandomSplitCrossover(Crossover):
     >>> new_solution_2 = initialiser()
     >>> offspring_solution = random_split_crossover.apply(new_solution_1, new_solution_2)
     >>> list(offspring_solution.data)
-    [1, 0, 0, 1, 1, 1, 0, 0, 1, 1]
+    [0, 0, 0, 1, 1, 1, 1, 0, 0, 1]
     """
     def apply(self, solution1, solution2=None):
         """Create new solution based on best solution found and solution passed as parameter
