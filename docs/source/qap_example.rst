@@ -29,7 +29,7 @@ is assigned to location 2, facility 3 is assigned to location 3, and facility 2 
 which means that facility 4 is assigned to location 1, facility 1 is assigned to location 2, facility 3 is assigned to location 3, and facility 2 is assigned to location 3. 
 In the figure, the line between a pair of facilities indicates that there is required flow between the facilities, and the thickness of the line increases with the value of the flow. 
 
-.. image:: _static//examples/qap/factories_qap.png
+.. image:: _static/examples/qap/factories_qap.png
    :width: 50 %
    :align: center
    :alt: Example of QAP facilities to locations problem
