@@ -27,3 +27,5 @@ from macop.solutions import continuous
 from macop.solutions import discrete
 
 from macop.utils import progress
+
+__version__ = "v1.0.16"
