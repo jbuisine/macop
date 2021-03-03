@@ -28,4 +28,4 @@ from macop.solutions import discrete
 
 from macop.utils import progress
 
-__version__ = "v1.1.0"
+__version__ = "1.1.1"
