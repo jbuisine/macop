@@ -7,7 +7,7 @@
 [![GitHub](https://img.shields.io/github/license/jbuisine/macop?style=flat)](https://github.com/jbuisine/macop/blob/master/LICENCE)
 
 <p align="center">
-    <img src="https://github.com/jbuisine/macop/blob/master/docs/source/_static/logo_macop.png" alt="" width="50%">
+    <img src="https://github.com/jbuisine/macop/blob/master/docs/source/_static/logo_macop.png" alt="" width="40%">
 </p>
 
 
