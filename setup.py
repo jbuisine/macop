@@ -1,6 +1,6 @@
 from setuptools import setup
 import distutils.command.check
-import macop
+from macop import __version__
 
 class TestCommand(distutils.command.check.check):
     """Custom test command."""
@@ -83,7 +83,7 @@ class TestCommand(distutils.command.check.check):
 
 setup(
     name='macop',
-    version=macop.__version__,
+    version=__version__,
     description='Minimalist And Customisable Optimisation Package',
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
