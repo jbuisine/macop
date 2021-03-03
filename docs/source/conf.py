@@ -26,9 +26,9 @@ copyright = '2021, Jérôme BUISINE'
 author = 'Jérôme BUISINE'
 
 # The short X.Y version
-version = version=macop.__version__
+version = macop.__version__
 # The full version, including alpha/beta/rc tags
-release = version=macop.__version__
+release = macop.__version__
 
 
 # -- General configuration ---------------------------------------------------
