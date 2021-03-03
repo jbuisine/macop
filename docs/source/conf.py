@@ -15,6 +15,7 @@
 import os
 import sys
 import asteroid_sphinx_theme
+import macop
 
 sys.path.insert(0, os.path.abspath('../../../macop'))
 
@@ -25,9 +26,9 @@ copyright = '2021, Jérôme BUISINE'
 author = 'Jérôme BUISINE'
 
 # The short X.Y version
-version = '1.0.16'
+version = version=macop.__version__
 # The full version, including alpha/beta/rc tags
-release = 'v1.0.16'
+release = version=macop.__version__
 
 
 # -- General configuration ---------------------------------------------------
