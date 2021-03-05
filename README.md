@@ -16,9 +16,9 @@
 `Macop` is a python package for solving discrete optimisation problems in nature. Continuous optimisation can also applicable if needed. The objective is to allow a user to exploit the basic structure proposed by this package to solve a problem specific to him. The interest is that he can quickly abstract himself from the complications related to the way of evaluating, comparing, saving the progress of the search for good solutions but rather concentrate if necessary on his own algorithm. Indeed, `Macop` offers the following main and basic features: 
 
 - **solutions:** representation of the solution;
-- **validator:** such as constraint programmig, a `validator` is function which is used for validate or not a solution data state;
-- **evaluator:** stores problem instance data and implement a `compute` method in order to evaluate a solution;
-- **operators:** mutators, crossovers operators for update and obtain new solution;
+- **validator:** such as constraint programming, a `validator` is a function which is used to validate or not a solution data state;
+- **evaluator:** stores problem instance data and implements a `compute` method in order to evaluate a solution;
+- **operators:** mutators, crossovers operators to update and obtain new solution;
 - **policies:** the way you choose the available operators (might be using reinforcement learning);
 - **algorithms:** generic and implemented optimisation research algorithms;
 - **callbacks:** callbacks to automatically keep track of the search space advancement and restart from previous state if nedded.
@@ -42,7 +42,7 @@ Flexible discrete optimisation package allowing a quick implementation of your p
 ## Target Audience 
 
 This package would meet the expectations of people wishing to: 
-- Solve a complex problem oriented evolutionary algorithm but who do not wish to develop their own framework. They can rely on what the package already proposes but also on its generic and flexible contribution in order to adapt their own content;
+- Solve a problem using an evolutionary algorithm but without developing their own frawmework. They can rely on what the package already proposes but also on its generic and flexible contribution in order to adapt their own content;
 - Conduct research work leading to the rapid modification of meta-heuristics and the interaction of different algorithms. More precisely:
   - test new combinations of algorithms. Changing algorithms during evaluations, e.g. different local searches;
   - provide reinforcement learning during searches (e.g. adaptive operator choice strategy).

@@ -8,11 +8,11 @@ Modules description
 
 - **algorithms:** generic and implemented optimisation research algorithms;
 - **callbacks:** callbacks to automatically keep track of the search space advancement and restart from previous state if nedded;
-- **evaluator:** stores problem instance data and implement a `compute` method in order to evaluate a solution;
-- **operators:** mutators, crossovers operators for update and obtain new solution;
+- **evaluator:** stores problem instance data and implements a `compute` method in order to evaluate a solution;
+- **operators:** mutators, crossovers operators to update and obtain new solution;
 - **policies:** the way you choose the available operators (might be using reinforcement learning);
 - **solutions:** representation of the solution;
-- **validator:** such as constraint programmig, a `validator` is function which is used for validate or not a solution data state.
+- **validator:** such as constraint programming, a `validator` is a function which is used to validate or not a solution data state;
 
 
 Common and base modules

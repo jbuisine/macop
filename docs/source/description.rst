@@ -35,7 +35,7 @@ Target Audience
 
 This package would meet the expectations of people wishing to: 
 
-- Solve a complex problem oriented evolutionary algorithm but who do not wish to develop their own framework. They can rely on what the package already proposes but also on its generic and flexible contribution in order to adapt their own content;
+- Solve a problem using an evolutionary algorithm but without developing their own frawmework. They can rely on what the package already proposes but also on its generic and flexible contribution in order to adapt their own content;
 - Conduct research work leading to the rapid modification of meta-heuristics and the interaction of different algorithms. More precisely:
 
   - test new combinations of algorithms. Changing algorithms during evaluations, e.g. different local searches;

@@ -31,13 +31,13 @@ bibliography: paper.bib
 
 Optimisation problems are frequently encountered in science and industry. Given a real-valued function $f$ defined on a set called the search space $X$, optimising the function $f$ consists of finding a point $x \in X$ that has the optimal value $f(x)$, or at least constructing a sequence $(x_t)_{t \in \mathbf{N}} \in X^\mathbb{N}$ that is close to the optimum. Depending on the search space $X$, optimisation problems can be globally classified as discrete problems (e.g. $X=\{0,1\}^n$) or as continuous problems (e.g. $X=\mathbb{R}^n$). Tools for modelling and solving discrete [@solid-solver] and continuous [@ceres-solver] problems are proposed in the literature.
 
-In this paper, `Macop` for `Minimalist And Customisable Optimisation Package`, is a proposed as a discrete optimisation Python package which doesn't implement every algorithm in the literature, but provides the ability to quickly develop and test your own algorithm and strategies. The main objective of this package is to provide maximum flexibility, which allows easy implementation when experimenting new algorithms.
+In this paper, `Macop` for `Minimalist And Customisable Optimisation Package`, is proposed as a discrete optimisation Python package which doesn't implement every algorithm in the literature, but provides the ability to quickly develop and test your own algorithm and strategies. The main objective of this package is to provide maximum flexibility, which allows easy implementation when experimenting new algorithms.
 
-Based on a common interaction loop (see \autoref{fig:macop-behaviour}) of all the algorithms. `Macop` wants to allow users to quickly focus on one of the main parts of this loop.
+Based on a common interaction loop (see \autoref{fig:macop-behaviour}) of all the algorithms, `Macop` wants to allow users to quickly focus on one of the main parts of this loop.
 
 ![Macop common interation loop.\label{fig:macop-behaviour}](docs/source/_static/documentation/macop_behaviour_reduced.png)
 
-# Motivation
+# Statement of Need
 
 Most of the operational research libraries developed in Python offer users either problems and algorithms where it is possible to choose parameters to obtain optimal (or near optimal) results such as proposed in [@MaherMiltenbergerPedrosoRehfeldtSchwarzSerrano2016], or, libraries targeted to a specific problem or algorithm such as [@simanneal-solver]. Another package is proposed in [@solid-solver] which is a comprehensive gradient-free optimization framework written in Python. It seems very similar to `Macop`. However, hiearchic dependencies between algorithms, the notion of callbacks and adaptive operator selection are proposed within `Macop`.
 
@@ -57,7 +57,7 @@ Hence, motivation behind **Macop** is a flexible discrete optimisation package a
 
 This package would meet the expectations of people wishing to: 
 
-- Solve a complex problem oriented evolutionary algorithm but who do not wish to develop their own framework. They can rely on what the package already proposes but also on its generic and flexible contribution in order to adapt their own content;
+- Solve a problem using an evolutionary algorithm but without developing their own frawmework. They can rely on what the package already proposes but also on its generic and flexible contribution in order to adapt their own content;
 - Conduct research work leading to the rapid modification of meta-heuristics and the interaction of different algorithms. More precisely:
   
   - test new combinations of algorithms. Changing algorithms during evaluations, e.g. different local searches;
@@ -74,9 +74,9 @@ At the beginning of the development of this library, the idea of making it as mo
 The package consists of main several modules:
 
 - **solutions:** representation of the solution;
-- **validator:** such as constraint programming, a `validator` is function which is used for validate or not a solution data state;
-- **evaluator:** stores problem instance data and implement a `compute` method in order to evaluate a solution;
-- **operators:** mutators, crossovers operators for update and obtain new solution;
+- **validator:** such as constraint programming, a `validator` is a function which is used to validate or not a solution data state;
+- **evaluator:** stores problem instance data and implements a `compute` method in order to evaluate a solution;
+- **operators:** mutators, crossovers operators to update and obtain new solution;
 - **policies:** the way you choose the available operators (might be using reinforcement learning);
 - **algorithms:** generic and implemented optimisation research algorithms;
 - **callbacks:** callbacks to automatically keep track of the search space advancement and restart from previous state if nedded.
@@ -90,29 +90,25 @@ Both single and multi-objective algorithms have been implemented for demonstrati
 
 A hierarchy between dependent algorithms is also available, based on a parent/child link, allowing quick access to global information when looking for solutions, such as the best solution found, the number of global evaluations.
 
-The mono-objective Iterated Local Search [@DBLP:books/sp/03/LourencoMS03] algorithm which aims to perform local searches (child algorithms linked to the main algorithm) and then to explore again (explorations vs. exploitation trade-off). On the multi-objective side, the MOEA/D algorithm [@DBLP:journals/tec/ZhangL07] has been implemented by using the weighted-sum of objectives to change multi-objectives problem into a set of mono-objective (Tchebycheff approach can also be used [@DBLP:journals/cor/AlvesA07]). Hence, this algorithm aims at decomposing the multi-objective problem into $mu$ single-objective problems in order to obtain the Pareto front [@kim2005adaptive] where single-objective problems are so-called child algorithms linked to the multi-objective algorithm.
+The mono-objective Iterated Local Search [@DBLP:books/sp/03/LourencoMS03] algorithm have been implemented. This algorithm aims to perform local searches (child algorithms linked to the main algorithm) and then to explore again (explorations vs. exploitation trade-off). On the multi-objective side, the MOEA/D algorithm [@DBLP:journals/tec/ZhangL07] has been implemented by using the weighted-sum of objectives to change multi-objectives problem into a set of mono-objective problems (Tchebycheff approach can also be used [@DBLP:journals/cor/AlvesA07]). Hence, this algorithm aims at decomposing the multi-objective problem into $\mu$ single-objective problems in order to obtain the Pareto front [@kim2005adaptive] where single-objective problems are so-called child algorithms linked to the multi-objective algorithm.
 
 The main purpose of these developed algorithms is to show the possibilities of operational search algorithm implementations based on the minimalist structure of the library.
 
 ## In `macop.solutions` module:
 
-Currently, only combinatorial solutions (discrete problem modelisation) are offered, with the well-known problem of the knapsack as an example. Of course, it's easy to add your own representations of solutions. Solutions modeling continuous problems can also be created by the anyone who wants to model his own problem.
+Currently, only combinatorial solutions (discrete problem modelisation) are offered, with the well-known problem of the knapsack as an example. Of course, it's easy to add your own representations of solutions. Solutions modeling continuous problems can also be created by anyone who wants to model his own problem.
 
 ## In `macop.operators` and `macop.policies` modules:
 
-A few mutation and crossover operators have been implemented, however, it remains quite simple. What is interesting here is that it is possible to develop one's own strategy for choosing operators for the next evaluation. The available UCBPolicy class proposes this functionality as an example, since it will seek to propose the best operator to apply based on a method known as the Adaptive Operator Selection (AOS) via the use of the Upper Confidence Bound (UCB) algorithm [@DBLP:journals/tec/LiFKZ14]. 
+A few mutation and crossover operators have been implemented. However, it remains quite simple. What is interesting here is that it is possible to develop one's own strategy for choosing operators for the next evaluation. The available UCBPolicy class proposes this functionality as an example, since it will seek to propose the best operator to apply based on a method known as the Adaptive Operator Selection (AOS) via the use of the Upper Confidence Bound (UCB) algorithm [@DBLP:journals/tec/LiFKZ14]. 
 
 ## In `macop.callbacks` module:
 
-The use of callback instance, allows both to do an action every $k$ evaluations of information, but also to reload them once the run of the algorithm is cut. Simply inherit the abstract Callback class and implement the `apply` method to backup and `load` to restore. It is possible to add as many callbacks as required. Such as an example, implemented UCBPolicy has its own callback allowing the instance to reload previously collected statistics and restart using them.
-
-## Documentation
-
-Fully documented examples of the usage of **Macop** is available at [https://jbuisine.github.io/macop/](https://jbuisine.github.io/macop/).
+The use of callback instance allows both to do an action every $k$ evaluations of information, but also to reload them once the run of the algorithm is cut. Simply inherit the abstract Callback class and implement the `apply` method to backup and `load` to restore. It is possible to add as many callbacks as required. As an example, the implemented UCBPolicy has its own callback allowing the instance to reload previously collected statistics and restart using them.
 
 # Conclusion
 
-`Macop` aims to allow the modelling of discrete (usually combinatorial) optimisation problem. It is therefore open to expansion and not closed specifically to a kind of problem.
+`Macop` aims to allow the modelling of discrete (usually combinatorial) optimisation problems. It is therefore open to expansion and not closed specifically to a kind of problem.
 
 `Macop` proposes a simple structure of interaction of the main elements (algorithms, operators, solutions, policies, callbacks) for the resolution of operational research problems inside an interaction loop. From its generic structure, it is possible, thanks to the flexible programming paradigm of the Python language, to easily allow the extension and development of new algorithms and problems. Based on simple concepts, this package can therefore meet the needs of the rapid problem implementation.
 
