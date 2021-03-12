@@ -1,0 +1,1238 @@
+
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>macop.algorithms.multi &mdash; Macop 1.2.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!-- <link rel="stylesheet" href="../_static/pygments.css" type="text/css" /> -->
+  <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="macop.callbacks.base" href="macop.callbacks.base.html" />
+    <link rel="prev" title="macop.algorithms.mono" href="macop.algorithms.mono.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+  <!-- Preload the theme fonts -->
+
+<link rel="preload" href="../_static/fonts/FreightSans/freight-sans-book.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/FreightSans/freight-sans-medium.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/IBMPlexMono/IBMPlexMono-Medium.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/FreightSans/freight-sans-bold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/FreightSans/freight-sans-medium-italic.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/IBMPlexMono/IBMPlexMono-SemiBold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+
+<!-- Preload the katex fonts -->
+
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Math-Italic.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Main-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Main-Bold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size1-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size4-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size2-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size3-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Caligraphic-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+</head>
+
+<div class="container-fluid header-holder tutorials-header" id="header-holder">
+  <div class="container">
+    <div class="header-container">
+      <a class="header-logo" href="https://github.com/mpariente/asteroid" aria-label="PyTorch">
+       <!-- <img class="call-to-action-img" src="../_static/images/asteroid_logo_dark.png"/> -->
+      </a>
+
+      <div class="main-menu">
+        <ul>
+          <li>
+            <a href="https://pytorch.org/get-started">Get Started</a>
+          </li>
+
+          <li>
+            <a href="https://pytorch.org/blog/">Blog</a>
+          </li>
+
+          <li>
+            <a href="https://pytorch.org/tutorials">Tutorials</a>
+          </li>
+
+          <li>
+            <a href="https://pytorch.org/docs/stable/index.html">Docs</a>
+          </li>
+
+          <li>
+            <div class="resources-dropdown">
+              <a id="resourcesDropdownButton" data-toggle="resources-dropdown">
+                Resources
+              </a>
+              <div class="resources-dropdown-menu">
+                <a class="nav-dropdown-item" href="https://pytorch.org/resources"">
+                  <span class=dropdown-title>Developer Resources</span>
+                  <p>Find resources and get questions answered</p>
+                </a>
+                <!--
+                <a class="nav-dropdown-item" href="https://pytorch.org/features">
+                  <span class=dropdown-title>About</span>
+                  <p>Learn about PyTorch’s features and capabilities</p>
+                </a>
+                -->
+              </div>
+            </div>
+          </li>
+
+          <li>
+            <a href="https://github.com/mpariente/asteroid">Github</a>
+          </li>
+        </ul>
+      </div>
+
+      <a class="main-menu-open-button" href="#" data-behavior="open-mobile-menu"></a>
+    </div>
+
+  </div>
+</div>
+
+
+<body class="pytorch-body">
+
+   
+
+    
+
+    <div class="table-of-contents-link-wrapper">
+      <span>Table of Contents</span>
+      <a href="#" class="toggle-table-of-contents" data-behavior="toggle-table-of-contents"></a>
+    </div>
+
+    <nav data-toggle="wy-nav-shift" class="pytorch-left-menu" id="pytorch-left-menu">
+      <div class="pytorch-side-scroll">
+        <div class="pytorch-menu pytorch-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          <div class="pytorch-left-menu-search">
+            
+
+            
+              
+              
+                <div class="version">
+                  1.2.0
+                </div>
+              
+            
+
+            
+
+
+  
+
+
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search Docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+            
+          </div>
+
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../description.html">Description</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../documentations.html">A tour of Macop</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Example uses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <div class="pytorch-container">
+      <div class="pytorch-page-level-bar" id="pytorch-page-level-bar">
+        <div class="pytorch-breadcrumbs-wrapper">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="pytorch-breadcrumbs">
+    
+      <li>
+        <a href="../index.html">
+          
+            Docs
+          
+        </a> &gt;
+      </li>
+
+        
+          <li><a href="../api.html">API</a> &gt;</li>
+        
+      <li>macop.algorithms.multi</li>
+    
+    
+      <li class="pytorch-breadcrumbs-aside">
+        
+            
+            
+              <a href="https://github.com/prise-3d/macop/blob/master/docs/source/macop/macop.algorithms.multi.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+</div>
+        </div>
+
+        <div class="pytorch-shortcuts-wrapper" id="pytorch-shortcuts-wrapper">
+          Shortcuts
+        </div>
+      </div>
+
+      <section data-toggle="wy-nav-shift" id="pytorch-content-wrap" class="pytorch-content-wrap">
+        <div class="pytorch-content-left">
+
+        
+          
+          <div class="rst-content">
+          
+            <div role="main" class="main-content" itemscope="itemscope" itemtype="http://schema.org/Article">
+             <article itemprop="articleBody" id="pytorch-article" class="pytorch-article">
+              
+  <div class="section" id="module-macop.algorithms.multi">
+<span id="macop-algorithms-multi"></span><h1>macop.algorithms.multi<a class="headerlink" href="#module-macop.algorithms.multi" title="Permalink to this headline">¶</a></h1>
+<p>Multi-objetive classes algorithm</p>
+<p class="rubric">Classes</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#macop.algorithms.multi.MOEAD" title="macop.algorithms.multi.MOEAD"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MOEAD</span></code></a>(mu, T, initialiser, evaluator, …[, …])</p></td>
+<td><p>Multi-Ojective Evolutionary Algorithm with Scalar Decomposition</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#macop.algorithms.multi.MOSubProblem" title="macop.algorithms.multi.MOSubProblem"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MOSubProblem</span></code></a>(index, weights, initalizer, …)</p></td>
+<td><p>Specific MO sub problem used into MOEAD</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="class">
+<dt id="macop.algorithms.multi.MOEAD">
+<em class="property">class </em><code class="sig-prename descclassname">macop.algorithms.multi.</code><code class="sig-name descname">MOEAD</code><span class="sig-paren">(</span><em class="sig-param">mu</em>, <em class="sig-param">T</em>, <em class="sig-param">initialiser</em>, <em class="sig-param">evaluator</em>, <em class="sig-param">operators</em>, <em class="sig-param">policy</em>, <em class="sig-param">validator</em>, <em class="sig-param">maximise=True</em>, <em class="sig-param">parent=None</em>, <em class="sig-param">verbose=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macop/algorithms/multi.html#MOEAD"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macop.algorithms.multi.MOEAD" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="macop.algorithms.base.html#macop.algorithms.base.Algorithm" title="macop.algorithms.base.Algorithm"><code class="xref py py-class docutils literal notranslate"><span class="pre">macop.algorithms.base.Algorithm</span></code></a></p>
+<p>Multi-Ojective Evolutionary Algorithm with Scalar Decomposition</p>
+<dl class="attribute">
+<dt id="macop.algorithms.multi.MOEAD.mu">
+<code class="sig-name descname">mu</code><a class="headerlink" href="#macop.algorithms.multi.MOEAD.mu" title="Permalink to this definition">¶</a></dt>
+<dd><p>{int} – number of sub problems</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="macop.algorithms.multi.MOEAD.T">
+<code class="sig-name descname">T</code><a class="headerlink" href="#macop.algorithms.multi.MOEAD.T" title="Permalink to this definition">¶</a></dt>
+<dd><p>{[float]} – number of neightbors for each sub problem</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="macop.algorithms.multi.MOEAD.nObjectives">
+<code class="sig-name descname">nObjectives</code><a class="headerlink" href="#macop.algorithms.multi.MOEAD.nObjectives" title="Permalink to this definition">¶</a></dt>
+<dd><p>{int} – number of objectives (based of number evaluator)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="macop.algorithms.multi.MOEAD.initialiser">
+<code class="sig-name descname">initialiser</code><a class="headerlink" href="#macop.algorithms.multi.MOEAD.initialiser" title="Permalink to this definition">¶</a></dt>
+<dd><p>{function} – basic function strategy to initialise solution</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="macop.algorithms.multi.MOEAD.evaluator">
+<code class="sig-name descname">evaluator</code><a class="headerlink" href="#macop.algorithms.multi.MOEAD.evaluator" title="Permalink to this definition">¶</a></dt>
+<dd><p>{[function]} – list of basic function in order to obtained fitness (multiple objectives)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="macop.algorithms.multi.MOEAD.operators">
+<code class="sig-name descname">operators</code><a class="headerlink" href="#macop.algorithms.multi.MOEAD.operators" title="Permalink to this definition">¶</a></dt>
+<dd><p>{[<a class="reference internal" href="macop.operators.base.html#macop.operators.base.Operator" title="macop.operators.base.Operator"><code class="xref py py-class docutils literal notranslate"><span class="pre">Operator</span></code></a>]} – list of operator to use when launching algorithm</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="macop.algorithms.multi.MOEAD.policy">
+<code class="sig-name descname">policy</code><a class="headerlink" href="#macop.algorithms.multi.MOEAD.policy" title="Permalink to this definition">¶</a></dt>
+<dd><p>{<a class="reference internal" href="macop.policies.base.html#macop.policies.base.Policy" title="macop.policies.base.Policy"><code class="xref py py-class docutils literal notranslate"><span class="pre">Policy</span></code></a>} – Policy class implementation strategy to select operators</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="macop.algorithms.multi.MOEAD.validator">
+<code class="sig-name descname">validator</code><a class="headerlink" href="#macop.algorithms.multi.MOEAD.validator" title="Permalink to this definition">¶</a></dt>
+<dd><p>{function} – basic function to check if solution is valid or not under some constraints</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="macop.algorithms.multi.MOEAD.maximise">
+<code class="sig-name descname">maximise</code><a class="headerlink" href="#macop.algorithms.multi.MOEAD.maximise" title="Permalink to this definition">¶</a></dt>
+<dd><p>{bool} – specify kind of optimisation problem</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="macop.algorithms.multi.MOEAD.verbose">
+<code class="sig-name descname">verbose</code><a class="headerlink" href="#macop.algorithms.multi.MOEAD.verbose" title="Permalink to this definition">¶</a></dt>
+<dd><p>{bool} – verbose or not information about the algorithm</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="macop.algorithms.multi.MOEAD.population">
+<code class="sig-name descname">population</code><a class="headerlink" href="#macop.algorithms.multi.MOEAD.population" title="Permalink to this definition">¶</a></dt>
+<dd><p>[{<a class="reference internal" href="macop.solutions.base.html#macop.solutions.base.Solution" title="macop.solutions.base.Solution"><code class="xref py py-class docutils literal notranslate"><span class="pre">Solution</span></code></a>}] – population of solution, one for each sub problem</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="macop.algorithms.multi.MOEAD.pfPop">
+<code class="sig-name descname">pfPop</code><a class="headerlink" href="#macop.algorithms.multi.MOEAD.pfPop" title="Permalink to this definition">¶</a></dt>
+<dd><p>[{<a class="reference internal" href="macop.solutions.base.html#macop.solutions.base.Solution" title="macop.solutions.base.Solution"><code class="xref py py-class docutils literal notranslate"><span class="pre">Solution</span></code></a>}] – pareto front population</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="macop.algorithms.multi.MOEAD.weights">
+<code class="sig-name descname">weights</code><a class="headerlink" href="#macop.algorithms.multi.MOEAD.weights" title="Permalink to this definition">¶</a></dt>
+<dd><p>[[{float}]] – random weights used for custom mu sub problems</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="macop.algorithms.multi.MOEAD.callbacks">
+<code class="sig-name descname">callbacks</code><a class="headerlink" href="#macop.algorithms.multi.MOEAD.callbacks" title="Permalink to this definition">¶</a></dt>
+<dd><p>{[<a class="reference internal" href="macop.callbacks.base.html#macop.callbacks.base.Callback" title="macop.callbacks.base.Callback"><code class="xref py py-class docutils literal notranslate"><span class="pre">Callback</span></code></a>]} – list of Callback class implementation to do some instructions every number of evaluations and <cite>load</cite> when initialising algorithm</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="macop.algorithms.multi.MOEAD.parent">
+<code class="sig-name descname">parent</code><a class="headerlink" href="#macop.algorithms.multi.MOEAD.parent" title="Permalink to this definition">¶</a></dt>
+<dd><p>{<a class="reference internal" href="macop.algorithms.base.html#macop.algorithms.base.Algorithm" title="macop.algorithms.base.Algorithm"><code class="xref py py-class docutils literal notranslate"><span class="pre">Algorithm</span></code></a>} – parent algorithm reference in case of inner Algorithm instance (optional)</p>
+</dd></dl>
+
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">random</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># operators import</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">macop.operators.discrete.crossovers</span> <span class="kn">import</span> <span class="n">SimpleCrossover</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">macop.operators.discrete.mutators</span> <span class="kn">import</span> <span class="n">SimpleMutation</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># policy import</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">macop.policies.classicals</span> <span class="kn">import</span> <span class="n">RandomPolicy</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># solution and algorithm imports</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">macop.solutions.discrete</span> <span class="kn">import</span> <span class="n">BinarySolution</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">macop.algorithms.multi</span> <span class="kn">import</span> <span class="n">MOEAD</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># evaluator import</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">macop.evaluators.discrete.mono</span> <span class="kn">import</span> <span class="n">KnapsackEvaluator</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># evaluator initialization (worths objects passed into data)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">problem_size</span> <span class="o">=</span> <span class="mi">20</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">worths1</span> <span class="o">=</span> <span class="p">[</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">problem_size</span><span class="p">)</span> <span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">evaluator1</span> <span class="o">=</span> <span class="n">KnapsackEvaluator</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;worths&#39;</span><span class="p">:</span> <span class="n">worths1</span><span class="p">})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">worths2</span> <span class="o">=</span> <span class="p">[</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">15</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">problem_size</span><span class="p">)</span> <span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">evaluator2</span> <span class="o">=</span> <span class="n">KnapsackEvaluator</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;worths&#39;</span><span class="p">:</span> <span class="n">worths2</span><span class="p">})</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># validator specification (based on weights of each objects)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">weights</span> <span class="o">=</span> <span class="p">[</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">problem_size</span><span class="p">)</span> <span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">validator</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">solution</span><span class="p">:</span> <span class="kc">True</span> <span class="k">if</span> <span class="nb">sum</span><span class="p">([</span><span class="n">weights</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">solution</span><span class="o">.</span><span class="n">data</span><span class="p">)</span> <span class="k">if</span> <span class="n">value</span> <span class="o">==</span> <span class="mi">1</span><span class="p">])</span> <span class="o">&lt;</span> <span class="mi">200</span> <span class="k">else</span> <span class="kc">False</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># initialiser function for binary solution using specific solution size</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">initialiser</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="o">=</span><span class="mi">20</span><span class="p">:</span> <span class="n">BinarySolution</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">validator</span><span class="p">)</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># operators list with crossover and mutation</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">operators</span> <span class="o">=</span> <span class="p">[</span><span class="n">SimpleCrossover</span><span class="p">(),</span> <span class="n">SimpleMutation</span><span class="p">()]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">policy</span> <span class="o">=</span> <span class="n">RandomPolicy</span><span class="p">(</span><span class="n">operators</span><span class="p">)</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># MOEAD use multi-objective, hence list of evaluators with mu=100 and T=10</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">algo</span> <span class="o">=</span> <span class="n">MOEAD</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">initialiser</span><span class="p">,</span> <span class="p">[</span><span class="n">evaluator1</span><span class="p">,</span> <span class="n">evaluator2</span><span class="p">],</span> <span class="n">operators</span><span class="p">,</span> <span class="n">policy</span><span class="p">,</span> <span class="n">validator</span><span class="p">,</span> <span class="n">maximise</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># run the algorithm and get the pareto front obtained</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pf_solutions</span> <span class="o">=</span> <span class="n">algo</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># check size of expected pareto</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">pf_solutions</span><span class="p">)</span>
+<span class="go">33</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="macop.algorithms.multi.MOEAD.addCallback">
+<code class="sig-name descname">addCallback</code><span class="sig-paren">(</span><em class="sig-param">callback</em><span class="sig-paren">)</span><a class="headerlink" href="#macop.algorithms.multi.MOEAD.addCallback" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add new callback to algorithm specifying usefull parameters</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>callback</strong> – {<a class="reference internal" href="macop.callbacks.base.html#macop.callbacks.base.Callback" title="macop.callbacks.base.Callback"><code class="xref py py-class docutils literal notranslate"><span class="pre">Callback</span></code></a>} – specific Callback instance</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="macop.algorithms.multi.MOEAD.end">
+<code class="sig-name descname">end</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macop/algorithms/multi.html#MOEAD.end"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macop.algorithms.multi.MOEAD.end" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display end message into <cite>run</cite> method</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="macop.algorithms.multi.MOEAD.evaluate">
+<code class="sig-name descname">evaluate</code><span class="sig-paren">(</span><em class="sig-param">solution</em><span class="sig-paren">)</span><a class="headerlink" href="#macop.algorithms.multi.MOEAD.evaluate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evaluate a solution using evaluator passed when intialize algorithm</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>solution</strong> – {<a class="reference internal" href="macop.solutions.base.html#macop.solutions.base.Solution" title="macop.solutions.base.Solution"><code class="xref py py-class docutils literal notranslate"><span class="pre">Solution</span></code></a>} – solution to evaluate</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>fitness score of solution which is not already evaluated or changed</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>{float}</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>if multi-objective problem this method can be updated using array of <cite>evaluator</cite></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="macop.algorithms.multi.MOEAD.getEvaluation">
+<code class="sig-name descname">getEvaluation</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#macop.algorithms.multi.MOEAD.getEvaluation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the current number of evaluation</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>current number of evaluation</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>{int}</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="macop.algorithms.multi.MOEAD.getGlobalEvaluation">
+<code class="sig-name descname">getGlobalEvaluation</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#macop.algorithms.multi.MOEAD.getGlobalEvaluation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the global number of evaluation (if inner algorithm)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>current global number of evaluation</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>{int}</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="macop.algorithms.multi.MOEAD.getGlobalMaxEvaluation">
+<code class="sig-name descname">getGlobalMaxEvaluation</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#macop.algorithms.multi.MOEAD.getGlobalMaxEvaluation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the global max number of evaluation (if inner algorithm)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>current global max number of evaluation</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>{int}</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="macop.algorithms.multi.MOEAD.getParent">
+<code class="sig-name descname">getParent</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#macop.algorithms.multi.MOEAD.getParent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Recursively find the main parent algorithm attached of the current algorithm</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>main algorithm set for this algorithm</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>{<a class="reference internal" href="macop.algorithms.base.html#macop.algorithms.base.Algorithm" title="macop.algorithms.base.Algorithm"><code class="xref py py-class docutils literal notranslate"><span class="pre">Algorithm</span></code></a>}</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="macop.algorithms.multi.MOEAD.increaseEvaluation">
+<code class="sig-name descname">increaseEvaluation</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#macop.algorithms.multi.MOEAD.increaseEvaluation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Increase number of evaluation once a solution is evaluated for each dependant algorithm (parents hierarchy)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="macop.algorithms.multi.MOEAD.initRun">
+<code class="sig-name descname">initRun</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macop/algorithms/multi.html#MOEAD.initRun"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macop.algorithms.multi.MOEAD.initRun" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method which initialiazes or re-initialises the whole algorithm context specifically for MOEAD</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="macop.algorithms.multi.MOEAD.isBetter">
+<code class="sig-name descname">isBetter</code><span class="sig-paren">(</span><em class="sig-param">solution</em><span class="sig-paren">)</span><a class="headerlink" href="#macop.algorithms.multi.MOEAD.isBetter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if solution is better than best found</p>
+<ul class="simple">
+<li><p>if the new solution is not valid then the fitness comparison is not done</p></li>
+<li><p>fitness comparison is done using problem nature (maximising or minimising)</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>solution</strong> – {<a class="reference internal" href="macop.solutions.base.html#macop.solutions.base.Solution" title="macop.solutions.base.Solution"><code class="xref py py-class docutils literal notranslate"><span class="pre">Solution</span></code></a>} – solution to compare with best one</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><cite>True</cite> if better</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>{bool}</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="macop.algorithms.multi.MOEAD.progress">
+<code class="sig-name descname">progress</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macop/algorithms/multi.html#MOEAD.progress"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macop.algorithms.multi.MOEAD.progress" title="Permalink to this definition">¶</a></dt>
+<dd><p>Log progress and apply callbacks if necessary</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="macop.algorithms.multi.MOEAD.resume">
+<code class="sig-name descname">resume</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#macop.algorithms.multi.MOEAD.resume" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resume algorithm using Callback instances</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="macop.algorithms.multi.MOEAD.run">
+<code class="sig-name descname">run</code><span class="sig-paren">(</span><em class="sig-param">evaluations</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macop/algorithms/multi.html#MOEAD.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macop.algorithms.multi.MOEAD.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run the local search algorithm</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>evaluations</strong> – {int} – number of Local search evaluations</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>best solution found</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>{<a class="reference internal" href="macop.solutions.base.html#macop.solutions.base.Solution" title="macop.solutions.base.Solution"><code class="xref py py-class docutils literal notranslate"><span class="pre">Solution</span></code></a>}</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="macop.algorithms.multi.MOEAD.setEvaluation">
+<code class="sig-name descname">setEvaluation</code><span class="sig-paren">(</span><em class="sig-param">evaluations</em><span class="sig-paren">)</span><a class="headerlink" href="#macop.algorithms.multi.MOEAD.setEvaluation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the current number of evaluation</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>evaluations</strong> – {int} – current expected number of evaluation</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="macop.algorithms.multi.MOEAD.setParent">
+<code class="sig-name descname">setParent</code><span class="sig-paren">(</span><em class="sig-param">parent</em><span class="sig-paren">)</span><a class="headerlink" href="#macop.algorithms.multi.MOEAD.setParent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set parent algorithm to current algorithm</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>parent</strong> – {<a class="reference internal" href="macop.algorithms.base.html#macop.algorithms.base.Algorithm" title="macop.algorithms.base.Algorithm"><code class="xref py py-class docutils literal notranslate"><span class="pre">Algorithm</span></code></a>} – main algorithm set for this algorithm</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="macop.algorithms.multi.MOEAD.stop">
+<code class="sig-name descname">stop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#macop.algorithms.multi.MOEAD.stop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Global stopping criteria (check for parents algorithm hierarchy too)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="macop.algorithms.multi.MOEAD.update">
+<code class="sig-name descname">update</code><span class="sig-paren">(</span><em class="sig-param">solution</em><span class="sig-paren">)</span><a class="headerlink" href="#macop.algorithms.multi.MOEAD.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apply update function to solution using specific <cite>policy</cite>
+Check if solution is valid after modification and returns it</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>solution</strong> – {<a class="reference internal" href="macop.solutions.base.html#macop.solutions.base.Solution" title="macop.solutions.base.Solution"><code class="xref py py-class docutils literal notranslate"><span class="pre">Solution</span></code></a>} – solution to update using current policy</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>updated solution obtained by the selected operator</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>{<a class="reference internal" href="macop.solutions.base.html#macop.solutions.base.Solution" title="macop.solutions.base.Solution"><code class="xref py py-class docutils literal notranslate"><span class="pre">Solution</span></code></a>}</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="macop.algorithms.multi.MOEAD.result">
+<em class="property">property </em><code class="sig-name descname">result</code><a class="headerlink" href="#macop.algorithms.multi.MOEAD.result" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the expected result of the current algorithm</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>pareto front population</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>[{<a class="reference internal" href="macop.solutions.base.html#macop.solutions.base.Solution" title="macop.solutions.base.Solution"><code class="xref py py-class docutils literal notranslate"><span class="pre">Solution</span></code></a>}]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="macop.algorithms.multi.MOSubProblem">
+<em class="property">class </em><code class="sig-prename descclassname">macop.algorithms.multi.</code><code class="sig-name descname">MOSubProblem</code><span class="sig-paren">(</span><em class="sig-param">index</em>, <em class="sig-param">weights</em>, <em class="sig-param">initalizer</em>, <em class="sig-param">evaluator</em>, <em class="sig-param">operators</em>, <em class="sig-param">policy</em>, <em class="sig-param">validator</em>, <em class="sig-param">maximise=True</em>, <em class="sig-param">parent=None</em>, <em class="sig-param">verbose=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macop/algorithms/multi.html#MOSubProblem"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macop.algorithms.multi.MOSubProblem" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="macop.algorithms.base.html#macop.algorithms.base.Algorithm" title="macop.algorithms.base.Algorithm"><code class="xref py py-class docutils literal notranslate"><span class="pre">macop.algorithms.base.Algorithm</span></code></a></p>
+<p>Specific MO sub problem used into MOEAD</p>
+<dl class="attribute">
+<dt id="macop.algorithms.multi.MOSubProblem.index">
+<code class="sig-name descname">index</code><a class="headerlink" href="#macop.algorithms.multi.MOSubProblem.index" title="Permalink to this definition">¶</a></dt>
+<dd><p>{int} – sub problem index</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="macop.algorithms.multi.MOSubProblem.weights">
+<code class="sig-name descname">weights</code><a class="headerlink" href="#macop.algorithms.multi.MOSubProblem.weights" title="Permalink to this definition">¶</a></dt>
+<dd><p>{[float]} – sub problems objectives weights</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="macop.algorithms.multi.MOSubProblem.initalizer">
+<code class="sig-name descname">initalizer</code><a class="headerlink" href="#macop.algorithms.multi.MOSubProblem.initalizer" title="Permalink to this definition">¶</a></dt>
+<dd><p>{function} – basic function strategy to initialise solution</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="macop.algorithms.multi.MOSubProblem.evaluator">
+<code class="sig-name descname">evaluator</code><a class="headerlink" href="#macop.algorithms.multi.MOSubProblem.evaluator" title="Permalink to this definition">¶</a></dt>
+<dd><p>{function} – basic function in order to obtained fitness (mono or multiple objectives)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="macop.algorithms.multi.MOSubProblem.operators">
+<code class="sig-name descname">operators</code><a class="headerlink" href="#macop.algorithms.multi.MOSubProblem.operators" title="Permalink to this definition">¶</a></dt>
+<dd><p>{[<a class="reference internal" href="macop.operators.base.html#macop.operators.base.Operator" title="macop.operators.base.Operator"><code class="xref py py-class docutils literal notranslate"><span class="pre">Operator</span></code></a>]} – list of operator to use when launching algorithm</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="macop.algorithms.multi.MOSubProblem.policy">
+<code class="sig-name descname">policy</code><a class="headerlink" href="#macop.algorithms.multi.MOSubProblem.policy" title="Permalink to this definition">¶</a></dt>
+<dd><p>{<a class="reference internal" href="macop.policies.base.html#macop.policies.base.Policy" title="macop.policies.base.Policy"><code class="xref py py-class docutils literal notranslate"><span class="pre">Policy</span></code></a>} – Policy class implementation strategy to select operators</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="macop.algorithms.multi.MOSubProblem.validator">
+<code class="sig-name descname">validator</code><a class="headerlink" href="#macop.algorithms.multi.MOSubProblem.validator" title="Permalink to this definition">¶</a></dt>
+<dd><p>{function} – basic function to check if solution is valid or not under some constraints</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="macop.algorithms.multi.MOSubProblem.maximise">
+<code class="sig-name descname">maximise</code><a class="headerlink" href="#macop.algorithms.multi.MOSubProblem.maximise" title="Permalink to this definition">¶</a></dt>
+<dd><p>{bool} – specify kind of optimisation problem</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="macop.algorithms.multi.MOSubProblem.verbose">
+<code class="sig-name descname">verbose</code><a class="headerlink" href="#macop.algorithms.multi.MOSubProblem.verbose" title="Permalink to this definition">¶</a></dt>
+<dd><p>{bool} – verbose or not information about the algorithm</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="macop.algorithms.multi.MOSubProblem.currentSolution">
+<code class="sig-name descname">currentSolution</code><a class="headerlink" href="#macop.algorithms.multi.MOSubProblem.currentSolution" title="Permalink to this definition">¶</a></dt>
+<dd><p>{<a class="reference internal" href="macop.solutions.base.html#macop.solutions.base.Solution" title="macop.solutions.base.Solution"><code class="xref py py-class docutils literal notranslate"><span class="pre">Solution</span></code></a>} – current solution managed for current evaluation</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="macop.algorithms.multi.MOSubProblem.bestSolution">
+<code class="sig-name descname">bestSolution</code><a class="headerlink" href="#macop.algorithms.multi.MOSubProblem.bestSolution" title="Permalink to this definition">¶</a></dt>
+<dd><p>{<a class="reference internal" href="macop.solutions.base.html#macop.solutions.base.Solution" title="macop.solutions.base.Solution"><code class="xref py py-class docutils literal notranslate"><span class="pre">Solution</span></code></a>} – best solution found so far during running algorithm</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="macop.algorithms.multi.MOSubProblem.callbacks">
+<code class="sig-name descname">callbacks</code><a class="headerlink" href="#macop.algorithms.multi.MOSubProblem.callbacks" title="Permalink to this definition">¶</a></dt>
+<dd><p>{[<a class="reference internal" href="macop.callbacks.base.html#macop.callbacks.base.Callback" title="macop.callbacks.base.Callback"><code class="xref py py-class docutils literal notranslate"><span class="pre">Callback</span></code></a>]} – list of Callback class implementation to do some instructions every number of evaluations and <cite>load</cite> when initialising algorithm</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="macop.algorithms.multi.MOSubProblem.parent">
+<code class="sig-name descname">parent</code><a class="headerlink" href="#macop.algorithms.multi.MOSubProblem.parent" title="Permalink to this definition">¶</a></dt>
+<dd><p>{<a class="reference internal" href="macop.algorithms.base.html#macop.algorithms.base.Algorithm" title="macop.algorithms.base.Algorithm"><code class="xref py py-class docutils literal notranslate"><span class="pre">Algorithm</span></code></a>} – parent algorithm reference in case of inner Algorithm instance (optional)</p>
+</dd></dl>
+
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">random</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># operators import</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">macop.operators.discrete.crossovers</span> <span class="kn">import</span> <span class="n">SimpleCrossover</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">macop.operators.discrete.mutators</span> <span class="kn">import</span> <span class="n">SimpleMutation</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># policy import</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">macop.policies.classicals</span> <span class="kn">import</span> <span class="n">RandomPolicy</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># solution and algorithm imports</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">macop.solutions.discrete</span> <span class="kn">import</span> <span class="n">BinarySolution</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">macop.algorithms.multi</span> <span class="kn">import</span> <span class="n">MOEAD</span><span class="p">,</span> <span class="n">MOSubProblem</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># evaluator import</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">macop.evaluators.discrete.mono</span> <span class="kn">import</span> <span class="n">KnapsackEvaluator</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># evaluator initialization (worths objects passed into data)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">problem_size</span> <span class="o">=</span> <span class="mi">20</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">worths1</span> <span class="o">=</span> <span class="p">[</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">problem_size</span><span class="p">)</span> <span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">evaluator1</span> <span class="o">=</span> <span class="n">KnapsackEvaluator</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;worths&#39;</span><span class="p">:</span> <span class="n">worths1</span><span class="p">})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">worths2</span> <span class="o">=</span> <span class="p">[</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">15</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">problem_size</span><span class="p">)</span> <span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">evaluator2</span> <span class="o">=</span> <span class="n">KnapsackEvaluator</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;worths&#39;</span><span class="p">:</span> <span class="n">worths2</span><span class="p">})</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># validator specification (based on weights of each objects)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">weights</span> <span class="o">=</span> <span class="p">[</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">problem_size</span><span class="p">)</span> <span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">validator</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">solution</span><span class="p">:</span> <span class="kc">True</span> <span class="k">if</span> <span class="nb">sum</span><span class="p">([</span><span class="n">weights</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">solution</span><span class="o">.</span><span class="n">data</span><span class="p">)</span> <span class="k">if</span> <span class="n">value</span> <span class="o">==</span> <span class="mi">1</span><span class="p">])</span> <span class="o">&lt;</span> <span class="mi">200</span> <span class="k">else</span> <span class="kc">False</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># initialiser function for binary solution using specific solution size</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">initialiser</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="o">=</span><span class="mi">20</span><span class="p">:</span> <span class="n">BinarySolution</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">validator</span><span class="p">)</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># operators list with crossover and mutation</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">operators</span> <span class="o">=</span> <span class="p">[</span><span class="n">SimpleCrossover</span><span class="p">(),</span> <span class="n">SimpleMutation</span><span class="p">()]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">policy</span> <span class="o">=</span> <span class="n">RandomPolicy</span><span class="p">(</span><span class="n">operators</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">algo</span> <span class="o">=</span> <span class="n">MOEAD</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">initialiser</span><span class="p">,</span> <span class="p">[</span><span class="n">evaluator1</span><span class="p">,</span> <span class="n">evaluator2</span><span class="p">],</span> <span class="n">operators</span><span class="p">,</span> <span class="n">policy</span><span class="p">,</span> <span class="n">validator</span><span class="p">,</span> <span class="n">maximise</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># weights of the sub problem</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sub_problem_weights</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sub_evaluator</span> <span class="o">=</span> <span class="n">WeightedSum</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;evaluators&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">evaluator1</span><span class="p">,</span> <span class="n">evaluator2</span><span class="p">],</span> <span class="s1">&#39;weights&#39;</span><span class="p">:</span> <span class="n">sub_problem_weights</span><span class="p">})</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># first parameter is the index of the MOSubProblem</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">subProblem</span> <span class="o">=</span> <span class="n">MOSubProblem</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">sub_problem_weights</span><span class="p">,</span> <span class="n">initialiser</span><span class="p">,</span> <span class="n">sub_evaluator</span><span class="p">,</span> <span class="n">operators</span><span class="p">,</span> <span class="n">policy</span><span class="p">,</span> <span class="n">validator</span><span class="p">,</span> <span class="n">maximise</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="n">algo</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># run the algorithm</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">solution</span> <span class="o">=</span> <span class="n">subProblem</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">solution</span><span class="o">.</span><span class="n">_score</span>
+<span class="go">133.0</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="macop.algorithms.multi.MOSubProblem.addCallback">
+<code class="sig-name descname">addCallback</code><span class="sig-paren">(</span><em class="sig-param">callback</em><span class="sig-paren">)</span><a class="headerlink" href="#macop.algorithms.multi.MOSubProblem.addCallback" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add new callback to algorithm specifying usefull parameters</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>callback</strong> – {<a class="reference internal" href="macop.callbacks.base.html#macop.callbacks.base.Callback" title="macop.callbacks.base.Callback"><code class="xref py py-class docutils literal notranslate"><span class="pre">Callback</span></code></a>} – specific Callback instance</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="macop.algorithms.multi.MOSubProblem.end">
+<code class="sig-name descname">end</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#macop.algorithms.multi.MOSubProblem.end" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display end message into <cite>run</cite> method</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="macop.algorithms.multi.MOSubProblem.evaluate">
+<code class="sig-name descname">evaluate</code><span class="sig-paren">(</span><em class="sig-param">solution</em><span class="sig-paren">)</span><a class="headerlink" href="#macop.algorithms.multi.MOSubProblem.evaluate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evaluate a solution using evaluator passed when intialize algorithm</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>solution</strong> – {<a class="reference internal" href="macop.solutions.base.html#macop.solutions.base.Solution" title="macop.solutions.base.Solution"><code class="xref py py-class docutils literal notranslate"><span class="pre">Solution</span></code></a>} – solution to evaluate</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>fitness score of solution which is not already evaluated or changed</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>{float}</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>if multi-objective problem this method can be updated using array of <cite>evaluator</cite></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="macop.algorithms.multi.MOSubProblem.getEvaluation">
+<code class="sig-name descname">getEvaluation</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#macop.algorithms.multi.MOSubProblem.getEvaluation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the current number of evaluation</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>current number of evaluation</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>{int}</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="macop.algorithms.multi.MOSubProblem.getGlobalEvaluation">
+<code class="sig-name descname">getGlobalEvaluation</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#macop.algorithms.multi.MOSubProblem.getGlobalEvaluation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the global number of evaluation (if inner algorithm)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>current global number of evaluation</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>{int}</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="macop.algorithms.multi.MOSubProblem.getGlobalMaxEvaluation">
+<code class="sig-name descname">getGlobalMaxEvaluation</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#macop.algorithms.multi.MOSubProblem.getGlobalMaxEvaluation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the global max number of evaluation (if inner algorithm)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>current global max number of evaluation</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>{int}</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="macop.algorithms.multi.MOSubProblem.getParent">
+<code class="sig-name descname">getParent</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#macop.algorithms.multi.MOSubProblem.getParent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Recursively find the main parent algorithm attached of the current algorithm</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>main algorithm set for this algorithm</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>{<a class="reference internal" href="macop.algorithms.base.html#macop.algorithms.base.Algorithm" title="macop.algorithms.base.Algorithm"><code class="xref py py-class docutils literal notranslate"><span class="pre">Algorithm</span></code></a>}</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="macop.algorithms.multi.MOSubProblem.increaseEvaluation">
+<code class="sig-name descname">increaseEvaluation</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#macop.algorithms.multi.MOSubProblem.increaseEvaluation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Increase number of evaluation once a solution is evaluated for each dependant algorithm (parents hierarchy)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="macop.algorithms.multi.MOSubProblem.initRun">
+<code class="sig-name descname">initRun</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#macop.algorithms.multi.MOSubProblem.initRun" title="Permalink to this definition">¶</a></dt>
+<dd><p>initialise the current solution and best solution using the <cite>initialiser</cite> function</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="macop.algorithms.multi.MOSubProblem.isBetter">
+<code class="sig-name descname">isBetter</code><span class="sig-paren">(</span><em class="sig-param">solution</em><span class="sig-paren">)</span><a class="headerlink" href="#macop.algorithms.multi.MOSubProblem.isBetter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if solution is better than best found</p>
+<ul class="simple">
+<li><p>if the new solution is not valid then the fitness comparison is not done</p></li>
+<li><p>fitness comparison is done using problem nature (maximising or minimising)</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>solution</strong> – {<a class="reference internal" href="macop.solutions.base.html#macop.solutions.base.Solution" title="macop.solutions.base.Solution"><code class="xref py py-class docutils literal notranslate"><span class="pre">Solution</span></code></a>} – solution to compare with best one</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><cite>True</cite> if better</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>{bool}</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="macop.algorithms.multi.MOSubProblem.progress">
+<code class="sig-name descname">progress</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#macop.algorithms.multi.MOSubProblem.progress" title="Permalink to this definition">¶</a></dt>
+<dd><p>Log progress and apply callbacks if necessary</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="macop.algorithms.multi.MOSubProblem.resume">
+<code class="sig-name descname">resume</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#macop.algorithms.multi.MOSubProblem.resume" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resume algorithm using Callback instances</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="macop.algorithms.multi.MOSubProblem.run">
+<code class="sig-name descname">run</code><span class="sig-paren">(</span><em class="sig-param">evaluations</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macop/algorithms/multi.html#MOSubProblem.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macop.algorithms.multi.MOSubProblem.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run the local search algorithm</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>evaluations</strong> – {int} – number of evaluations</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>best solution found</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>{<a class="reference internal" href="macop.solutions.base.html#macop.solutions.base.Solution" title="macop.solutions.base.Solution"><code class="xref py py-class docutils literal notranslate"><span class="pre">Solution</span></code></a>}</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="macop.algorithms.multi.MOSubProblem.setEvaluation">
+<code class="sig-name descname">setEvaluation</code><span class="sig-paren">(</span><em class="sig-param">evaluations</em><span class="sig-paren">)</span><a class="headerlink" href="#macop.algorithms.multi.MOSubProblem.setEvaluation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the current number of evaluation</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>evaluations</strong> – {int} – current expected number of evaluation</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="macop.algorithms.multi.MOSubProblem.setParent">
+<code class="sig-name descname">setParent</code><span class="sig-paren">(</span><em class="sig-param">parent</em><span class="sig-paren">)</span><a class="headerlink" href="#macop.algorithms.multi.MOSubProblem.setParent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set parent algorithm to current algorithm</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>parent</strong> – {<a class="reference internal" href="macop.algorithms.base.html#macop.algorithms.base.Algorithm" title="macop.algorithms.base.Algorithm"><code class="xref py py-class docutils literal notranslate"><span class="pre">Algorithm</span></code></a>} – main algorithm set for this algorithm</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="macop.algorithms.multi.MOSubProblem.stop">
+<code class="sig-name descname">stop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#macop.algorithms.multi.MOSubProblem.stop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Global stopping criteria (check for parents algorithm hierarchy too)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="macop.algorithms.multi.MOSubProblem.update">
+<code class="sig-name descname">update</code><span class="sig-paren">(</span><em class="sig-param">solution</em><span class="sig-paren">)</span><a class="headerlink" href="#macop.algorithms.multi.MOSubProblem.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apply update function to solution using specific <cite>policy</cite>
+Check if solution is valid after modification and returns it</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>solution</strong> – {<a class="reference internal" href="macop.solutions.base.html#macop.solutions.base.Solution" title="macop.solutions.base.Solution"><code class="xref py py-class docutils literal notranslate"><span class="pre">Solution</span></code></a>} – solution to update using current policy</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>updated solution obtained by the selected operator</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>{<a class="reference internal" href="macop.solutions.base.html#macop.solutions.base.Solution" title="macop.solutions.base.Solution"><code class="xref py py-class docutils literal notranslate"><span class="pre">Solution</span></code></a>}</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="macop.algorithms.multi.MOSubProblem.result">
+<em class="property">property </em><code class="sig-name descname">result</code><a class="headerlink" href="#macop.algorithms.multi.MOSubProblem.result" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the expected result of the current algorithm</p>
+<p>By default the best solution (but can be anything you want)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>expected result data of the current algorithm</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>{object}</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+             </article>
+             
+            </div>
+            <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="macop.callbacks.base.html" class="btn btn-neutral float-right" title="macop.callbacks.base" accesskey="n" rel="next">Next <img src="../_static/images/chevron-right-orange.svg" class="next-page"></a>
+      
+      
+        <a href="macop.algorithms.mono.html" class="btn btn-neutral" title="macop.algorithms.mono" accesskey="p" rel="prev"><img src="../_static/images/chevron-right-orange.svg" class="previous-page"> Previous</a>
+      
+    </div>
+  
+
+  
+
+    <hr>
+
+  
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2021, Jérôme BUISINE.
+
+    </p>
+  </div>
+    
+      <div>
+        Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+      </div>
+     
+
+</footer>
+
+          </div>
+        </div>
+
+        <div class="pytorch-content-right" id="pytorch-content-right">
+          <div class="pytorch-right-menu" id="pytorch-right-menu">
+            <div class="pytorch-side-scroll" id="pytorch-side-scroll-right">
+              <ul>
+<li><a class="reference internal" href="#">macop.algorithms.multi</a></li>
+</ul>
+
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+  
+
+
+  
+
+     
+       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+         <script type="text/javascript" src="../_static/jquery.js"></script>
+         <script type="text/javascript" src="../_static/underscore.js"></script>
+         <script type="text/javascript" src="../_static/doctools.js"></script>
+         <script type="text/javascript" src="../_static/language_data.js"></script>
+         <script type="text/javascript" src="../_static/js/custom.js"></script>
+         <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+     
+
+  
+
+  <script type="text/javascript" src="../_static/js/vendor/popper.min.js"></script>
+  <script type="text/javascript" src="../_static/js/vendor/bootstrap.min.js"></script>
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+  <!-- Begin Footer -->
+
+  <div class="container-fluid" id="docs-tutorials-resources">
+    <div class="container">
+      <div class="row">
+        <!--
+        <div class="col-md-4 text-center">
+          <h2>Docs</h2>
+          <p>Access comprehensive developer documentation for PyTorch</p>
+          <a class="with-right-arrow" href="https://pytorch.org/docs/stable/index.html">View Docs</a>
+        </div>
+
+        <div class="col-md-4 text-center">
+          <h2>Tutorials</h2>
+          <p>Get in-depth tutorials for beginners and advanced developers</p>
+          <a class="with-right-arrow" href="https://pytorch.org/tutorials">View Tutorials</a>
+        </div>
+
+        <div class="col-md-4 text-center">
+          <h2>Resources</h2>
+          <p>Find development resources and get your questions answered</p>
+          <a class="with-right-arrow" href="https://pytorch.org/resources">View Resources</a>
+        </div>
+        -->
+      </div>
+    </div>
+  </div>
+
+
+  <!-- <footer class="site-footer">
+    <div class="container footer-container">
+      <div class="footer-logo-wrapper">
+        <a href="https://github.com/mpariente/asteroid" class="footer-logo"></a>
+      </div>
+
+      <div class="footer-links-wrapper">
+
+        <div class="footer-logo-col">
+          <img class="footer-logo-img" src="../_static/images/dark_asteroid_logo.svg"/>
+        </div>
+
+        <div class="footer-links-col">
+          <ul>
+            <li class="list-title"><a href="https://github.com/mpariente/asteroid">Asteroid</a></li>
+            <li><a href="https://pytorch.org/get-started">Get Started</a></li>
+            <li><a href="https://pytorch.org/features">Features</a></li>
+            <li><a href="">Ecosystem</a></li>
+            <li><a href="https://pytorch.org/blog/">Blog</a></li>
+            <li><a href="https://pytorch.org/resources">Resources</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-links-col">
+          <ul>
+            <li class="list-title"><a href="https://pytorch.org/support">Support</a></li>
+            <li><a href="https://pytorch.org/tutorials">Tutorials</a></li>
+            <li><a href="https://pytorch.org/docs/stable/index.html">Docs</a></li>
+            <li><a href="https://discuss.pytorch.org" target="_blank">Discuss</a></li>
+            <li><a href="https://github.com/mpariente/asteroid/issues" target="_blank">Github Issues</a></li>
+            <li><a href="" target="_blank">Slack</a></li>
+            <li><a href="https://github.com/mpariente/asteroid/blob/master/CONTRIBUTING.md" target="_blank">Contributing</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-links-col follow-us-col">
+          <ul>
+            <li class="list-title">Follow Us</li>
+            <li>
+              <div id="mc_embed_signup">
+                <form
+                  action="https://twitter.us14.list-manage.com/subscribe/post?u=75419c71fe0a935e53dfa4a3f&id=91d0dccd39"
+                  method="post"
+                  id="mc-embedded-subscribe-form"
+                  name="mc-embedded-subscribe-form"
+                  class="email-subscribe-form validate"
+                  target="_blank"
+                  novalidate>
+                  <div id="mc_embed_signup_scroll" class="email-subscribe-form-fields-wrapper">
+                    <div class="mc-field-group">
+                      <label for="mce-EMAIL" style="display:none;">Email Address</label>
+                      <input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL" placeholder="Email Address">
+                    </div>
+
+                    <div id="mce-responses" class="clear">
+                      <div class="response" id="mce-error-response" style="display:none"></div>
+                      <div class="response" id="mce-success-response" style="display:none"></div>
+                    </div>
+
+                    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_75419c71fe0a935e53dfa4a3f_91d0dccd39" tabindex="-1" value=""></div>
+
+                    <div class="clear">
+                      <input type="submit" value="" name="subscribe" id="mc-embedded-subscribe" class="button email-subscribe-button">
+                    </div>
+                  </div>
+                </form>
+              </div>
+
+            </li>
+          </ul>
+
+          <div class="footer-social-icons">
+            <a href="" target="_blank" class="facebook"></a>
+            <a href="https://twitter.com" target="_blank" class="twitter"></a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </footer> -->
+
+
+  <!-- End Footer -->
+
+  <!-- Begin Mobile Menu -->
+
+  <div class="mobile-main-menu">
+    <div class="container-fluid">
+      <div class="container">
+        <div class="mobile-main-menu-header-container">
+          <a class="header-logo" href="https://github.com/mpariente/asteroid" aria-label="PyTorch Lightning"></a>
+          <a class="main-menu-close-button" href="#" data-behavior="close-mobile-menu"></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="mobile-main-menu-links-container">
+      <div class="main-menu">
+        <ul>
+          <li>
+            <a href="https://pytorch.org/get-started">Get Started</a>
+          </li>
+
+          <li>
+            <a href="https://pytorch.org/features">Features</a>
+          </li>
+
+          <li>
+            <a href="https://pytorch.org/blog/">Blog</a>
+          </li>
+
+          <li>
+            <a href="https://pytorch.org/tutorials">Tutorials</a>
+          </li>
+
+          <li>
+            <a href="https://pytorch.org/docs/stable/index.html">Docs</a>
+          </li>
+
+          <li>
+            <a href="https://pytorch.org/resources">Resources</a>
+          </li>
+
+          <li>
+            <a href="https://github.com/mpariente/asteroid">Github</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- End Mobile Menu -->
+
+  <script type="text/javascript" src="../_static/js/vendor/anchor.min.js"></script>
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+      mobileMenu.bind();
+      mobileTOC.bind();
+      pytorchAnchors.bind();
+      sideMenus.bind();
+      scrollToAnchor.bind();
+      highlightNavigation.bind();
+      mainMenuDropdown.bind();
+
+      // Add class to links that have code blocks, since we cannot create links in code blocks
+      $("article.pytorch-article a span.pre").each(function(e) {
+        $(this).closest("a").addClass("has-code");
+      });
+    })
+  </script>
+</body>
+</html>

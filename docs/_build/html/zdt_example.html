@@ -1,0 +1,685 @@
+
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Zdt optimisation problem &mdash; Macop 1.2.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!-- <link rel="stylesheet" href="_static/pygments.css" type="text/css" /> -->
+  <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Contributing" href="contributing.html" />
+    <link rel="prev" title="Unconstrained Binary Quadratic Programming" href="ubqp_example.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+  <!-- Preload the theme fonts -->
+
+<link rel="preload" href="_static/fonts/FreightSans/freight-sans-book.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="_static/fonts/FreightSans/freight-sans-medium.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="_static/fonts/IBMPlexMono/IBMPlexMono-Medium.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="_static/fonts/FreightSans/freight-sans-bold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="_static/fonts/FreightSans/freight-sans-medium-italic.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="_static/fonts/IBMPlexMono/IBMPlexMono-SemiBold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+
+<!-- Preload the katex fonts -->
+
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Math-Italic.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Main-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Main-Bold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size1-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size4-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size2-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size3-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Caligraphic-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+</head>
+
+<div class="container-fluid header-holder tutorials-header" id="header-holder">
+  <div class="container">
+    <div class="header-container">
+      <a class="header-logo" href="https://github.com/mpariente/asteroid" aria-label="PyTorch">
+       <!-- <img class="call-to-action-img" src="_static/images/asteroid_logo_dark.png"/> -->
+      </a>
+
+      <div class="main-menu">
+        <ul>
+          <li>
+            <a href="https://pytorch.org/get-started">Get Started</a>
+          </li>
+
+          <li>
+            <a href="https://pytorch.org/blog/">Blog</a>
+          </li>
+
+          <li>
+            <a href="https://pytorch.org/tutorials">Tutorials</a>
+          </li>
+
+          <li>
+            <a href="https://pytorch.org/docs/stable/index.html">Docs</a>
+          </li>
+
+          <li>
+            <div class="resources-dropdown">
+              <a id="resourcesDropdownButton" data-toggle="resources-dropdown">
+                Resources
+              </a>
+              <div class="resources-dropdown-menu">
+                <a class="nav-dropdown-item" href="https://pytorch.org/resources"">
+                  <span class=dropdown-title>Developer Resources</span>
+                  <p>Find resources and get questions answered</p>
+                </a>
+                <!--
+                <a class="nav-dropdown-item" href="https://pytorch.org/features">
+                  <span class=dropdown-title>About</span>
+                  <p>Learn about PyTorch’s features and capabilities</p>
+                </a>
+                -->
+              </div>
+            </div>
+          </li>
+
+          <li>
+            <a href="https://github.com/mpariente/asteroid">Github</a>
+          </li>
+        </ul>
+      </div>
+
+      <a class="main-menu-open-button" href="#" data-behavior="open-mobile-menu"></a>
+    </div>
+
+  </div>
+</div>
+
+
+<body class="pytorch-body">
+
+   
+
+    
+
+    <div class="table-of-contents-link-wrapper">
+      <span>Table of Contents</span>
+      <a href="#" class="toggle-table-of-contents" data-behavior="toggle-table-of-contents"></a>
+    </div>
+
+    <nav data-toggle="wy-nav-shift" class="pytorch-left-menu" id="pytorch-left-menu">
+      <div class="pytorch-side-scroll">
+        <div class="pytorch-menu pytorch-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          <div class="pytorch-left-menu-search">
+            
+
+            
+              
+              
+                <div class="version">
+                  1.2.0
+                </div>
+              
+            
+
+            
+
+
+  
+
+
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search Docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+            
+          </div>
+
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="description.html">Description</a></li>
+<li class="toctree-l1"><a class="reference internal" href="documentations.html">A tour of Macop</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="examples.html">Example uses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <div class="pytorch-container">
+      <div class="pytorch-page-level-bar" id="pytorch-page-level-bar">
+        <div class="pytorch-breadcrumbs-wrapper">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="pytorch-breadcrumbs">
+    
+      <li>
+        <a href="index.html">
+          
+            Docs
+          
+        </a> &gt;
+      </li>
+
+        
+          <li><a href="examples.html">Example uses</a> &gt;</li>
+        
+      <li>Zdt optimisation problem</li>
+    
+    
+      <li class="pytorch-breadcrumbs-aside">
+        
+            
+            
+              <a href="https://github.com/prise-3d/macop/blob/master/docs/source/zdt_example.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+</div>
+        </div>
+
+        <div class="pytorch-shortcuts-wrapper" id="pytorch-shortcuts-wrapper">
+          Shortcuts
+        </div>
+      </div>
+
+      <section data-toggle="wy-nav-shift" id="pytorch-content-wrap" class="pytorch-content-wrap">
+        <div class="pytorch-content-left">
+
+        
+          
+          <div class="rst-content">
+          
+            <div role="main" class="main-content" itemscope="itemscope" itemtype="http://schema.org/Article">
+             <article itemprop="articleBody" id="pytorch-article" class="pytorch-article">
+              
+  <div class="section" id="zdt-optimisation-problem">
+<h1>Zdt optimisation problem<a class="headerlink" href="#zdt-optimisation-problem" title="Permalink to this headline">¶</a></h1>
+<p>In applied mathematics, test functions, known as artificial landscapes, are useful to evaluate characteristics of continuous optimization algorithms, such as:</p>
+<ul class="simple">
+<li><p>Convergence rate.</p></li>
+<li><p>Precision.</p></li>
+<li><p>Robustness.</p></li>
+<li><p>General performance.</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The full code for what will be proposed in this example is available: <a class="reference external" href="https://github.com/jbuisine/macop/blob/master/examples/ZdtExample.py">ZdtExample.py</a>.</p>
+</div>
+<div class="section" id="rosenbrock-s-function">
+<h2>Rosenbrock’s function<a class="headerlink" href="#rosenbrock-s-function" title="Permalink to this headline">¶</a></h2>
+<p>In mathematical optimization, the Rosenbrock function is a non-convex function, introduced by Howard H. Rosenbrock in 1960, which is used as a performance test problem for optimization algorithms.</p>
+<div class="section" id="mathematical-definition">
+<h3>Mathematical definition<a class="headerlink" href="#mathematical-definition" title="Permalink to this headline">¶</a></h3>
+<p>The function is defined by: <span class="math notranslate nohighlight">\(f(x, y) = (a − x)^2 + b(y − x^2)^2\)</span></p>
+<p>It has a global minimum at <span class="math notranslate nohighlight">\((x, y) = (a, a^2)\)</span>, where <span class="math notranslate nohighlight">\(f(x, y) = 0\)</span>. Usually these parameters are set such that <span class="math notranslate nohighlight">\(a = 1\)</span> and <span class="math notranslate nohighlight">\(b = 100\)</span>. Only in the trivial case where <span class="math notranslate nohighlight">\(a = 0\)</span> the function is symmetric and the minimum is at the origin.</p>
+<p>Below is a 3D representation of the function with the same parameters <span class="math notranslate nohighlight">\(a = 1\)</span> and <span class="math notranslate nohighlight">\(b = 100\)</span>.</p>
+<a class="reference internal image-reference" href="_images/rosenbrock_function.jpg"><img alt="3D representation of Rosenbrock's function" class="align-center" src="_images/rosenbrock_function.jpg" style="width: 50%;" /></a>
+<p>The search space is defined by: <span class="math notranslate nohighlight">\(-\infty \leq x_i \leq \infty, 1 \leq i \leq n\)</span></p>
+<p>Optimal solution is defined by: <span class="math notranslate nohighlight">\(f(1, ..., 1)=0\)</span> when <span class="math notranslate nohighlight">\(n &gt; 3\)</span></p>
+</div>
+<div class="section" id="specific-instance-used">
+<h3>Specific instance used<a class="headerlink" href="#specific-instance-used" title="Permalink to this headline">¶</a></h3>
+<p>Using <span class="math notranslate nohighlight">\(a = 1\)</span> and <span class="math notranslate nohighlight">\(b = 100\)</span>, the function can be re-written:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(f(x)=\sum_{i=1}^{n-1}{[(x_{i + 1} − x_i^2)^2 + (1 − x_i)^2]}\)</span></p></li>
+</ul>
+<p>For the current implementation example, the search space will be reduced to <span class="math notranslate nohighlight">\(-10 \leq x_i \leq 10\)</span> and the instance size will be set to <span class="math notranslate nohighlight">\(n = 10\)</span>.</p>
+</div>
+</div>
+<div class="section" id="macop-implementation">
+<h2>Macop implementation<a class="headerlink" href="#macop-implementation" title="Permalink to this headline">¶</a></h2>
+<p>Let’s see how it is possible with the use of the <strong>Macop</strong> package to implement and deal with this Rosenbrock’s function instance problem.</p>
+<div class="section" id="solution-structure-definition">
+<h3>Solution structure definition<a class="headerlink" href="#solution-structure-definition" title="Permalink to this headline">¶</a></h3>
+<p>Firstly, we are going to use a type of solution that will allow us to define the structure of our solutions.</p>
+<p>The available <a class="reference external" href="macop/macop.solutions.continuous.html#macop.solutions.continuous.ContinuousSolution">macop.solutions.continuous.ContinuousSolution</a> type of solution within the Macop package represents exactly what one would wish for.
+I.e. a solution that stores a float array with respect to the size of the problem.</p>
+<p>Let’s see an example of its use:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">macop.solutions.continuous</span> <span class="kn">import</span> <span class="n">ContinuousSolution</span>
+
+<span class="n">problem_interval</span> <span class="o">=</span> <span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span>
+<span class="n">solution</span> <span class="o">=</span> <span class="n">ContinuousSolution</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="n">problem_interval</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">solution</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">problem_interval</span></code> variable is required in order to generate our continuous solution with respect to the search space.
+The resulting solution obtained should be something like:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>Continuous solution <span class="o">[</span>-3.31048093 -8.69195762 ... -2.84790964 -1.08397853<span class="o">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="zdt-evaluator">
+<h3>Zdt Evaluator<a class="headerlink" href="#zdt-evaluator" title="Permalink to this headline">¶</a></h3>
+<p>Now that we have the structure of our solutions, and the means to generate them, we will seek to evaluate them.</p>
+<p>To do this, we need to create a new evaluator specific to our problem and the relative evaluation function:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(f(x)=\sum_{i=1}^{n-1}{[(x_{i + 1} − x_i^2)^2 + (1 − x_i)^2]}\)</span></p></li>
+</ul>
+<p>So we are going to create a class that will inherit from the abstract class <a class="reference external" href="macop/macop.evaluators.base.html#macop.evaluators.base.Evaluator">macop.evaluators.base.Evaluator</a>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">macop.evaluators.base</span> <span class="kn">import</span> <span class="n">Evaluator</span>
+
+<span class="k">class</span> <span class="nc">ZdtEvaluator</span><span class="p">(</span><span class="n">Evaluator</span><span class="p">):</span>
+<span class="sd">&quot;&quot;&quot;Generic Zdt evaluator class which enables to compute custom Zdt function for continuous problem</span>
+
+<span class="sd">- stores into its `_data` dictionary attritute required measures when computing a continuous solution</span>
+<span class="sd">- `_data[&#39;f&#39;]` stores lambda Zdt function</span>
+<span class="sd">- `compute` method enables to compute and associate a score to a given continuous solution</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="k">def</span> <span class="nf">compute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">solution</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Apply the computation of fitness from solution</span>
+<span class="sd">    Args:</span>
+<span class="sd">        solution: {:class:`~macop.solutions.base.Solution`} -- Solution instance</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        {float}: fitness score of solution</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s1">&#39;f&#39;</span><span class="p">](</span><span class="n">solution</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The cost function for the zdt continuous problem is now well defined but we still need to define the lambda function.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">macop.evaluators.continuous.mono</span> <span class="kn">import</span> <span class="n">ZdtEvaluator</span>
+
+<span class="c1"># Rosenbrock function definition</span>
+<span class="n">Rosenbrock_function</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="nb">sum</span><span class="p">([</span> <span class="mi">100</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="mi">2</span><span class="p">)),</span> <span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="n">math</span><span class="o">.</span><span class="n">pow</span><span class="p">((</span><span class="mi">1</span> <span class="o">-</span> <span class="n">s</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">]),</span> <span class="mi">2</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">data</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="p">])</span>
+
+<span class="n">evaluator</span> <span class="o">=</span> <span class="n">ZdtEvaluator</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;f&#39;</span><span class="p">:</span> <span class="n">Rosenbrock_function</span><span class="p">})</span>
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>The class proposed here, is available in the Macop package <a class="reference external" href="macop/macop.evaluators.continuous.mono.html#macop.evaluators.continuous.mono.ZdtEvaluator">macop.evaluators.continuous.mono.ZdtEvaluator</a>.</p>
+</div>
+</div>
+<div class="section" id="running-algorithm">
+<h3>Running algorithm<a class="headerlink" href="#running-algorithm" title="Permalink to this headline">¶</a></h3>
+<p>Now that the necessary tools are available, we will be able to deal with our problem and look for solutions in the search space of our Zdt Rosenbrock instance.</p>
+<p>Here we will use local search algorithms already implemented in <strong>Macop</strong>.</p>
+<p>If you are uncomfortable with some of the elements in the code that will follow, you can refer to the more complete <strong>Macop</strong> <a class="reference external" href="https://jbuisine.github.io/macop/_build/html/documentations">documentation</a> that focuses more on the concepts and tools of the package.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># main imports</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="c1"># module imports</span>
+<span class="kn">from</span> <span class="nn">macop.solutions.continuous</span> <span class="kn">import</span> <span class="n">ContinuousSolution</span>
+<span class="kn">from</span> <span class="nn">macop.evaluators.continuous.mono</span> <span class="kn">import</span> <span class="n">ZdtEvaluator</span>
+
+<span class="kn">from</span> <span class="nn">macop.operators.continuous.mutators</span> <span class="kn">import</span> <span class="n">PolynomialMutation</span>
+
+<span class="kn">from</span> <span class="nn">macop.policies.classicals</span> <span class="kn">import</span> <span class="n">RandomPolicy</span>
+
+<span class="kn">from</span> <span class="nn">macop.algorithms.mono</span> <span class="kn">import</span> <span class="n">IteratedLocalSearch</span> <span class="k">as</span> <span class="n">ILS</span>
+<span class="kn">from</span> <span class="nn">macop.algorithms.mono</span> <span class="kn">import</span> <span class="n">HillClimberFirstImprovment</span>
+
+<span class="c1"># usefull instance data</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">problem_interval</span> <span class="o">=</span> <span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span>
+<span class="n">qap_instance_file</span> <span class="o">=</span> <span class="s1">&#39;zdt_instance.txt&#39;</span>
+
+<span class="c1"># default validator (check the consistency of our data, i.e. x_i element in search space)</span>
+<span class="k">def</span> <span class="nf">validator</span><span class="p">(</span><span class="n">solution</span><span class="p">):</span>
+    <span class="n">mini</span><span class="p">,</span> <span class="n">maxi</span> <span class="o">=</span> <span class="n">problem_interval</span>
+
+    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">solution</span><span class="o">.</span><span class="n">data</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="n">mini</span> <span class="ow">or</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="n">maxi</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="k">return</span> <span class="kc">True</span>
+
+<span class="c1"># define init random solution with search space bounds</span>
+<span class="k">def</span> <span class="nf">init</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">ContinuousSolution</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="n">problem_interval</span><span class="p">,</span> <span class="n">validator</span><span class="p">)</span>
+
+<span class="c1"># only one operator here</span>
+<span class="n">operators</span> <span class="o">=</span> <span class="p">[</span><span class="n">PolynomialMutation</span><span class="p">()]</span>
+
+<span class="c1"># random policy even if list of solution has only one element</span>
+<span class="n">policy</span> <span class="o">=</span> <span class="n">RandomPolicy</span><span class="p">(</span><span class="n">operators</span><span class="p">)</span>
+
+<span class="c1"># Rosenbrock function definition</span>
+<span class="n">Rosenbrock_function</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="nb">sum</span><span class="p">([</span> <span class="mi">100</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="mi">2</span><span class="p">)),</span> <span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="n">math</span><span class="o">.</span><span class="n">pow</span><span class="p">((</span><span class="mi">1</span> <span class="o">-</span> <span class="n">s</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">]),</span> <span class="mi">2</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">data</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="p">])</span>
+
+<span class="n">evaluator</span> <span class="o">=</span> <span class="n">ZdtEvaluator</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;f&#39;</span><span class="p">:</span> <span class="n">Rosenbrock_function</span><span class="p">})</span>
+
+<span class="c1"># passing global evaluation param from ILS</span>
+<span class="n">hcfi</span> <span class="o">=</span> <span class="n">HillClimberFirstImprovment</span><span class="p">(</span><span class="n">init</span><span class="p">,</span> <span class="n">evaluator</span><span class="p">,</span> <span class="n">operators</span><span class="p">,</span> <span class="n">policy</span><span class="p">,</span> <span class="n">validator</span><span class="p">,</span> <span class="n">maximise</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">algo</span> <span class="o">=</span> <span class="n">ILS</span><span class="p">(</span><span class="n">init</span><span class="p">,</span> <span class="n">evaluator</span><span class="p">,</span> <span class="n">operators</span><span class="p">,</span> <span class="n">policy</span><span class="p">,</span> <span class="n">validator</span><span class="p">,</span> <span class="n">localSearch</span><span class="o">=</span><span class="n">hcfi</span><span class="p">,</span> <span class="n">maximise</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># run the algorithm</span>
+<span class="n">bestSol</span> <span class="o">=</span> <span class="n">algo</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="mi">10000</span><span class="p">,</span> <span class="n">ls_evaluations</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Solution for zdt Rosenbrock instance score is </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">evaluator</span><span class="o">.</span><span class="n">compute</span><span class="p">(</span><span class="n">bestSol</span><span class="p">)))</span>
+</pre></div>
+</div>
+<p>Continuous Rosenbrock’s function problem is now possible with <strong>Macop</strong>. As a reminder, the complete code is available in the <a class="reference external" href="https://github.com/jbuisine/macop/blob/master/examples/ZdtExample.py">ZdtExample.py</a> file.</p>
+</div>
+</div>
+</div>
+
+
+             </article>
+             
+            </div>
+            <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="contributing.html" class="btn btn-neutral float-right" title="Contributing" accesskey="n" rel="next">Next <img src="_static/images/chevron-right-orange.svg" class="next-page"></a>
+      
+      
+        <a href="ubqp_example.html" class="btn btn-neutral" title="Unconstrained Binary Quadratic Programming" accesskey="p" rel="prev"><img src="_static/images/chevron-right-orange.svg" class="previous-page"> Previous</a>
+      
+    </div>
+  
+
+  
+
+    <hr>
+
+  
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2021, Jérôme BUISINE.
+
+    </p>
+  </div>
+    
+      <div>
+        Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+      </div>
+     
+
+</footer>
+
+          </div>
+        </div>
+
+        <div class="pytorch-content-right" id="pytorch-content-right">
+          <div class="pytorch-right-menu" id="pytorch-right-menu">
+            <div class="pytorch-side-scroll" id="pytorch-side-scroll-right">
+              <ul>
+<li><a class="reference internal" href="#">Zdt optimisation problem</a><ul>
+<li><a class="reference internal" href="#rosenbrock-s-function">Rosenbrock’s function</a><ul>
+<li><a class="reference internal" href="#mathematical-definition">Mathematical definition</a></li>
+<li><a class="reference internal" href="#specific-instance-used">Specific instance used</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#macop-implementation">Macop implementation</a><ul>
+<li><a class="reference internal" href="#solution-structure-definition">Solution structure definition</a></li>
+<li><a class="reference internal" href="#zdt-evaluator">Zdt Evaluator</a></li>
+<li><a class="reference internal" href="#running-algorithm">Running algorithm</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+  
+
+
+  
+
+     
+       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+         <script type="text/javascript" src="_static/jquery.js"></script>
+         <script type="text/javascript" src="_static/underscore.js"></script>
+         <script type="text/javascript" src="_static/doctools.js"></script>
+         <script type="text/javascript" src="_static/language_data.js"></script>
+         <script type="text/javascript" src="_static/js/custom.js"></script>
+         <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+     
+
+  
+
+  <script type="text/javascript" src="_static/js/vendor/popper.min.js"></script>
+  <script type="text/javascript" src="_static/js/vendor/bootstrap.min.js"></script>
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+  <!-- Begin Footer -->
+
+  <div class="container-fluid" id="docs-tutorials-resources">
+    <div class="container">
+      <div class="row">
+        <!--
+        <div class="col-md-4 text-center">
+          <h2>Docs</h2>
+          <p>Access comprehensive developer documentation for PyTorch</p>
+          <a class="with-right-arrow" href="https://pytorch.org/docs/stable/index.html">View Docs</a>
+        </div>
+
+        <div class="col-md-4 text-center">
+          <h2>Tutorials</h2>
+          <p>Get in-depth tutorials for beginners and advanced developers</p>
+          <a class="with-right-arrow" href="https://pytorch.org/tutorials">View Tutorials</a>
+        </div>
+
+        <div class="col-md-4 text-center">
+          <h2>Resources</h2>
+          <p>Find development resources and get your questions answered</p>
+          <a class="with-right-arrow" href="https://pytorch.org/resources">View Resources</a>
+        </div>
+        -->
+      </div>
+    </div>
+  </div>
+
+
+  <!-- <footer class="site-footer">
+    <div class="container footer-container">
+      <div class="footer-logo-wrapper">
+        <a href="https://github.com/mpariente/asteroid" class="footer-logo"></a>
+      </div>
+
+      <div class="footer-links-wrapper">
+
+        <div class="footer-logo-col">
+          <img class="footer-logo-img" src="_static/images/dark_asteroid_logo.svg"/>
+        </div>
+
+        <div class="footer-links-col">
+          <ul>
+            <li class="list-title"><a href="https://github.com/mpariente/asteroid">Asteroid</a></li>
+            <li><a href="https://pytorch.org/get-started">Get Started</a></li>
+            <li><a href="https://pytorch.org/features">Features</a></li>
+            <li><a href="">Ecosystem</a></li>
+            <li><a href="https://pytorch.org/blog/">Blog</a></li>
+            <li><a href="https://pytorch.org/resources">Resources</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-links-col">
+          <ul>
+            <li class="list-title"><a href="https://pytorch.org/support">Support</a></li>
+            <li><a href="https://pytorch.org/tutorials">Tutorials</a></li>
+            <li><a href="https://pytorch.org/docs/stable/index.html">Docs</a></li>
+            <li><a href="https://discuss.pytorch.org" target="_blank">Discuss</a></li>
+            <li><a href="https://github.com/mpariente/asteroid/issues" target="_blank">Github Issues</a></li>
+            <li><a href="" target="_blank">Slack</a></li>
+            <li><a href="https://github.com/mpariente/asteroid/blob/master/CONTRIBUTING.md" target="_blank">Contributing</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-links-col follow-us-col">
+          <ul>
+            <li class="list-title">Follow Us</li>
+            <li>
+              <div id="mc_embed_signup">
+                <form
+                  action="https://twitter.us14.list-manage.com/subscribe/post?u=75419c71fe0a935e53dfa4a3f&id=91d0dccd39"
+                  method="post"
+                  id="mc-embedded-subscribe-form"
+                  name="mc-embedded-subscribe-form"
+                  class="email-subscribe-form validate"
+                  target="_blank"
+                  novalidate>
+                  <div id="mc_embed_signup_scroll" class="email-subscribe-form-fields-wrapper">
+                    <div class="mc-field-group">
+                      <label for="mce-EMAIL" style="display:none;">Email Address</label>
+                      <input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL" placeholder="Email Address">
+                    </div>
+
+                    <div id="mce-responses" class="clear">
+                      <div class="response" id="mce-error-response" style="display:none"></div>
+                      <div class="response" id="mce-success-response" style="display:none"></div>
+                    </div>
+
+                    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_75419c71fe0a935e53dfa4a3f_91d0dccd39" tabindex="-1" value=""></div>
+
+                    <div class="clear">
+                      <input type="submit" value="" name="subscribe" id="mc-embedded-subscribe" class="button email-subscribe-button">
+                    </div>
+                  </div>
+                </form>
+              </div>
+
+            </li>
+          </ul>
+
+          <div class="footer-social-icons">
+            <a href="" target="_blank" class="facebook"></a>
+            <a href="https://twitter.com" target="_blank" class="twitter"></a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </footer> -->
+
+
+  <!-- End Footer -->
+
+  <!-- Begin Mobile Menu -->
+
+  <div class="mobile-main-menu">
+    <div class="container-fluid">
+      <div class="container">
+        <div class="mobile-main-menu-header-container">
+          <a class="header-logo" href="https://github.com/mpariente/asteroid" aria-label="PyTorch Lightning"></a>
+          <a class="main-menu-close-button" href="#" data-behavior="close-mobile-menu"></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="mobile-main-menu-links-container">
+      <div class="main-menu">
+        <ul>
+          <li>
+            <a href="https://pytorch.org/get-started">Get Started</a>
+          </li>
+
+          <li>
+            <a href="https://pytorch.org/features">Features</a>
+          </li>
+
+          <li>
+            <a href="https://pytorch.org/blog/">Blog</a>
+          </li>
+
+          <li>
+            <a href="https://pytorch.org/tutorials">Tutorials</a>
+          </li>
+
+          <li>
+            <a href="https://pytorch.org/docs/stable/index.html">Docs</a>
+          </li>
+
+          <li>
+            <a href="https://pytorch.org/resources">Resources</a>
+          </li>
+
+          <li>
+            <a href="https://github.com/mpariente/asteroid">Github</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- End Mobile Menu -->
+
+  <script type="text/javascript" src="_static/js/vendor/anchor.min.js"></script>
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+      mobileMenu.bind();
+      mobileTOC.bind();
+      pytorchAnchors.bind();
+      sideMenus.bind();
+      scrollToAnchor.bind();
+      highlightNavigation.bind();
+      mainMenuDropdown.bind();
+
+      // Add class to links that have code blocks, since we cannot create links in code blocks
+      $("article.pytorch-article a span.pre").each(function(e) {
+        $(this).closest("a").addClass("has-code");
+      });
+    })
+  </script>
+</body>
+</html>

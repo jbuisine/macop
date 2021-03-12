@@ -1,0 +1,717 @@
+
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Unconstrained Binary Quadratic Programming &mdash; Macop 1.2.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!-- <link rel="stylesheet" href="_static/pygments.css" type="text/css" /> -->
+  <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Zdt optimisation problem" href="zdt_example.html" />
+    <link rel="prev" title="Quadratric Assignment Problem" href="qap_example.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+  <!-- Preload the theme fonts -->
+
+<link rel="preload" href="_static/fonts/FreightSans/freight-sans-book.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="_static/fonts/FreightSans/freight-sans-medium.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="_static/fonts/IBMPlexMono/IBMPlexMono-Medium.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="_static/fonts/FreightSans/freight-sans-bold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="_static/fonts/FreightSans/freight-sans-medium-italic.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="_static/fonts/IBMPlexMono/IBMPlexMono-SemiBold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+
+<!-- Preload the katex fonts -->
+
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Math-Italic.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Main-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Main-Bold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size1-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size4-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size2-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size3-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Caligraphic-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+</head>
+
+<div class="container-fluid header-holder tutorials-header" id="header-holder">
+  <div class="container">
+    <div class="header-container">
+      <a class="header-logo" href="https://github.com/mpariente/asteroid" aria-label="PyTorch">
+       <!-- <img class="call-to-action-img" src="_static/images/asteroid_logo_dark.png"/> -->
+      </a>
+
+      <div class="main-menu">
+        <ul>
+          <li>
+            <a href="https://pytorch.org/get-started">Get Started</a>
+          </li>
+
+          <li>
+            <a href="https://pytorch.org/blog/">Blog</a>
+          </li>
+
+          <li>
+            <a href="https://pytorch.org/tutorials">Tutorials</a>
+          </li>
+
+          <li>
+            <a href="https://pytorch.org/docs/stable/index.html">Docs</a>
+          </li>
+
+          <li>
+            <div class="resources-dropdown">
+              <a id="resourcesDropdownButton" data-toggle="resources-dropdown">
+                Resources
+              </a>
+              <div class="resources-dropdown-menu">
+                <a class="nav-dropdown-item" href="https://pytorch.org/resources"">
+                  <span class=dropdown-title>Developer Resources</span>
+                  <p>Find resources and get questions answered</p>
+                </a>
+                <!--
+                <a class="nav-dropdown-item" href="https://pytorch.org/features">
+                  <span class=dropdown-title>About</span>
+                  <p>Learn about PyTorch’s features and capabilities</p>
+                </a>
+                -->
+              </div>
+            </div>
+          </li>
+
+          <li>
+            <a href="https://github.com/mpariente/asteroid">Github</a>
+          </li>
+        </ul>
+      </div>
+
+      <a class="main-menu-open-button" href="#" data-behavior="open-mobile-menu"></a>
+    </div>
+
+  </div>
+</div>
+
+
+<body class="pytorch-body">
+
+   
+
+    
+
+    <div class="table-of-contents-link-wrapper">
+      <span>Table of Contents</span>
+      <a href="#" class="toggle-table-of-contents" data-behavior="toggle-table-of-contents"></a>
+    </div>
+
+    <nav data-toggle="wy-nav-shift" class="pytorch-left-menu" id="pytorch-left-menu">
+      <div class="pytorch-side-scroll">
+        <div class="pytorch-menu pytorch-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          <div class="pytorch-left-menu-search">
+            
+
+            
+              
+              
+                <div class="version">
+                  1.2.0
+                </div>
+              
+            
+
+            
+
+
+  
+
+
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search Docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+            
+          </div>
+
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="description.html">Description</a></li>
+<li class="toctree-l1"><a class="reference internal" href="documentations.html">A tour of Macop</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="examples.html">Example uses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <div class="pytorch-container">
+      <div class="pytorch-page-level-bar" id="pytorch-page-level-bar">
+        <div class="pytorch-breadcrumbs-wrapper">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="pytorch-breadcrumbs">
+    
+      <li>
+        <a href="index.html">
+          
+            Docs
+          
+        </a> &gt;
+      </li>
+
+        
+          <li><a href="examples.html">Example uses</a> &gt;</li>
+        
+      <li>Unconstrained Binary Quadratic Programming</li>
+    
+    
+      <li class="pytorch-breadcrumbs-aside">
+        
+            
+            
+              <a href="https://github.com/prise-3d/macop/blob/master/docs/source/ubqp_example.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+</div>
+        </div>
+
+        <div class="pytorch-shortcuts-wrapper" id="pytorch-shortcuts-wrapper">
+          Shortcuts
+        </div>
+      </div>
+
+      <section data-toggle="wy-nav-shift" id="pytorch-content-wrap" class="pytorch-content-wrap">
+        <div class="pytorch-content-left">
+
+        
+          
+          <div class="rst-content">
+          
+            <div role="main" class="main-content" itemscope="itemscope" itemtype="http://schema.org/Article">
+             <article itemprop="articleBody" id="pytorch-article" class="pytorch-article">
+              
+  <div class="section" id="unconstrained-binary-quadratic-programming">
+<h1>Unconstrained Binary Quadratic Programming<a class="headerlink" href="#unconstrained-binary-quadratic-programming" title="Permalink to this headline">¶</a></h1>
+<p>Given a collection of <span class="math notranslate nohighlight">\(n\)</span> items such that each pair of items is associated with a profit value that can be positive, negative or zero, unconstrained binary quadratic programming (UBQP) seeks a subset of items that maximizes the sum of their paired values. The value of a pair is accumulated in the sum only if the two corresponding items are selected.</p>
+<p>The UBQP problem will be tackle in this example.</p>
+<div class="section" id="ubqp-problem-definition">
+<h2>UBQP problem definition<a class="headerlink" href="#ubqp-problem-definition" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="understand-the-ubqp-problem">
+<h3>Understand the UBQP Problem<a class="headerlink" href="#understand-the-ubqp-problem" title="Permalink to this headline">¶</a></h3>
+<p>Given a collection of <span class="math notranslate nohighlight">\(n\)</span> items such that each pair of items is associated with a profit value that can be positive, negative or zero, unconstrained binary quadratic programming (UBQP) seeks a subset of items that maximizes the sum of their paired values. The value of a pair is accumulated in the sum only if the two corresponding items are selected. A feasible solution to a UBQP instance can be specified by a binary string of size <span class="math notranslate nohighlight">\(n\)</span>, such that each variable indicates whether the corresponding item is included in the selection or not.</p>
+</div>
+<div class="section" id="mathematical-definition">
+<h3>Mathematical definition<a class="headerlink" href="#mathematical-definition" title="Permalink to this headline">¶</a></h3>
+<p>More formally, the conventional and single-objective UBQP problem is to maximize the following objective function:</p>
+<p><span class="math notranslate nohighlight">\(f(x)=x′Qx=\sum_{i=1}^{n}{\sum_{j=1}^{n}{q_{ij}⋅x_i⋅x_j}}\)</span></p>
+<p>where <span class="math notranslate nohighlight">\(Q=(q_{ij})\)</span> is an <span class="math notranslate nohighlight">\(n\)</span> by <span class="math notranslate nohighlight">\(n\)</span> matrix of constant values, <span class="math notranslate nohighlight">\(x\)</span> is a vector of <span class="math notranslate nohighlight">\(n\)</span> binary (zero-one) variables, i.e., <span class="math notranslate nohighlight">\(x \in \{0, 1\}\)</span>, <span class="math notranslate nohighlight">\(i \in \{1,...,n\}\)</span>, and <span class="math notranslate nohighlight">\(x'\)</span> is the transpose of <span class="math notranslate nohighlight">\(x\)</span>.</p>
+</div>
+</div>
+<div class="section" id="ubqp-problem-instance-generation">
+<h2>UBQP Problem instance generation<a class="headerlink" href="#ubqp-problem-instance-generation" title="Permalink to this headline">¶</a></h2>
+<p>To define our quadratic assignment problem instance, we will use the available <a class="reference external" href="http://mocobench.sourceforge.net/index.php?n=Problem.MUBQP">mUBQP</a> multi-objective quadratic problem generator.</p>
+<div class="section" id="genration-of-the-instance">
+<h3>Genration of the instance<a class="headerlink" href="#genration-of-the-instance" title="Permalink to this headline">¶</a></h3>
+<p>We will limit ourselves here to a single objective for the purposes of this example. The available file <strong>mubqpGenerator.R</strong>, will be used to generate the instance (using R language).</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>Rscript mubqpGenerator.R <span class="m">0</span>.8 <span class="m">1</span> <span class="m">100</span> <span class="m">5</span> <span class="m">42</span> ubqp_instance.txt
+</pre></div>
+</div>
+<p>The main parameters used for generating our UBQP instance are:</p>
+<ul class="simple">
+<li><p><strong>ρ:</strong> the objective correlation coefficient</p></li>
+<li><p><strong>M:</strong> the number of objective functions</p></li>
+<li><p><strong>N:</strong> the length of bit strings</p></li>
+<li><p><strong>d:</strong> the matrix density (frequency of non-zero numbers)</p></li>
+<li><p><strong>s:</strong> seed to use</p></li>
+</ul>
+</div>
+<div class="section" id="load-data-instance">
+<h3>Load data instance<a class="headerlink" href="#load-data-instance" title="Permalink to this headline">¶</a></h3>
+<p>We are now going to load this instance via a Python code which will be useful to us later on:</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">qap_instance_file</span> <span class="o">=</span> <span class="s1">&#39;ubqp_instance.txt&#39;</span>
+
+<span class="n">n</span> <span class="o">=</span> <span class="mi">100</span> <span class="c1"># the instance size</span>
+
+<span class="c1"># load UBQP instance</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">ubqp_instance_file</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+
+    <span class="n">lines</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
+
+    <span class="c1"># get all string floating point values of matrix</span>
+    <span class="n">Q_data</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span> <span class="n">line</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="mi">8</span><span class="p">:]</span> <span class="p">])</span>
+
+    <span class="c1"># load the concatenate obtained string</span>
+    <span class="n">Q_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="n">Q_data</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Q_matrix </span><span class="si">{Q_matrix.shape}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>As we know the size of our instance and the structure of the document (header size), it is quite quick to look for the lines related to the <span class="math notranslate nohighlight">\(Q\)</span> matrix.</p>
+</div>
+</div>
+</div>
+<div class="section" id="macop-ubqp-implementation">
+<h2>Macop UBQP implementation<a class="headerlink" href="#macop-ubqp-implementation" title="Permalink to this headline">¶</a></h2>
+<p>Let’s see how it is possible with the use of the <strong>Macop</strong> package to implement and deal with this UBQP instance problem.</p>
+<div class="section" id="solution-structure-definition">
+<h3>Solution structure definition<a class="headerlink" href="#solution-structure-definition" title="Permalink to this headline">¶</a></h3>
+<p>Firstly, we are going to use a type of solution that will allow us to define the structure of our solutions.</p>
+<p>The available <a class="reference external" href="macop/macop.solutions.discrete.html#macop.solutions.discrete.BinarySolution">macop.solutions.discrete.BinarySolution</a> type of solution within the Macop package represents exactly what one would wish for.</p>
+<p>Let’s see an example of its use:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">macop.solutions.discrete</span> <span class="kn">import</span> <span class="n">BinarySolution</span>
+
+<span class="n">solution</span> <span class="o">=</span> <span class="n">BinarySolution</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">solution</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The resulting solution obtained:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>Binary solution <span class="o">[</span><span class="m">1</span> <span class="m">0</span> <span class="m">1</span> <span class="m">1</span> <span class="m">1</span> <span class="m">0</span> <span class="m">0</span> <span class="m">1</span> <span class="m">1</span> <span class="m">0</span><span class="o">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="ubqp-evaluator">
+<h3>UBQP Evaluator<a class="headerlink" href="#ubqp-evaluator" title="Permalink to this headline">¶</a></h3>
+<p>Now that we have the structure of our solutions, and the means to generate them, we will seek to evaluate them.</p>
+<p>To do this, we need to create a new evaluator specific to our problem and the relative evaluation function we need to maximise:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(f(x)=x′Qx=\sum_{i=1}^{n}{\sum_{j=1}^{n}{q_{ij}⋅x_i⋅x_j}}\)</span></p></li>
+</ul>
+<p>So we are going to create a class that will inherit from the abstract class <a class="reference external" href="macop/macop.evaluators.base.html#macop.evaluators.base.Evaluator">macop.evaluators.base.Evaluator</a>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">macop.evaluators.base</span> <span class="kn">import</span> <span class="n">Evaluator</span>
+
+<span class="k">class</span> <span class="nc">UBQPEvaluator</span><span class="p">(</span><span class="n">Evaluator</span><span class="p">):</span>
+<span class="sd">&quot;&quot;&quot;UBQP evaluator class which enables to compute UBQP solution using specific `_data`</span>
+
+<span class="sd">- stores into its `_data` dictionary attritute required measures when computing a UBQP solution</span>
+<span class="sd">- `_data[&#39;Q&#39;]` matrix of size n x n with real values data (stored as numpy array)</span>
+<span class="sd">- `compute` method enables to compute and associate a score to a given UBQP solution</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="k">def</span> <span class="nf">compute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">solution</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Apply the computation of fitness from solution</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        solution: {Solution} -- UBQP solution instance</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        {float} -- fitness score of solution</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">fitness</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">index_i</span><span class="p">,</span> <span class="n">val_i</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">solution</span><span class="o">.</span><span class="n">getdata</span> <span class="o">=</span> <span class="p">)):</span>
+        <span class="k">for</span> <span class="n">index_j</span><span class="p">,</span> <span class="n">val_j</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">solution</span><span class="o">.</span><span class="n">getdata</span> <span class="o">=</span> <span class="p">)):</span>
+            <span class="n">fitness</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s1">&#39;Q&#39;</span><span class="p">][</span><span class="n">index_i</span><span class="p">,</span> <span class="n">index_j</span><span class="p">]</span> <span class="o">*</span> <span class="n">val_i</span> <span class="o">*</span> <span class="n">val_j</span>
+
+    <span class="k">return</span> <span class="n">fitness</span>
+</pre></div>
+</div>
+<p>The cost function for the Unconstrained binary quadratic problem is now well defined.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>The class proposed here, is available in the Macop package <a class="reference external" href="macop/macop.evaluators.discrete.mono.html#macop.evaluators.discrete.mono.UBQPEvaluator">macop.evaluators.discrete.mono.UBQPEvaluator</a>.</p>
+</div>
+</div>
+<div class="section" id="running-algorithm">
+<h3>Running algorithm<a class="headerlink" href="#running-algorithm" title="Permalink to this headline">¶</a></h3>
+<p>Now that the necessary tools are available, we will be able to deal with our problem and look for solutions in the search space of our UBQP instance.</p>
+<p>Here we will use local search algorithms already implemented in <strong>Macop</strong>.</p>
+<p>If you are uncomfortable with some of the elements in the code that will follow, you can refer to the more complete <strong>Macop</strong> <a class="reference external" href="https://jbuisine.github.io/macop/_build/html/documentations">documentation</a> that focuses more on the concepts and tools of the package.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># main imports</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="c1"># module imports</span>
+<span class="kn">from</span> <span class="nn">macop.solutions.discrete</span> <span class="kn">import</span> <span class="n">BinarySolution</span>
+<span class="kn">from</span> <span class="nn">macop.evaluators.discrete.mono</span> <span class="kn">import</span> <span class="n">UBQPEvaluator</span>
+
+<span class="kn">from</span> <span class="nn">macop.operators.discrete.mutators</span> <span class="kn">import</span> <span class="n">SimpleMutation</span><span class="p">,</span> <span class="n">SimpleBinaryMutation</span>
+
+<span class="kn">from</span> <span class="nn">macop.policies.classicals</span> <span class="kn">import</span> <span class="n">RandomPolicy</span>
+
+<span class="kn">from</span> <span class="nn">macop.algorithms.mono</span> <span class="kn">import</span> <span class="n">IteratedLocalSearch</span> <span class="k">as</span> <span class="n">ILS</span>
+<span class="kn">from</span> <span class="nn">macop.algorithms.mono</span> <span class="kn">import</span> <span class="n">HillClimberFirstImprovment</span>
+
+<span class="c1"># usefull instance data</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">ubqp_instance_file</span> <span class="o">=</span> <span class="s1">&#39;ubqp_instance.txt&#39;</span>
+
+<span class="c1"># default validator</span>
+<span class="k">def</span> <span class="nf">validator</span><span class="p">(</span><span class="n">solution</span><span class="p">):</span>
+    <span class="k">return</span> <span class="kc">True</span>
+
+<span class="c1"># define init random solution</span>
+<span class="k">def</span> <span class="nf">init</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">BinarySolution</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">validator</span><span class="p">)</span>
+
+<span class="c1"># load UBQP instance</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">ubqp_instance_file</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+
+    <span class="n">lines</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
+
+    <span class="c1"># get all string floating point values of matrix</span>
+    <span class="n">Q_data</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span> <span class="n">line</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="mi">8</span><span class="p">:]</span> <span class="p">])</span>
+
+    <span class="c1"># load the concatenate obtained string</span>
+    <span class="n">Q_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="n">Q_data</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Q_matrix shape: </span><span class="si">{Q_matrix.shape}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="c1"># only one operator here</span>
+<span class="n">operators</span> <span class="o">=</span> <span class="p">[</span><span class="n">SimpleMutation</span><span class="p">(),</span> <span class="n">SimpleBinaryMutation</span><span class="p">()]</span>
+
+<span class="c1"># random policy</span>
+<span class="n">policy</span> <span class="o">=</span> <span class="n">RandomPolicy</span><span class="p">(</span><span class="n">operators</span><span class="p">)</span>
+
+<span class="c1"># use of loaded data from UBQP instance</span>
+<span class="n">evaluator</span> <span class="o">=</span> <span class="n">UBQPEvaluator</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;Q&#39;</span><span class="p">:</span> <span class="n">Q_matrix</span><span class="p">})</span>
+
+<span class="c1"># passing global evaluation param from ILS</span>
+<span class="n">hcfi</span> <span class="o">=</span> <span class="n">HillClimberFirstImprovment</span><span class="p">(</span><span class="n">init</span><span class="p">,</span> <span class="n">evaluator</span><span class="p">,</span> <span class="n">operators</span><span class="p">,</span> <span class="n">policy</span><span class="p">,</span> <span class="n">validator</span><span class="p">,</span> <span class="n">maximise</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">algo</span> <span class="o">=</span> <span class="n">ILS</span><span class="p">(</span><span class="n">init</span><span class="p">,</span> <span class="n">evaluator</span><span class="p">,</span> <span class="n">operators</span><span class="p">,</span> <span class="n">policy</span><span class="p">,</span> <span class="n">validator</span><span class="p">,</span> <span class="n">localSearch</span><span class="o">=</span><span class="n">hcfi</span><span class="p">,</span> <span class="n">maximise</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># run the algorithm</span>
+<span class="n">bestSol</span> <span class="o">=</span> <span class="n">algo</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="mi">10000</span><span class="p">,</span> <span class="n">ls_evaluations</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Solution for UBQP instance score is </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">evaluator</span><span class="o">.</span><span class="n">compute</span><span class="p">(</span><span class="n">bestSol</span><span class="p">)))</span>
+</pre></div>
+</div>
+<p>UBQP problem solving is now possible with <strong>Macop</strong>. As a reminder, the complete code is available in the <a class="reference external" href="https://github.com/jbuisine/macop/blob/master/examples/ubqpExample.py">ubqpExample.py</a> file.</p>
+</div>
+</div>
+</div>
+
+
+             </article>
+             
+            </div>
+            <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="zdt_example.html" class="btn btn-neutral float-right" title="Zdt optimisation problem" accesskey="n" rel="next">Next <img src="_static/images/chevron-right-orange.svg" class="next-page"></a>
+      
+      
+        <a href="qap_example.html" class="btn btn-neutral" title="Quadratric Assignment Problem" accesskey="p" rel="prev"><img src="_static/images/chevron-right-orange.svg" class="previous-page"> Previous</a>
+      
+    </div>
+  
+
+  
+
+    <hr>
+
+  
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2021, Jérôme BUISINE.
+
+    </p>
+  </div>
+    
+      <div>
+        Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+      </div>
+     
+
+</footer>
+
+          </div>
+        </div>
+
+        <div class="pytorch-content-right" id="pytorch-content-right">
+          <div class="pytorch-right-menu" id="pytorch-right-menu">
+            <div class="pytorch-side-scroll" id="pytorch-side-scroll-right">
+              <ul>
+<li><a class="reference internal" href="#">Unconstrained Binary Quadratic Programming</a><ul>
+<li><a class="reference internal" href="#ubqp-problem-definition">UBQP problem definition</a><ul>
+<li><a class="reference internal" href="#understand-the-ubqp-problem">Understand the UBQP Problem</a></li>
+<li><a class="reference internal" href="#mathematical-definition">Mathematical definition</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#ubqp-problem-instance-generation">UBQP Problem instance generation</a><ul>
+<li><a class="reference internal" href="#genration-of-the-instance">Genration of the instance</a></li>
+<li><a class="reference internal" href="#load-data-instance">Load data instance</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#macop-ubqp-implementation">Macop UBQP implementation</a><ul>
+<li><a class="reference internal" href="#solution-structure-definition">Solution structure definition</a></li>
+<li><a class="reference internal" href="#ubqp-evaluator">UBQP Evaluator</a></li>
+<li><a class="reference internal" href="#running-algorithm">Running algorithm</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+  
+
+
+  
+
+     
+       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+         <script type="text/javascript" src="_static/jquery.js"></script>
+         <script type="text/javascript" src="_static/underscore.js"></script>
+         <script type="text/javascript" src="_static/doctools.js"></script>
+         <script type="text/javascript" src="_static/language_data.js"></script>
+         <script type="text/javascript" src="_static/js/custom.js"></script>
+         <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+     
+
+  
+
+  <script type="text/javascript" src="_static/js/vendor/popper.min.js"></script>
+  <script type="text/javascript" src="_static/js/vendor/bootstrap.min.js"></script>
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+  <!-- Begin Footer -->
+
+  <div class="container-fluid" id="docs-tutorials-resources">
+    <div class="container">
+      <div class="row">
+        <!--
+        <div class="col-md-4 text-center">
+          <h2>Docs</h2>
+          <p>Access comprehensive developer documentation for PyTorch</p>
+          <a class="with-right-arrow" href="https://pytorch.org/docs/stable/index.html">View Docs</a>
+        </div>
+
+        <div class="col-md-4 text-center">
+          <h2>Tutorials</h2>
+          <p>Get in-depth tutorials for beginners and advanced developers</p>
+          <a class="with-right-arrow" href="https://pytorch.org/tutorials">View Tutorials</a>
+        </div>
+
+        <div class="col-md-4 text-center">
+          <h2>Resources</h2>
+          <p>Find development resources and get your questions answered</p>
+          <a class="with-right-arrow" href="https://pytorch.org/resources">View Resources</a>
+        </div>
+        -->
+      </div>
+    </div>
+  </div>
+
+
+  <!-- <footer class="site-footer">
+    <div class="container footer-container">
+      <div class="footer-logo-wrapper">
+        <a href="https://github.com/mpariente/asteroid" class="footer-logo"></a>
+      </div>
+
+      <div class="footer-links-wrapper">
+
+        <div class="footer-logo-col">
+          <img class="footer-logo-img" src="_static/images/dark_asteroid_logo.svg"/>
+        </div>
+
+        <div class="footer-links-col">
+          <ul>
+            <li class="list-title"><a href="https://github.com/mpariente/asteroid">Asteroid</a></li>
+            <li><a href="https://pytorch.org/get-started">Get Started</a></li>
+            <li><a href="https://pytorch.org/features">Features</a></li>
+            <li><a href="">Ecosystem</a></li>
+            <li><a href="https://pytorch.org/blog/">Blog</a></li>
+            <li><a href="https://pytorch.org/resources">Resources</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-links-col">
+          <ul>
+            <li class="list-title"><a href="https://pytorch.org/support">Support</a></li>
+            <li><a href="https://pytorch.org/tutorials">Tutorials</a></li>
+            <li><a href="https://pytorch.org/docs/stable/index.html">Docs</a></li>
+            <li><a href="https://discuss.pytorch.org" target="_blank">Discuss</a></li>
+            <li><a href="https://github.com/mpariente/asteroid/issues" target="_blank">Github Issues</a></li>
+            <li><a href="" target="_blank">Slack</a></li>
+            <li><a href="https://github.com/mpariente/asteroid/blob/master/CONTRIBUTING.md" target="_blank">Contributing</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-links-col follow-us-col">
+          <ul>
+            <li class="list-title">Follow Us</li>
+            <li>
+              <div id="mc_embed_signup">
+                <form
+                  action="https://twitter.us14.list-manage.com/subscribe/post?u=75419c71fe0a935e53dfa4a3f&id=91d0dccd39"
+                  method="post"
+                  id="mc-embedded-subscribe-form"
+                  name="mc-embedded-subscribe-form"
+                  class="email-subscribe-form validate"
+                  target="_blank"
+                  novalidate>
+                  <div id="mc_embed_signup_scroll" class="email-subscribe-form-fields-wrapper">
+                    <div class="mc-field-group">
+                      <label for="mce-EMAIL" style="display:none;">Email Address</label>
+                      <input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL" placeholder="Email Address">
+                    </div>
+
+                    <div id="mce-responses" class="clear">
+                      <div class="response" id="mce-error-response" style="display:none"></div>
+                      <div class="response" id="mce-success-response" style="display:none"></div>
+                    </div>
+
+                    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_75419c71fe0a935e53dfa4a3f_91d0dccd39" tabindex="-1" value=""></div>
+
+                    <div class="clear">
+                      <input type="submit" value="" name="subscribe" id="mc-embedded-subscribe" class="button email-subscribe-button">
+                    </div>
+                  </div>
+                </form>
+              </div>
+
+            </li>
+          </ul>
+
+          <div class="footer-social-icons">
+            <a href="" target="_blank" class="facebook"></a>
+            <a href="https://twitter.com" target="_blank" class="twitter"></a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </footer> -->
+
+
+  <!-- End Footer -->
+
+  <!-- Begin Mobile Menu -->
+
+  <div class="mobile-main-menu">
+    <div class="container-fluid">
+      <div class="container">
+        <div class="mobile-main-menu-header-container">
+          <a class="header-logo" href="https://github.com/mpariente/asteroid" aria-label="PyTorch Lightning"></a>
+          <a class="main-menu-close-button" href="#" data-behavior="close-mobile-menu"></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="mobile-main-menu-links-container">
+      <div class="main-menu">
+        <ul>
+          <li>
+            <a href="https://pytorch.org/get-started">Get Started</a>
+          </li>
+
+          <li>
+            <a href="https://pytorch.org/features">Features</a>
+          </li>
+
+          <li>
+            <a href="https://pytorch.org/blog/">Blog</a>
+          </li>
+
+          <li>
+            <a href="https://pytorch.org/tutorials">Tutorials</a>
+          </li>
+
+          <li>
+            <a href="https://pytorch.org/docs/stable/index.html">Docs</a>
+          </li>
+
+          <li>
+            <a href="https://pytorch.org/resources">Resources</a>
+          </li>
+
+          <li>
+            <a href="https://github.com/mpariente/asteroid">Github</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- End Mobile Menu -->
+
+  <script type="text/javascript" src="_static/js/vendor/anchor.min.js"></script>
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+      mobileMenu.bind();
+      mobileTOC.bind();
+      pytorchAnchors.bind();
+      sideMenus.bind();
+      scrollToAnchor.bind();
+      highlightNavigation.bind();
+      mainMenuDropdown.bind();
+
+      // Add class to links that have code blocks, since we cannot create links in code blocks
+      $("article.pytorch-article a span.pre").each(function(e) {
+        $(this).closest("a").addClass("has-code");
+      });
+    })
+  </script>
+</body>
+</html>

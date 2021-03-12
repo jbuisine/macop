@@ -17,17 +17,18 @@ import sys
 import asteroid_sphinx_theme
 
 sys.path.insert(0, os.path.abspath('../../../macop'))
+from macop import __version__
 
 # -- Project information -----------------------------------------------------
 
 project = 'Macop'
-copyright = '2020, Jérôme BUISINE'
+copyright = '2021, Jérôme BUISINE'
 author = 'Jérôme BUISINE'
 
 # The short X.Y version
-version = '1.0.6'
+version = __version__
 # The full version, including alpha/beta/rc tags
-release = 'v1.0.6'
+release = __version__
 
 
 # -- General configuration ---------------------------------------------------
@@ -47,8 +48,13 @@ extensions = [
     'sphinx.ext.autosummary',
     'sphinx.ext.viewcode',
     'sphinx.ext.coverage',
+    'sphinx.ext.intersphinx',
+    #'sphinx.ext.pngmath',
     #'autoapi.extension' 
 ]
+
+# Enable numref
+numfig = True
 
 # These folders are copied to the documentation's HTML output
 html_static_path = ['_static']
@@ -68,7 +74,7 @@ html_js_files = [
 # autoapi_dirs = ['../../rawls']
 
 autosummary_generate = True
-autodoc_default_flags = ['members']
+autodoc_default_flags = ['class', 'members', 'inherited-members', 'show-inheritance']
 autodoc_member_order = 'groupwise'
 
 # Add any paths that contain templates here, relative to this directory.
@@ -153,6 +159,9 @@ html_static_path = ['_static']
 # 'searchbox.html']``.
 #
 # html_sidebars = {}
+# html_sidebars = { '**': ['globaltoc.html', 'relations.html', 'sourcelink.html', 'searchbox.html'] }
+
+html_sidebars = {'**': ['fulltoc.html', 'relations.html', 'sourcelink.html', 'searchbox.html']}
 
 # -- Options for HTMLHelp output ---------------------------------------------
 

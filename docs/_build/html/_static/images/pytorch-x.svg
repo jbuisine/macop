@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.1"
+   id="Layer_1"
+   x="0px"
+   y="0px"
+   viewBox="0 0 200 200"
+   style="enable-background:new 0 0 200 200;"
+   xml:space="preserve"
+   sodipodi:docname="pytorch-x-green.svg"
+   inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)"><metadata
+   id="metadata13"><rdf:RDF><cc:Work
+       rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
+         rdf:resource="http://purl.org/dc/dcmitype/StillImage" /><dc:title></dc:title></cc:Work></rdf:RDF></metadata><defs
+   id="defs11" /><sodipodi:namedview
+   pagecolor="#ffffff"
+   bordercolor="#666666"
+   borderopacity="1"
+   objecttolerance="10"
+   gridtolerance="10"
+   guidetolerance="10"
+   inkscape:pageopacity="0"
+   inkscape:pageshadow="2"
+   inkscape:window-width="3840"
+   inkscape:window-height="2094"
+   id="namedview9"
+   showgrid="false"
+   inkscape:zoom="5.21"
+   inkscape:cx="102.30326"
+   inkscape:cy="100"
+   inkscape:window-x="0"
+   inkscape:window-y="0"
+   inkscape:window-maximized="1"
+   inkscape:current-layer="Layer_1" />
+<style
+   type="text/css"
+   id="style2">
+	.st0{fill:#EE4C2A;}
+</style>
+<rect
+   x="-27.55"
+   y="90.14"
+   transform="matrix(0.7071 0.7071 -0.7071 0.7071 100 -41.4214)"
+   class="st0"
+   width="255.1"
+   height="19.72"
+   id="rect4" />
+<rect
+   x="-27.55"
+   y="90.14"
+   transform="matrix(-0.7071 0.7071 -0.7071 -0.7071 241.4214 100)"
+   class="st0"
+   width="255.1"
+   height="19.72"
+   id="rect6" />
+<path
+   style="fill:#009900;stroke-width:0.191939"
+   d="M 9.8847818,190.11511 2.9761032,183.20443 44.578207,141.60232 86.180313,100.00022 44.578263,58.397841 2.9762137,16.79546 9.884837,9.8848367 16.79346,2.9742136 58.396729,44.577152 100,86.18009 141.60327,44.577152 183.20654,2.9742136 l 6.90862,6.9106231 6.90862,6.9106233 -41.60204,41.602381 -41.60205,41.602379 41.6021,41.6021 41.60211,41.60211 -6.90868,6.91068 -6.90868,6.91067 L 141.60327,155.42285 100,113.81991 58.396729,155.42285 16.79346,197.02578 Z"
+   id="path838" /></svg>

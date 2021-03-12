@@ -1,0 +1,1482 @@
+
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>A tour of Macop &mdash; Macop 1.2.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!-- <link rel="stylesheet" href="_static/pygments.css" type="text/css" /> -->
+  <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="API" href="api.html" />
+    <link rel="prev" title="Description" href="description.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+  <!-- Preload the theme fonts -->
+
+<link rel="preload" href="_static/fonts/FreightSans/freight-sans-book.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="_static/fonts/FreightSans/freight-sans-medium.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="_static/fonts/IBMPlexMono/IBMPlexMono-Medium.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="_static/fonts/FreightSans/freight-sans-bold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="_static/fonts/FreightSans/freight-sans-medium-italic.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="_static/fonts/IBMPlexMono/IBMPlexMono-SemiBold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+
+<!-- Preload the katex fonts -->
+
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Math-Italic.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Main-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Main-Bold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size1-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size4-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size2-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size3-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Caligraphic-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+</head>
+
+<div class="container-fluid header-holder tutorials-header" id="header-holder">
+  <div class="container">
+    <div class="header-container">
+      <a class="header-logo" href="https://github.com/mpariente/asteroid" aria-label="PyTorch">
+       <!-- <img class="call-to-action-img" src="_static/images/asteroid_logo_dark.png"/> -->
+      </a>
+
+      <div class="main-menu">
+        <ul>
+          <li>
+            <a href="https://pytorch.org/get-started">Get Started</a>
+          </li>
+
+          <li>
+            <a href="https://pytorch.org/blog/">Blog</a>
+          </li>
+
+          <li>
+            <a href="https://pytorch.org/tutorials">Tutorials</a>
+          </li>
+
+          <li>
+            <a href="https://pytorch.org/docs/stable/index.html">Docs</a>
+          </li>
+
+          <li>
+            <div class="resources-dropdown">
+              <a id="resourcesDropdownButton" data-toggle="resources-dropdown">
+                Resources
+              </a>
+              <div class="resources-dropdown-menu">
+                <a class="nav-dropdown-item" href="https://pytorch.org/resources"">
+                  <span class=dropdown-title>Developer Resources</span>
+                  <p>Find resources and get questions answered</p>
+                </a>
+                <!--
+                <a class="nav-dropdown-item" href="https://pytorch.org/features">
+                  <span class=dropdown-title>About</span>
+                  <p>Learn about PyTorch’s features and capabilities</p>
+                </a>
+                -->
+              </div>
+            </div>
+          </li>
+
+          <li>
+            <a href="https://github.com/mpariente/asteroid">Github</a>
+          </li>
+        </ul>
+      </div>
+
+      <a class="main-menu-open-button" href="#" data-behavior="open-mobile-menu"></a>
+    </div>
+
+  </div>
+</div>
+
+
+<body class="pytorch-body">
+
+   
+
+    
+
+    <div class="table-of-contents-link-wrapper">
+      <span>Table of Contents</span>
+      <a href="#" class="toggle-table-of-contents" data-behavior="toggle-table-of-contents"></a>
+    </div>
+
+    <nav data-toggle="wy-nav-shift" class="pytorch-left-menu" id="pytorch-left-menu">
+      <div class="pytorch-side-scroll">
+        <div class="pytorch-menu pytorch-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          <div class="pytorch-left-menu-search">
+            
+
+            
+              
+              
+                <div class="version">
+                  1.2.0
+                </div>
+              
+            
+
+            
+
+
+  
+
+
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search Docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+            
+          </div>
+
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="description.html">Description</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">A tour of Macop</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Example uses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <div class="pytorch-container">
+      <div class="pytorch-page-level-bar" id="pytorch-page-level-bar">
+        <div class="pytorch-breadcrumbs-wrapper">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="pytorch-breadcrumbs">
+    
+      <li>
+        <a href="index.html">
+          
+            Docs
+          
+        </a> &gt;
+      </li>
+
+        
+      <li>A tour of Macop</li>
+    
+    
+      <li class="pytorch-breadcrumbs-aside">
+        
+            
+            
+              <a href="https://github.com/prise-3d/macop/blob/master/docs/source/documentations.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+</div>
+        </div>
+
+        <div class="pytorch-shortcuts-wrapper" id="pytorch-shortcuts-wrapper">
+          Shortcuts
+        </div>
+      </div>
+
+      <section data-toggle="wy-nav-shift" id="pytorch-content-wrap" class="pytorch-content-wrap">
+        <div class="pytorch-content-left">
+
+        
+          
+          <div class="rst-content">
+          
+            <div role="main" class="main-content" itemscope="itemscope" itemtype="http://schema.org/Article">
+             <article itemprop="articleBody" id="pytorch-article" class="pytorch-article">
+              
+  <div class="section" id="a-tour-of-macop">
+<h1>A tour of Macop<a class="headerlink" href="#a-tour-of-macop" title="Permalink to this headline">¶</a></h1>
+<a class="reference internal image-reference" href="_images/logo_macop.png"><img alt="_images/logo_macop.png" class="align-center" src="_images/logo_macop.png" style="width: 300px;" /></a>
+<p>This documentation will allow a user who wishes to use the <strong>Macop</strong> optimisation package to understand both how it works and offers examples of how to implement specific needs.</p>
+<p>It will gradually take up the major ideas developed within <strong>Macop</strong> to allow for quick development. You can navigate directly via the menu available below to access a specific part of the documentation.</p>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p><cite>Macop</cite> is a python package for solving discrete optimisation problems in nature. Continuous optimisation is also applicable but not yet developed. The objective is to allow a user to exploit the basic structure proposed by this package to solve a problem specific to him. The interest is that he can quickly abstract himself from the complications related to the way of evaluating, comparing, saving the progress of the search for good solutions but rather concentrate if necessary on his own algorithm. Indeed, <cite>Macop</cite> offers the following main and basic features:</p>
+<ul class="simple">
+<li><p><strong>solutions:</strong> representation of the solution;</p></li>
+<li><p><strong>validator:</strong> such as constraint programming, a <cite>validator</cite> is a function which is used to validate or not a solution data state;</p></li>
+<li><p><strong>evaluator:</strong> stores problem instance data and implements a <cite>compute</cite> method in order to evaluate a solution;</p></li>
+<li><p><strong>operators:</strong> mutators, crossovers operators to update and obtain new solution;</p></li>
+<li><p><strong>policies:</strong> the way you choose the available operators (might be using reinforcement learning);</p></li>
+<li><p><strong>algorithms:</strong> generic and implemented optimisation research algorithms;</p></li>
+<li><p><strong>callbacks:</strong> callbacks to automatically keep track of the search space advancement and restart from previous state if nedded.</p></li>
+</ul>
+<a class="reference internal image-reference" href="_images/macop_behaviour.png"><img alt="_images/macop_behaviour.png" class="align-center" src="_images/macop_behaviour.png" style="width: 50%;" /></a>
+<p>Based on all of these generic and/or implemented functionalities, the user will be able to quickly develop a solution to his problem while retaining the possibility of remaining in control of his development by overloading existing functionalities if necessary.</p>
+</div>
+<div class="section" id="problem-instance">
+<h2>Problem instance<a class="headerlink" href="#problem-instance" title="Permalink to this headline">¶</a></h2>
+<p>In this tutorial, we introduce the way of using <strong>Macop</strong> and running your algorithm quickly using the well known <cite>knapsack</cite> problem.</p>
+<div class="section" id="problem-definition">
+<h3>Problem definition<a class="headerlink" href="#problem-definition" title="Permalink to this headline">¶</a></h3>
+<p>The <strong>knapsack problem</strong> is a problem in combinatorial optimisation: Given a set of items, each with a weight and a value, determine the number of each item to include in a collection so that the total weight is less than or equal to a given limit and the total value is as large as possible.</p>
+<p>The image below provides an illustration of the problem:</p>
+<a class="reference internal image-reference" href="_images/knapsack_problem.png"><img alt="_images/knapsack_problem.png" class="align-center" src="_images/knapsack_problem.png" style="width: 40%;" /></a>
+<p>In this problem, we try to optimise the value associated with the objects we wish to put in our backpack while respecting the capacity of the bag (weight constraint).</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>It is a combinatorial and therefore discrete problem. <strong>Macop</strong> decomposes its package into two parts, which is related to discrete optimisation on the one hand, and continuous optimisation on the other hand. This will be detailed later.</p>
+</div>
+</div>
+<div class="section" id="problem-implementation">
+<h3>Problem implementation<a class="headerlink" href="#problem-implementation" title="Permalink to this headline">¶</a></h3>
+<p>During the whole tutorial, the example used is based on the previous illustration with:</p>
+<a class="reference internal image-reference" href="_images/project_knapsack_problem.png"><img alt="_images/project_knapsack_problem.png" class="align-center" src="_images/project_knapsack_problem.png" style="width: 85%;" /></a>
+<p>Hence, we now define our problem in Python:</p>
+<ul class="simple">
+<li><p>worth value of each objects</p></li>
+<li><p>weight associated to each of these objects</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Problem instance definition</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="n">elements_score</span> <span class="o">=</span> <span class="p">[</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span> <span class="p">]</span> <span class="c1"># worth of each object</span>
+<span class="n">elements_weight</span> <span class="o">=</span> <span class="p">[</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span> <span class="p">]</span> <span class="c1"># weight of each object</span>
+</pre></div>
+</div>
+<p>Once we have defined the instance of our problem, we will need to define the representation of a solution to that problem.</p>
+<p>Let’s define the <code class="docutils literal notranslate"><span class="pre">SimpleBinaryCrossover</span></code> operator, allows to randomly change a binary value of our current solution.</p>
+</div>
+</div>
+<div class="section" id="solutions">
+<h2>Solutions<a class="headerlink" href="#solutions" title="Permalink to this headline">¶</a></h2>
+<p>Representing a solution to a specific problem is very important in an optimisation process. In this example, we will always use the <strong>knapsack problem</strong> as a basis.</p>
+<p>In a first step, the management of the solutions by the macop package will be presented. Then a specific implementation for the current problem will be detailed.</p>
+<div class="section" id="generic-solution">
+<h3>Generic Solution<a class="headerlink" href="#generic-solution" title="Permalink to this headline">¶</a></h3>
+<p>Inside <a class="reference external" href="macop/macop.solutions.base.html#module-macop.solutions.base">macop.solutions.base</a> module of <cite>Macop</cite>, the <code class="docutils literal notranslate"><span class="pre">Solution</span></code> class is available. It’s an abstract solution class structure which:</p>
+<ul class="simple">
+<li><p>stores the solution data representation into its <code class="docutils literal notranslate"><span class="pre">data</span></code> attribute</p></li>
+<li><p>get <code class="docutils literal notranslate"><span class="pre">size</span></code> (shape) of specific data representation</p></li>
+<li><p>stores the <code class="docutils literal notranslate"><span class="pre">score</span></code> of the solution once a solution is evaluated</p></li>
+</ul>
+<p>Some specific methods are available:</p>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>An important thing here are the <code class="docutils literal notranslate"><span class="pre">fitness</span></code>, <code class="docutils literal notranslate"><span class="pre">size</span></code> and <code class="docutils literal notranslate"><span class="pre">data</span></code> functions brought as an editable attribute by the <code class="docutils literal notranslate"><span class="pre">&#64;property</span></code> and <code class="docutils literal notranslate"><span class="pre">&#64;XXXXX.setter</span></code> decorators. The idea is to allow the user to modify these functions in order to change the expected result of the algorithm regardless of the data to be returned/modified.</p>
+</div>
+<p>From these basic methods, it is possible to manage a representation of a solution to our problem.</p>
+<p>Allowing to initialise it randomly or not (using constructor or <code class="docutils literal notranslate"><span class="pre">random</span></code> method), to evaluate it (<code class="docutils literal notranslate"><span class="pre">evaluate</span></code> method) and to check some constraints of validation of the solution (<code class="docutils literal notranslate"><span class="pre">isValid</span></code> method).</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Only one of these methods needs specification if we create our own type of solution. This is the <code class="docutils literal notranslate"><span class="pre">random</span></code> method, which depends on the need of the problem.</p>
+</div>
+<p>We will now see how to define a type of solution specific to our problem.</p>
+</div>
+<div class="section" id="solution-representation-for-knapsack">
+<h3>Solution representation for knapsack<a class="headerlink" href="#solution-representation-for-knapsack" title="Permalink to this headline">¶</a></h3>
+<p>We will now use the abstract <code class="docutils literal notranslate"><span class="pre">Solution</span></code> type available in the <a class="reference external" href="macop/macop.solutions.base.html#module-macop.solutions.base">macop.solutions.base</a> module in order to define our own solution.
+First of all, let’s look at the representation of our knapsack problem. <strong>How to represent the solution?</strong></p>
+<div class="section" id="knapsack-solution">
+<h4>Knapsack solution<a class="headerlink" href="#knapsack-solution" title="Permalink to this headline">¶</a></h4>
+<p>A valid solution can be shown below where the sum of the object weights is 15 and the sum of the selected objects values is 8 (its fitness):</p>
+<a class="reference internal image-reference" href="_images/project_knapsack_solution.png"><img alt="_images/project_knapsack_solution.png" class="align-center" src="_images/project_knapsack_solution.png" style="width: 85%;" /></a>
+<p>Its representation can be translate as a <strong>binary array</strong> with value:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>where selected objects have <strong>1</strong> as value otherwise <strong>0</strong>.</p>
+</div>
+<div class="section" id="binary-solution">
+<h4>Binary Solution<a class="headerlink" href="#binary-solution" title="Permalink to this headline">¶</a></h4>
+<p>We will now define our own type of solution by inheriting from <a class="reference external" href="macop/macop.solutions.base.html#macop.solutions.base.Solution">macop.solutions.base.Solution</a>, which we will call <code class="docutils literal notranslate"><span class="pre">BinarySolution</span></code>.</p>
+<p>First we will define our new class as inheriting functionality from <code class="docutils literal notranslate"><span class="pre">Solution</span></code> (such as child class).
+We will also have to implement the <code class="docutils literal notranslate"><span class="pre">random</span></code> method to create a new random solution.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">modules imports</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">macop.solutions.base</span> <span class="kn">import</span> <span class="n">Solution</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="k">class</span> <span class="nc">BinarySolution</span><span class="p">(</span><span class="n">Solution</span><span class="p">):</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">random</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="n">validator</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+        <span class="c1"># create binary array of specific size using numpy random module</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">size</span><span class="p">)</span>
+        <span class="c1"># initialise new solution using constructor</span>
+        <span class="n">solution</span> <span class="o">=</span> <span class="n">BinarySolution</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">size</span><span class="p">)</span>
+
+        <span class="c1"># check if validator is set</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">validator</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">solution</span>
+
+        <span class="c1"># try to generate solution until solution validity (if validator is provided)</span>
+        <span class="k">while</span> <span class="ow">not</span> <span class="n">validator</span><span class="p">(</span><span class="n">solution</span><span class="p">):</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">size</span><span class="p">)</span>
+            <span class="n">solution</span> <span class="o">=</span> <span class="n">BinarySolution</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">size</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">solution</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The current developed <code class="docutils literal notranslate"><span class="pre">BinarySolution</span></code> is available into <a class="reference external" href="macop/macop.solutions.discrete.html#macop.solutions.discrete.BinarySolution">macop.solutions.discrete.BinarySolution</a> in <strong>Macop</strong>.</p>
+</div>
+<p>Using this new Solution representation, we can now generate solution randomly:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">solution</span> <span class="o">=</span> <span class="n">BinarySolution</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In the next part, we will see how to verify that a solution meets certain modeling constraints of the problem.</p>
+</div>
+</div>
+</div>
+<div class="section" id="validate-a-solution">
+<h2>Validate a solution<a class="headerlink" href="#validate-a-solution" title="Permalink to this headline">¶</a></h2>
+<p>When an optimisation problem requires respecting certain constraints, Macop allows you to quickly verify that a solution is valid.
+It is based on a defined function taking a solution as input and returning the validity criterion (true or false).</p>
+<div class="section" id="validator-definition">
+<h3>Validator definition<a class="headerlink" href="#validator-definition" title="Permalink to this headline">¶</a></h3>
+<p>An invalid solution can be shown below where the sum of the object weights is greater than 15:</p>
+<a class="reference internal image-reference" href="_images/project_knapsack_invalid.png"><img alt="_images/project_knapsack_invalid.png" class="align-center" src="_images/project_knapsack_invalid.png" style="width: 85%;" /></a>
+<p>In fact, <strong>[1, 0, 1, 0, 0]</strong> is an invalid solution as we have a weight of <strong>16</strong> which violates the knapsack capacity constraint.</p>
+<p>To avoid taking into account invalid solutions, we can define our function which will validate or not a solution based on our problem instance:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Problem instance definition</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="n">elements_score</span> <span class="o">=</span> <span class="p">[</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span> <span class="p">]</span> <span class="c1"># worth of each object</span>
+<span class="n">elements_weight</span> <span class="o">=</span> <span class="p">[</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span> <span class="p">]</span> <span class="c1"># weight of each object</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Validator function definition</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="k">def</span> <span class="nf">validator</span><span class="p">(</span><span class="n">solution</span><span class="p">):</span>
+
+    <span class="n">weight_sum</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">w</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">elements_weight</span><span class="p">):</span>
+        <span class="c1"># add weight if current object is set to 1</span>
+        <span class="n">weight_sum</span> <span class="o">+=</span> <span class="n">w</span> <span class="o">*</span> <span class="n">solution</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
+    <span class="c1"># validation condition</span>
+    <span class="k">return</span> <span class="n">weight_sum</span> <span class="o">&lt;=</span> <span class="mi">15</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="use-of-validator">
+<h3>Use of validator<a class="headerlink" href="#use-of-validator" title="Permalink to this headline">¶</a></h3>
+<p>We can now generate solutions randomly by passing our validation function as a parameter:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Problem instance definition</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="o">...</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Validator function definition</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="o">...</span>
+
+<span class="c1"># ensure valid solution</span>
+<span class="n">solution</span> <span class="o">=</span> <span class="n">BinarySolution</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">validator</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>If the search space for valid solutions is very small compared to the overall search space, this can involve a considerable time for validating the solution and therefore obtaining a solution.</p>
+</div>
+<p>The validation of a solution is therefore now possible. In the next part we will focus on the evaluation of a solution.</p>
+</div>
+</div>
+<div class="section" id="use-of-evaluators">
+<h2>Use of evaluators<a class="headerlink" href="#use-of-evaluators" title="Permalink to this headline">¶</a></h2>
+<p>Now that it is possible to generate a solution randomly or not. It is important to know the value associated with this solution. We will then speak of evaluation of the solution. With the score associated with it, the <cite>fitness</cite>.</p>
+<div class="section" id="generic-evaluator">
+<h3>Generic evaluator<a class="headerlink" href="#generic-evaluator" title="Permalink to this headline">¶</a></h3>
+<p>As for the management of solutions, a generic evaluator class <a class="reference external" href="macop/macop.evaluators.base.html#macop.evaluators.base.Evaluator">macop.evaluators.base.Evaluator</a> is developed within <strong>Macop</strong>:</p>
+<p>Abstract Evaluator class is used for computing fitness score associated to a solution. To evaluate all the solutions, this class:</p>
+<ul class="simple">
+<li><p>stores into its <code class="docutils literal notranslate"><span class="pre">data</span></code> initialiser dictionary attritute required measures when computing a solution</p></li>
+<li><p>has a <code class="docutils literal notranslate"><span class="pre">compute</span></code> abstract method enable to compute and associate a score to a given solution</p></li>
+<li><p>stores into its <code class="docutils literal notranslate"><span class="pre">algo</span></code> attritute the current algorithm to use (we will talk about algorithm later)</p></li>
+</ul>
+<p>We must therefore now create our own evaluator based on the proposed structure.</p>
+</div>
+<div class="section" id="custom-evaluator">
+<h3>Custom evaluator<a class="headerlink" href="#custom-evaluator" title="Permalink to this headline">¶</a></h3>
+<p>To create our own evaluator, we need both:</p>
+<ul class="simple">
+<li><p>data useful for evaluating a solution</p></li>
+<li><p>compute the fitness associated with the state of the solution from these data. Hence, implement specific <code class="docutils literal notranslate"><span class="pre">compute</span></code> method.</p></li>
+</ul>
+<p>We will define the <code class="docutils literal notranslate"><span class="pre">KnapsackEvaluator</span></code> class, which will therefore allow us to evaluate solutions to our current problem.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">modules imports</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">macop.evaluators.base</span> <span class="kn">import</span> <span class="n">Evaluator</span>
+
+<span class="k">class</span> <span class="nc">KnapsackEvaluator</span><span class="p">(</span><span class="n">Evaluator</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">compute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">solution</span><span class="p">):</span>
+
+        <span class="c1"># `_data` contains worths array values of objects</span>
+        <span class="n">fitness</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">elem</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">solution</span><span class="o">.</span><span class="n">data</span><span class="p">):</span>
+            <span class="n">fitness</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s1">&#39;worths&#39;</span><span class="p">][</span><span class="n">index</span><span class="p">]</span> <span class="o">*</span> <span class="n">elem</span>
+
+        <span class="k">return</span> <span class="n">fitness</span>
+</pre></div>
+</div>
+<p>It is now possible to initialise our new evaluator with specific data of our problem instance:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Problem instance definition</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="n">elements_score</span> <span class="o">=</span> <span class="p">[</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span> <span class="p">]</span> <span class="c1"># worth of each object</span>
+<span class="n">elements_weight</span> <span class="o">=</span> <span class="p">[</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span> <span class="p">]</span> <span class="c1"># weight of each object</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Evaluator problem instance</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="n">evaluator</span> <span class="o">=</span> <span class="n">KnapsackEvaluator</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;worths&#39;</span><span class="p">:</span> <span class="n">elements_score</span><span class="p">})</span>
+
+<span class="c1"># using defined BinarySolution</span>
+<span class="n">solution</span> <span class="o">=</span> <span class="n">BinarySolution</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="c1"># obtaining current solution score</span>
+<span class="n">solution_fitness</span> <span class="o">=</span> <span class="n">solution</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">evaluator</span><span class="p">)</span>
+
+<span class="c1"># score is also stored into solution</span>
+<span class="n">solution_fitness</span> <span class="o">=</span> <span class="n">solution</span><span class="o">.</span><span class="n">fitness</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The current developed <code class="docutils literal notranslate"><span class="pre">KnapsackEvaluator</span></code> is available into <a class="reference external" href="macop/macop.evaluators.discrete.mono.html#macop.evaluators.discrete.mono.KnapsackEvaluator">macop.evaluators.discrete.mono.KnapsackEvaluator</a> in <strong>Macop</strong>.</p>
+</div>
+<p>In the next part we will see how to modify our current solution with the use of modification operator.</p>
+</div>
+</div>
+<div class="section" id="apply-operators-to-solution">
+<h2>Apply operators to solution<a class="headerlink" href="#apply-operators-to-solution" title="Permalink to this headline">¶</a></h2>
+<p>Applying an operator to a solution consists of modifying the current state of the solution in order to obtain a new one. The goal is to find a better solution in the search space.</p>
+<div class="section" id="operators-definition">
+<h3>Operators definition<a class="headerlink" href="#operators-definition" title="Permalink to this headline">¶</a></h3>
+<p>In the discrete optimisation literature, we can categorise operators into two sections:</p>
+<ul class="simple">
+<li><p><strong>mutators</strong>: modification of one or more elements of a solution from its current state.</p></li>
+<li><p><strong>crossovers</strong>: Inspired by Darwin’s theory of evolution, we are going here from two solutions to generate a so-called offspring solution composed of the fusion of the data of the parent solutions.</p></li>
+</ul>
+<p>Inside <strong>Macop</strong>, operators are also decomposed into these two categories. Inside <a class="reference external" href="macop/macop.operators.base.html#module-macop.operators.base">macop.operators.base</a>, generic class <code class="docutils literal notranslate"><span class="pre">Operator</span></code> enables to manage any kind of operator.</p>
+<p>Like the evaluator, the operator keeps <strong>track of the algorithm</strong> (using <code class="docutils literal notranslate"><span class="pre">setAlgo</span></code> method) to which he will be linked. This will allow better management of the way in which the operator must take into account the state of current data relating to the evolution of research.</p>
+<p><code class="docutils literal notranslate"><span class="pre">Mutation</span></code> and <code class="docutils literal notranslate"><span class="pre">Crossover</span></code> classes inherite from <code class="docutils literal notranslate"><span class="pre">Operator</span></code>. An <code class="docutils literal notranslate"><span class="pre">apply</span></code> function is required for any new operator.</p>
+<p>We will now detail these categories of operators and suggest some relative to our problem.</p>
+</div>
+<div class="section" id="mutator-operator">
+<h3>Mutator operator<a class="headerlink" href="#mutator-operator" title="Permalink to this headline">¶</a></h3>
+<p>As detailed, the mutation operator consists in having a minimum impact on the current state of our solution. Here is an example of a modification that could be done for our problem.</p>
+<a class="reference internal image-reference" href="_images/project_knapsack_mutator.png"><img alt="_images/project_knapsack_mutator.png" class="align-center" src="_images/project_knapsack_mutator.png" style="width: 90%;" /></a>
+<p>In this example we change a bit value randomly and obtain a new solution from our search space.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Applying an operator can conduct to a new but invalid solution from the search space.</p>
+</div>
+<p>The modification applied here is just a bit swapped. Let’s define the <code class="docutils literal notranslate"><span class="pre">SimpleBinaryMutation</span></code> operator, allows to randomly change a binary value of our current solution.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">modules imports</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">macop.operators.discrete.base</span> <span class="kn">import</span> <span class="n">Mutation</span>
+
+<span class="k">class</span> <span class="nc">SimpleBinaryMutation</span><span class="p">(</span><span class="n">Mutation</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">apply</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">solution</span><span class="p">):</span>
+
+        <span class="c1"># obtain targeted cell using solution size</span>
+        <span class="n">size</span> <span class="o">=</span> <span class="n">solution</span><span class="o">.</span><span class="n">size</span>
+        <span class="n">cell</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1"># copy of solution</span>
+        <span class="n">copy_solution</span> <span class="o">=</span> <span class="n">solution</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span>
+
+        <span class="c1"># swicth values</span>
+        <span class="k">if</span> <span class="n">copy_solution</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">cell</span><span class="p">]:</span>
+            <span class="n">copy_solution</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">cell</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">copy_solution</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">cell</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+
+        <span class="c1"># return the new obtained solution</span>
+        <span class="k">return</span> <span class="n">copy_solution</span>
+</pre></div>
+</div>
+<p>We can now instanciate our new operator in order to obtain a new solution:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">BinaryMutator instance</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="n">mutator</span> <span class="o">=</span> <span class="n">SimpleBinaryMutation</span><span class="p">()</span>
+
+<span class="c1"># using defined BinarySolution</span>
+<span class="n">solution</span> <span class="o">=</span> <span class="n">BinarySolution</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="c1"># obtaining new solution using operator</span>
+<span class="n">new_solution</span> <span class="o">=</span> <span class="n">mutator</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">solution</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The developed <code class="docutils literal notranslate"><span class="pre">SimpleBinaryMutation</span></code> is available into <a class="reference external" href="macop/macop.operators.discrete.mutators.html#macop.operators.discrete.mutators.SimpleBinaryMutation">macop.operators.discrete.mutators.SimpleBinaryMutation</a> in <strong>Macop</strong>.</p>
+</div>
+</div>
+<div class="section" id="crossover-operator">
+<h3>Crossover operator<a class="headerlink" href="#crossover-operator" title="Permalink to this headline">¶</a></h3>
+<p>Inspired by Darwin’s theory of evolution, crossover starts from two solutions to generate a so-called offspring solution composed of the fusion of the data of the parent solutions.</p>
+<a class="reference internal image-reference" href="_images/project_knapsack_crossover.png"><img alt="_images/project_knapsack_crossover.png" class="align-center" src="_images/project_knapsack_crossover.png" style="width: 95%;" /></a>
+<p>In this example we merge two solutions with a specific splitting criterion in order to obtain an offspring.</p>
+<p>We will now implement the SimpleCrossover crossover operator, which will merge data from two solutions.
+The first half of solution 1 will be saved and added to the second half of solution 2 to generate the new solution (offspring).</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">modules imports</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">macop.operators.discrete.base</span> <span class="kn">import</span> <span class="n">Crossover</span>
+
+<span class="k">class</span> <span class="nc">SimpleCrossover</span><span class="p">(</span><span class="n">Crossover</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">apply</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">solution1</span><span class="p">,</span> <span class="n">solution2</span><span class="p">):</span>
+
+        <span class="n">size</span> <span class="o">=</span> <span class="n">solution1</span><span class="o">.</span><span class="n">size</span>
+
+        <span class="c1"># default split index used</span>
+        <span class="n">splitIndex</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">size</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+
+        <span class="c1"># copy data of solution 1</span>
+        <span class="n">firstData</span> <span class="o">=</span> <span class="n">solution1</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+        <span class="c1"># copy of solution 2</span>
+        <span class="n">copy_solution</span> <span class="o">=</span> <span class="n">solution2</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span>
+
+        <span class="n">copy_solution</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">splitIndex</span><span class="p">:]</span> <span class="o">=</span> <span class="n">firstData</span><span class="p">[</span><span class="n">splitIndex</span><span class="p">:]</span>
+
+        <span class="k">return</span> <span class="n">copy_solution</span>
+</pre></div>
+</div>
+<p>We can now use the crossover operator created to generate new solutions. Here is an example of use:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">SimpleCrossover instance</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="n">crossover</span> <span class="o">=</span> <span class="n">SimpleCrossover</span><span class="p">()</span>
+
+<span class="c1"># using defined BinarySolution</span>
+<span class="n">solution1</span> <span class="o">=</span> <span class="n">BinarySolution</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">solution2</span> <span class="o">=</span> <span class="n">BinarySolution</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="c1"># obtaining new solution using crossover</span>
+<span class="n">offspring</span> <span class="o">=</span> <span class="n">crossover</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">solution1</span><span class="p">,</span> <span class="n">solution2</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>The developed <code class="docutils literal notranslate"><span class="pre">SimpleCrossover</span></code> is available into <a class="reference external" href="macop/macop.operators.discrete.crossovers.html#macop.operators.discrete.crossovers.SimpleCrossover">macop.operators.discrete.crossovers.SimpleCrossover</a> in <strong>Macop</strong>.
+However, the choice of halves of the merged data is made randomly.</p>
+</div>
+<p>Next part introduce the <code class="docutils literal notranslate"><span class="pre">policy</span></code> feature of <strong>Macop</strong> which enables to choose the next operator to apply during the search process based on specific criterion.</p>
+</div>
+</div>
+<div class="section" id="operator-choices">
+<h2>Operator choices<a class="headerlink" href="#operator-choices" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">policy</span></code> feature of <strong>Macop</strong> enables to choose the next operator to apply during the search process of the algorithm based on specific criterion.</p>
+<div class="section" id="why-using-policy">
+<h3>Why using policy ?<a class="headerlink" href="#why-using-policy" title="Permalink to this headline">¶</a></h3>
+<p>Sometimes the nature of the problem and its instance can strongly influence the search results when using mutation operators or crossovers.
+Automated operator choice strategies have also been developed in the literature, notably based on reinforcement learning.</p>
+<p>The operator choice problem can be seen as the desire to find the best solution generation operator at the next evaluation that will be the most conducive to precisely improving the solution.</p>
+<a class="reference internal image-reference" href="_images/operators_choice.png"><img alt="_images/operators_choice.png" class="align-center" src="_images/operators_choice.png" style="width: 45%;" /></a>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>An implementation using reinforcement learning has been developed as an example in the <a class="reference external" href="macop/macop.policies.reinforcement.html#module-macop.policies.reinforcement">macop.policies.reinforcement</a> module.
+However, it will not be detailed here. You can refer to the API documentation for more details.</p>
+</div>
+</div>
+<div class="section" id="custom-policy">
+<h3>Custom policy<a class="headerlink" href="#custom-policy" title="Permalink to this headline">¶</a></h3>
+<p>In our case, we are not going to exploit a complex enough implementation of a <code class="docutils literal notranslate"><span class="pre">policy</span></code>. Simply, we will use a random choice of operator.</p>
+<p>First, let’s take a look of the <code class="docutils literal notranslate"><span class="pre">Policy</span></code> abstract class available in <a class="reference external" href="macop/macop.policies.base.html#module-macop.policies.base">macop.policies.base</a>:</p>
+<p><code class="docutils literal notranslate"><span class="pre">Policy</span></code> instance will have of <code class="docutils literal notranslate"><span class="pre">operators</span></code> attributes in order to keep track of possible operators when selecting one.
+Here, in our implementation we only need to specify the <code class="docutils literal notranslate"><span class="pre">select</span></code> abstract method. The <code class="docutils literal notranslate"><span class="pre">apply</span></code> method will select the next operator and return the new solution.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">module imports</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">macop.policies.base</span> <span class="kn">import</span> <span class="n">Policy</span>
+
+<span class="k">class</span> <span class="nc">RandomPolicy</span><span class="p">(</span><span class="n">Policy</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">select</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Select specific operator</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># choose operator randomly</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">operators</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">operators</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>We can now use this operator choice policy to update our current solution:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Operators instances</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="n">mutator</span> <span class="o">=</span> <span class="n">SimpleMutation</span><span class="p">()</span>
+<span class="n">crossover</span> <span class="o">=</span> <span class="n">SimpleCrossover</span><span class="p">()</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">RandomPolicy instance</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="n">policy</span> <span class="o">=</span> <span class="n">RandomPolicy</span><span class="p">([</span><span class="n">mutator</span><span class="p">,</span> <span class="n">crossover</span><span class="p">])</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Current solutions instance</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="n">solution1</span> <span class="o">=</span> <span class="n">BinarySolution</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">solution2</span> <span class="o">=</span> <span class="n">BinarySolution</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="c1"># pass two solutions in parameters in case of selected crossover operator</span>
+<span class="n">new_solution</span> <span class="o">=</span> <span class="n">policy</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">solution1</span><span class="p">,</span> <span class="n">solution2</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>By default if <code class="docutils literal notranslate"><span class="pre">solution2</span></code> parameter is not provided into <code class="docutils literal notranslate"><span class="pre">policy.apply</span></code> method for crossover, the best solution known is used from the algorithm linked to the <code class="docutils literal notranslate"><span class="pre">policy</span></code>.</p>
+</div>
+<p>Updating solutions is therefore now possible with our policy. It is high time to dive into the process of optimizing solutions and digging into our research space.</p>
+</div>
+</div>
+<div class="section" id="optimisation-process">
+<h2>Optimisation process<a class="headerlink" href="#optimisation-process" title="Permalink to this headline">¶</a></h2>
+<p>Let us now tackle the interesting part concerning the search for optimum solutions in our research space.</p>
+<div class="section" id="find-local-and-global-optima">
+<h3>Find local and global optima<a class="headerlink" href="#find-local-and-global-optima" title="Permalink to this headline">¶</a></h3>
+<p>Overall, in an optimization process, we will seek to find the best, or the best solutions that minimize or maximize our objective function (fitness score obtained) in order to respond to our problem.</p>
+<a class="reference internal image-reference" href="_images/search_space.png"><img alt="_images/search_space.png" class="align-center" src="_images/search_space.png" style="width: 95%;" /></a>
+<p>Sometimes, the search space can be very simple. A local search can provide access to the global optimum as shown in figure (a) above.
+In other cases, the search space is more complex. It may be necessary to explore more rather than exploit in order to get out of a convex zone and not find the global optimum but only a local opmatime solution.
+This problem is illustrated in figure (b).</p>
+</div>
+<div class="section" id="abstract-algorithm-class">
+<h3>Abstract algorithm class<a class="headerlink" href="#abstract-algorithm-class" title="Permalink to this headline">¶</a></h3>
+<p>An abstract class is proposed within Macop to generalize the management of an algorithm and therefore of a heuristic.
+It is located in the <a class="reference external" href="macop/macop.algorithms.base.html#module-macop.algorithms.base">macop.algorithms.base</a> module.</p>
+<p>We will pay attention to the different methods of which she is composed. This class enables to manage some common usages of operation research algorithms:</p>
+<ul class="simple">
+<li><p>initialization function of solution</p></li>
+<li><p>validator function to check if solution is valid or not (based on some criteria)</p></li>
+<li><p>evaluation function to give fitness score to a solution</p></li>
+<li><p>operators used in order to update solution during search process</p></li>
+<li><p>policy process applied when choosing next operator to apply</p></li>
+<li><p>callbacks function in order to do some relative stuff every number of evaluation or reload algorithm state</p></li>
+<li><p>parent algorithm associated to this new algorithm instance (hierarchy management)</p></li>
+</ul>
+<p>She is composed of few default attributes:</p>
+<ul class="simple">
+<li><p>initialiser: {function} – basic function strategy to initialise solution</p></li>
+<li><p>evaluator: {<a class="reference internal" href="macop/macop.evaluators.base.html#macop.evaluators.base.Evaluator" title="macop.evaluators.base.Evaluator"><code class="xref py py-class docutils literal notranslate"><span class="pre">Evaluator</span></code></a>} – evaluator instance in order to obtained fitness (mono or multiple objectives)</p></li>
+<li><p>operators: {[<a class="reference internal" href="macop/macop.operators.base.html#macop.operators.base.Operator" title="macop.operators.base.Operator"><code class="xref py py-class docutils literal notranslate"><span class="pre">Operator</span></code></a>]} – list of operator to use when launching algorithm</p></li>
+<li><p>policy: {<a class="reference internal" href="macop/macop.policies.base.html#macop.policies.base.Policy" title="macop.policies.base.Policy"><code class="xref py py-class docutils literal notranslate"><span class="pre">Policy</span></code></a>} – Policy instance strategy to select operators</p></li>
+<li><p>validator: {function} – basic function to check if solution is valid or not under some constraints</p></li>
+<li><p>maximise: {bool} – specify kind of optimisation problem</p></li>
+<li><p>verbose: {bool} – verbose or not information about the algorithm</p></li>
+<li><p>currentSolution: {<a class="reference internal" href="macop/macop.solutions.base.html#macop.solutions.base.Solution" title="macop.solutions.base.Solution"><code class="xref py py-class docutils literal notranslate"><span class="pre">Solution</span></code></a>} – current solution managed for current evaluation comparison</p></li>
+<li><p>bestSolution: {<a class="reference internal" href="macop/macop.solutions.base.html#macop.solutions.base.Solution" title="macop.solutions.base.Solution"><code class="xref py py-class docutils literal notranslate"><span class="pre">Solution</span></code></a>} – best solution found so far during running algorithm</p></li>
+<li><p>callbacks: {[<a class="reference internal" href="macop/macop.callbacks.base.html#macop.callbacks.base.Callback" title="macop.callbacks.base.Callback"><code class="xref py py-class docutils literal notranslate"><span class="pre">Callback</span></code></a>]} – list of Callback class implementation to do some instructions every number of evaluations and <cite>load</cite> when initialising algorithm</p></li>
+<li><p>parent: {<a class="reference internal" href="macop/macop.algorithms.base.html#macop.algorithms.base.Algorithm" title="macop.algorithms.base.Algorithm"><code class="xref py py-class docutils literal notranslate"><span class="pre">Algorithm</span></code></a>} – parent algorithm reference in case of inner Algorithm instance (optional)</p></li>
+</ul>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>An important thing here are the <code class="docutils literal notranslate"><span class="pre">result</span></code> functions brought as an editable attribute by the <code class="docutils literal notranslate"><span class="pre">&#64;property</span></code> and <code class="docutils literal notranslate"><span class="pre">&#64;result.setter</span></code> decorators. The idea is to allow the user to modify these functions in order to change the expected result of the algorithm regardless of the data to be returned/modified.</p>
+</div>
+<p>The notion of hierarchy between algorithms is introduced here. We can indeed have certain dependencies between algorithms.
+The methods <code class="docutils literal notranslate"><span class="pre">increaseEvaluation</span></code>, <code class="docutils literal notranslate"><span class="pre">getGlobalEvaluation</span></code> and <code class="docutils literal notranslate"><span class="pre">getGlobalMaxEvaluation</span></code> ensure that the expected global number of evaluations is correctly managed, just like the <code class="docutils literal notranslate"><span class="pre">stop</span></code> method for the search stop criterion.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">evaluate</span></code>, <code class="docutils literal notranslate"><span class="pre">update</span></code> and <code class="docutils literal notranslate"><span class="pre">isBetter</span></code> will be used a lot when looking for a solution in the search space.
+In particular the <code class="docutils literal notranslate"><span class="pre">update</span></code> function, which will call the <code class="docutils literal notranslate"><span class="pre">policy</span></code> instance to generate a new valid solution.
+<code class="docutils literal notranslate"><span class="pre">isBetter</span></code> method is also overloadable especially if the algorithm does not take any more into account than a single solution to be verified (verification via a population for example).</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">initRun</span></code> method specify the way you intialise your algorithm (<code class="docutils literal notranslate"><span class="pre">bestSolution</span></code> and <code class="docutils literal notranslate"><span class="pre">currentSolution</span></code> as example) if algorithm not already initialised.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">initRun</span></code> method can also be used for intialise population of solutions instead of only one best solution, if you want to manage a genetic algorithm.</p>
+</div>
+<p>Most important part is the <code class="docutils literal notranslate"><span class="pre">run</span></code> method. Into abstract, the <code class="docutils literal notranslate"><span class="pre">run</span></code> method only initialised the current number of evaluation for the algorithm based on the parent algorithm if we are into inner algorithm.
+It is always <strong>mandatory</strong> to call the parent class <code class="docutils literal notranslate"><span class="pre">run</span></code> method using <code class="docutils literal notranslate"><span class="pre">super().run(evaluations)</span></code>. Then, using <code class="docutils literal notranslate"><span class="pre">evaluations</span></code> parameter which is the number of evaluations budget to run, we can process or continue to find solutions into search space.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The other methods such as <code class="docutils literal notranslate"><span class="pre">addCallback</span></code>, <code class="docutils literal notranslate"><span class="pre">resume</span></code> and <code class="docutils literal notranslate"><span class="pre">progress</span></code> will be detailed in the next part focusing on the notion of callback.</p>
+</div>
+</div>
+<div class="section" id="local-search-algorithm">
+<h3>Local search algorithm<a class="headerlink" href="#local-search-algorithm" title="Permalink to this headline">¶</a></h3>
+<p>We are going to carry out our first local search algorithm within our search space. A <cite>local search</cite> consists of starting from a solution, then applying a mutation or crossover operation to it, in order to obtain a new one.
+This new solution is evaluated and retained if it is better. We will speak here of the notion of <strong>neighborhood exploration</strong>. The process is then completed in the same way.
+The local search ends after a certain number of evaluations and the best evaluated solution obtained is returned.</p>
+<p>Let’s implement an algorithm well known under the name of hill climber best improvment inheriting from the mother algorithm class and name it <code class="docutils literal notranslate"><span class="pre">HillClimberBestImprovment</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">module imports</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">macop.algorithms.base</span> <span class="kn">import</span> <span class="n">Algorithm</span>
+
+<span class="k">class</span> <span class="nc">HillClimberBestImprovment</span><span class="p">(</span><span class="n">Algorithm</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">evaluations</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Run a local search algorithm</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># by default use of mother method to initialise variables</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">evaluations</span><span class="p">)</span>
+
+        <span class="c1"># initialise current solution and best solution</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">initRun</span><span class="p">()</span>
+
+        <span class="n">solutionSize</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_currentSolution</span><span class="o">.</span><span class="n">size</span>
+
+        <span class="c1"># local search algorithm implementation</span>
+        <span class="k">while</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">stop</span><span class="p">():</span>
+
+            <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">solutionSize</span><span class="p">):</span>
+
+                <span class="c1"># update current solution using policy</span>
+                <span class="n">newSolution</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_currentSolution</span><span class="p">)</span>
+
+                <span class="c1"># if better solution than currently, replace it</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">isBetter</span><span class="p">(</span><span class="n">newSolution</span><span class="p">):</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_bestSolution</span> <span class="o">=</span> <span class="n">newSolution</span>
+
+                <span class="c1"># increase number of evaluations</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">increaseEvaluation</span><span class="p">()</span>
+
+                <span class="c1"># stop algorithm if necessary</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">stop</span><span class="p">():</span>
+                    <span class="k">break</span>
+
+            <span class="c1"># set new current solution using best solution found in this neighbor search</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_currentSolution</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bestSolution</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bestSolution</span>
+</pre></div>
+</div>
+<p>Our algorithm is now ready to work. As previously, let us define two operators as well as a random choice strategy.
+We will also need to define a <strong>solution initialisation function</strong> so that the algorithm can generate new solutions.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Problem instance definition</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="n">elements_score</span> <span class="o">=</span> <span class="p">[</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span> <span class="p">]</span> <span class="c1"># worth of each object</span>
+<span class="n">elements_weight</span> <span class="o">=</span> <span class="p">[</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span> <span class="p">]</span> <span class="c1"># weight of each object</span>
+
+<span class="c1"># evaluator instance</span>
+<span class="n">evaluator</span> <span class="o">=</span> <span class="n">KnapsackEvaluator</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;worths&#39;</span><span class="p">:</span> <span class="n">elements_score</span><span class="p">})</span>
+
+<span class="c1"># valid instance using lambda</span>
+<span class="n">validator</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">solution</span><span class="p">:</span> <span class="nb">sum</span><span class="p">([</span> <span class="n">elements_weight</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">solution</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">solution</span><span class="o">.</span><span class="n">data</span><span class="p">))])</span> <span class="o">&lt;=</span> <span class="mi">15</span>
+
+<span class="c1"># initialiser instance using lambda with default param value</span>
+<span class="n">initialiser</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="o">=</span><span class="mi">5</span><span class="p">:</span> <span class="n">BinarySolution</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">validator</span><span class="p">)</span>
+
+<span class="c1"># operators list with crossover and mutation</span>
+<span class="n">operators</span> <span class="o">=</span> <span class="p">[</span><span class="n">SimpleCrossover</span><span class="p">(),</span> <span class="n">SimpleMutation</span><span class="p">()]</span>
+
+<span class="c1"># policy random instance</span>
+<span class="n">policy</span> <span class="o">=</span> <span class="n">RandomPolicy</span><span class="p">(</span><span class="n">operators</span><span class="p">)</span>
+
+<span class="c1"># maximizing algorithm (relative to knapsack problem)</span>
+<span class="n">algo</span> <span class="o">=</span> <span class="n">HillClimberBestImprovment</span><span class="p">(</span><span class="n">initialiser</span><span class="p">,</span> <span class="n">evaluator</span><span class="p">,</span> <span class="n">operators</span><span class="p">,</span> <span class="n">policy</span><span class="p">,</span> <span class="n">validator</span><span class="p">,</span> <span class="n">maximise</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="c1"># run the algorithm and get solution found</span>
+<span class="n">solution</span> <span class="o">=</span> <span class="n">algo</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">solution</span><span class="o">.</span><span class="n">fitness</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">verbose</span></code> algorithm parameter will log into console the advancement process of the algorithm is set to <code class="docutils literal notranslate"><span class="pre">True</span></code> (the default value).</p>
+</div>
+</div>
+<div class="section" id="exploratory-algorithm">
+<h3>Exploratory algorithm<a class="headerlink" href="#exploratory-algorithm" title="Permalink to this headline">¶</a></h3>
+<p>As explained in <strong>figure (b)</strong> of <strong>section 8.1</strong>, sometimes the search space is more complicated due to convex parts and need heuristic with other strategy rather than a simple local search.</p>
+<p>The way to counter this problem is to allow the algorithm to exit the exploitation phase offered by local search. But rather to seek to explore other parts of the research space. This is possible by simply carrying out several local searches with our budget (number of evaluations).</p>
+<p>The idea is to make a leap in the search space in order to find a new local optimum which can be the global optimum. The explained process is illustrated below:</p>
+<a class="reference internal image-reference" href="_images/search_space_simple.png"><img alt="_images/search_space_simple.png" class="align-center" src="_images/search_space_simple.png" style="width: 45%;" /></a>
+<p>We are going to implement a more specific algorithm allowing to take a new parameter as input. This is a local search, the one previously developed. For that, we will have to modify the constructor a little.
+Let’s called this new algorithm <code class="docutils literal notranslate"><span class="pre">IteratedLocalSearch</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">module imports</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">macop.algorithms.base</span> <span class="kn">import</span> <span class="n">Algorithm</span>
+
+<span class="k">class</span> <span class="nc">IteratedLocalSearch</span><span class="p">(</span><span class="n">Algorithm</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                <span class="n">initialiser</span><span class="p">,</span>
+                <span class="n">evaluator</span><span class="p">,</span>
+                <span class="n">operators</span><span class="p">,</span>
+                <span class="n">policy</span><span class="p">,</span>
+                <span class="n">validator</span><span class="p">,</span>
+                <span class="n">localSearch</span><span class="p">,</span>
+                <span class="n">maximise</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">initialiser</span><span class="p">,</span> <span class="n">evaluator</span><span class="p">,</span> <span class="n">operators</span><span class="p">,</span> <span class="n">policy</span><span class="p">,</span> <span class="n">validator</span><span class="p">,</span> <span class="n">maximise</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">verbose</span><span class="p">)</span>
+
+        <span class="c1"># specific local search associated with current algorithm</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_localSearch</span> <span class="o">=</span> <span class="n">localSearch</span>
+
+        <span class="c1"># need to attach current algorithm as parent</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_localSearch</span><span class="o">.</span><span class="n">setParent</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">evaluations</span><span class="p">,</span> <span class="n">ls_evaluations</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Run the iterated local search algorithm using local search</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># by default use of mother method to initialise variables</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">evaluations</span><span class="p">)</span>
+
+        <span class="c1"># initialise current solution</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">initRun</span><span class="p">()</span>
+
+        <span class="c1"># local search algorithm implementation</span>
+        <span class="k">while</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">stop</span><span class="p">():</span>
+
+            <span class="c1"># create and search solution from local search (stop method can be called inside local search)</span>
+            <span class="n">newSolution</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_localSearch</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">ls_evaluations</span><span class="p">)</span>
+
+            <span class="c1"># if better solution than currently, replace it</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">isBetter</span><span class="p">(</span><span class="n">newSolution</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_bestSolution</span> <span class="o">=</span> <span class="n">newSolution</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">information</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bestSolution</span>
+</pre></div>
+</div>
+<p>In the initialization phase we have attached our local search passed as a parameter with the current algorithm as parent.
+The goal is to touch keep track of the overall search evaluation number (relative to the parent algorithm).</p>
+<p>Then, we use this local search in our <code class="docutils literal notranslate"><span class="pre">run</span></code> method to allow a better search for solutions.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Problem instance definition</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="n">elements_score</span> <span class="o">=</span> <span class="p">[</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span> <span class="p">]</span> <span class="c1"># worth of each object</span>
+<span class="n">elements_weight</span> <span class="o">=</span> <span class="p">[</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span> <span class="p">]</span> <span class="c1"># weight of each object</span>
+
+<span class="c1"># evaluator instance</span>
+<span class="n">evaluator</span> <span class="o">=</span> <span class="n">KnapsackEvaluator</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;worths&#39;</span><span class="p">:</span> <span class="n">elements_score</span><span class="p">})</span>
+
+<span class="c1"># valid instance using lambda</span>
+<span class="n">validator</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">solution</span><span class="p">:</span> <span class="nb">sum</span><span class="p">([</span> <span class="n">elements_weight</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">solution</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">solution</span><span class="o">.</span><span class="n">data</span><span class="p">))])</span> <span class="o">&lt;=</span> <span class="mi">15</span>
+
+<span class="c1"># initialiser instance using lambda with default param value</span>
+<span class="n">initialiser</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="o">=</span><span class="mi">5</span><span class="p">:</span> <span class="n">BinarySolution</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">validator</span><span class="p">)</span>
+
+<span class="c1"># operators list with crossover and mutation</span>
+<span class="n">operators</span> <span class="o">=</span> <span class="p">[</span><span class="n">SimpleCrossover</span><span class="p">(),</span> <span class="n">SimpleMutation</span><span class="p">()]</span>
+
+<span class="c1"># policy random instance</span>
+<span class="n">policy</span> <span class="o">=</span> <span class="n">RandomPolicy</span><span class="p">(</span><span class="n">operators</span><span class="p">)</span>
+
+<span class="c1"># maximizing algorithm (relative to knapsack problem)</span>
+<span class="n">localSearch</span> <span class="o">=</span> <span class="n">HillClimberBestImprovment</span><span class="p">(</span><span class="n">initialiser</span><span class="p">,</span> <span class="n">evaluator</span><span class="p">,</span> <span class="n">operators</span><span class="p">,</span> <span class="n">policy</span><span class="p">,</span> <span class="n">validator</span><span class="p">,</span> <span class="n">maximise</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">algo</span> <span class="o">=</span> <span class="n">IteratedLocalSearch</span><span class="p">(</span><span class="n">initialiser</span><span class="p">,</span> <span class="n">evaluator</span><span class="p">,</span> <span class="n">operators</span><span class="p">,</span> <span class="n">policy</span><span class="p">,</span> <span class="n">validator</span><span class="p">,</span> <span class="n">localSearch</span><span class="o">=</span><span class="n">local_search</span><span class="p">,</span> <span class="n">maximise</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="c1"># run the algorithm using local search and get solution found</span>
+<span class="n">solution</span> <span class="o">=</span> <span class="n">algo</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">evaluations</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">ls_evaluations</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">solution</span><span class="o">.</span><span class="n">fitness</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>These two last algorithms developed are available in the library within the module <a class="reference external" href="macop/macop.algorithms.mono.html#module-macop.algorithms.mono">macop.algorithms.mono</a>.</p>
+</div>
+<p>We have one final feature to explore in the next part. This is the notion of <code class="docutils literal notranslate"><span class="pre">callback</span></code>.</p>
+</div>
+</div>
+<div class="section" id="keep-track">
+<h2>Keep track<a class="headerlink" href="#keep-track" title="Permalink to this headline">¶</a></h2>
+<p>Keeping track of the running algorithm can be useful on two levels. First of all to understand how it unfolded at the end of the classic run. But also in the case of the unwanted shutdown of the algorithm.
+This section will allow you to introduce the recovery of the algorithm thanks to a continuous backup functionality.</p>
+<div class="section" id="logging-into-algorithm">
+<h3>Logging into algorithm<a class="headerlink" href="#logging-into-algorithm" title="Permalink to this headline">¶</a></h3>
+<p>Some logs can be retrieve after running an algorithm. <strong>Macop</strong> uses the <code class="docutils literal notranslate"><span class="pre">logging</span></code> Python package in order to log algorithm advancement.</p>
+<p>Here is an example of use when running an algorithm:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">basic imports</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="c1"># logging configuration</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="nb">format</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%(asctime)s</span><span class="s1"> </span><span class="si">%(message)s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;data/example.log&#39;</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+
+<span class="o">...</span>
+
+<span class="c1"># maximizing algorithm (relative to knapsack problem)</span>
+<span class="n">algo</span> <span class="o">=</span> <span class="n">HillClimberBestImprovment</span><span class="p">(</span><span class="n">initialiser</span><span class="p">,</span> <span class="n">evaluator</span><span class="p">,</span> <span class="n">operators</span><span class="p">,</span> <span class="n">policy</span><span class="p">,</span> <span class="n">validator</span><span class="p">,</span> <span class="n">maximise</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="c1"># run the algorithm using local search and get solution found</span>
+<span class="n">solution</span> <span class="o">=</span> <span class="n">algo</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">evaluations</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">solution</span><span class="o">.</span><span class="n">fitness</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Hence, log data are saved into <code class="docutils literal notranslate"><span class="pre">data/example.log</span></code> in our example.</p>
+</div>
+<div class="section" id="callbacks-introduction">
+<h3>Callbacks introduction<a class="headerlink" href="#callbacks-introduction" title="Permalink to this headline">¶</a></h3>
+<p>Having output logs can help to understand an error that has occurred, however all the progress of the research carried out may be lost.
+For this, the functionality relating to callbacks has been developed.</p>
+<p>Within <strong>Macop</strong>, a callback is a specific instance of <a class="reference external" href="macop/macop.callbacks.base.html#macop.callbacks.base.Callback">macop.callbacks.base.Callback</a> that allows you to perform an action of tracing / saving information <strong>every</strong> <code class="docutils literal notranslate"><span class="pre">n</span></code> <strong>evaluations</strong> but also reloading information if necessary when restarting an algorithm.</p>
+<ul class="simple">
+<li><p>The <code class="docutils literal notranslate"><span class="pre">run</span></code> method will be called during run process of the algo and do backup at each specific number of evaluations.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">load</span></code> method will be used to reload the state of the algorithm from the last information saved. All saved data is saved in a file whose name will be specified by the user.</p></li>
+</ul>
+</div>
+<div class="section" id="towards-the-use-of-callbacks">
+<h3>Towards the use of Callbacks<a class="headerlink" href="#towards-the-use-of-callbacks" title="Permalink to this headline">¶</a></h3>
+<p>We are going to create our own Callback instance called <code class="docutils literal notranslate"><span class="pre">BasicCheckpoint</span></code> which will save the best solution found and number of evaluations done in order to reload it for the next run of our algorithm.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">module imports</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">macop.callbacks.base</span> <span class="kn">import</span> <span class="n">Callback</span>
+
+
+<span class="k">class</span> <span class="nc">BasicCheckpoint</span><span class="p">(</span><span class="n">Callback</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Check if necessary to do backup based on `every` variable</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># get current best solution</span>
+        <span class="n">solution</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">algo</span><span class="o">.</span><span class="n">_bestSolution</span>
+
+        <span class="n">currentEvaluation</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">algo</span><span class="o">.</span><span class="n">getGlobalEvaluation</span><span class="p">()</span>
+
+        <span class="c1"># backup if necessary every number of evaluations</span>
+        <span class="k">if</span> <span class="n">currentEvaluation</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">_every</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+
+            <span class="c1"># create specific line with solution data</span>
+            <span class="n">solution</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+            <span class="n">solutionSize</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">solution</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">solution</span><span class="o">.</span><span class="n">data</span><span class="p">):</span>
+                <span class="n">solution</span><span class="o">.</span><span class="n">data</span> <span class="o">+=</span> <span class="nb">str</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="n">index</span> <span class="o">&lt;</span> <span class="n">solutionSize</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="n">solution</span><span class="o">.</span><span class="n">data</span> <span class="o">+=</span> <span class="s1">&#39; &#39;</span>
+
+            <span class="c1"># number of evaluations done, solution data and fitness score</span>
+            <span class="n">line</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">currentEvaluation</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;;&#39;</span> <span class="o">+</span> <span class="n">solution</span><span class="o">.</span><span class="n">data</span> <span class="o">+</span> <span class="s1">&#39;;&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span>
+                <span class="n">solution</span><span class="o">.</span><span class="n">fitness</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;;</span><span class="se">\n</span><span class="s1">&#39;</span>
+
+            <span class="c1"># check if file exists</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_filepath</span><span class="p">):</span>
+                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_filepath</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_filepath</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Load last backup line and set algorithm state (best solution and evaluations)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_filepath</span><span class="p">):</span>
+
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_filepath</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+
+                <span class="c1"># get last line and read data</span>
+                <span class="n">lastline</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readlines</span><span class="p">()[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                <span class="n">data</span> <span class="o">=</span> <span class="n">lastline</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;;&#39;</span><span class="p">)</span>
+
+                <span class="c1"># get evaluation  information</span>
+                <span class="n">globalEvaluation</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+                <span class="c1"># restore number of evaluations</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">algo</span><span class="o">.</span><span class="n">getParent</span><span class="p">()</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">algo</span><span class="o">.</span><span class="n">getParent</span><span class="p">()</span><span class="o">.</span><span class="n">_numberOfEvaluations</span> <span class="o">=</span> <span class="n">globalEvaluation</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">algo</span><span class="o">.</span><span class="n">_numberOfEvaluations</span> <span class="o">=</span> <span class="n">globalEvaluation</span>
+
+                <span class="c1"># get best solution data information</span>
+                <span class="n">solution</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)))</span>
+
+                <span class="c1"># avoid uninitialised solution</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">algo</span><span class="o">.</span><span class="n">_bestSolution</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">algo</span><span class="o">.</span><span class="n">_bestSolution</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">algo</span><span class="o">.</span><span class="n">initialiser</span><span class="p">()</span>
+
+                <span class="c1"># set to algorithm the lastest obtained best solution</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">algo</span><span class="o">.</span><span class="n">_bestsolution</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">solution</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">algo</span><span class="o">.</span><span class="n">_bestSolution</span><span class="o">.</span><span class="n">_score</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>In this way, it is possible to specify the use of a callback to our algorithm instance:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="o">...</span>
+
+<span class="c1"># maximizing algorithm (relative to knapsack problem)</span>
+<span class="n">algo</span> <span class="o">=</span> <span class="n">HillClimberBestImprovment</span><span class="p">(</span><span class="n">initialiser</span><span class="p">,</span> <span class="n">evaluator</span><span class="p">,</span> <span class="n">operators</span><span class="p">,</span> <span class="n">policy</span><span class="p">,</span> <span class="n">validator</span><span class="p">,</span> <span class="n">maximise</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="n">callback</span> <span class="o">=</span> <span class="n">BasicCheckpoint</span><span class="p">(</span><span class="n">every</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">filepath</span><span class="o">=</span><span class="s1">&#39;data/hillClimberBackup.csv&#39;</span><span class="p">)</span>
+
+<span class="c1"># add callback into callback list</span>
+<span class="n">algo</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="n">callback</span><span class="p">)</span>
+
+<span class="c1"># run the algorithm using local search and get solution found</span>
+<span class="n">solution</span> <span class="o">=</span> <span class="n">algo</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">evaluations</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">solution</span><span class="o">.</span><span class="n">fitness</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>It is possible to add as many callbacks as desired in the algorithm in question.</p>
+</div>
+<p>Previously, some methods of the abstract <code class="docutils literal notranslate"><span class="pre">Algorithm</span></code> class have not been presented. These methods are linked to the use of callbacks,
+in particular the <code class="docutils literal notranslate"><span class="pre">addCallback</span></code> method which allows the addition of a callback to an algorithm instance as seen above.</p>
+<ul class="simple">
+<li><p>The <code class="docutils literal notranslate"><span class="pre">resume</span></code> method will reload all callbacks list using <code class="docutils literal notranslate"><span class="pre">load</span></code> method.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">progress</span></code> method will <code class="docutils literal notranslate"><span class="pre">run</span></code> each callbacks during the algorithm search.</p></li>
+</ul>
+<p>If we want to exploit this functionality, then we will need to exploit them within our algorithm. Let’s make the necessary modifications for our algorithm <code class="docutils literal notranslate"><span class="pre">IteratedLocalSearch</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">module imports</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">macop.algorithms.base</span> <span class="kn">import</span> <span class="n">Algorithm</span>
+
+<span class="k">class</span> <span class="nc">IteratedLocalSearch</span><span class="p">(</span><span class="n">Algorithm</span><span class="p">):</span>
+
+    <span class="o">...</span>
+
+    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">evaluations</span><span class="p">,</span> <span class="n">ls_evaluations</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Run the iterated local search algorithm using local search</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># by default use of mother method to initialise variables</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">evaluations</span><span class="p">)</span>
+
+        <span class="c1"># initialise current solution</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">initRun</span><span class="p">()</span>
+
+        <span class="c1"># restart using callbacks backup list</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">resume</span><span class="p">()</span>
+
+        <span class="c1"># local search algorithm implementation</span>
+        <span class="k">while</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">stop</span><span class="p">():</span>
+
+            <span class="c1"># create and search solution from local search</span>
+            <span class="n">newSolution</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_localSearch</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">ls_evaluations</span><span class="p">)</span>
+
+            <span class="c1"># if better solution than currently, replace it</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">isBetter</span><span class="p">(</span><span class="n">newSolution</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_bestSolution</span> <span class="o">=</span> <span class="n">newSolution</span>
+
+            <span class="c1"># check if necessary to call each callbacks</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">progress</span><span class="p">()</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">information</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bestSolution</span>
+</pre></div>
+</div>
+<p>All the features of <strong>Macop</strong> were presented. The next section will aim to quickly present the few implementations proposed within <strong>Macop</strong> to highlight the modulality of the package.</p>
+</div>
+</div>
+<div class="section" id="advanced-usages">
+<h2>Advanced usages<a class="headerlink" href="#advanced-usages" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="multi-objective-discrete-optimisation">
+<h3>Multi-objective discrete optimisation<a class="headerlink" href="#multi-objective-discrete-optimisation" title="Permalink to this headline">¶</a></h3>
+<p>Within the API of <strong>Macop</strong>, you can find an implementation of The Multi-objective evolutionary algorithm based on decomposition (MOEA/D) is a general-purpose algorithm for approximating the Pareto set of multi-objective optimization problems.
+It decomposes the original multi-objective problem into a number of single-objective optimization sub-problems and then uses an evolutionary process to optimize these sub-problems simultaneously and cooperatively.
+MOEA/D is a state-of-art algorithm in aggregation-based approaches for multi-objective optimization.</p>
+<a class="reference internal image-reference" href="_images/search_space_moead.png"><img alt="_images/search_space_moead.png" class="align-center" src="_images/search_space_moead.png" style="width: 45%;" /></a>
+<p>As illustrated below, the two main objectives are sub-divised into 5 single-objective optimization sub-problems in order to find the Pareto front.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="macop/macop.algorithms.multi.html#macop.algorithms.multi.MOSubProblem">macop.algorithms.multi.MOSubProblem</a> class defines each sub-problem of MOEA/D.</p></li>
+<li><p><a class="reference external" href="macop/macop.algorithms.multi.html#macop.algorithms.multi.MOEAD">macop.algorithms.multi.MOEAD</a> class exploits <code class="docutils literal notranslate"><span class="pre">MOSubProblem</span></code> and implements MOEA/D using weighted-sum of objectives method.</p></li>
+</ul>
+<p>An example with MOEAD for knapsack problem is available in <a class="reference external" href="https://github.com/jbuisine/macop/blob/master/examples/knapsackMultiExample.py">knapsackMultiExample.py</a>.</p>
+</div>
+<div class="section" id="continuous-zdt-problems">
+<h3>Continuous Zdt problems<a class="headerlink" href="#continuous-zdt-problems" title="Permalink to this headline">¶</a></h3>
+<p>Even if the package is not primarily intended for continuous optimisation, it allows for adaptation to continuous optimisation.</p>
+<p>Based on the <a class="reference external" href="https://en.wikipedia.org/wiki/Test_functions_for_optimization">Zdt</a> benchmarks function, it offers an implementation of Solution, Operator and Evaluator to enable the optimisation of this kind of problem.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="macop/macop.solutions.continuous.html#macop.solutions.continuous.ContinuousSolution">macop.solutions.continuous.ContinuousSolution</a>: manage float array solution in order to represent continuous solution;</p></li>
+<li><p><a class="reference external" href="macop/macop.operators.continuous.mutators.html#macop.operators.continuous.mutators.PolynomialMutation">macop.operators.continuous.mutators.PolynomialMutation</a>: update solution using polynomial mutation over solution’s data;</p></li>
+<li><p><a class="reference external" href="macop/macop.operators.continuous.crossovers.html#macop.operators.continuous.crossovers.BasicDifferentialEvolutionCrossover">macop.operators.continuous.crossovers.BasicDifferentialEvolutionCrossover</a>: use of new generated solutions in order to obtain new offspring solution;</p></li>
+<li><p><a class="reference external" href="macop/macop.evaluators.continuous.mono.html#macop.evaluators.continous.mono.ZdtEvaluator">macop.evaluators.continous.mono.ZdtEvaluator</a>: continuous evaluator for <cite>Zdt</cite> problem instance. Take into its <code class="docutils literal notranslate"><span class="pre">data</span></code>, the <code class="docutils literal notranslate"><span class="pre">f</span></code> Zdt function;</p></li>
+<li><p><a class="reference external" href="macop/macop.callbacks.classicals.html#macop.callbacks.classicals.ContinuousCallback">macop.callbacks.classicals.ContinuousCallback</a>: manage callback and backup of continuous solution.</p></li>
+</ul>
+<p>A complete implementation example with the <a class="reference external" href="https://github.com/jbuisine/macop/blob/master/examples/ZdtExample.py">Rosenbrock</a> function is available.</p>
+</div>
+</div>
+</div>
+
+
+             </article>
+             
+            </div>
+            <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="api.html" class="btn btn-neutral float-right" title="API" accesskey="n" rel="next">Next <img src="_static/images/chevron-right-orange.svg" class="next-page"></a>
+      
+      
+        <a href="description.html" class="btn btn-neutral" title="Description" accesskey="p" rel="prev"><img src="_static/images/chevron-right-orange.svg" class="previous-page"> Previous</a>
+      
+    </div>
+  
+
+  
+
+    <hr>
+
+  
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2021, Jérôme BUISINE.
+
+    </p>
+  </div>
+    
+      <div>
+        Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+      </div>
+     
+
+</footer>
+
+          </div>
+        </div>
+
+        <div class="pytorch-content-right" id="pytorch-content-right">
+          <div class="pytorch-right-menu" id="pytorch-right-menu">
+            <div class="pytorch-side-scroll" id="pytorch-side-scroll-right">
+              <ul>
+<li><a class="reference internal" href="#">A tour of Macop</a><ul>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#problem-instance">Problem instance</a><ul>
+<li><a class="reference internal" href="#problem-definition">Problem definition</a></li>
+<li><a class="reference internal" href="#problem-implementation">Problem implementation</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#solutions">Solutions</a><ul>
+<li><a class="reference internal" href="#generic-solution">Generic Solution</a></li>
+<li><a class="reference internal" href="#solution-representation-for-knapsack">Solution representation for knapsack</a><ul>
+<li><a class="reference internal" href="#knapsack-solution">Knapsack solution</a></li>
+<li><a class="reference internal" href="#binary-solution">Binary Solution</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#validate-a-solution">Validate a solution</a><ul>
+<li><a class="reference internal" href="#validator-definition">Validator definition</a></li>
+<li><a class="reference internal" href="#use-of-validator">Use of validator</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#use-of-evaluators">Use of evaluators</a><ul>
+<li><a class="reference internal" href="#generic-evaluator">Generic evaluator</a></li>
+<li><a class="reference internal" href="#custom-evaluator">Custom evaluator</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#apply-operators-to-solution">Apply operators to solution</a><ul>
+<li><a class="reference internal" href="#operators-definition">Operators definition</a></li>
+<li><a class="reference internal" href="#mutator-operator">Mutator operator</a></li>
+<li><a class="reference internal" href="#crossover-operator">Crossover operator</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#operator-choices">Operator choices</a><ul>
+<li><a class="reference internal" href="#why-using-policy">Why using policy ?</a></li>
+<li><a class="reference internal" href="#custom-policy">Custom policy</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#optimisation-process">Optimisation process</a><ul>
+<li><a class="reference internal" href="#find-local-and-global-optima">Find local and global optima</a></li>
+<li><a class="reference internal" href="#abstract-algorithm-class">Abstract algorithm class</a></li>
+<li><a class="reference internal" href="#local-search-algorithm">Local search algorithm</a></li>
+<li><a class="reference internal" href="#exploratory-algorithm">Exploratory algorithm</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#keep-track">Keep track</a><ul>
+<li><a class="reference internal" href="#logging-into-algorithm">Logging into algorithm</a></li>
+<li><a class="reference internal" href="#callbacks-introduction">Callbacks introduction</a></li>
+<li><a class="reference internal" href="#towards-the-use-of-callbacks">Towards the use of Callbacks</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#advanced-usages">Advanced usages</a><ul>
+<li><a class="reference internal" href="#multi-objective-discrete-optimisation">Multi-objective discrete optimisation</a></li>
+<li><a class="reference internal" href="#continuous-zdt-problems">Continuous Zdt problems</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+  
+
+
+  
+
+     
+       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+         <script type="text/javascript" src="_static/jquery.js"></script>
+         <script type="text/javascript" src="_static/underscore.js"></script>
+         <script type="text/javascript" src="_static/doctools.js"></script>
+         <script type="text/javascript" src="_static/language_data.js"></script>
+         <script type="text/javascript" src="_static/js/custom.js"></script>
+         <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+     
+
+  
+
+  <script type="text/javascript" src="_static/js/vendor/popper.min.js"></script>
+  <script type="text/javascript" src="_static/js/vendor/bootstrap.min.js"></script>
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+  <!-- Begin Footer -->
+
+  <div class="container-fluid" id="docs-tutorials-resources">
+    <div class="container">
+      <div class="row">
+        <!--
+        <div class="col-md-4 text-center">
+          <h2>Docs</h2>
+          <p>Access comprehensive developer documentation for PyTorch</p>
+          <a class="with-right-arrow" href="https://pytorch.org/docs/stable/index.html">View Docs</a>
+        </div>
+
+        <div class="col-md-4 text-center">
+          <h2>Tutorials</h2>
+          <p>Get in-depth tutorials for beginners and advanced developers</p>
+          <a class="with-right-arrow" href="https://pytorch.org/tutorials">View Tutorials</a>
+        </div>
+
+        <div class="col-md-4 text-center">
+          <h2>Resources</h2>
+          <p>Find development resources and get your questions answered</p>
+          <a class="with-right-arrow" href="https://pytorch.org/resources">View Resources</a>
+        </div>
+        -->
+      </div>
+    </div>
+  </div>
+
+
+  <!-- <footer class="site-footer">
+    <div class="container footer-container">
+      <div class="footer-logo-wrapper">
+        <a href="https://github.com/mpariente/asteroid" class="footer-logo"></a>
+      </div>
+
+      <div class="footer-links-wrapper">
+
+        <div class="footer-logo-col">
+          <img class="footer-logo-img" src="_static/images/dark_asteroid_logo.svg"/>
+        </div>
+
+        <div class="footer-links-col">
+          <ul>
+            <li class="list-title"><a href="https://github.com/mpariente/asteroid">Asteroid</a></li>
+            <li><a href="https://pytorch.org/get-started">Get Started</a></li>
+            <li><a href="https://pytorch.org/features">Features</a></li>
+            <li><a href="">Ecosystem</a></li>
+            <li><a href="https://pytorch.org/blog/">Blog</a></li>
+            <li><a href="https://pytorch.org/resources">Resources</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-links-col">
+          <ul>
+            <li class="list-title"><a href="https://pytorch.org/support">Support</a></li>
+            <li><a href="https://pytorch.org/tutorials">Tutorials</a></li>
+            <li><a href="https://pytorch.org/docs/stable/index.html">Docs</a></li>
+            <li><a href="https://discuss.pytorch.org" target="_blank">Discuss</a></li>
+            <li><a href="https://github.com/mpariente/asteroid/issues" target="_blank">Github Issues</a></li>
+            <li><a href="" target="_blank">Slack</a></li>
+            <li><a href="https://github.com/mpariente/asteroid/blob/master/CONTRIBUTING.md" target="_blank">Contributing</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-links-col follow-us-col">
+          <ul>
+            <li class="list-title">Follow Us</li>
+            <li>
+              <div id="mc_embed_signup">
+                <form
+                  action="https://twitter.us14.list-manage.com/subscribe/post?u=75419c71fe0a935e53dfa4a3f&id=91d0dccd39"
+                  method="post"
+                  id="mc-embedded-subscribe-form"
+                  name="mc-embedded-subscribe-form"
+                  class="email-subscribe-form validate"
+                  target="_blank"
+                  novalidate>
+                  <div id="mc_embed_signup_scroll" class="email-subscribe-form-fields-wrapper">
+                    <div class="mc-field-group">
+                      <label for="mce-EMAIL" style="display:none;">Email Address</label>
+                      <input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL" placeholder="Email Address">
+                    </div>
+
+                    <div id="mce-responses" class="clear">
+                      <div class="response" id="mce-error-response" style="display:none"></div>
+                      <div class="response" id="mce-success-response" style="display:none"></div>
+                    </div>
+
+                    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_75419c71fe0a935e53dfa4a3f_91d0dccd39" tabindex="-1" value=""></div>
+
+                    <div class="clear">
+                      <input type="submit" value="" name="subscribe" id="mc-embedded-subscribe" class="button email-subscribe-button">
+                    </div>
+                  </div>
+                </form>
+              </div>
+
+            </li>
+          </ul>
+
+          <div class="footer-social-icons">
+            <a href="" target="_blank" class="facebook"></a>
+            <a href="https://twitter.com" target="_blank" class="twitter"></a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </footer> -->
+
+
+  <!-- End Footer -->
+
+  <!-- Begin Mobile Menu -->
+
+  <div class="mobile-main-menu">
+    <div class="container-fluid">
+      <div class="container">
+        <div class="mobile-main-menu-header-container">
+          <a class="header-logo" href="https://github.com/mpariente/asteroid" aria-label="PyTorch Lightning"></a>
+          <a class="main-menu-close-button" href="#" data-behavior="close-mobile-menu"></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="mobile-main-menu-links-container">
+      <div class="main-menu">
+        <ul>
+          <li>
+            <a href="https://pytorch.org/get-started">Get Started</a>
+          </li>
+
+          <li>
+            <a href="https://pytorch.org/features">Features</a>
+          </li>
+
+          <li>
+            <a href="https://pytorch.org/blog/">Blog</a>
+          </li>
+
+          <li>
+            <a href="https://pytorch.org/tutorials">Tutorials</a>
+          </li>
+
+          <li>
+            <a href="https://pytorch.org/docs/stable/index.html">Docs</a>
+          </li>
+
+          <li>
+            <a href="https://pytorch.org/resources">Resources</a>
+          </li>
+
+          <li>
+            <a href="https://github.com/mpariente/asteroid">Github</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- End Mobile Menu -->
+
+  <script type="text/javascript" src="_static/js/vendor/anchor.min.js"></script>
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+      mobileMenu.bind();
+      mobileTOC.bind();
+      pytorchAnchors.bind();
+      sideMenus.bind();
+      scrollToAnchor.bind();
+      highlightNavigation.bind();
+      mainMenuDropdown.bind();
+
+      // Add class to links that have code blocks, since we cannot create links in code blocks
+      $("article.pytorch-article a span.pre").each(function(e) {
+        $(this).closest("a").addClass("has-code");
+      });
+    })
+  </script>
+</body>
+</html>
