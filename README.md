@@ -98,6 +98,24 @@ You can also see examples of use:
 git submodule add https://github.com/jbuisine/macop.git
 ```
 
+
+## Citation
+
+```
+@article{Buisine2021,
+  doi = {10.21105/joss.02812},
+  url = {https://doi.org/10.21105/joss.02812},
+  year = {2021},
+  publisher = {The Open Journal},
+  volume = {6},
+  number = {59},
+  pages = {2812},
+  author = {Jérôme Buisine and Samuel Delepoulle and Christophe Renaud},
+  title = {Minimalist And Customisable Optimisation Package},
+  journal = {Journal of Open Source Software}
+}
+```
+
 ## Current projects which use `Macop`:
 
 - [@prise3d/noise-detection-attributes-optimization](https://github.com/prise-3d/noise-detection-attributes-optimization): use of a parent algorithm with the real (but very expensive) evaluation function, and then inner local searches which use a substitution model (a model that has learned to approximate the real cost function with a quick-to-evaluate function). Hence, two evaluation functions have been used in order to accelerate the search in the set of solutions.
